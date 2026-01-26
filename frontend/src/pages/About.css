@@ -1,0 +1,202 @@
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary);
+}
+
+/* Mission Section */
+.mission-section {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+.mission-icon {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.mission-section h2 {
+    color: var(--primary);
+    margin-bottom: 2rem;
+}
+
+.mission-text {
+    font-size: 18px;
+    line-height: 1.9;
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+}
+
+.mission-text:last-child {
+    margin-bottom: 0;
+}
+
+/* Leadership Section */
+.leadership-section {
+    background: var(--secondary);
+}
+
+.founder-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.founder-image {
+    position: relative;
+}
+
+.founder-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.founder-image::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: -20px;
+    bottom: -20px;
+    border: 3px solid var(--accent);
+    border-radius: 12px;
+    z-index: -1;
+}
+
+.founder-bio h3 {
+    font-size: 32px;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.founder-title {
+    font-size: 18px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.founder-description {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+}
+
+/* Team Section */
+.team-section {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.team-icon {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.team-section h2 {
+    color: var(--primary);
+    margin-bottom: 2rem;
+}
+
+.team-highlight {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    border-radius: 12px;
+}
+
+.team-details p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+}
+
+/* Philosophy Section */
+.philosophy-section {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+}
+
+.philosophy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+}
+
+.philosophy-icon {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.philosophy-content h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.philosophy-tagline {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    font-family: var(--font-heading);
+}
+
+.philosophy-text {
+    font-size: 18px;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .founder-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .founder-image {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .founder-image::after {
+        display: none;
+    }
+
+    .mission-text,
+    .founder-description,
+    .team-details p,
+    .philosophy-text {
+        font-size: 16px;
+    }
+
+    .team-highlight {
+        font-size: 18px;
+        padding: 1.5rem;
+    }
+
+    .philosophy-tagline {
+        font-size: 24px;
+    }
+}

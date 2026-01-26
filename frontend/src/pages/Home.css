@@ -1,0 +1,186 @@
+/* Section Headings */
+.section-heading {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.section-subheading {
+    font-size: 18px;
+    color: var(--text-gray);
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Advantage Section (Cards) */
+.card-icon-wrapper {
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.card-text {
+    color: var(--text-gray);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h3 {
+    color: var(--primary-dark);
+}
+
+/* Technical Depth Section */
+.tech-section {
+    background: var(--secondary);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tech-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-light);
+}
+
+.tech-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+}
+
+.tech-icon {
+    color: var(--primary);
+}
+
+.tech-item:hover .tech-icon {
+    color: var(--accent);
+}
+
+.tech-item span {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-family: var(--font-heading);
+}
+
+/* Services Section */
+.services-section {
+    background: white;
+}
+
+/* Guarantee Section */
+.guarantee-section {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+}
+
+.guarantee-block {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guarantee-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.guarantee-icon {
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.guarantee-header h2 {
+    color: white;
+}
+
+.guarantee-intro {
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.guarantee-points {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    /* Glassmorphism Lite */
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.g-point {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.g-point svg {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.g-point h4 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+}
+
+.g-point p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* CTA Section */
+.cta-section {
+    background: var(--secondary);
+}
+
+.cta-block {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    padding: 4rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.cta-block h2 {
+    font-size: 32px;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-block h2 {
+        font-size: 24px;
+    }
+}
