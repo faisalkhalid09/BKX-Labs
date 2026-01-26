@@ -8,9 +8,12 @@ import CaseStudy from './pages/CaseStudy';
 import About from './pages/About';
 import Contact from './pages/Contact';
 
+import ScrollToTop from './components/ui/ScrollToTop';
+
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <main>
         <Routes>
