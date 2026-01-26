@@ -3,10 +3,8 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import Card from '../components/ui/Card';
 import ServiceCard from '../components/ui/ServiceCard';
-import ProcessStep from '../components/ui/ProcessStep';
 import Button from '../components/ui/Button';
 import {
-    Rocket,
     Server,
     Hammer,
     UserCheck,
@@ -17,8 +15,6 @@ import {
     Monitor,
     Smartphone,
     Zap,
-    Palette,
-    Headphones,
     Layers,
     Code
 } from 'lucide-react';
