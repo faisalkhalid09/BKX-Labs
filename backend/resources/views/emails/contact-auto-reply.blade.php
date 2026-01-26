@@ -16,30 +16,33 @@
         }
         .container {
             background-color: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
+            border-radius: 4px;
+            padding: 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #2c3e50;
             color: white;
-            padding: 30px 20px;
-            border-radius: 8px 8px 0 0;
-            margin: -30px -30px 30px -30px;
+            padding: 30px;
+            border-radius: 4px 4px 0 0;
             text-align: center;
         }
         .header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 30px;
         }
         .greeting {
             font-size: 18px;
             font-weight: 600;
-            color: #667eea;
+            color: #2c3e50;
             margin-bottom: 20px;
         }
         .message-content {
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.8;
             color: #555;
         }
@@ -47,58 +50,73 @@
             margin-bottom: 15px;
         }
         .highlight-box {
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            border-radius: 6px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #2c3e50;
+            padding: 20px;
+            border-radius: 4px;
             margin: 20px 0;
         }
-        .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            text-align: center;
-            color: #888;
-            font-size: 13px;
+        .highlight-box strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .highlight-box ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
         }
         .contact-info {
             margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
             font-size: 14px;
         }
         .contact-info a {
-            color: #667eea;
+            color: #2c3e50;
             text-decoration: none;
+        }
+        .footer {
+            padding: 20px 30px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            border-radius: 0 0 4px 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>✅ Message Received</h1>
+            <h1>Message Received</h1>
         </div>
         
-        <div class="greeting">
-            Hi {{ $customerName }},
-        </div>
-        
-        <div class="message-content">
-            <p>Thank you for reaching out to <strong>BKX Labs</strong>! We've received your message and our team has been notified.</p>
-            
-            <div class="highlight-box">
-                <strong>📋 What happens next?</strong><br>
-                Our technical team will review your project brief and get back to you within <strong>24 hours</strong> with:
-                <ul style="margin: 10px 0 0 0; padding-left: 20px;">
-                    <li>Initial technical assessment</li>
-                    <li>Preliminary timeline estimate</li>
-                    <li>Next steps for consultation</li>
-                </ul>
+        <div class="content">
+            <div class="greeting">
+                Hi {{ $customerName }},
             </div>
-
-            <p>If your inquiry is urgent, feel free to reach out to us directly:</p>
             
-            <div class="contact-info">
-                📧 <strong>Email:</strong> <a href="mailto:contact@bkxlabs.com">contact@bkxlabs.com</a><br>
-                🌐 <strong>Website:</strong> <a href="https://bkxlabs.com">bkxlabs.com</a>
+            <div class="message-content">
+                <p>Thank you for reaching out to <strong>BKX Labs</strong>. We have received your message and our team has been notified.</p>
+                
+                <div class="highlight-box">
+                    <strong>What happens next?</strong>
+                    Our technical team will review your project brief and get back to you within <strong>24 hours</strong> with:
+                    <ul>
+                        <li>Initial technical assessment</li>
+                        <li>Preliminary timeline estimate</li>
+                        <li>Next steps for consultation</li>
+                    </ul>
+                </div>
+
+                <p>If your inquiry is urgent, feel free to reach out to us directly:</p>
+                
+                <div class="contact-info">
+                    <strong>Email:</strong> <a href="mailto:contact@bkxlabs.com">contact@bkxlabs.com</a><br>
+                    <strong>Website:</strong> <a href="https://bkxlabs.com">bkxlabs.com</a>
+                </div>
             </div>
         </div>
         
@@ -106,7 +124,7 @@
             <strong>BKX Labs</strong><br>
             Engineering Enterprise-Grade Software<br>
             <br>
-            This is an automated confirmation email. Please do not reply to this message.
+            This is an automated confirmation email.
         </div>
     </div>
 </body>

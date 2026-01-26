@@ -16,24 +16,27 @@
         }
         .container {
             background-color: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
+            border-radius: 4px;
+            padding: 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #2c3e50;
             color: white;
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
-            margin: -30px -30px 30px -30px;
+            padding: 30px;
+            border-radius: 4px 4px 0 0;
         }
         .header h1 {
             margin: 0;
             font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 30px;
         }
         .field {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
         .field:last-child {
@@ -41,11 +44,12 @@
         }
         .label {
             font-weight: 600;
-            color: #667eea;
-            font-size: 14px;
+            color: #2c3e50;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: block;
         }
         .value {
             font-size: 16px;
@@ -54,46 +58,49 @@
         .message-box {
             background-color: #f8f9fa;
             padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            border-left: 3px solid #2c3e50;
         }
         .footer {
-            margin-top: 30px;
-            padding-top: 20px;
+            padding: 20px 30px;
+            background-color: #f8f9fa;
             border-top: 1px solid #eee;
             font-size: 12px;
             color: #888;
             text-align: center;
+            border-radius: 0 0 4px 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📩 New Contact Form Submission</h1>
+            <h1>New Contact Form Submission</h1>
         </div>
         
-        <div class="field">
-            <div class="label">Name</div>
-            <div class="value">{{ $contactName }}</div>
-        </div>
-        
-        <div class="field">
-            <div class="label">Email</div>
-            <div class="value">
-                <a href="mailto:{{ $contactEmail }}">{{ $contactEmail }}</a>
+        <div class="content">
+            <div class="field">
+                <span class="label">Name</span>
+                <div class="value">{{ $contactName }}</div>
             </div>
-        </div>
-        
-        <div class="field">
-            <div class="label">Message</div>
-            <div class="message-box">
-                {!! nl2br(e($contactMessage)) !!}
+            
+            <div class="field">
+                <span class="label">Email</span>
+                <div class="value">
+                    <a href="mailto:{{ $contactEmail }}" style="color: #2c3e50; text-decoration: none;">{{ $contactEmail }}</a>
+                </div>
+            </div>
+            
+            <div class="field">
+                <span class="label">Message</span>
+                <div class="message-box">
+                    {!! nl2br(e($contactMessage)) !!}
+                </div>
             </div>
         </div>
         
         <div class="footer">
-            This email was sent from the BKX Labs website contact form.<br>
+            <strong>BKX Labs</strong><br>
             Submitted on {{ now()->format('F j, Y \a\t g:i A') }}
         </div>
     </div>
