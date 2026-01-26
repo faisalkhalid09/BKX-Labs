@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactFormSubmitted;
 
 class ContactController extends Controller
 {
@@ -32,8 +34,9 @@ class ContactController extends Controller
                 'updated_at' => now(),
             ]);
 
-            // TODO: Send email notification here
-            // Mail::to('contact@vsh.com')->send(new ContactFormSubmitted($request->all()));
+            // Send email notification
+            Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
+                ->send(new ContactFormSubmitted($request->all()));
 
             return response()->json([
                 'success' => true,
