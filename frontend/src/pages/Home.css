@@ -160,12 +160,12 @@ h3 {
 }
 
 .cta-block {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    background: var(--primary);
     padding: 4rem 2rem;
-    border-radius: 16px;
+    border-radius: 12px;
     text-align: center;
     color: white;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
 }
 
 .cta-block h2 {
