@@ -16,12 +16,14 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         <div className="hero">
             <Container>
                 <div className="hero-content">
-                    <h1>{title}</h1>
-                    <p className="hero-subtitle">{subtitle}</p>
+                    <h1 className="animate-fade-in">{title}</h1>
+                    <p className="hero-subtitle animate-fade-in delay-100">{subtitle}</p>
                     {ctaText && ctaLink && (
-                        <Button variant="primary" href={ctaLink}>
-                            {ctaText}
-                        </Button>
+                        <div className="animate-fade-in delay-200">
+                            <Button variant="primary" href={ctaLink}>
+                                {ctaText}
+                            </Button>
+                        </div>
                     )}
                     {children}
                 </div>

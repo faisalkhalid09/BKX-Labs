@@ -1,31 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap');
 
 :root {
-  /* Colors */
+  /* Premium Brand Colors */
   --primary: #1e3a8a;
-  --primary-dark: #1e293b;
-  --secondary: #f1f5f9;
-  --secondary-light: #fafafa;
+  --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  --secondary: #f8fafc;
   --accent: #06b6d4;
-  --accent-hover: #0891b2;
+  --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
+  --dark-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 
+  /* Neutral tones */
   --text-dark: #0f172a;
   --text-gray: #64748b;
-  --text-light: #ffffff;
+  --text-light: #f8fafc;
+  --border-light: rgba(226, 232, 240, 0.8);
 
-  --border-light: #e2e8f0;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  /* Glassmorphism & Shadows */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --glow: 0 0 20px rgba(6, 182, 212, 0.3);
 
   /* Typography */
   --font-body: 'Inter', sans-serif;
-  --font-heading: 'Poppins', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  /* More modern/geometric than Poppins */
 
   /* Spacing */
-  --max-width: 1200px;
-  --section-padding: 6rem 2rem;
-  --section-padding-mobile: 4rem 1.5rem;
+  --max-width: 1280px;
+  --section-padding: 8rem 2rem;
+  --section-padding-mobile: 5rem 1.5rem;
 }
 
 * {
@@ -36,6 +42,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -43,12 +50,12 @@ body {
   font-size: 16px;
   line-height: 1.7;
   color: var(--text-dark);
-  background-color: var(--secondary-light);
+  background-color: var(--secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography */
+/* Typography Enhancements */
 h1,
 h2,
 h3,
@@ -57,38 +64,73 @@ h5,
 h6 {
   font-family: var(--font-heading);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   color: var(--text-dark);
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 48px;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
-  font-size: 36px;
-}
-
-h3 {
-  font-size: 24px;
-}
-
-p {
+  font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1rem;
 }
 
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  color: var(--text-gray);
+  max-width: 65ch;
+}
+
 a {
-  color: var(--primary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
-a:hover {
-  color: var(--accent);
+/* Animations included in standard CSS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Utility Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* Utilities */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -97,76 +139,80 @@ a:hover {
 
 .section {
   padding: var(--section-padding);
+  position: relative;
+  overflow: hidden;
 }
 
-.text-center {
-  text-align: center;
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
 }
 
-.text-muted {
-  color: var(--text-gray);
-}
-
-/* Button Styles */
+/* Improved Buttons */
 .btn {
-  display: inline-block;
-  padding: 0.875rem 2rem;
-  font-family: var(--font-body);
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
   font-weight: 600;
-  text-align: center;
-  border: none;
-  border-radius: 6px;
+  border-radius: 50px;
+  /* Pill shape is more modern */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
+  border: none;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
-  background-color: white;
-  color: var(--primary);
-  border: 2px solid white;
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: transparent;
-  color: white;
-  border-color: white;
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
 }
 
 .btn-secondary {
-  background-color: var(--secondary);
+  background: white;
   color: var(--text-dark);
   border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-  background-color: var(--primary-dark);
-  color: var(--text-light);
-  border-color: var(--primary-dark);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Card Styles */
+/* Card Updates */
 .card {
   background: white;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  padding: 2.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid var(--border-light);
+  height: 100%;
 }
 
 .card:hover {
+  transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  border-color: rgba(6, 182, 212, 0.3);
 }
 
-/* Grid System */
+/* Layout Grids */
 .grid {
   display: grid;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .grid-2 {
@@ -181,40 +227,18 @@ a:hover {
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* Responsive Design */
+/* Responsive adjustments */
 @media (max-width: 1024px) {
-  h1 {
-    font-size: 40px;
-  }
 
-  h2 {
-    font-size: 32px;
-  }
-
+  .grid-3,
   .grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  :root {
-    --section-padding: var(--section-padding-mobile);
-  }
-
-  h1 {
-    font-size: 32px;
-  }
-
-  h2 {
-    font-size: 28px;
-  }
-
-  h3 {
-    font-size: 20px;
-  }
-
-  .container {
-    padding: 0 1.5rem;
+  .section {
+    padding: var(--section-padding-mobile);
   }
 
   .grid-2,
@@ -223,14 +247,15 @@ a:hover {
     grid-template-columns: 1fr;
   }
 
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
   .btn {
     width: 100%;
   }
-}
-
-/* Remove default React styles */
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }

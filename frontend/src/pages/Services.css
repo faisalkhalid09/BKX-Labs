@@ -40,12 +40,13 @@
 .service-icon-wrapper {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary-gradient);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
     flex-shrink: 0;
 }
 
@@ -127,17 +128,19 @@
 .tech-tags span {
     display: inline-block;
     padding: 0.4rem 0.8rem;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-    color: white;
+    background: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--border-light);
     border-radius: 20px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 /* Best For */
 .best-for {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%) !important;
+    background: var(--dark-gradient) !important;
     border: none !important;
+    color: white !important;
 }
 
 .best-for h4 {
@@ -151,7 +154,7 @@
 
 /* CTA Section */
 .services-cta {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: var(--primary-gradient);
 }
 
 .cta-content {
