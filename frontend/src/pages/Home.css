@@ -196,3 +196,18 @@ h3 {
         padding: 2.5rem 1.5rem;
     }
 }
+
+/* Ultra-small devices (< 350px) */
+@media (max-width: 350px) {
+    .guarantee-points {
+        padding: 1.5rem 1rem;
+    }
+
+    .cta-block {
+        padding: 2rem 1rem;
+    }
+
+    .section-subheading {
+        margin-bottom: 2rem;
+    }
+}

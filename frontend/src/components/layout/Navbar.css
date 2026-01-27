@@ -169,3 +169,16 @@
         height: 40px;
     }
 }
+
+/* Ultra-small devices (< 350px) */
+@media (max-width: 350px) {
+    .logo-img {
+        height: 32px;
+        /* Prevent overlap on tiny screens */
+    }
+
+    .hamburger {
+        padding: 0.25rem;
+        /* Tighter touch target area */
+    }
+}
