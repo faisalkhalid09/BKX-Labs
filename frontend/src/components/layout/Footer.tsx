@@ -8,7 +8,15 @@ const Footer = () => {
             <div className="container">
                 <div className="footer-content">
                     <div className="footer-section">
-                        <img src="/brand-logo.png" alt="BKX Labs" style={{ height: '32px', marginBottom: '1rem' }} />
+                        <div style={{
+                            backgroundColor: 'white',
+                            padding: '8px 12px',
+                            borderRadius: '8px',
+                            display: 'inline-block',
+                            marginBottom: '1rem'
+                        }}>
+                            <img src="/brand-logo.png" alt="BKX Labs" style={{ height: '45px', display: 'block' }} />
+                        </div>
                         <p className="footer-tagline">
                             Reliable software products, delivered phase by phase
                         </p>
