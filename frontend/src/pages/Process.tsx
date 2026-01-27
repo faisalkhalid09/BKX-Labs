@@ -24,7 +24,7 @@ const Process = () => {
                             From day one, you'll be assigned a dedicated Project Manager who serves as your
                             <strong> single point of contact</strong>. They coordinate with our development team,
                             provide regular updates, and ensure your project stays on track. No chasing multiple
-                            people — just one professional who knows your project inside and out.
+                            people - just one professional who knows your project inside and out.
                         </p>
                     </div>
                 </Container>
@@ -118,7 +118,7 @@ const Process = () => {
                         </div>
                         <p className="step-description">
                             Development proceeds in clearly defined phases, each with specific outcomes,
-                            timelines, and deliverables. You see progress at every step — no black boxes.
+                            timelines, and deliverables. You see progress at every step - no black boxes.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -157,7 +157,7 @@ const Process = () => {
                         </div>
                         <p className="step-description">
                             Your Project Manager provides structured weekly updates so you always know
-                            exactly where your project stands — no surprises, no guesswork.
+                            exactly where your project stands - no surprises, no guesswork.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -195,8 +195,8 @@ const Process = () => {
                             <h2>Delivery & Review</h2>
                         </div>
                         <p className="step-description">
-                            Final handover includes comprehensive testing, documentation, and deployment
-                            support. We don't disappear after launch — we're here for the long haul.
+                            final handover includes comprehensive testing, documentation, and deployment
+                            support. We don't disappear after launch - we're here for the long haul.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -265,7 +265,7 @@ const Process = () => {
                         <h2>Payment Milestones</h2>
                         <p className="payment-intro">
                             Our milestone-based payment structure aligns your investment with project progress.
-                            You only pay as we deliver — ensuring accountability at every stage.
+                            You only pay as we deliver - ensuring accountability at every stage.
                         </p>
                         <div className="payment-milestones">
                             <div className="milestone">

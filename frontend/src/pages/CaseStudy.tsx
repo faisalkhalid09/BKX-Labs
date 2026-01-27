@@ -36,7 +36,7 @@ const CaseStudy = () => {
                         </div>
 
                         <h2>Class Moalimy</h2>
-                        <p className="case-subtitle">International Education Platform — Saudi Arabia</p>
+                        <p className="case-subtitle">International Education Platform - Saudi Arabia</p>
 
                         {/* Executive Summary */}
                         <div className="case-highlight">
@@ -87,7 +87,7 @@ const CaseStudy = () => {
                             <div className="case-section-block">
                                 <h3>The "Closer" Impact</h3>
                                 <p>
-                                    We didn't just complete the remaining 80% — we optimized the entire system.
+                                    We didn't just complete the remaining 80% - we optimized the entire system.
                                     Database queries were reduced from 200+ to under 50 per page load. AWS costs
                                     were cut by 40% through proper S3 lifecycle policies. The authentication system
                                     was rebuilt with Laravel Sanctum, ensuring enterprise-grade security.
@@ -179,7 +179,7 @@ const CaseStudy = () => {
                         </div>
 
                         <h2>LocaGed</h2>
-                        <p className="case-subtitle">Enterprise Document Management System — Multi-Language Support</p>
+                        <p className="case-subtitle">Enterprise Document Management System - Multi-Language Support</p>
 
                         {/* Executive Summary */}
                         <div className="case-highlight">

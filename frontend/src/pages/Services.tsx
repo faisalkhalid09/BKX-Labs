@@ -19,7 +19,7 @@ const Services = () => {
                     <div className="services-intro">
                         <p>
                             We combine technical excellence with structured project management to deliver
-                            software that scales. Every engagement follows our proven roadmap methodology —
+                            software that scales. Every engagement follows our proven roadmap methodology -
                             complete with documentation, staging environments, and regular demos.
                         </p>
                     </div>
@@ -191,7 +191,7 @@ const Services = () => {
                         </div>
 
                         <p className="service-value">
-                            Transform your idea into a functional product — fast. We specialize in building
+                            Transform your idea into a functional product - fast. We specialize in building
                             Minimum Viable Products that are lean enough to validate your concept, yet
                             robust enough to scale when you're ready.
                         </p>
@@ -340,7 +340,7 @@ const Services = () => {
                         <p className="service-value">
                             Your software is an asset that needs care. Our maintenance packages ensure
                             your applications stay secure, performant, and aligned with evolving business
-                            needs — without the overhead of a full-time engineering team.
+                            needs - without the overhead of a full-time engineering team.
                         </p>
 
                         <div className="service-details-grid">

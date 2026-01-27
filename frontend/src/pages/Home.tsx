@@ -26,7 +26,7 @@ const Home = () => {
             {/* Hero Section */}
             <Hero
                 title="Engineering Enterprise-Grade Software. Recovering Stalled Projects."
-                subtitle="We don't just write code — we architect secure, scalable systems for businesses that demand production-ready results."
+                subtitle="We don't just write code - we architect secure, scalable systems for businesses that demand production-ready results."
                 ctaText="Book a Technical Consultation"
                 ctaLink="/contact"
             />

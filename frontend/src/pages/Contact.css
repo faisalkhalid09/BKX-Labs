@@ -134,3 +134,23 @@ button:disabled {
         padding: 2rem;
     }
 }
+
+@media (max-width: 400px) {
+    .contact-email {
+        padding: 1rem;
+        flex-direction: column;
+        /* Stack icon and text on tiny screens */
+        gap: 0.5rem;
+        text-align: center;
+        align-items: center;
+    }
+
+    .contact-email a {
+        word-break: break-all;
+        /* Force email to wrap if needed */
+    }
+
+    .contact-form-wrapper {
+        padding: 1.5rem 1rem;
+    }
+}

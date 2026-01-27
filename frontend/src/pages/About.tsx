@@ -27,7 +27,7 @@ const About = () => {
                         </p>
                         <p className="mission-text">
                             Too many businesses have been burned by agencies that overpromise and underdeliver.
-                            We believe you deserve complete visibility into every phase of your project — from
+                            We believe you deserve complete visibility into every phase of your project - from
                             the first line of code to final deployment.
                         </p>
                     </div>
@@ -121,7 +121,7 @@ const About = () => {
                             milestones, and complete access to project progress at every stage.
                         </p>
                         <p className="philosophy-text">
-                            No surprises. No hidden costs. Just clear communication and reliable delivery —
+                            No surprises. No hidden costs. Just clear communication and reliable delivery -
                             exactly what you'd expect from a true technology partner.
                         </p>
                     </div>
