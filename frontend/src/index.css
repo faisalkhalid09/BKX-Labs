@@ -265,3 +265,25 @@ a {
     width: 100%;
   }
 }
+
+/* Ultra-small devices (< 350px) */
+@media (max-width: 350px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    /* Smaller heading to prevent overflow */
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .btn {
+    padding: 0.875rem 1.5rem;
+    /* Compact buttons */
+    font-size: 0.9rem;
+  }
+}
