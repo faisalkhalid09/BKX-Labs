@@ -18,17 +18,22 @@
     margin-bottom: 1.5rem;
     color: var(--accent);
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    /* Centered icon */
 }
 
 .card-text {
     color: var(--text-gray);
     font-size: 16px;
     line-height: 1.6;
+    text-align: center;
+    /* Centered text */
 }
 
 h3 {
     color: var(--primary-dark);
+    text-align: center;
+    /* Centered heading */
 }
 
 /* Technical Depth Section */
