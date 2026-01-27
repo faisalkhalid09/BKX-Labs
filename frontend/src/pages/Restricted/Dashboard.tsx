@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/axios';
 import axios from 'axios';
+import './Dashboard.css';
 
 interface Template {
     id: number;
@@ -27,7 +29,7 @@ const RestrictedDashboard = () => {
 
         const fetchTemplates = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/restricted/templates', {
+                const response = await apiClient.get('/restricted/templates', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setTemplates(response.data);
@@ -62,7 +64,7 @@ const RestrictedDashboard = () => {
 
         try {
             const token = localStorage.getItem('restricted_token');
-            await axios.post('http://localhost:8000/api/restricted/send', {
+            await apiClient.post('/restricted/send', {
                 client_email: clientEmail,
                 subject,
                 body
@@ -70,10 +72,6 @@ const RestrictedDashboard = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessage('Email sent successfully!');
-            // Optional: reset form
-            // setClientEmail('');
-            // setSubject('');
-            // setBody('');
         } catch (error) {
             setMessage('Failed to send email.');
             console.error(error);
@@ -86,26 +84,26 @@ const RestrictedDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
-            <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-blue-600 px-6 py-4 flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-white">Client Receipt & Update Portal</h1>
-                    <button onClick={handleLogout} className="text-white hover:text-blue-200">Logout</button>
+        <div className="dashboard-container">
+            <div className="dashboard-card">
+                <div className="dashboard-header">
+                    <h1 className="dashboard-title">Client Receipt & Update Portal</h1>
+                    <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>
 
-                <div className="p-6">
+                <div className="dashboard-content">
                     {message && (
-                        <div className={`p-4 mb-6 rounded ${message.includes('success') ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                        <div className={`alert-message ${message.includes('success') ? 'alert-success' : 'alert-info'}`}>
                             {message}
                         </div>
                     )}
 
                     <form onSubmit={handleSend}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div className="form-row">
                             <div>
                                 <label className="block text-gray-700 font-bold mb-2">Select Template</label>
                                 <select
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                    className="dash-select"
                                     value={selectedTemplateId}
                                     onChange={handleTemplateChange}
                                 >
@@ -120,7 +118,7 @@ const RestrictedDashboard = () => {
                                 <label className="block text-gray-700 font-bold mb-2">Client Email</label>
                                 <input
                                     type="email"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                    className="dash-input"
                                     value={clientEmail}
                                     onChange={(e) => setClientEmail(e.target.value)}
                                     required
@@ -129,32 +127,29 @@ const RestrictedDashboard = () => {
                             </div>
                         </div>
 
-                        <div className="mb-6">
-                            <label className="block text-gray-700 font-bold mb-2">Subject</label>
+                        <div className="form-group-dash">
+                            <label>Subject</label>
                             <input
                                 type="text"
-                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                                className="dash-input"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                                 required
                             />
                         </div>
 
-                        <div className="mb-6">
-                            <label className="block text-gray-700 font-bold mb-2">Message Body</label>
+                        <div className="form-group-dash">
+                            <label>Message Body</label>
                             <textarea
-                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 h-64"
+                                className="dash-textarea"
                                 value={body}
                                 onChange={(e) => setBody(e.target.value)}
                                 required
                             />
                         </div>
 
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                className="bg-green-600 text-white font-bold py-3 px-8 rounded hover:bg-green-700 focus:outline-none transition duration-200"
-                            >
+                        <div className="form-actions">
+                            <button type="submit" className="send-btn">
                                 Send Email
                             </button>
                         </div>

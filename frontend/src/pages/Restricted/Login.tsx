@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import apiClient from '../../api/axios';
+import './Login.css';
 
 const RestrictedLogin = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +12,8 @@ const RestrictedLogin = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/api/restricted/login', {
+            // Using relative path via apiClient which handles base URL
+            const response = await apiClient.post('/restricted/login', {
                 email,
                 password
             });
@@ -24,35 +26,32 @@ const RestrictedLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Restricted Access</h2>
-                {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
+        <div className="restricted-login-container">
+            <div className="login-card">
+                <h2 className="login-title">Restricted Access</h2>
+                {error && <div className="login-error">{error}</div>}
                 <form onSubmit={handleLogin}>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                    <div className="login-form-group">
+                        <label>Email Address</label>
                         <input
                             type="email"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                            className="login-input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <div className="login-form-group">
+                        <label>Password</label>
                         <input
                             type="password"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                            className="login-input"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none"
-                    >
+                    <button type="submit" className="login-submit-btn">
                         Sign In
                     </button>
                 </form>
