@@ -7,7 +7,7 @@ const Navbar = () => {
             <div className="container">
                 <div className="navbar-content">
                     <Link to="/" className="logo">
-                        <img src="/logo.png" alt="BKX Labs" style={{ height: '40px' }} />
+                        <img src="/brand-logo.png" alt="BKX Labs" style={{ height: '40px' }} />
                     </Link>
 
                     <ul className="nav-links">
