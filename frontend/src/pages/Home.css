@@ -83,8 +83,9 @@ h3 {
 }
 
 /* Guarantee Section */
+/* Guarantee Section */
 .guarantee-section {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    background: var(--primary-gradient);
     color: white;
 }
 
