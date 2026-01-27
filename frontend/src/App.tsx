@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -7,12 +8,20 @@ import Process from './pages/Process';
 import CaseStudy from './pages/CaseStudy';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import SplashScreen from './components/ui/SplashScreen';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  const handleSplashComplete = useCallback(() => {
+    setShowSplash(false);
+  }, []);
+
   return (
     <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
       <ScrollToTop />
       <Navbar />
       <main>
@@ -31,3 +40,4 @@ function App() {
 }
 
 export default App;
+
