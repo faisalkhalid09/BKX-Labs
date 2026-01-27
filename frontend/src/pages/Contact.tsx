@@ -12,6 +12,7 @@ interface ContactFormData {
     name: string;
     email: string;
     message: string;
+    agreeToTerms: boolean;
 }
 
 const Contact = () => {
@@ -103,6 +104,19 @@ const Contact = () => {
                                         className={errors.message ? 'error' : ''}
                                     />
                                     {errors.message && <span className="error-message">{errors.message.message}</span>}
+                                </div>
+
+                                <div className="form-group checkbox-group">
+                                    <label className="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            {...register('agreeToTerms', { required: 'You must agree to the Terms and Privacy Policy' })}
+                                        />
+                                        <span>
+                                            By checking this you agree on BKX-Labs <a href="/TOS" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>Term of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>Privacy Policy</a>
+                                        </span>
+                                    </label>
+                                    {errors.agreeToTerms && <span className="error-message">{errors.agreeToTerms.message}</span>}
                                 </div>
 
                                 <Button type="submit" variant="primary" disabled={isSubmitting}>

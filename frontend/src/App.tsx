@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import RestrictedLogin from './pages/Restricted/Login';
 import RestrictedDashboard from './pages/Restricted/Dashboard';
+import PdfViewer from './pages/PdfViewer';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/restricted-portal" element={<RestrictedLogin />} />
           <Route path="/restricted-portal/dashboard" element={<RestrictedDashboard />} />
+          <Route path="/:type" element={<PdfViewer />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
