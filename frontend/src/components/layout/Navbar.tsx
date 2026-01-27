@@ -31,14 +31,16 @@ const Navbar = () => {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <ul className="nav-links desktop-only">
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/services">Services</Link></li>
-                        <li><Link to="/process">Process</Link></li>
-                        <li><Link to="/case-study">Case Study</Link></li>
-                        <li><Link to="/about">About</Link></li>
-                        <li><Link to="/contact" className="nav-cta">Contact</Link></li>
-                    </ul>
+                    {!location.pathname.startsWith('/restricted-portal') && (
+                        <ul className="nav-links desktop-only">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/services">Services</Link></li>
+                            <li><Link to="/process">Process</Link></li>
+                            <li><Link to="/case-study">Case Study</Link></li>
+                            <li><Link to="/about">About</Link></li>
+                            <li><Link to="/contact" className="nav-cta">Contact</Link></li>
+                        </ul>
+                    )}
 
                     {/* Mobile Menu Toggle */}
                     <button
@@ -55,12 +57,16 @@ const Navbar = () => {
             <div className={`mobile-menu ${isOpen ? 'active' : ''}`}>
                 <div className="container">
                     <ul className="mobile-nav-links">
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/services">Services</Link></li>
-                        <li><Link to="/process">Process</Link></li>
-                        <li><Link to="/case-study">Case Study</Link></li>
-                        <li><Link to="/about">About</Link></li>
-                        <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
+                        {!location.pathname.startsWith('/restricted-portal') && (
+                            <>
+                                <li><Link to="/">Home</Link></li>
+                                <li><Link to="/services">Services</Link></li>
+                                <li><Link to="/process">Process</Link></li>
+                                <li><Link to="/case-study">Case Study</Link></li>
+                                <li><Link to="/about">About</Link></li>
+                                <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
