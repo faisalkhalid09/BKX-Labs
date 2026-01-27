@@ -176,6 +176,7 @@ h3 {
 }
 
 /* Responsive */
+/* Responsive */
 @media (max-width: 768px) {
     .tech-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -183,5 +184,15 @@ h3 {
 
     .cta-block h2 {
         font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-block {
+        padding: 2.5rem 1.5rem;
     }
 }

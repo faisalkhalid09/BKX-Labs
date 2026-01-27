@@ -97,6 +97,8 @@ p {
   margin-bottom: 1.5rem;
   color: var(--text-gray);
   max-width: 65ch;
+  text-align: justify;
+  hyphens: auto;
 }
 
 a {
