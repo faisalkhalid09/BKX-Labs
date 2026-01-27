@@ -16,12 +16,12 @@ class ReceiptTemplateSeeder extends Seeder
             [
                 'name' => 'Payment Received',
                 'subject' => 'Payment Confirmation - {Project Name}',
-                'body' => "Dear Client,\n\nWe have successfully received your payment of {Amount}. Thank you for your business.\n\nBest regards,\nVSH Team",
+                'body' => "Dear Client,\n\nWe have successfully received your payment of {Amount}. Thank you for your business.\n\nBest regards,\nBKX Labs Admin",
             ],
             [
                 'name' => 'Project Update',
                 'subject' => 'Project Update - {Project Name}',
-                'body' => "Dear Client,\n\nHere is an update on your project: {Description}\n\nWe are making great progress.\n\nBest regards,\nVSH Team",
+                'body' => "Dear Client,\n\nHere is an update on your project: {Description}\n\nWe are making great progress.\n\nBest regards,\nBKX Labs Admin",
             ]
         ];
 
