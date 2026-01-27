@@ -17,11 +17,12 @@ const PdfViewer = () => {
     }
 
     return (
-        <div className="fixed inset-0 z-50 bg-white w-full h-full flex flex-col">
+        <div className="fixed top-0 left-0 w-screen h-screen z-[99999] bg-white flex flex-col">
             <iframe
                 src={file}
-                className="w-full h-full border-0"
+                className="w-full h-full border-0 block"
                 title="Document Viewer"
+                style={{ width: '100vw', height: '100vh' }}
             />
         </div>
     );
