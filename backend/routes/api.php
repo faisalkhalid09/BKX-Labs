@@ -14,6 +14,12 @@ Route::get('/test', function () {
 
 Route::post('/contact', [ContactController::class, 'submit']);
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::group(['prefix' => 'restricted'], function () {
+    Route::post('/login', [App\Http\Controllers\RestrictedAccessController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/templates', [App\Http\Controllers\RestrictedAccessController::class, 'getTemplates']);
+        Route::post('/send', [App\Http\Controllers\RestrictedAccessController::class, 'sendReceipt']);
+    });
+});
+

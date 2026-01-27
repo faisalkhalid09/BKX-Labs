@@ -8,6 +8,8 @@ import CaseStudy from './pages/CaseStudy';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import RestrictedLogin from './pages/Restricted/Login';
+import RestrictedDashboard from './pages/Restricted/Dashboard';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 
@@ -24,6 +26,8 @@ function App() {
           <Route path="/case-study" element={<CaseStudy />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/restricted-portal" element={<RestrictedLogin />} />
+          <Route path="/restricted-portal/dashboard" element={<RestrictedDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
