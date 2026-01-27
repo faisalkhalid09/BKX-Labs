@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receipt_templates', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); // e.g., "Payment Received"
-            $table->string('subject');
-            $table->text('body'); // The HTML/Text content
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('receipt_templates')) {
+            Schema::create('receipt_templates', function (Blueprint $table) {
+                $table->id();
+                $table->string('name'); // e.g., "Payment Received"
+                $table->string('subject');
+                $table->text('body'); // The HTML/Text content
+                $table->timestamps();
+            });
+        }
     }
 
     /**
