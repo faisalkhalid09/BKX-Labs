@@ -12,25 +12,34 @@ class RestrictedAccessController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            // Check if it's the specific restricted user
-            if ($user->email === 'faisal3245.com@gmail.com') {
-                $token = $user->createToken('restricted-access')->plainTextToken;
-                return response()->json(['token' => $token, 'user' => $user]);
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                // Check if it's the specific restricted user
+                if ($user->email === 'faisal3245.com@gmail.com') {
+                    $token = $user->createToken('restricted-access')->plainTextToken;
+                    return response()->json(['token' => $token, 'user' => $user]);
+                }
+                
+                // Logout if not the specific user
+                Auth::logout();
+                return response()->json(['message' => 'Unauthorized access.'], 403);
             }
-            
-            // Logout if not the specific user
-            Auth::logout();
-            return response()->json(['message' => 'Unauthorized access.'], 403);
-        }
 
-        return response()->json(['message' => 'Invalid credentials.'], 401);
+            return response()->json(['message' => 'Invalid credentials.'], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Server Error detected',
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ], 500);
+        }
     }
 
     public function getTemplates()
