@@ -16,7 +16,9 @@ import {
     Smartphone,
     Zap,
     Layers,
-    Code
+    Code,
+    AlignCenter,
+    TextAlignCenter
 } from 'lucide-react';
 import './Home.css';
 
@@ -90,7 +92,7 @@ const Home = () => {
                                 <span>Laravel</span>
                             </div>
                             <div className="tech-item">
-                                <div className="tech-icon"><Database size={24} /></div>
+                                <div className="tech-icon"><Code size={24} /></div>
                                 <span>Node.js</span>
                             </div>
                             <div className="tech-item">
@@ -98,8 +100,20 @@ const Home = () => {
                                 <span>React</span>
                             </div>
                             <div className="tech-item">
+                                <div className="tech-icon"><Monitor size={24} /></div>
+                                <span>Vue.js</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><Code size={24} /></div>
+                                <span>TypeScript</span>
+                            </div>
+                            <div className="tech-item">
                                 <div className="tech-icon"><Server size={24} /></div>
                                 <span>AWS S3</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><Server size={24} /></div>
+                                <span>CloudFront</span>
                             </div>
                             <div className="tech-item">
                                 <div className="tech-icon"><Zap size={24} /></div>
@@ -114,8 +128,28 @@ const Home = () => {
                                 <span>MySQL</span>
                             </div>
                             <div className="tech-item">
+                                <div className="tech-icon"><Database size={24} /></div>
+                                <span>PostgreSQL</span>
+                            </div>
+                            <div className="tech-item">
                                 <div className="tech-icon"><ShieldCheck size={24} /></div>
                                 <span>Docker</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><Code size={24} /></div>
+                                <span>GitHub Actions</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><Server size={24} /></div>
+                                <span>Nginx</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><ShieldCheck size={24} /></div>
+                                <span>Laravel Sanctum</span>
+                            </div>
+                            <div className="tech-item">
+                                <div className="tech-icon"><Layers size={24} /></div>
+                                <span>MinIO</span>
                             </div>
                         </div>
                     </div>
