@@ -16,9 +16,7 @@ import {
     Smartphone,
     Zap,
     Layers,
-    Code,
-    AlignCenter,
-    TextAlignCenter
+    Code
 } from 'lucide-react';
 import './Home.css';
 
