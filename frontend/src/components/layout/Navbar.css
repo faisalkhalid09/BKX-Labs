@@ -28,13 +28,13 @@
 }
 
 .logo-img {
-    height: 48px;
+    height: 64px;
     width: auto;
     transition: height 0.3s ease;
 }
 
 .navbar.scrolled .logo-img {
-    height: 40px;
+    height: 52px;
 }
 
 /* Desktop Navigation */
