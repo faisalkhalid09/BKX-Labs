@@ -6,7 +6,7 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  withCredentials: true,
+  // withCredentials: true, // Removed - not needed for public endpoints like contact form
 });
 
 // Request interceptor
