@@ -40,6 +40,24 @@
     color: #bfdbfe;
 }
 
+.contacts-link {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.contacts-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
 .dashboard-content {
     padding: 1.5rem;
 }

@@ -87,7 +87,15 @@ const RestrictedDashboard = () => {
         <div className="dashboard-container">
             <div className="dashboard-card">
                 <div className="dashboard-header">
-                    <h1 className="dashboard-title">Client Receipt & Update Portal</h1>
+                    <div>
+                        <h1 className="dashboard-title">Client Receipt & Update Portal</h1>
+                        <button
+                            onClick={() => navigate('/restricted-portal/contacts')}
+                            className="contacts-link"
+                        >
+                            📧 View Contact Messages
+                        </button>
+                    </div>
                     <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>
 

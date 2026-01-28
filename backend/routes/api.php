@@ -20,6 +20,12 @@ Route::group(['prefix' => 'restricted'], function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/templates', [App\Http\Controllers\RestrictedAccessController::class, 'getTemplates']);
         Route::post('/send', [App\Http\Controllers\RestrictedAccessController::class, 'sendReceipt']);
+        
+        // Contact management routes
+        Route::get('/contacts', [ContactController::class, 'index']);
+        Route::get('/contacts/{id}', [ContactController::class, 'show']);
+        Route::get('/contacts/export/excel', [ContactController::class, 'export']);
+        Route::delete('/contacts/clear', [ContactController::class, 'clear']);
     });
 });
 

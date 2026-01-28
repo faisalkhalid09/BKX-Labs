@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Models\Contact;
+use App\Exports\ContactsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use App\Mail\ContactFormSubmitted;
@@ -28,13 +31,11 @@ class ContactController extends Controller
         }
 
         try {
-            // Save to database
-            DB::table('contacts')->insert([
+            // Save to database using Contact model
+            Contact::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'message' => $request->message,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
 
             // Send notification email to admin
@@ -56,6 +57,47 @@ class ContactController extends Controller
                 'success' => false,
                 'message' => 'Something went wrong. Please try again later.',
                 'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Get all contact submissions
+    public function index()
+    {
+        $contacts = Contact::orderBy('created_at', 'desc')->get();
+        return response()->json($contacts);
+    }
+
+    // Get single contact submission
+    public function show($id)
+    {
+        $contact = Contact::findOrFail($id);
+        return response()->json($contact);
+    }
+
+    // Export contacts to Excel
+    public function export()
+    {
+        return Excel::download(new ContactsExport, 'contact-submissions-' . date('Y-m-d') . '.xlsx');
+    }
+
+    // Clear all contact submissions
+    public function clear()
+    {
+        try {
+            $count = Contact::count();
+            Contact::truncate();
+            
+            return response()->json([
+                'success' => true,
+                'message' => "Successfully deleted {$count} contact submission(s)."
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Contact clear error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to clear contacts.'
             ], 500);
         }
     }
