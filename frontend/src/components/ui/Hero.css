@@ -45,63 +45,8 @@
     background-size: 50px 50px;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0) 100%);
     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0) 100%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Animated blue light effect that moves through spaces between grid boxes */
-.hero::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center,
-            rgba(30, 58, 138, 0.2) 0%,
-            rgba(37, 99, 235, 0.12) 20%,
-            rgba(37, 99, 235, 0.05) 35%,
-            transparent 50%);
-    animation: moveLight 20s ease-in-out infinite;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.7;
-
-    /* Mask to block light on grid lines - light only shows in spaces between boxes */
-    mask-image:
-        linear-gradient(transparent 1px, black 1px),
-        linear-gradient(90deg, transparent 1px, black 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image:
-        linear-gradient(transparent 1px, black 1px),
-        linear-gradient(90deg, transparent 1px, black 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0) 100%);
-    mask-size: 50px 50px, 50px 50px, 100% 100%;
-    -webkit-mask-size: 50px 50px, 50px 50px, 100% 100%;
-    mask-composite: intersect;
-    -webkit-mask-composite: source-in;
-}
-
-@keyframes moveLight {
-    0% {
-        transform: translate(0%, 0%) scale(1);
-    }
-
-    25% {
-        transform: translate(30%, 15%) scale(1.1);
-    }
-
-    50% {
-        transform: translate(10%, 35%) scale(0.95);
-    }
-
-    75% {
-        transform: translate(-20%, 20%) scale(1.05);
-    }
-
-    100% {
-        transform: translate(0%, 0%) scale(1);
-    }
 }
 
 @media (max-width: 768px) {
@@ -111,11 +56,5 @@
 
     .hero-subtitle {
         font-size: 1.1rem;
-    }
-
-    /* Reduce light animation intensity on mobile */
-    .hero::after {
-        opacity: 0.5;
-        animation-duration: 25s;
     }
 }
