@@ -31,7 +31,6 @@ class ClientReceipt extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new \Illuminate\Mail\Mailables\Address('admin@bkxlabs.com', 'BKX Labs Admin'),
             subject: $this->subjectLine,
         );
     }
