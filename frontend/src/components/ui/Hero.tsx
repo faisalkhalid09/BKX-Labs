@@ -23,10 +23,12 @@ interface GridPoint {
 
 const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const heroRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas) return;
+        const heroDiv = heroRef.current;
+        if (!canvas || !heroDiv) return;
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
@@ -39,7 +41,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Mouse tracking
+        // Mouse tracking on hero div instead of canvas
         let mouseX = -1000;
         let mouseY = -1000;
         const handleMouseMove = (e: MouseEvent) => {
@@ -51,8 +53,8 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             mouseX = -1000;
             mouseY = -1000;
         };
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseleave', handleMouseLeave);
+        heroDiv.addEventListener('mousemove', handleMouseMove);
+        heroDiv.addEventListener('mouseleave', handleMouseLeave);
 
         // Grid settings
         const gridSize = 50;
@@ -136,13 +138,13 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
-            canvas.removeEventListener('mousemove', handleMouseMove);
-            canvas.removeEventListener('mouseleave', handleMouseLeave);
+            heroDiv.removeEventListener('mousemove', handleMouseMove);
+            heroDiv.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, []);
 
     return (
-        <div className="hero">
+        <div className="hero" ref={heroRef}>
             <canvas ref={canvasRef} className="hero-canvas" />
             <Container>
                 <div className="hero-content">
