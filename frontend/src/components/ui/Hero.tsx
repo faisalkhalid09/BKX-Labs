@@ -12,6 +12,15 @@ interface HeroProps {
     children?: ReactNode;
 }
 
+interface GridPoint {
+    x: number;
+    y: number;
+    offsetX: number;
+    offsetY: number;
+    opacity: number;
+    lastInteraction: number;
+}
+
 const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -49,49 +58,73 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         const gridSize = 50;
         const interactionRadius = 120;
         const maxDisplacement = 20;
+        const trailDuration = 800; // Trail lasts 0.8 seconds
+
+        // Store grid points with their state
+        const gridPoints: Map<string, GridPoint> = new Map();
 
         // Animation loop
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const currentTime = Date.now();
 
-            // Draw grid with mouse interaction
+            // Draw grid with mouse interaction and trailing effect
             for (let x = 0; x < canvas.width; x += gridSize) {
                 for (let y = 0; y < canvas.height; y += gridSize) {
+                    const key = `${x},${y}`;
                     const dx = mouseX - x;
                     const dy = mouseY - y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    let offsetX = 0;
-                    let offsetY = 0;
-                    let opacity = 0.12;
+                    let point = gridPoints.get(key);
+                    if (!point) {
+                        point = { x, y, offsetX: 0, offsetY: 0, opacity: 0.12, lastInteraction: 0 };
+                        gridPoints.set(key, point);
+                    }
 
+                    // Calculate new displacement if mouse is nearby
                     if (distance < interactionRadius) {
                         const force = (interactionRadius - distance) / interactionRadius;
-                        offsetX = (dx / distance) * force * maxDisplacement;
-                        offsetY = (dy / distance) * force * maxDisplacement;
-                        opacity = 0.12 + force * 0.3;
+                        point.offsetX = (dx / distance) * force * maxDisplacement;
+                        point.offsetY = (dy / distance) * force * maxDisplacement;
+                        point.opacity = 0.12 + force * 0.3;
+                        point.lastInteraction = currentTime;
+                    } else {
+                        // Apply trailing effect - fade back to original position
+                        const timeSinceInteraction = currentTime - point.lastInteraction;
+                        if (timeSinceInteraction < trailDuration) {
+                            const fadeProgress = timeSinceInteraction / trailDuration;
+                            point.offsetX *= (1 - fadeProgress);
+                            point.offsetY *= (1 - fadeProgress);
+                            point.opacity = 0.12 + (point.opacity - 0.12) * (1 - fadeProgress);
+                        } else {
+                            point.offsetX = 0;
+                            point.offsetY = 0;
+                            point.opacity = 0.12;
+                        }
                     }
 
                     // Apply fade based on position (fade at bottom)
                     const fadeStart = canvas.height * 0.6;
+                    let finalOpacity = point.opacity;
                     if (y > fadeStart) {
                         const fadeProgress = (y - fadeStart) / (canvas.height - fadeStart);
-                        opacity *= (1 - fadeProgress);
+                        finalOpacity *= (1 - fadeProgress);
                     }
 
-                    ctx.strokeStyle = `rgba(30, 58, 138, ${opacity})`;
+                    ctx.strokeStyle = `rgba(30, 58, 138, ${finalOpacity})`;
                     ctx.lineWidth = 1;
 
                     // Vertical line
                     ctx.beginPath();
-                    ctx.moveTo(x + offsetX, y + offsetY);
-                    ctx.lineTo(x + offsetX, y + gridSize + offsetY);
+                    ctx.moveTo(x + point.offsetX, y + point.offsetY);
+                    ctx.lineTo(x + point.offsetX, y + gridSize + point.offsetY);
                     ctx.stroke();
 
                     // Horizontal line
                     ctx.beginPath();
-                    ctx.moveTo(x + offsetX, y + offsetY);
-                    ctx.lineTo(x + gridSize + offsetX, y + offsetY);
+                    ctx.moveTo(x + point.offsetX, y + point.offsetY);
+                    ctx.lineTo(x + gridSize + point.offsetX, y + point.offsetY);
                     ctx.stroke();
                 }
             }
