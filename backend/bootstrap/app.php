@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
 
+        // Add CORS middleware globally
+        $middleware->append(\App\Http\Middleware\HandleCors::class);
+
         // CORS Configuration
         $middleware->validateCsrfTokens(except: [
             'api/*',
