@@ -49,6 +49,46 @@
     pointer-events: none;
 }
 
+/* Animated blue light effect that moves across the grid */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center,
+            rgba(30, 58, 138, 0.15) 0%,
+            rgba(37, 99, 235, 0.08) 20%,
+            transparent 50%);
+    animation: moveLight 20s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes moveLight {
+    0% {
+        transform: translate(0%, 0%) scale(1);
+    }
+
+    25% {
+        transform: translate(30%, 15%) scale(1.1);
+    }
+
+    50% {
+        transform: translate(10%, 35%) scale(0.95);
+    }
+
+    75% {
+        transform: translate(-20%, 20%) scale(1.05);
+    }
+
+    100% {
+        transform: translate(0%, 0%) scale(1);
+    }
+}
+
 @media (max-width: 768px) {
     .hero {
         padding: 7rem 0 4rem;
@@ -56,5 +96,11 @@
 
     .hero-subtitle {
         font-size: 1.1rem;
+    }
+
+    /* Reduce light animation intensity on mobile */
+    .hero::after {
+        opacity: 0.4;
+        animation-duration: 25s;
     }
 }
