@@ -114,7 +114,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                         finalOpacity *= (1 - fadeProgress);
                     }
 
-                    ctx.strokeStyle = `rgba(30, 58, 138, ${finalOpacity})`;
+                    ctx.strokeStyle = `rgba(6, 182, 212, ${finalOpacity * 1.5})`;
                     ctx.lineWidth = 1;
 
                     // Vertical line

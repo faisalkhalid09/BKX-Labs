@@ -75,12 +75,28 @@ h6 {
 
 h1 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 800;
-  background: var(--primary-gradient);
+  font-weight: 900;
+  background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 25%, #a78bfa 50%, #c084fc 75%, #e879f9 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.5)) drop-shadow(0 4px 20px rgba(168, 85, 247, 0.4));
+  animation: shimmer 8s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
 }
 
 h2 {
