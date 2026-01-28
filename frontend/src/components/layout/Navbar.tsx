@@ -13,10 +13,17 @@ const Navbar = () => {
         setIsOpen(false);
     }, [location]);
 
-    // Handle scroll for glass effect
+    // Handle scroll for glass effect with hysteresis to prevent shaking
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            const scrollY = window.scrollY;
+            // Use hysteresis: different thresholds for scrolling down vs up
+            if (scrollY > 50) {
+                setIsScrolled(true);
+            } else if (scrollY < 30) {
+                setIsScrolled(false);
+            }
+            // Between 30-50px, maintain current state to prevent shaking
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
