@@ -17,13 +17,13 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
-            // Use hysteresis: different thresholds for scrolling down vs up
-            if (scrollY > 50) {
+            // Use wide hysteresis gap to prevent any shaking
+            if (scrollY > 80) {
                 setIsScrolled(true);
-            } else if (scrollY < 30) {
+            } else if (scrollY < 40) {
                 setIsScrolled(false);
             }
-            // Between 30-50px, maintain current state to prevent shaking
+            // Between 40-80px, maintain current state to prevent shaking
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
