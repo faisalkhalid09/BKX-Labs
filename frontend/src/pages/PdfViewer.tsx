@@ -1,12 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const PdfViewer = () => {
-    const { type } = useParams();
+    const location = useLocation();
 
-    // Map URL param to file name
+    // Map URL path to file name
     const getFile = () => {
-        if (type === 'privacy-policy') return '/BKX-Labs-Privacy-Policy.pdf';
-        if (type === 'TOS') return '/BKX-Labs-Term-Of-Service.pdf';
+        if (location.pathname === '/privacy-policy') return '/BKX-Labs-Privacy-Policy.pdf';
+        if (location.pathname === '/TOS') return '/BKX-Labs-Term-Of-Service.pdf';
         return '';
     };
 

@@ -31,7 +31,8 @@ function App() {
           <Route path="/restricted-portal" element={<RestrictedLogin />} />
           <Route path="/restricted-portal/dashboard" element={<RestrictedDashboard />} />
           <Route path="/restricted-portal/contacts" element={<RestrictedContacts />} />
-          <Route path="/:type" element={<PdfViewer />} />
+          <Route path="/privacy-policy" element={<PdfViewer />} />
+          <Route path="/TOS" element={<PdfViewer />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
