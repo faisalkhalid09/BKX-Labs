@@ -79,9 +79,9 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
 
         // Grid settings
         const gridSize = 50;
-        const interactionRadius = 120;
-        const maxDisplacement = 25;
-        const trailDuration = 1200; // Trail lasts 1.2 seconds
+        const interactionRadius = 150;
+        const maxDisplacement = 30;
+        const trailDuration = 1200;
 
         // Store grid points with their state
         const gridPoints: Map<string, GridPoint> = new Map();
@@ -91,7 +91,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const currentTime = Date.now();
 
-            // Draw grid with mouse interaction and trailing effect
+            // Draw grid with smooth ripple/wave effect
             for (let x = 0; x < canvas.width; x += gridSize) {
                 for (let y = 0; y < canvas.height; y += gridSize) {
                     const key = `${x},${y}`;
@@ -105,23 +105,34 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                         gridPoints.set(key, point);
                     }
 
-                    // Calculate new displacement if mouse is nearby - using grid-aligned displacement
+                    // Create smooth wave/ripple effect
                     if (distance < interactionRadius) {
-                        const force = (interactionRadius - distance) / interactionRadius;
-                        // Grid-aligned displacement: offset entire boxes instead of circular distortion
-                        const gridInfluence = force * force; // Quadratic falloff for smoother grid effect
-                        point.offsetX = dx > 0 ? gridInfluence * maxDisplacement : -gridInfluence * maxDisplacement;
-                        point.offsetY = dy > 0 ? gridInfluence * maxDisplacement : -gridInfluence * maxDisplacement;
-                        point.opacity = 0.12 + force * 0.3;
+                        const normalizedDistance = distance / interactionRadius;
+
+                        // Create ripple waves using sine function
+                        const waveFrequency = 3;
+                        const wave = Math.sin(normalizedDistance * Math.PI * waveFrequency);
+
+                        // Smooth falloff from center
+                        const falloff = Math.pow(1 - normalizedDistance, 2);
+                        const strength = wave * falloff;
+
+                        // Calculate perpendicular displacement for flowing effect
+                        const angle = Math.atan2(dy, dx);
+                        point.offsetX = Math.cos(angle) * strength * maxDisplacement;
+                        point.offsetY = Math.sin(angle) * strength * maxDisplacement;
+
+                        point.opacity = 0.12 + Math.abs(strength) * 0.25;
                         point.lastInteraction = currentTime;
                     } else {
                         // Apply trailing effect - fade back to original position
                         const timeSinceInteraction = currentTime - point.lastInteraction;
                         if (timeSinceInteraction < trailDuration) {
                             const fadeProgress = timeSinceInteraction / trailDuration;
-                            point.offsetX *= (1 - fadeProgress);
-                            point.offsetY *= (1 - fadeProgress);
-                            point.opacity = 0.12 + (point.opacity - 0.12) * (1 - fadeProgress);
+                            const easeOut = 1 - Math.pow(1 - fadeProgress, 3);
+                            point.offsetX *= (1 - easeOut);
+                            point.offsetY *= (1 - easeOut);
+                            point.opacity = 0.12 + (point.opacity - 0.12) * (1 - easeOut);
                         } else {
                             point.offsetX = 0;
                             point.offsetY = 0;
