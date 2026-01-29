@@ -41,20 +41,41 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Mouse tracking on hero div instead of canvas
+        // Mouse tracking - store both client and canvas-relative positions
         let mouseX = -1000;
         let mouseY = -1000;
-        const handleMouseMove = (e: MouseEvent) => {
+        let lastClientX = -1000;
+        let lastClientY = -1000;
+
+        const updateMousePosition = () => {
             const rect = canvas.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
+            mouseX = lastClientX - rect.left;
+            mouseY = lastClientY - rect.top;
         };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            lastClientX = e.clientX;
+            lastClientY = e.clientY;
+            updateMousePosition();
+        };
+
         const handleMouseLeave = () => {
             mouseX = -1000;
             mouseY = -1000;
+            lastClientX = -1000;
+            lastClientY = -1000;
         };
+
+        // Update mouse position on scroll
+        const handleScroll = () => {
+            if (lastClientX !== -1000 && lastClientY !== -1000) {
+                updateMousePosition();
+            }
+        };
+
         heroDiv.addEventListener('mousemove', handleMouseMove);
         heroDiv.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('scroll', handleScroll);
 
         // Grid settings
         const gridSize = 50;
@@ -84,11 +105,13 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                         gridPoints.set(key, point);
                     }
 
-                    // Calculate new displacement if mouse is nearby
+                    // Calculate new displacement if mouse is nearby - using grid-aligned displacement
                     if (distance < interactionRadius) {
                         const force = (interactionRadius - distance) / interactionRadius;
-                        point.offsetX = (dx / distance) * force * maxDisplacement;
-                        point.offsetY = (dy / distance) * force * maxDisplacement;
+                        // Grid-aligned displacement: offset entire boxes instead of circular distortion
+                        const gridInfluence = force * force; // Quadratic falloff for smoother grid effect
+                        point.offsetX = dx > 0 ? gridInfluence * maxDisplacement : -gridInfluence * maxDisplacement;
+                        point.offsetY = dy > 0 ? gridInfluence * maxDisplacement : -gridInfluence * maxDisplacement;
                         point.opacity = 0.12 + force * 0.3;
                         point.lastInteraction = currentTime;
                     } else {
@@ -140,6 +163,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             window.removeEventListener('resize', resizeCanvas);
             heroDiv.removeEventListener('mousemove', handleMouseMove);
             heroDiv.removeEventListener('mouseleave', handleMouseLeave);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
