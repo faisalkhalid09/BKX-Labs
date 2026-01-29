@@ -81,7 +81,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         const gridSize = 50;
         const interactionRadius = 150;
         const maxDisplacement = 30;
-        const trailDuration = 1200;
+        const trailDuration = 1000; // Effect lasts exactly 1 second
 
         // Store grid points with their state
         const gridPoints: Map<string, GridPoint> = new Map();
