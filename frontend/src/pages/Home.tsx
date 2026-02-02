@@ -4,6 +4,7 @@ import Section from '../components/layout/Section';
 import Card from '../components/ui/Card';
 import ServiceCard from '../components/ui/ServiceCard';
 import Button from '../components/ui/Button';
+import SEO from '../components/ui/SEO';
 import {
     Server,
     Hammer,
@@ -21,8 +22,26 @@ import {
 import './Home.css';
 
 const Home = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Home - BKX Labs",
+        "description": "Enterprise-grade software development specializing in rescuing stalled projects and delivering production-ready solutions.",
+        "url": "https://bkxlabs.com/",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "BKX Labs"
+        }
+    };
+
     return (
         <div>
+            <SEO
+                title="Enterprise Software Development | Rescue Stalled Projects"
+                description="BKX Labs specializes in enterprise-grade software development and rescuing stalled projects. Expert web, mobile, MVP development with transparent phase-wise delivery. Transform failed projects into production-ready solutions."
+                keywords="software development, enterprise software, stalled project rescue, web applications, mobile apps, MVP development, custom software development, Laravel, React, Node.js, AWS"
+                structuredData={structuredData}
+            />
             {/* Hero Section */}
             <Hero
                 title="Engineering Enterprise-Grade Software. Recovering Stalled Projects."

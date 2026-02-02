@@ -15,7 +15,11 @@ const Footer = () => {
                             display: 'inline-block',
                             marginBottom: '1rem'
                         }}>
-                            <img src="/brand-logo.png" alt="BKX Labs" style={{ height: '45px', display: 'block' }} />
+                            <img
+                                src="/brand-logo.png"
+                                alt="BKX Labs Logo - Reliable Software Development Phase by Phase"
+                                style={{ height: '45px', display: 'block' }}
+                            />
                         </div>
                         <p className="footer-tagline">
                             Reliable software products, delivered phase by phase

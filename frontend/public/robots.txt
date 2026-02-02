@@ -1,0 +1,10 @@
+# BKX Labs - Robots.txt
+User-agent: *
+Allow: /
+
+# Disallow restricted portal and admin areas
+Disallow: /restricted-portal/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://bkxlabs.com/sitemap.xml

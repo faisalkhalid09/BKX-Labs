@@ -2,11 +2,52 @@ import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Search, Settings, Code, MessageSquare, Rocket, Shield, CreditCard, UserCheck } from 'lucide-react';
+import SEO from '../components/ui/SEO';
 import './Process.css';
 
 const Process = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "BKX Labs Software Development Process",
+        "description": "Our transparent 5-step development workflow with milestone-based payments",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Discovery & Scope",
+                "text": "In-depth requirements discussion and project planning"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Project Setup",
+                "text": "Team assembly and infrastructure setup"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Phase-wise Execution",
+                "text": "Development in 2-4 week sprints with regular demos"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Weekly Updates",
+                "text": "Structured weekly communication and progress reports"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Delivery & Review",
+                "text": "Final QA, deployment, and 30-day post-launch support"
+            }
+        ]
+    };
+
     return (
         <div>
+            <SEO
+                title="Our Development Process - Transparent Phase-Wise Delivery"
+                description="Discover BKX Labs transparent 5-step development workflow: Discovery, Setup, Execution, Updates, and Delivery. Milestone-based payments, weekly demos, and dedicated project managers ensure complete visibility."
+                keywords="software development process, agile development, project management, milestone payments, transparent workflow, dedicated project manager"
+                structuredData={structuredData}
+            />
             <Hero
                 title="Our Workflow"
                 subtitle="A transparent, roadmap-driven development process designed for international clients who demand visibility and reliability"

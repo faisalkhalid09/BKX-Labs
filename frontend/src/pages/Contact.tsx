@@ -5,6 +5,7 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import Button from '../components/ui/Button';
 import { Mail } from 'lucide-react';
+import SEO from '../components/ui/SEO';
 import './Contact.css';
 import apiService from '../api/apiService';
 
@@ -36,8 +37,26 @@ const Contact = () => {
         }
     };
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contact BKX Labs",
+        "description": "Get in touch with BKX Labs for your software development project. We respond within 24 hours.",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "BKX Labs",
+            "email": "contact@bkxlabs.com"
+        }
+    };
+
     return (
         <div>
+            <SEO
+                title="Contact Us - Get Your Free Project Consultation"
+                description="Contact BKX Labs for expert software development services. Book a free technical consultation. We respond within 24 hours. Email: contact@bkxlabs.com"
+                keywords="contact software developer, software development consultation, project quote, BKX Labs contact"
+                structuredData={structuredData}
+            />
             <Hero
                 title="Contact Us"
                 subtitle="Let's discuss your project and define a clear roadmap"

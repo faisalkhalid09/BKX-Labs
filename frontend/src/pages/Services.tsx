@@ -3,11 +3,50 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Link } from 'react-router-dom';
 import { Monitor, Smartphone, Zap, Palette, Headphones, ArrowRight } from 'lucide-react';
+import SEO from '../components/ui/SEO';
 import './Services.css';
 
 const Services = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "Service",
+                "name": "Web Application Development",
+                "description": "Custom web applications that automate workflows and scale with your business"
+            },
+            {
+                "@type": "Service",
+                "name": "Mobile Development",
+                "description": "Native-quality mobile applications for iOS and Android"
+            },
+            {
+                "@type": "Service",
+                "name": "MVP Development",
+                "description": "Rapid product validation for investors and market testing"
+            },
+            {
+                "@type": "Service",
+                "name": "UI/UX Design",
+                "description": "User-centered design that converts visitors into customers"
+            },
+            {
+                "@type": "Service",
+                "name": "Ongoing Support & Maintenance",
+                "description": "Comprehensive maintenance packages for production applications"
+            }
+        ]
+    };
+
     return (
         <div>
+            <SEO
+                title="Software Development Services - Web, Mobile, MVP & UI/UX"
+                description="Comprehensive software development services: Web applications, mobile apps, MVP development, UI/UX design, and ongoing support. Expert Laravel, React, Node.js, and Flutter development with transparent delivery."
+                keywords="web development services, mobile app development, MVP development, UI/UX design, Laravel development, React development, Flutter, software consulting, custom software"
+                structuredData={structuredData}
+            />
             <Hero
                 title="Our Services"
                 subtitle="Enterprise-grade software solutions delivered through a transparent, phase-wise process with documented milestones"

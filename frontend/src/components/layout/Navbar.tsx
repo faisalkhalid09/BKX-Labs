@@ -34,7 +34,11 @@ const Navbar = () => {
             <div className="container">
                 <div className="navbar-content">
                     <Link to="/" className="logo">
-                        <img src="/brand-logo.png" alt="BKX Labs" className="logo-img" />
+                        <img
+                            src="/brand-logo.png"
+                            alt="BKX Labs - Enterprise Software Development Company"
+                            className="logo-img"
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

@@ -2,11 +2,35 @@ import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Target, Users, Eye, Linkedin } from 'lucide-react';
+import SEO from '../components/ui/SEO';
 import './About.css';
 
 const About = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About BKX Labs",
+        "description": "Learn about BKX Labs mission, leadership, and transparent approach to enterprise software development.",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "Faisal Khalid",
+            "jobTitle": "Founder & Lead Architect",
+            "url": "https://www.linkedin.com/in/faisal-khalid1622/",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "BKX Labs"
+            }
+        }
+    };
+
     return (
         <div>
+            <SEO
+                title="About Us - BKX Labs Leadership & Mission"
+                description="Meet the team behind BKX Labs. Founded by Faisal Khalid, we eliminate the 'black box' of software development through transparency, enterprise-grade engineering, and proven project rescue expertise."
+                keywords="BKX Labs, Faisal Khalid, software development company, transparent development, project management, enterprise software team"
+                structuredData={structuredData}
+            />
             <Hero
                 title="About Us"
                 subtitle="Building enterprise-grade software through transparency and trust"
@@ -40,7 +64,10 @@ const About = () => {
                     <h2 className="section-title">Leadership</h2>
                     <div className="founder-container">
                         <div className="founder-image">
-                            <img src="/me.jpeg" alt="Faisal Khalid - Founder & Lead Architect" />
+                            <img
+                                src="/me.jpeg"
+                                alt="Faisal Khalid - Founder and Lead Architect at BKX Labs, enterprise software development expert specializing in project rescue and scalable systems"
+                            />
                         </div>
                         <div className="founder-bio">
                             <h3>Faisal Khalid</h3>

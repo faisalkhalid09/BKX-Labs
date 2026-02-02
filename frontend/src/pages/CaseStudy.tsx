@@ -3,11 +3,46 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Globe, FileText, CheckCircle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/ui/SEO';
 import './CaseStudy.css';
 
 const CaseStudy = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Case Studies - BKX Labs Success Stories",
+        "description": "Real projects showing how BKX Labs rescues stalled software projects and delivers enterprise-grade solutions.",
+        "hasPart": [
+            {
+                "@type": "Article",
+                "headline": "Class Moalimy - EdTech Platform Rescue",
+                "description": "Inherited 20% complete codebase and delivered full-scale production system with 40% AWS cost reduction",
+                "author": {
+                    "@type": "Organization",
+                    "name": "BKX Labs"
+                }
+            },
+            {
+                "@type": "Article",
+                "headline": "LocaGed - Enterprise Document Management System",
+                "description": "Transformed stalled DMS project achieving 100x faster search and 94% OCR accuracy",
+                "author": {
+                    "@type": "Organization",
+                    "name": "BKX Labs"
+                }
+            }
+        ]
+    };
+
     return (
         <div>
+            <SEO
+                title="Case Studies - Real Project Success Stories"
+                description="Explore BKX Labs proven track record: Class Moalimy (EdTech rescue, 40% cost reduction), LocaGed (100x faster search, 94% OCR accuracy). Real metrics from real projects."
+                keywords="software project rescue, case studies, EdTech development, document management system, Laravel projects, enterprise software examples"
+                ogType="article"
+                structuredData={structuredData}
+            />
             <Hero
                 title="Success Stories"
                 subtitle="Real projects. Complex challenges. Proven results."
