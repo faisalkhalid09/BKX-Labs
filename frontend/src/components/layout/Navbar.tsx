@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-const STORE_URL = import.meta.env.VITE_STORE_URL || API_BASE.replace('/api', '/store');
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -53,14 +51,12 @@ const Navbar = () => {
                             <li><Link to="/case-study">Case Study</Link></li>
                             <li><Link to="/about">About</Link></li>
                             <li>
-                                <a
-                                    href={STORE_URL}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <Link
+                                    to="/store"
                                     className="nav-store-badge"
                                 >
-                                    Store <span className="nav-store-arrow">&#8599;</span>
-                                </a>
+                                    Store
+                                </Link>
                             </li>
                             <li><Link to="/contact" className="nav-cta">Contact</Link></li>
                         </ul>
@@ -89,14 +85,12 @@ const Navbar = () => {
                                 <li><Link to="/case-study">Case Study</Link></li>
                                 <li><Link to="/about">About</Link></li>
                                 <li>
-                                    <a
-                                        href={STORE_URL}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <Link
+                                        to="/store"
                                         className="nav-store-badge mobile"
                                     >
-                                        Store &#8599;
-                                    </a>
+                                        Store
+                                    </Link>
                                 </li>
                                 <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
                             </>
