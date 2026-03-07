@@ -4,20 +4,34 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use PDO;
+use PDOException;
 
 class RezgoDemoController extends Controller
 {
     /**
      * Fetch all ticket prices joined with their types from the devrezgo database.
-     * This uses the default connection but explicitly queries the external database
-     * to keep the integration cleanly separated from the main Laravel app migrations.
+     * Uses an isolated PDO connection to guarantee access regardless of Laravel's main db config.
      */
     public function getPrices(Request $request)
     {
         try {
-            // Ensure the root user can access the manual db
-            $results = DB::select("
+            $host = '127.0.0.1';
+            $db   = 'devrezgo';
+            $user = 'devrezgo_user';
+            $pass = 'Faisalkhalid1#'; 
+            $charset = 'utf8mb4';
+
+            $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+            $options = [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES   => false,
+            ];
+
+            $pdo = new PDO($dsn, $user, $pass, $options);
+
+            $stmt = $pdo->query("
                 SELECT 
                     tp.id,
                     tp.date,
@@ -28,16 +42,18 @@ class RezgoDemoController extends Controller
                     tp.KGS_Adult,
                     tp.KGS_Child,
                     tt.ticket_name
-                FROM devrezgo.ticket_prices tp
-                JOIN devrezgo.tickettypes tt ON tp.ticket_id = tt.id
+                FROM ticket_prices tp
+                JOIN tickettypes tt ON tp.ticket_id = tt.id
                 ORDER BY tp.date ASC
             ");
+
+            $results = $stmt->fetchAll();
 
             return response()->json([
                 'status' => 'success',
                 'data' => $results
             ]);
-        } catch (\Exception $e) {
+        } catch (PDOException $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Could not connect to the Rezgo database. Ensure it is initialized.',
