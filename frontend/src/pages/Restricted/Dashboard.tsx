@@ -89,12 +89,23 @@ const RestrictedDashboard = () => {
                 <div className="dashboard-header">
                     <div>
                         <h1 className="dashboard-title">Client Receipt & Update Portal</h1>
-                        <button
-                            onClick={() => navigate('/restricted-portal/contacts')}
-                            className="contacts-link"
-                        >
-                            📧 View Contact Messages
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                            <button
+                                onClick={() => navigate('/restricted-portal/contacts')}
+                                className="contacts-link"
+                            >
+                                View Contact Messages
+                            </button>
+                            <a
+                                href={`${import.meta.env.VITE_API_URL?.replace('/api', '')}/admin`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="contacts-link"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                Store Admin Panel
+                            </a>
+                        </div>
                     </div>
                     <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>

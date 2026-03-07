@@ -1,143 +1,183 @@
+/* ─── Layout ─── */
 .dashboard-container {
     min-height: 100vh;
-    background-color: #f9fafb;
-    padding: 2rem;
+    background: #f8fafc;
+    padding: 2rem 1rem;
+    font-family: 'Inter', sans-serif;
 }
 
 .dashboard-card {
     max-width: 56rem;
-    /* 4xl */
     margin: 0 auto;
-    background: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
     overflow: hidden;
 }
 
+/* ─── Header ─── */
 .dashboard-header {
-    background-color: #2563eb;
-    padding: 1rem 1.5rem;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1.25rem 1.75rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .dashboard-title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 700;
-    color: white;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
 }
 
-.logout-btn {
-    color: white;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.logout-btn:hover {
-    color: #bfdbfe;
-}
-
+/* ─── Nav buttons ─── */
 .contacts-link {
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
+    background: #fff;
+    color: #374151;
+    border: 1.5px solid #e2e8f0;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    margin-top: 0.5rem;
-    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.18s, color 0.18s;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .contacts-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: white;
+    border-color: #94a3b8;
+    color: #0f172a;
 }
 
+.logout-btn {
+    background: transparent;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.18s, color 0.18s;
+}
+
+.logout-btn:hover {
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+/* ─── Content ─── */
 .dashboard-content {
-    padding: 1.5rem;
+    padding: 1.75rem;
 }
 
+/* ─── Alerts ─── */
 .alert-message {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
-    border-radius: 0.25rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
 .alert-success {
-    background-color: #d1fae5;
-    color: #047857;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
 }
 
 .alert-info {
-    background-color: #dbeafe;
-    color: #1e40af;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
 }
 
+/* ─── Form ─── */
 .form-row {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
     .form-row {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 .form-group-dash {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .form-group-dash label {
     display: block;
     color: #374151;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    font-size: 0.875rem;
+}
+
+.block.text-gray-700.font-bold.mb-2 {
+    display: block;
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    font-size: 0.875rem;
 }
 
 .dash-select,
 .dash-input,
 .dash-textarea {
     width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
+    padding: 0.6rem 0.875rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
     outline: none;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: #0f172a;
+    background: #fff;
+    transition: border-color 0.18s;
+    box-sizing: border-box;
 }
 
 .dash-select:focus,
 .dash-input:focus,
 .dash-textarea:focus {
-    border-color: #3b82f6;
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.08);
 }
 
 .dash-textarea {
-    height: 16rem;
+    height: 14rem;
+    resize: vertical;
 }
 
+/* ─── Actions ─── */
 .form-actions {
     display: flex;
     justify-content: flex-end;
 }
 
 .send-btn {
-    background-color: #16a34a;
-    color: white;
-    font-weight: 700;
-    padding: 0.75rem 2rem;
-    border-radius: 0.375rem;
+    background: #0f172a;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.65rem 1.75rem;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.18s;
 }
 
 .send-btn:hover {
-    background-color: #15803d;
+    background: #1e293b;
 }

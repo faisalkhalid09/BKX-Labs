@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 
+const STORE_URL = import.meta.env.VITE_STORE_URL || '/store';
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -49,6 +51,16 @@ const Navbar = () => {
                             <li><Link to="/process">Process</Link></li>
                             <li><Link to="/case-study">Case Study</Link></li>
                             <li><Link to="/about">About</Link></li>
+                            <li>
+                                <a
+                                    href={STORE_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="nav-store-badge"
+                                >
+                                    Store <span className="nav-store-arrow">&#8599;</span>
+                                </a>
+                            </li>
                             <li><Link to="/contact" className="nav-cta">Contact</Link></li>
                         </ul>
                     )}
@@ -75,6 +87,16 @@ const Navbar = () => {
                                 <li><Link to="/process">Process</Link></li>
                                 <li><Link to="/case-study">Case Study</Link></li>
                                 <li><Link to="/about">About</Link></li>
+                                <li>
+                                    <a
+                                        href={STORE_URL}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="nav-store-badge mobile"
+                                    >
+                                        Store &#8599;
+                                    </a>
+                                </li>
                                 <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
                             </>
                         )}
