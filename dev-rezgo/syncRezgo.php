@@ -155,17 +155,16 @@ $syncDate = date('Y-m-d'); // Update prices for today or the relevant validity d
 foreach ($items as $item) {
     // Try to extract name, prices from API response
     // Replace these keys with actual Rezgo API keys if they differ
-    $itemName = isset($item['name']) ? $item['name'] : (isset($item['item_name']) ? $item['item_name'] : 'Unknown');
+    // Rezgo API keys: 'item' for name, 'starting' for price
+    $itemName = isset($item['item']) ? $item['item'] : (isset($item['name']) ? $item['name'] : (isset($item['item_name']) ? $item['item_name'] : 'Unknown'));
     
-    // Debug: Log first item structure if sync failing
-    if ($successCount == 0 && $skipCount == 0) {
-        logMessage("DEBUG: First item structure: " . json_encode($item));
-    }
+    // Log all items to help with mapping
+    logMessage("API ITEM FOUND: '$itemName'");
 
-    // Sometimes Rezgo returns prices in different nodes, adapt as necessary.
-    // In search API, it's often inside 'rate' or 'base_price'
-    $apiAdultPrice = isset($item['adult_price']) ? (float)$item['adult_price'] : 
-                    (isset($item['rate']) ? (float)$item['rate'] : 0.00);
+    // In search API, the price is often in 'starting' or 'rate'
+    $apiAdultPrice = isset($item['starting']) ? (float)$item['starting'] : 
+                    (isset($item['adult_price']) ? (float)$item['adult_price'] : 
+                    (isset($item['rate']) ? (float)$item['rate'] : 0.00));
     $apiChildPrice = isset($item['child_price']) ? (float)$item['child_price'] : 0.00;
     
     $itemKey = strtolower(trim($itemName));
@@ -183,7 +182,7 @@ foreach ($items as $item) {
         $price_adult = $KGS_Adult + $dbData['adult_markup'];
         $price_child = $KGS_Child + $dbData['child_markup'];
         
-        // The default "price" column could point to price_adult
+        // The default "price" column points to price_adult
         $price = $price_adult; 
 
         $stmt->bind_param("isddddd", $ticketId, $syncDate, $KGS_Adult, $KGS_Child, $price_adult, $price_child, $price);
