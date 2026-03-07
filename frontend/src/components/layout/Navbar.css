@@ -206,6 +206,14 @@
     width: 100%;
 }
 
+.mobile-nav-links .btn-primary {
+    color: white !important;
+}
+
+.mobile-nav-links .nav-store-badge {
+    color: var(--text-dark) !important;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 768px) {
     .desktop-only {
