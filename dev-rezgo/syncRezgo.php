@@ -122,6 +122,7 @@ if ($result) {
             'child_markup' => (float)$row['child_markup']
         ];
     }
+    logMessage("DB TICKET NAMES LOADED: " . implode(", ", array_keys($ticketTypes)));
 } else {
     logMessage("ERROR fetching tickettypes: " . mysqli_error($db));
     exit(1);
@@ -154,10 +155,17 @@ $syncDate = date('Y-m-d'); // Update prices for today or the relevant validity d
 foreach ($items as $item) {
     // Try to extract name, prices from API response
     // Replace these keys with actual Rezgo API keys if they differ
-    $itemName = isset($item['name']) ? $item['name'] : '';
+    $itemName = isset($item['name']) ? $item['name'] : (isset($item['item_name']) ? $item['item_name'] : 'Unknown');
     
+    // Debug: Log first item structure if sync failing
+    if ($successCount == 0 && $skipCount == 0) {
+        logMessage("DEBUG: First item structure: " . json_encode($item));
+    }
+
     // Sometimes Rezgo returns prices in different nodes, adapt as necessary.
-    $apiAdultPrice = isset($item['adult_price']) ? (float)$item['adult_price'] : 0.00;
+    // In search API, it's often inside 'rate' or 'base_price'
+    $apiAdultPrice = isset($item['adult_price']) ? (float)$item['adult_price'] : 
+                    (isset($item['rate']) ? (float)$item['rate'] : 0.00);
     $apiChildPrice = isset($item['child_price']) ? (float)$item['child_price'] : 0.00;
     
     $itemKey = strtolower(trim($itemName));
@@ -166,6 +174,7 @@ foreach ($items as $item) {
     if (isset($ticketTypes[$itemKey])) {
         $dbData = $ticketTypes[$itemKey];
         $ticketId = $dbData['id'];
+        logMessage("MATCH FOUND: '$itemName' matches ID $ticketId");
         
         $KGS_Adult = $apiAdultPrice;
         $KGS_Child = $apiChildPrice;
