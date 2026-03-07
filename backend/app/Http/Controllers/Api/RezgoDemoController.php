@@ -41,10 +41,10 @@ class RezgoDemoController extends Controller
                     tp.price_child,
                     tp.KGS_Adult,
                     tp.KGS_Child,
-                    tt.ticket_name
+                    COALESCE(tt.ticket_name, CONCAT('Ticket ID: ', tp.ticket_id)) as ticket_name
                 FROM ticket_prices tp
-                JOIN tickettypes tt ON tp.ticket_id = tt.id
-                ORDER BY tp.date ASC
+                LEFT JOIN tickettypes tt ON tp.ticket_id = tt.id
+                ORDER BY tp.date ASC, tt.ticket_name ASC
             ");
 
             $results = $stmt->fetchAll();
