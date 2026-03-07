@@ -78,6 +78,7 @@ curl_close($ch);
 $apiData = json_decode($response, true);
 if (json_last_error() !== JSON_ERROR_NONE) {
     logMessage("JSON Decode Error: " . json_last_error_msg());
+    logMessage("RAW API RESPONSE: \n" . substr($response, 0, 1000));
     exit(1);
 }
 
