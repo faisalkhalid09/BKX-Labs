@@ -57,6 +57,8 @@ if (empty($rezgoApiUrl)) {
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $rezgoApiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 // If keys are needed in headers
 // Legacy XML endpoint usually takes keys in the URL, headers might cause 403.
