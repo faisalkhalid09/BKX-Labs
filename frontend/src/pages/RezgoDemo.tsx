@@ -17,8 +17,6 @@ interface TicketPrice {
 
 const RezgoDemo: React.FC = () => {
     const [prices, setPrices] = useState<TicketPrice[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
 
     // Note for User: Ensure this URL matches your active Laravel Backend API URL
     const API_URL = import.meta.env.VITE_API_URL || 'https://bkxlabs.com/api';
@@ -30,14 +28,9 @@ const RezgoDemo: React.FC = () => {
                 const response = await axios.get(`${API_URL}/rezgo-demo/prices`);
                 if (response.data && response.data.status === 'success') {
                     setPrices(response.data.data);
-                } else {
-                    setError('Failed to load pricing data. Ensure database is populated.');
                 }
             } catch (err: any) {
                 console.error('Error fetching prices:', err);
-                setError('Could not connect to the API. Please ensure the backend server is running and the route is accessible.');
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -112,7 +105,7 @@ const RezgoDemo: React.FC = () => {
                                             </td>
                                         </tr>
                                     ) : (
-                                        prices.map((price, idx) => (
+                                        prices.map((price) => (
                                             <tr key={price.id} style={{ transition: 'all 0.2s ease', cursor: 'default' }}>
                                                 <td style={{ padding: '1.25rem 1rem', borderBottom: '1px solid #f1f5f9', maxWidth: '300px' }}>
                                                     <div style={{ fontWeight: '600', color: '#0f172a', lineHeight: '1.4' }}>{price.ticket_name}</div>
