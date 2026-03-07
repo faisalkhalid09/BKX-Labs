@@ -59,12 +59,10 @@ curl_setopt($ch, CURLOPT_URL, $rezgoApiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 // If keys are needed in headers
-if (!empty($rezgoApiKey)) {
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $rezgoApiKey",
-        "Content-Type: application/json"
-    ]);
-}
+// Legacy XML endpoint usually takes keys in the URL, headers might cause 403.
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Content-Type: application/json"
+]);
 
 $response = curl_exec($ch);
 if(curl_errno($ch)){
@@ -75,10 +73,17 @@ if(curl_errno($ch)){
 }
 curl_close($ch);
 
+if (empty($response)) {
+    logMessage("ERROR: Rezgo API returned an empty response. Check if your URL and API Key are valid.");
+    exit(1);
+}
+
+$response = trim($response);
 $apiData = json_decode($response, true);
+
 if (json_last_error() !== JSON_ERROR_NONE) {
     logMessage("JSON Decode Error: " . json_last_error_msg());
-    logMessage("RAW API RESPONSE: \n" . substr($response, 0, 1000));
+    logMessage("RAW API RESPONSE (First 500 chars): \n" . substr($response, 0, 500));
     exit(1);
 }
 
