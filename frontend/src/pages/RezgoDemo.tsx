@@ -21,13 +21,13 @@ const RezgoDemo: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     // Note for User: Ensure this URL matches your active Laravel Backend API URL
-    const API_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.bkxlabs.com';
+    const API_URL = import.meta.env.VITE_API_URL || 'https://bkxlabs.com/api';
 
     useEffect(() => {
         const fetchPrices = async () => {
             try {
                 // Fetch the live sandbox data directly from the isolated devrezgo database via the Laravel API
-                const response = await axios.get(`${API_URL}/api/rezgo-demo/prices`);
+                const response = await axios.get(`${API_URL}/rezgo-demo/prices`);
                 if (response.data && response.data.status === 'success') {
                     setPrices(response.data.data);
                 } else {
