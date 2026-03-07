@@ -11,7 +11,7 @@ class StoreController extends Controller
 {
     public function index()
     {
-        StorePageView::track('store');
+        try { StorePageView::track('store'); } catch (\Throwable) {}
         return view('store.index');
     }
 
@@ -21,8 +21,10 @@ class StoreController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        StorePageView::track('product');
-        ProductView::track($product->id);
+        try {
+            StorePageView::track('product');
+            ProductView::track($product->id);
+        } catch (\Throwable) {}
 
         return view('store.show', compact('product'));
     }
