@@ -110,19 +110,20 @@ logMessage("Successfully fetched data from Rezgo API. Items count: " . count($it
 
 // Fetch all ticket types from the DB to map markups
 $ticketTypes = [];
-$query = "SELECT id, ticket_name, adult_markup, child_markup FROM tickettypes";
+$query = "SELECT id, product_id, adult_markup, child_markup FROM tickettypes";
 $result = mysqli_query($db, $query);
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        // We trim and lowercase the name for more robust matching
-        $key = strtolower(trim($row['ticket_name']));
-        $ticketTypes[$key] = [
-            'id' => $row['id'],
-            'adult_markup' => (float)$row['adult_markup'],
-            'child_markup' => (float)$row['child_markup']
-        ];
+        $key = $row['product_id'];
+        if ($key) {
+            $ticketTypes[$key] = [
+                'id' => $row['id'],
+                'adult_markup' => (float)$row['adult_markup'],
+                'child_markup' => (float)$row['child_markup']
+            ];
+        }
     }
-    logMessage("DB TICKET NAMES LOADED: " . implode(", ", array_keys($ticketTypes)));
+    logMessage("DB TICKET UIDs LOADED: " . implode(", ", array_keys($ticketTypes)));
 } else {
     logMessage("ERROR fetching tickettypes: " . mysqli_error($db));
     exit(1);
@@ -155,11 +156,13 @@ $syncDate = date('Y-m-d'); // Update prices for today or the relevant validity d
 foreach ($items as $item) {
     // Try to extract name, prices from API response
     // Replace these keys with actual Rezgo API keys if they differ
-    // Rezgo API keys: 'item' for name, 'starting' for price
+    // Rezgo API keys: 'item' for name, 'starting' for price, 'uid' for unique ID
     $itemName = isset($item['item']) ? $item['item'] : (isset($item['name']) ? $item['name'] : (isset($item['item_name']) ? $item['item_name'] : 'Unknown'));
+    $optionName = isset($item['option']) ? $item['option'] : '';
+    $productUid = isset($item['uid']) ? $item['uid'] : null;
     
     // Log all items to help with mapping
-    logMessage("API ITEM FOUND: '$itemName'");
+    logMessage("API ITEM FOUND: '$itemName' | Option: '$optionName' | UID: '$productUid'");
 
     // In search API, the price is often in 'starting' or 'rate'
     $apiAdultPrice = isset($item['starting']) ? (float)$item['starting'] : 
@@ -167,13 +170,11 @@ foreach ($items as $item) {
                     (isset($item['rate']) ? (float)$item['rate'] : 0.00));
     $apiChildPrice = isset($item['child_price']) ? (float)$item['child_price'] : 0.00;
     
-    $itemKey = strtolower(trim($itemName));
-    
-    // Check if we have this ticket type in our DB
-    if (isset($ticketTypes[$itemKey])) {
-        $dbData = $ticketTypes[$itemKey];
+    // Check if we have this product UID in our DB
+    if ($productUid && isset($ticketTypes[$productUid])) {
+        $dbData = $ticketTypes[$productUid];
         $ticketId = $dbData['id'];
-        logMessage("MATCH FOUND: '$itemName' matches ID $ticketId");
+        logMessage("MATCH FOUND: UID '$productUid' matches ID $ticketId");
         
         $KGS_Adult = $apiAdultPrice;
         $KGS_Child = $apiChildPrice;
