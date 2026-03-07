@@ -17,6 +17,7 @@ interface TicketPrice {
 
 const RezgoDemo: React.FC = () => {
     const [prices, setPrices] = useState<TicketPrice[]>([]);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     // Note for User: Ensure this URL matches your active Laravel Backend API URL
     const API_URL = import.meta.env.VITE_API_URL || 'https://bkxlabs.com/api';
@@ -24,13 +25,15 @@ const RezgoDemo: React.FC = () => {
     useEffect(() => {
         const fetchPrices = async () => {
             try {
-                // Fetch the live sandbox data directly from the isolated devrezgo database via the Laravel API
                 const response = await axios.get(`${API_URL}/rezgo-demo/prices`);
                 if (response.data && response.data.status === 'success') {
                     setPrices(response.data.data);
+                } else {
+                    setFetchError('API returned an unsuccessful status.');
                 }
             } catch (err: any) {
                 console.error('Error fetching prices:', err);
+                setFetchError(err.message || 'Could not connect to the API.');
             }
         };
 
@@ -74,7 +77,7 @@ const RezgoDemo: React.FC = () => {
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
                             <h2 style={{ color: '#0f172a', fontSize: 'clamp(1.1rem, 3vw, 1.5rem)', fontWeight: '700' }}>
-                                Live Calculated Rates
+                                Live Calculated Rates {fetchError && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginLeft: '0.5rem' }}>({fetchError})</span>}
                             </h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 0.8rem', backgroundColor: '#f0fdf4', borderRadius: '99px', border: '1px solid #dcfce7' }}>
                                 <div style={{ width: '8px', height: '8px', backgroundColor: '#22c55e', borderRadius: '50%' }}></div>
