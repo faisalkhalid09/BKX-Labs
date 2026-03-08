@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Api\RezgoDemoController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -14,7 +13,6 @@ Route::get('/test', function () {
 });
 
 Route::post('/contact', [ContactController::class, 'submit']);
-Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 
 Route::group(['prefix' => 'restricted'], function () {
     Route::post('/login', [App\Http\Controllers\RestrictedAccessController::class, 'login']);

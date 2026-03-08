@@ -13,7 +13,6 @@ import RestrictedDashboard from './pages/Restricted/Dashboard';
 import RestrictedContacts from './pages/Restricted/Contacts';
 import PdfViewer from './pages/PdfViewer';
 import StoreComingSoon from './pages/StoreComingSoon';
-import RezgoDemo from './pages/RezgoDemo';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 
@@ -36,7 +35,6 @@ function App() {
           <Route path="/store" element={<StoreComingSoon />} />
           <Route path="/privacy-policy" element={<PdfViewer />} />
           <Route path="/TOS" element={<PdfViewer />} />
-          <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
