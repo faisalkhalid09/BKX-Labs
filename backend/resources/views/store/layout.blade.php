@@ -168,7 +168,7 @@
     <div class="container">
         <div class="store-header-inner" style="height: 80px;">
             <a href="{{ url('/store') }}" class="store-logo" style="display: flex; align-items: center; overflow: hidden; width: 140px; height: 50px;">
-                <img src="/brand-logo.png" alt="BKX Labs" style="height: 140px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.8); transform-origin: left center;" />
+                <img src="/brand-logo.png" alt="BKX Labs" style="height: 140px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.5); transform-origin: left center;" />
             </a>
 
             <ul class="store-nav-links">
