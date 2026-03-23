@@ -19,13 +19,23 @@
         <!-- Left Column: Product Visuals & Detailed Description -->
         <div class="lg:col-span-7 space-y-16 w-full">
             <!-- Product Image -->
-            <div class="aspect-[4/3] w-full bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/20 flex items-center justify-center">
+            <div class="aspect-[4/3] w-full bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/20 flex flex-col items-center justify-center relative group">
                 @if ($product->thumbnail_path)
-                    <img alt="{{ $product->name }}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" src="{{ asset('storage/thumbnails/'.$product->thumbnail_path) }}"/>
+                    <img alt="{{ $product->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="{{ asset('storage/' . $product->thumbnail_path) }}"/>
                 @else
                     <span class="material-symbols-outlined text-[80px] text-outline-variant/30">image</span>
                 @endif
             </div>
+
+            @if (!empty($product->images))
+                <div class="grid grid-cols-4 sm:grid-cols-5 gap-4 mt-6">
+                    @foreach ($product->images as $galleryImage)
+                        <div class="aspect-square bg-surface-container-low hover:ring-2 hover:ring-primary rounded-xl overflow-hidden cursor-pointer transition-all border border-outline-variant/20">
+                            <img alt="{{ $product->name }} gallery" class="w-full h-full object-cover" src="{{ asset('storage/' . $galleryImage) }}"/>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
             
             <!-- Product Content -->
             <div class="space-y-12">
@@ -43,7 +53,7 @@
                         <h3 class="text-xl font-bold tracking-tight text-on-surface">Detailed Description</h3>
                     </div>
                     <div class="text-on-surface-variant leading-relaxed prose prose-slate max-w-none">
-                        {!! nl2br(e($product->description)) !!}
+                        {!! $product->description !!}
                     </div>
                 </section>
                 @endif
@@ -114,8 +124,8 @@
                     <div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center flex-shrink-0">
                         <span class="material-symbols-outlined text-primary text-sm">verified_user</span>
                     </div>
-                    <p class="text-xs text-on-surface-variant leading-relaxed">
-                        Secured by Stripe <br/><span class="font-bold">256-bit SSL encryption.</span> Instant access after checkout.
+                    <p class="text-xs text-on-surface-variant leading-relaxed mt-1 font-bold">
+                        Secured by Stripe
                     </p>
                 </div>
             </div>
