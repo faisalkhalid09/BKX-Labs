@@ -12,7 +12,7 @@
             <div class="alert alert-error">{{ $errors->first() }}</div>
         @endif
 
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST" onsubmit="this.querySelector('button[type=submit]').innerHTML = 'Checking details...'; this.querySelector('button[type=submit]').style.opacity = '0.7'; this.querySelector('button[type=submit]').style.cursor = 'wait';">
             @csrf
             <div class="form-group">
                 <label class="form-label" for="email">Email address</label>
@@ -21,8 +21,13 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="password">Password</label>
-                <input class="form-input" type="password" id="password" name="password"
-                       required autocomplete="current-password" placeholder="••••••••">
+                <div style="position:relative;">
+                    <input class="form-input" type="password" id="password" name="password"
+                           required autocomplete="current-password" placeholder="••••••••" style="padding-right:2.5rem;width:100%;">
+                    <button type="button" onclick="const p=document.getElementById('password');p.type=p.type==='password'?'text':'password';" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;display:flex;align-items:center;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
             </div>
             <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem;">
                 <input type="checkbox" id="remember" name="remember" style="width:16px;height:16px;accent-color:#1e3a8a;">

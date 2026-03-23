@@ -77,16 +77,20 @@ class AuthController extends Controller
         $otp = (string) random_int(100000, 999999);
         Cache::put('otp_verify_' . $email, $otp, now()->addMinutes(30));
         
-        Mail::to($email)->send(new StoreOtpMail($otp));
+        dispatch(function () use ($email, $otp) {
+            Mail::to($email)->send(new StoreOtpMail($otp));
+        })->afterResponse();
     }
 
     public function showVerifyOtp(Request $request)
     {
-        if (!$request->session()->has('pending_login') && !$request->session()->has('pending_registration')) {
+        $email = $request->session()->get('pending_login') ?? $request->session()->get('pending_registration')['email'] ?? null;
+
+        if (!$email) {
             return redirect()->route('login');
         }
         
-        return view('auth.verify-otp');
+        return view('auth.verify-otp', ['email' => $email]);
     }
 
     public function verifyOtp(Request $request)
