@@ -28,4 +28,38 @@ class StoreController extends Controller
 
         return view('store.show', compact('product'));
     }
+
+    public function addToCart(Product $product)
+    {
+        $cart = session()->get('cart', []);
+        
+        if (!isset($cart[$product->id])) {
+            $cart[$product->id] = [
+                'id'    => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+                'slug'  => $product->slug,
+            ];
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('checkout.create');
+    }
+
+    public function addToCartOnly(Product $product)
+    {
+        $cart = session()->get('cart', []);
+        
+        if (!isset($cart[$product->id])) {
+            $cart[$product->id] = [
+                'id'    => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+                'slug'  => $product->slug,
+            ];
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Product added to your cart.');
+    }
 }

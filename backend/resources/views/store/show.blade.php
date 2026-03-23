@@ -97,26 +97,25 @@
                 
                 <!-- Pricing & Action -->
                 <div class="pt-6 border-t border-outline-variant/20 space-y-6">
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-4xl font-black text-on-surface">${{ number_format($product->price, 2) }}</span>
-                        <span class="text-sm text-on-surface-variant font-medium">USD / Single License</span>
-                    </div>
+                    @livewire('store.product-price', ['product' => $product])
                     
-                    @auth
-                        <form action="{{ route('checkout.store') }}" method="POST">
+                    <div class="space-y-4">
+                        <form action="{{ route('store.add_to_cart', $product) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="direct_product_id" value="{{ $product->id }}">
                             <button type="submit" class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
                                 Purchase Now
                                 <span class="material-symbols-outlined text-xl">arrow_forward</span>
                             </button>
                         </form>
-                    @else
-                        <a href="{{ route('login') }}" class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
-                            Sign in to Purchase
-                            <span class="material-symbols-outlined text-xl">login</span>
-                        </a>
-                    @endauth
+                        
+                        <form action="{{ route('store.add_to_cart_only', $product) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full py-4 rounded-xl bg-surface text-primary border border-primary/20 font-bold tracking-tight text-lg hover:border-primary hover:bg-primary/5 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+                                Add to Cart
+                                <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 
                 <!-- Trust Signal -->

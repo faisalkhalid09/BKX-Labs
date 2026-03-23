@@ -32,7 +32,7 @@
                             <p style="font-weight:600;font-size:.9rem;color:#0f172a;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $item['name'] }}</p>
                             <p style="color:#1e3a8a;font-weight:700;font-size:.875rem;margin:0;">${{ number_format($item['price'], 2) }}</p>
                         </div>
-                        <button wire:click="removeItem({{ $productId }})" class="btn btn-danger-outline btn-sm" style="flex-shrink:0;">Remove</button>
+                        <button wire:click="removeItem({{ $productId }})" class="px-3 py-1.5 rounded-lg border border-error/30 text-error hover:bg-error/10 transition-colors text-xs font-bold" style="flex-shrink:0;">Remove</button>
                     </div>
                 @empty
                     <div class="empty-state" style="padding:3rem 0;">
@@ -52,9 +52,9 @@
                         <span style="font-size:.9rem;color:#64748b;font-weight:500;">Subtotal</span>
                         <span style="font-size:1.2rem;font-weight:800;color:#0f172a;">${{ number_format($this->total, 2) }}</span>
                     </div>
-                    <a href="{{ route('checkout.create') }}" class="btn btn-primary btn-full" style="font-size:.9rem;">
+                    <a href="{{ route('checkout.create') }}" class="w-full py-3.5 mt-2 rounded-xl bg-primary text-white font-bold tracking-tight text-center text-sm hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                         Proceed to Checkout
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                     <p style="text-align:center;font-size:.75rem;color:#94a3b8;margin-top:.75rem;">Secure checkout via Stripe</p>
                 </div>

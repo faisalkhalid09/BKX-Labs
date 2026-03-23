@@ -59,13 +59,35 @@
                 @else
                     <form action="{{ route('checkout.store') }}" method="POST">
                         @csrf
-                        <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-6 mb-8 text-center">
-                            <span class="material-symbols-outlined text-[40px] text-outline-variant block mb-3">grading</span>
-                            <p class="text-on-surface-variant text-sm text-[#10b981] font-bold">Dummy Payment Flow Active.<br><span class="text-on-surface-variant font-normal">Clicking proceed will instantly simulate a successful payment and unlock your downloads.</span></p>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-sm font-bold text-on-surface mb-2">Cardholder Name</label>
+                                <input type="text" placeholder="John Doe" class="w-full bg-surface p-4 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-on-surface mb-2">Card Number</label>
+                                <input type="text" placeholder="**** **** **** ****" class="w-full bg-surface p-4 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-on-surface mb-2">Expiry Date</label>
+                                    <input type="text" placeholder="MM/YY" class="w-full bg-surface p-4 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-on-surface mb-2">CVC</label>
+                                    <input type="text" placeholder="123" class="w-full bg-surface p-4 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-primary/5 border border-primary/20 rounded-xl p-4 mb-8 text-center flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary">info</span>
+                            <p class="text-primary text-sm font-medium text-left">This gateway is currently in dummy test mode. Any random combination of payment details will be successfully processed unconditionally.</p>
                         </div>
                         
                         <button type="submit" class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
-                            Proceed (Test Payment)
+                            Proceed to Payment
+                            <span class="material-symbols-outlined text-[20px]">lock_open</span>
                         </button>
                     </form>
                 @endif

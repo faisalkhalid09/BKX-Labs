@@ -23,6 +23,18 @@ class DownloadController extends Controller
         return view('downloads.index', compact('orders'));
     }
 
+    public function receipt(Order $order)
+    {
+        // Ensure the order belongs to the authenticated user
+        abort_if($order->user_id !== Auth::id(), 403);
+
+        // Ensure payment is complete
+        abort_if(!$order->isPaid(), 403, 'Payment not completed.');
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('downloads.receipt', compact('order'));
+        return $pdf->download('Receipt-Order-' . $order->id . '.pdf');
+    }
+
     public function download(Order $order): StreamedResponse
     {
         // Ensure the order belongs to the authenticated user

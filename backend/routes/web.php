@@ -33,6 +33,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::prefix('store')->name('store.')->group(function () {
     Route::get('/',         [StoreController::class, 'index'])->name('index');
     Route::get('/search',   \App\Http\Controllers\Store\SearchController::class)->name('search');
+    Route::post('/{product:slug}/cart', [StoreController::class, 'addToCart'])->name('add_to_cart');
+    Route::post('/{product:slug}/cart-only', [StoreController::class, 'addToCartOnly'])->name('add_to_cart_only');
     Route::get('/{slug}',   [StoreController::class, 'show'])->name('show');
 });
 
@@ -59,6 +61,7 @@ Route::post('/webhook/stripe', [WebhookController::class, 'handle'])
 //  My Downloads (auth required)
 // ──────────────────────────────────────
 Route::middleware('auth')->prefix('downloads')->name('downloads.')->group(function () {
-    Route::get('/',          [DownloadController::class, 'index'])->name('index');
-    Route::get('/{order}',   [DownloadController::class, 'download'])->name('download');
+    Route::get('/',                 [DownloadController::class, 'index'])->name('index');
+    Route::get('/{order}/receipt',  [DownloadController::class, 'receipt'])->name('receipt');
+    Route::get('/{order}',          [DownloadController::class, 'download'])->name('download');
 });
