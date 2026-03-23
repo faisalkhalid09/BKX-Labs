@@ -17,12 +17,14 @@ class Product extends Model
         'category',
         'private_file_path',
         'thumbnail_path',
+        'images',
         'is_active',
     ];
 
     protected $casts = [
         'price'     => 'decimal:2',
         'is_active' => 'boolean',
+        'images'    => 'array',
     ];
 
     protected static function booted(): void
@@ -30,6 +32,20 @@ class Product extends Model
         static::creating(function (Product $product) {
             if (empty($product->slug)) {
                 $product->slug = Str::slug($product->name);
+            }
+        });
+
+        static::deleting(function (Product $product) {
+            if ($product->thumbnail_path) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($product->thumbnail_path);
+            }
+            if (!empty($product->images)) {
+                foreach ($product->images as $image) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($image);
+                }
+            }
+            if ($product->private_file_path) {
+                \Illuminate\Support\Facades\Storage::disk('private')->delete($product->private_file_path);
             }
         });
     }

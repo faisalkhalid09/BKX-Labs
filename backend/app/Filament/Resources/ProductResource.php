@@ -79,12 +79,23 @@ class ProductResource extends Resource
             ]),
 
             \Filament\Schemas\Components\Section::make('Files')->schema([
-                Components\FileUpload::make('thumbnail_path')
-                    ->label('Thumbnail Image')
+                \Filament\Schemas\Components\FileUpload::make('thumbnail_path')
+                    ->label('Primary Thumbnail Image')
                     ->image()
                     ->directory('thumbnails')
                     ->disk('public')
+                    ->imageEditor()
                     ->imagePreviewHeight('150'),
+
+                \Filament\Schemas\Components\FileUpload::make('images')
+                    ->label('Additional Gallery Images')
+                    ->image()
+                    ->multiple()
+                    ->directory('products/gallery')
+                    ->disk('public')
+                    ->imageEditor()
+                    ->reorderable()
+                    ->appendFiles(),
 
                 Components\FileUpload::make('private_file_path')
                     ->label('Product File (ZIP / Model — private)')
