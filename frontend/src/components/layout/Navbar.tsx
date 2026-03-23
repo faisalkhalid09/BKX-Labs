@@ -8,6 +8,9 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
+    
+    // Derive store URL from environment variable or API URL
+    const storeUrl = import.meta.env.VITE_STORE_URL || (import.meta.env.VITE_API_URL || '').replace('/api', '') + '/store';
 
     // Close menu when route changes
     useEffect(() => {
@@ -51,12 +54,12 @@ const Navbar = () => {
                             <li><Link to="/case-study">Case Study</Link></li>
                             <li><Link to="/about">About</Link></li>
                             <li>
-                                <Link
-                                    to="/store"
+                                <a
+                                    href={storeUrl}
                                     className="nav-store-badge"
                                 >
                                     Store
-                                </Link>
+                                </a>
                             </li>
                             <li><Link to="/contact" className="nav-cta">Contact</Link></li>
                         </ul>
@@ -85,12 +88,12 @@ const Navbar = () => {
                                 <li><Link to="/case-study">Case Study</Link></li>
                                 <li><Link to="/about">About</Link></li>
                                 <li>
-                                    <Link
-                                        to="/store"
+                                    <a
+                                        href={storeUrl}
                                         className="nav-store-badge mobile"
                                     >
                                         Store
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
                             </>

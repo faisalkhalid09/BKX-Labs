@@ -22,6 +22,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/register',[AuthController::class, 'register']);
 });
 
+Route::get('/verify-otp', [AuthController::class, 'showVerifyOtp'])->name('verify.otp');
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // ──────────────────────────────────────
