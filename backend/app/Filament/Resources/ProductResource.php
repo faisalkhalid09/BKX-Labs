@@ -69,7 +69,7 @@ class ProductResource extends Resource
                     ->default(true),
             ])->columns(2),
 
-            Components\Section::make('Description')->schema([
+            \Filament\Schemas\Components\Section::make('Description')->schema([
                 Components\TextInput::make('short_description')
                     ->maxLength(300)
                     ->placeholder('One-liner shown on the catalog card'),
@@ -78,7 +78,7 @@ class ProductResource extends Resource
                     ->columnSpanFull(),
             ]),
 
-            Components\Section::make('Files')->schema([
+            \Filament\Schemas\Components\Section::make('Files')->schema([
                 Components\FileUpload::make('thumbnail_path')
                     ->label('Thumbnail Image')
                     ->image()
