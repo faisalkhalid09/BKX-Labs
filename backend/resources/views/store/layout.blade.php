@@ -167,7 +167,9 @@
 <header class="store-header">
     <div class="container">
         <div class="store-header-inner">
-            <a href="{{ url('/store') }}" class="store-logo">BKX<span>Labs</span></a>
+            <a href="{{ url('/store') }}" class="store-logo" style="display: flex; align-items: center;">
+                <img src="/brand-logo.png" alt="BKX Labs" style="height: 32px; width: auto;" />
+            </a>
 
             <ul class="store-nav-links">
                 <li><a href="{{ url('/store') }}" class="{{ request()->is('store') ? 'active' : '' }}">Catalog</a></li>

@@ -6,8 +6,8 @@
 @push('styles')
 <style>
     .catalog-hero {
-        background: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
+        background: #1e3a8a;
+        border-bottom: 1px solid #1e40af;
         padding: 3.5rem 0;
         margin-bottom: 3rem;
     }
@@ -15,12 +15,12 @@
         font-size: 2.25rem;
         font-weight: 800;
         letter-spacing: -0.04em;
-        color: #0f172a;
+        color: #ffffff;
         margin-bottom: 0.5rem;
     }
     .catalog-hero p {
         font-size: 1rem;
-        color: #64748b;
+        color: #bfdbfe;
         max-width: 60ch;
     }
 
