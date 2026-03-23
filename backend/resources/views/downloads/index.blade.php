@@ -35,7 +35,7 @@
                     <!-- Thumbnail -->
                     <div class="w-full md:w-48 aspect-video bg-surface-container-low rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center border border-outline-variant/10">
                         @if ($order->product->thumbnail_path)
-                            <img src="{{ asset('storage/thumbnails/' . $order->product->thumbnail_path) }}" alt="{{ $order->product->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $order->product->thumbnail_path) }}" alt="{{ $order->product->name }}" class="w-full h-full object-cover">
                         @else
                             <span class="material-symbols-outlined text-3xl text-outline-variant/40">image</span>
                         @endif
