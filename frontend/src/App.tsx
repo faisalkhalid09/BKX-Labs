@@ -8,9 +8,6 @@ import CaseStudy from './pages/CaseStudy';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
-import RestrictedLogin from './pages/Restricted/Login';
-import RestrictedDashboard from './pages/Restricted/Dashboard';
-import RestrictedContacts from './pages/Restricted/Contacts';
 import PdfViewer from './pages/PdfViewer';
 import RezgoDemo from './pages/RezgoDemo';
 
@@ -29,9 +26,6 @@ function App() {
           <Route path="/case-study" element={<CaseStudy />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/restricted-portal" element={<RestrictedLogin />} />
-          <Route path="/restricted-portal/dashboard" element={<RestrictedDashboard />} />
-          <Route path="/restricted-portal/contacts" element={<RestrictedContacts />} />
           <Route path="/privacy-policy" element={<PdfViewer />} />
           <Route path="/TOS" element={<PdfViewer />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />

@@ -18,17 +18,22 @@ class OrderResource extends Resource
 
     public static function getNavigationIcon(): string|\BackedEnum|null
     {
-        return 'heroicon-o-shopping-cart';
+        return 'heroicon-o-banknotes';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Finance';
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Store';
+        return null; // Remove group to make a flat sidebar
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 4;
     }
 
     public static function form(Schema $schema): Schema
