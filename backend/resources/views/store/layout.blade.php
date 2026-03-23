@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>@yield('title', 'Digital Product Store') — BKX Labs</title>
+    <title>@yield('title', 'Digital Product Store') - BKX</title>
     
     <!-- Tailwind Configuration from Stitch -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
