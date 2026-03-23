@@ -15,8 +15,9 @@
         .footer { text-align: center; color: #94a3b8; font-size: 0.8em; margin-top: 60px; padding-top: 20px; border-top: 1px dashed #e2e8f0; }
     </style>
 </head>
-<body>
-    <div class="header">
+<body style="margin: 0; padding: 0; background: #f8fafc;">
+    <div id="receipt-content" style="background: #ffffff; width: 800px; margin: 0; padding: 50px; box-sizing: border-box;">
+        <div class="header">
         @php
             $logoPath = public_path('logo.png');
             if (file_exists($logoPath)) {
@@ -78,6 +79,7 @@
         <p style="margin: 0 0 5px 0;">This receipt was dynamically generated.</p>
         <p style="margin: 0;"><strong>BKX Labs</strong> &copy; {{ date('Y') }}. All rights reserved.</p>
         <p style="margin: 5px 0 0 0;"><a href="{{ url('/') }}" style="color: #1e3a8a; text-decoration: none;">www.bkxlabs.com</a></p>
+    </div>
     </div>
 </body>
 </html>
