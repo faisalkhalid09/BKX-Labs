@@ -37,7 +37,7 @@ class ProductResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Components\Section::make('Product Details')->schema([
+            \Filament\Schemas\Components\Section::make('Product Details')->schema([
                 Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
