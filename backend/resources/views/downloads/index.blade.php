@@ -71,7 +71,7 @@
                     
                     <!-- Action -->
                     <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3 mt-4 md:mt-0 pt-6 md:pt-0 border-t border-outline-variant/20 md:border-0">
-                        <button class="px-5 py-3 md:py-2.5 bg-surface-container-highest text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all">
+                        <button onclick="openReceiptModal({{ $order->id }})" class="px-5 py-3 md:py-2.5 bg-surface-container-highest text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all">
                             Receipt
                         </button>
                         @if ($order->canDownload())
@@ -91,4 +91,144 @@
         </div>
     @endif
 </div>
+
+<!-- Receipt Modal Wrapper -->
+<div id="receipt-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onclick="closeReceiptModal()"></div>
+    
+    <div class="relative w-full max-w-2xl bg-surface-container-lowest rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] scale-95 transition-transform duration-300" id="receipt-modal-content">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20 bg-surface">
+            <h3 class="text-lg font-bold text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">receipt_long</span>
+                Digital Receipt
+            </h3>
+            <button onclick="closeReceiptModal()" class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+        
+        <!-- Image Container -->
+        <div class="flex-1 overflow-y-auto p-6 bg-surface-container-low flex justify-center" id="receipt-image-container">
+            <!-- Loading or Image goes here -->
+        </div>
+        
+        <!-- Footer Actions -->
+        <div class="p-6 bg-surface border-t border-outline-variant/20 flex flex-col sm:flex-row gap-4 justify-end rounded-b-3xl">
+            <button id="receipt-share-btn" class="px-6 py-3 rounded-xl bg-surface-container border border-outline-variant/30 text-on-surface hover:bg-surface-container-high transition-colors font-bold text-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">share</span>
+                Share Receipt
+            </button>
+            <button id="receipt-download-btn" class="px-6 py-3 rounded-xl bg-primary text-white hover:bg-primary-container transition-colors shadow-lg shadow-primary/20 font-bold text-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                Download Image
+            </button>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    const modal = document.getElementById('receipt-modal');
+    const modalContent = document.getElementById('receipt-modal-content');
+    const imageContainer = document.getElementById('receipt-image-container');
+    const downloadBtn = document.getElementById('receipt-download-btn');
+    const shareBtn = document.getElementById('receipt-share-btn');
+    let currentImageBlob = null;
+    let currentImageUrl = null;
+
+    async function openReceiptModal(orderId) {
+        // Show modal and loading state
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+        }, 10);
+        
+        imageContainer.innerHTML = '<div class="p-10 text-center"><span class="material-symbols-outlined animate-spin text-4xl text-primary block mb-4 mx-auto" style="animation: spin 1s linear infinite;">sync</span><p class="font-bold text-on-surface-variant">Generating Digital Receipt...</p></div>';
+        
+        try {
+            // Fetch the receipt HTML
+            const response = await fetch(`/downloads/${orderId}/receipt`);
+            const html = await response.text();
+            
+            // Create hidden container
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.top = '-9999px';
+            container.style.left = '-9999px';
+            container.innerHTML = html;
+            document.body.appendChild(container);
+            
+            const captureArea = container.querySelector('#receipt-content');
+            
+            // Wait brief moment for any embedded SVGs/Fonts to stabilize
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // Run html2canvas
+            const canvas = await html2canvas(captureArea, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            });
+            
+            // Convert to image
+            currentImageUrl = canvas.toDataURL('image/png');
+            
+            canvas.toBlob((blob) => {
+                currentImageBlob = blob;
+            }, 'image/png');
+            
+            // Display image in modal
+            imageContainer.innerHTML = `<img src="${currentImageUrl}" class="w-full max-w-lg h-auto rounded border border-outline-variant/20 shadow-md block mx-auto">`;
+            
+            // Set download behavior
+            downloadBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.href = currentImageUrl;
+                a.download = `Receipt-Order-${orderId}.png`;
+                a.click();
+            };
+            
+            // Cleanup
+            document.body.removeChild(container);
+            
+        } catch (e) {
+            console.error(e);
+            imageContainer.innerHTML = '<div class="p-10 text-center text-error"><span class="material-symbols-outlined text-4xl mb-4 block">error</span><p class="font-bold">Failed to generate receipt.</p></div>';
+        }
+    }
+
+    function closeReceiptModal() {
+        modal.classList.add('opacity-0');
+        modalContent.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    shareBtn.onclick = async () => {
+        if (!currentImageBlob) return;
+        const file = new File([currentImageBlob], 'receipt.png', { type: 'image/png' });
+        
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'Purchase Receipt',
+                    text: 'Here is my purchase receipt from BKX Labs.'
+                });
+            } catch (err) {
+                console.log('User cancelled share');
+            }
+        } else {
+            alert('Sharing images directly is not supported on this device/browser. Please download the image instead.');
+        }
+    };
+</script>
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+@endpush

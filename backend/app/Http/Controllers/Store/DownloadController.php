@@ -31,8 +31,7 @@ class DownloadController extends Controller
         // Ensure payment is complete
         abort_if(!$order->isPaid(), 403, 'Payment not completed.');
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('downloads.receipt', compact('order'));
-        return $pdf->download('Receipt-Order-' . $order->id . '.pdf');
+        return view('downloads.receipt', compact('order'));
     }
 
     public function download(Order $order): StreamedResponse
