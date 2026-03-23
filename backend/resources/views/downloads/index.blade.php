@@ -1,78 +1,94 @@
 @extends('store.layout')
 @section('title', 'My Downloads')
 
-@push('styles')
-<style>
-.downloads-wrap { padding: 3rem 0 5rem; }
-.downloads-list { display: flex; flex-direction: column; gap: 1rem; }
-
-.download-row { display:flex;align-items:center;gap:1.5rem;padding:1.25rem 1.5rem; }
-@media(max-width:640px){ .download-row{flex-direction:column;align-items:flex-start;} }
-
-.download-icon-box { width:48px;height:48px;background:#f1f5f9;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
-.download-icon-box svg { width:22px;height:22px;stroke:#64748b; }
-.download-info { flex:1;min-width:0; }
-.download-name { font-weight:700;font-size:.95rem;color:#0f172a;margin-bottom:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.download-meta { font-size:.8rem;color:#94a3b8;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap; }
-.dl-action { flex-shrink:0; }
-</style>
-@endpush
-
 @section('content')
-<div class="section-hero-dark">
-    <div class="container">
-        <h1>My Downloads</h1>
-        <p>Access your purchased products. Download links expire 48 hours after purchase.</p>
+<div class="max-w-[1440px] mx-auto px-6 md:px-12 py-10 md:py-16">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-outline-variant/20 pb-8">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-on-surface leading-tight">My Library</h1>
+            <p class="text-on-surface-variant mt-3 text-lg font-medium">{{ Auth::user()->email }}</p>
+        </div>
+        <a href="{{ url('/store') }}" class="hidden md:inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-container transition-colors">
+            <span class="material-symbols-outlined text-[20px]">storefront</span>
+            Browse Catalog
+        </a>
     </div>
-</div>
 
-<div class="downloads-wrap">
-    <div class="container">
-        @if ($orders->isEmpty())
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><path stroke="#94a3b8" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                </div>
-                <h3>No purchases yet</h3>
-                <p>Once you buy a product, it will appear here with a download link.</p>
-                <a href="{{ url('/store') }}" class="btn btn-primary">Browse Store</a>
+    @if ($orders->isEmpty())
+        <div class="text-center py-24 bg-surface-container-lowest rounded-3xl border border-outline-variant/10 shadow-sm">
+            <div class="w-20 h-20 bg-surface-container-low rounded-2xl flex items-center justify-center mx-auto mb-6 text-outline">
+                <span class="material-symbols-outlined text-4xl">inventory_2</span>
             </div>
-        @else
-            <div class="downloads-list">
-                @foreach ($orders as $order)
-                    <div class="card download-row">
-                        <div class="download-icon-box">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                        </div>
-                        <div class="download-info">
-                            <div class="download-name">{{ $order->product->name }}</div>
-                            <div class="download-meta">
-                                <span class="chip">{{ ucwords(str_replace('_', ' ', $order->product->category)) }}</span>
-                                <span>Order #{{ $order->id }}</span>
-                                <span>Purchased {{ $order->created_at->format('M d, Y') }}</span>
-                                @if ($order->download_expires_at)
-                                    @if ($order->canDownload())
-                                        <span class="chip chip-green">Active · Expires {{ $order->download_expires_at->diffForHumans() }}</span>
-                                    @else
-                                        <span class="chip chip-red">Expired</span>
-                                    @endif
+            <h3 class="text-2xl font-bold text-on-surface mb-3 tracking-tight">No purchases yet</h3>
+            <p class="text-on-surface-variant text-base max-w-md mx-auto mb-8 leading-relaxed">Your digital products, models, and scripts will appear here instantly after purchase.</p>
+            <a href="{{ url('/store') }}" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-3.5 rounded-xl font-bold transition-all hover:bg-primary-container active:scale-95 shadow-lg shadow-primary/20">
+                Browse Catalog
+            </a>
+        </div>
+    @else
+        <!-- Content Area: List of purchased digital products -->
+        <div class="space-y-6">
+            @foreach ($orders as $order)
+                <div class="group bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:border-outline-variant/40 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
+                    
+                    <!-- Thumbnail -->
+                    <div class="w-full md:w-48 aspect-video bg-surface-container-low rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center border border-outline-variant/10">
+                        @if ($order->product->thumbnail_path)
+                            <img src="{{ asset('storage/thumbnails/' . $order->product->thumbnail_path) }}" alt="{{ $order->product->name }}" class="w-full h-full object-cover">
+                        @else
+                            <span class="material-symbols-outlined text-3xl text-outline-variant/40">image</span>
+                        @endif
+                    </div>
+                    
+                    <!-- Info -->
+                    <div class="flex-1 min-w-0 w-full">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="inline-block px-2.5 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-md">
+                                {{ ucwords(str_replace('_', ' ', $order->product->category)) }}
+                            </span>
+                            @if ($order->download_expires_at)
+                                @if ($order->canDownload())
+                                    <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#10b981]">
+                                        <span class="material-symbols-outlined text-[14px]">timer</span>
+                                        Expires {{ $order->download_expires_at->diffForHumans() }}
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-error">
+                                        <span class="material-symbols-outlined text-[14px]">timer_off</span>
+                                        Expired
+                                    </span>
                                 @endif
-                            </div>
-                        </div>
-                        <div class="dl-action">
-                            @if ($order->canDownload())
-                                <a href="{{ route('downloads.download', $order) }}" class="btn btn-primary btn-sm">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                                    Download
-                                </a>
-                            @else
-                                <button class="btn btn-ghost btn-sm" disabled>Expired</button>
                             @endif
                         </div>
+                        <h3 class="text-2xl font-bold text-on-surface tracking-tight mb-3 truncate hover:text-primary transition-colors cursor-pointer">{{ $order->product->name }}</h3>
+                        <div class="flex items-center gap-4 text-sm font-medium text-on-surface-variant flex-wrap">
+                            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">receipt</span> Order #{{ $order->id }}</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-outline-variant/50"></span>
+                            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">event</span> Purchased {{ $order->created_at->format('M d, Y') }}</span>
+                        </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
-    </div>
+                    
+                    <!-- Action -->
+                    <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3 mt-4 md:mt-0 pt-6 md:pt-0 border-t border-outline-variant/20 md:border-0">
+                        <button class="px-5 py-3 md:py-2.5 bg-surface-container-highest text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all">
+                            Receipt
+                        </button>
+                        @if ($order->canDownload())
+                            <a href="{{ route('downloads.download', $order) }}" class="px-8 py-3 md:py-2.5 bg-primary text-on-primary rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:bg-primary-container active:scale-[0.98] shadow-md shadow-primary/20">
+                                <span class="material-symbols-outlined text-[18px]">download</span>
+                                Download
+                            </a>
+                        @else
+                            <button disabled class="px-8 py-3 md:py-2.5 bg-surface-container-high text-outline-variant rounded-xl text-sm font-bold flex items-center justify-center gap-2 cursor-not-allowed">
+                                <span class="material-symbols-outlined text-[18px]">lock</span>
+                                Locked
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 </div>
 @endsection

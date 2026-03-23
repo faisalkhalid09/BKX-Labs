@@ -1,90 +1,120 @@
 @extends('store.layout')
-@section('title', 'Checkout')
-
-@push('styles')
-<style>
-.checkout-grid { display:grid; grid-template-columns:1fr 380px; gap:3rem; padding:3rem 0 5rem; align-items:start; }
-@media(max-width:900px){ .checkout-grid{grid-template-columns:1fr;} }
-.checkout-card { padding:1.75rem; }
-.checkout-section-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin-bottom:1.25rem; }
-.order-row { display:flex;justify-content:space-between;align-items:center;padding:.625rem 0;border-bottom:1px solid #f1f5f9;font-size:.9rem; }
-.order-row:last-child { border-bottom:none; }
-.order-total { display:flex;justify-content:space-between;align-items:center;padding:1rem 0 0;margin-top:.25rem;border-top:1px solid #e2e8f0; }
-.order-total-label { font-weight:600;font-size:.95rem;color:#0f172a; }
-.order-total-price { font-size:1.4rem;font-weight:800;color:#0f172a;letter-spacing:-0.03em; }
-#card-element { border:1.5px solid #e2e8f0; border-radius:8px; padding:.75rem 1rem; transition:border-color .2s; }
-#card-element.StripeElement--focus { border-color:#1e3a8a; box-shadow:0 0 0 3px rgba(30,58,138,.1); }
-#card-errors { color:#dc2626; font-size:.825rem; margin-top:.5rem; min-height:1.2em; }
-.page-back { display:inline-flex;align-items:center;gap:.375rem;font-size:.825rem;color:#64748b;margin-bottom:1.5rem;transition:color .2s; }
-.page-back:hover { color:#0f172a; }
-</style>
-@endpush
+@section('title', 'Secure Checkout')
 
 @section('content')
-<div class="container">
-    <a href="{{ url('/store') }}" class="page-back">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Back to Store
+<div class="max-w-[1440px] mx-auto px-6 md:px-12 py-10 md:py-16">
+    
+    <!-- Back Navigation -->
+    <a href="{{ url('/store') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 font-medium hover:text-primary transition-colors mb-10 group">
+        <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        Return to Catalog
     </a>
 
-    <h1 style="font-size:1.6rem;font-weight:800;color:#0f172a;letter-spacing:-0.03em;margin-bottom:2rem;">Checkout</h1>
+    <div class="mb-10">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-on-surface leading-tight">Secure Checkout</h1>
+        <p class="text-on-surface-variant mt-2 text-lg font-light">Complete your purchase to receive instant access.</p>
+    </div>
 
-    <div class="checkout-grid">
-        {{-- Payment form --}}
-        <div class="card checkout-card">
-            <p class="checkout-section-label">Payment Details</p>
+    <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        
+        <!-- Payment Details Form (Col 8) -->
+        <div class="lg:col-span-7 w-full space-y-8">
+            <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-8 lg:p-10 shadow-sm">
+                <h3 class="text-xs font-black uppercase tracking-[0.15em] text-on-surface-variant mb-8 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-primary">credit_card</span>
+                    Payment Information
+                </h3>
 
-            @if (!auth()->check())
-                <div class="alert alert-info" style="margin-bottom:1.25rem;">
-                    <strong>Sign in required.</strong>
-                    <a href="{{ route('login') }}" style="color:#1e3a8a;font-weight:700;"> Sign in</a> or
-                    <a href="{{ route('register') }}" style="color:#1e3a8a;font-weight:700;">create an account</a>
-                    to complete your purchase.
-                </div>
-            @endif
-
-            @if (isset($clientSecret))
-                <form id="payment-form">
-                    <div class="form-group">
-                        <label class="form-label">Card Information</label>
-                        <div id="card-element"></div>
-                        <div id="card-errors" role="alert"></div>
+                @if (!auth()->check())
+                    <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5 mb-8 flex items-start gap-4">
+                        <span class="material-symbols-outlined text-primary mt-0.5">info</span>
+                        <div>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">
+                                <strong class="text-on-surface">Sign in required.</strong><br/>
+                                <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">Sign in</a> or
+                                <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">create an account</a>
+                                to securely vault your purchase.
+                            </p>
+                        </div>
                     </div>
-                    <button class="btn btn-primary btn-full" id="pay-btn" style="margin-top:.75rem;font-size:.95rem;padding:.7rem 1.5rem;">
-                        Pay ${{ number_format($total, 2) }}
-                    </button>
-                </form>
-            @else
-                <form action="{{ route('checkout.store') }}" method="POST">
-                    @csrf
-                    <p style="font-size:.875rem;color:#64748b;margin-bottom:1.25rem;">Review your order and proceed to enter card details.</p>
-                    <button type="submit" class="btn btn-primary btn-full" style="font-size:.95rem;padding:.7rem 1.5rem;">
-                        Proceed to Pay ${{ number_format(collect($cart)->sum('price'), 2) }}
-                    </button>
-                </form>
-            @endif
+                @endif
 
-            <hr class="divider">
-            <div style="display:flex;align-items:center;gap:.5rem;color:#94a3b8;font-size:.775rem;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                Secured by Stripe · 256-bit SSL
-            </div>
-        </div>
-
-        {{-- Order summary --}}
-        <div class="card checkout-card">
-            <p class="checkout-section-label">Order Summary</p>
-            @foreach ($cart as $item)
-                <div class="order-row">
-                    <span style="color:#374151;">{{ $item['name'] }}</span>
-                    <span style="font-weight:600;color:#0f172a;">${{ number_format($item['price'], 2) }}</span>
+                @if (isset($clientSecret))
+                    <form id="payment-form" class="space-y-6">
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-on-surface">Card Details</label>
+                            <div class="bg-surface p-4 rounded-xl border border-outline-variant/30 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                                <div id="card-element" class="w-full"></div>
+                            </div>
+                            <div id="card-errors" role="alert" class="text-error text-sm font-medium mt-2 min-h-[20px]"></div>
+                        </div>
+                        
+                        <div class="pt-6">
+                            <button class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 disabled:opacity-50" id="pay-btn">
+                                <span class="material-symbols-outlined text-xl">lock</span>
+                                Pay ${{ number_format($total, 2) }}
+                            </button>
+                        </div>
+                    </form>
+                @else
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
+                        <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-6 mb-8 text-center">
+                            <span class="material-symbols-outlined text-[40px] text-outline-variant block mb-3">grading</span>
+                            <p class="text-on-surface-variant text-sm">Please review the order summary on the right before securely entering your payment details.</p>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
+                            Proceed to Payment
+                        </button>
+                    </form>
+                @endif
+                
+                <div class="mt-8 flex items-center justify-center gap-3 text-xs text-on-surface-variant font-medium">
+                    <span class="material-symbols-outlined text-[16px]">verified_user</span>
+                    Payments are securely processed by Stripe with 256-bit encryption.
                 </div>
-            @endforeach
-            <div class="order-total">
-                <span class="order-total-label">Total</span>
-                <span class="order-total-price">${{ number_format(collect($cart)->sum('price'), 2) }}</span>
             </div>
         </div>
+
+        <!-- Order Summary Sidebar (Col 4) -->
+        <div class="lg:col-span-5 w-full sticky top-28">
+            <div class="bg-surface-container rounded-2xl p-8 lg:p-10">
+                <h3 class="text-xs font-black uppercase tracking-[0.15em] text-on-surface-variant mb-8 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                    Order Summary
+                </h3>
+                
+                <div class="space-y-6">
+                    @foreach ($cart as $item)
+                        <div class="flex items-start justify-between gap-4 pb-6 border-b border-outline-variant/20">
+                            <div class="flex-1">
+                                <h4 class="text-on-surface font-bold text-lg leading-snug">{{ $item['name'] }}</h4>
+                                <p class="text-on-surface-variant text-sm mt-1">Digital License</p>
+                            </div>
+                            <span class="text-on-surface font-black text-lg">${{ number_format($item['price'], 2) }}</span>
+                        </div>
+                    @endforeach
+                </div>
+                
+                <div class="pt-6 mt-2 space-y-4">
+                    <div class="flex justify-between text-on-surface-variant text-sm font-medium">
+                        <span>Subtotal</span>
+                        <span>${{ number_format(collect($cart)->sum('price'), 2) }}</span>
+                    </div>
+                    <div class="flex justify-between text-on-surface-variant text-sm font-medium">
+                        <span>Tax</span>
+                        <span>$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/30">
+                    <span class="text-on-surface font-bold text-lg">Total</span>
+                    <span class="text-4xl font-black text-primary tracking-tight">${{ number_format(collect($cart)->sum('price'), 2) }}</span>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection
@@ -97,8 +127,17 @@ const stripe = Stripe('{{ $stripePublicKey }}');
 const elements = stripe.elements();
 const card = elements.create('card', {
     style: {
-        base: { fontSize: '15px', color: '#0f172a', fontFamily: 'Inter, sans-serif', fontWeight: '500', '::placeholder': { color: '#94a3b8' } },
-        invalid: { color: '#dc2626' }
+        base: { 
+            iconColor: '#1e3a8a',
+            color: '#131b2e',
+            fontWeight: '500',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '16px',
+            fontSmoothing: 'antialiased',
+            ':-webkit-autofill': { color: '#131b2e' },
+            '::placeholder': { color: '#94a3b8' }
+        },
+        invalid: { iconColor: '#ba1a1a', color: '#ba1a1a' }
     }
 });
 card.mount('#card-element');
@@ -110,14 +149,16 @@ const btn = document.getElementById('pay-btn');
 document.getElementById('payment-form').addEventListener('submit', async e => {
     e.preventDefault();
     btn.disabled = true;
-    btn.textContent = 'Processing...';
+    btn.innerHTML = '<span class="material-symbols-outlined text-xl animate-spin">refresh</span> Processing...';
+    
     const { error, paymentIntent } = await stripe.confirmCardPayment('{{ $clientSecret }}', {
         payment_method: { card }
     });
+    
     if (error) {
         document.getElementById('card-errors').textContent = error.message;
         btn.disabled = false;
-        btn.textContent = 'Pay ${{ number_format($total, 2) }}';
+        btn.innerHTML = '<span class="material-symbols-outlined text-xl">lock</span> Pay ${{ number_format($total, 2) }}';
     } else if (paymentIntent.status === 'succeeded') {
         window.location.href = '{{ route("checkout.success") }}';
     }
