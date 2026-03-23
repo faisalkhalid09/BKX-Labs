@@ -61,11 +61,11 @@
                         @csrf
                         <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-6 mb-8 text-center">
                             <span class="material-symbols-outlined text-[40px] text-outline-variant block mb-3">grading</span>
-                            <p class="text-on-surface-variant text-sm">Please review the order summary on the right before securely entering your payment details.</p>
+                            <p class="text-on-surface-variant text-sm text-[#10b981] font-bold">Dummy Payment Flow Active.<br><span class="text-on-surface-variant font-normal">Clicking proceed will instantly simulate a successful payment and unlock your downloads.</span></p>
                         </div>
                         
                         <button type="submit" class="w-full py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
-                            Proceed to Payment
+                            Proceed (Test Payment)
                         </button>
                     </form>
                 @endif

@@ -37,33 +37,23 @@ class CheckoutController extends Controller
             return redirect()->route('login')->with('info', 'Please log in to complete your purchase.');
         }
 
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        $total = collect($cart)->sum('price');
-        $amountInCents = (int) round($total * 100);
-
-        $paymentIntent = PaymentIntent::create([
-            'amount'   => $amountInCents,
-            'currency' => 'usd',
-            'metadata' => ['user_id' => Auth::id()],
-        ]);
-
-        // Create pending orders for each cart item
+        // ==========================================
+        // DUMMY PAYMENT FLOW
+        // ==========================================
         foreach ($cart as $productId => $item) {
             Order::create([
                 'user_id'                    => Auth::id(),
                 'product_id'                 => $productId,
-                'status'                     => 'pending',
+                'status'                     => 'paid',
                 'amount'                     => $item['price'],
-                'stripe_payment_intent_id'   => $paymentIntent->id,
+                'stripe_payment_intent_id'   => 'dummy_pi_' . uniqid(),
+                'download_expires_at'        => now()->addHours(48),
             ]);
         }
 
-        return view('store.checkout', [
-            'cart'              => $cart,
-            'total'             => $total,
-            'clientSecret'      => $paymentIntent->client_secret,
-            'stripePublicKey'   => config('services.stripe.key'),
-        ]);
+        session()->forget('cart');
+
+        return redirect()->route('downloads.index')
+            ->with('success', 'Payment successful! You can now download your digital products.');
     }
 }
