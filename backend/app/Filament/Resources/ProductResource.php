@@ -79,7 +79,7 @@ class ProductResource extends Resource
             ]),
 
             \Filament\Schemas\Components\Section::make('Files')->schema([
-                \Filament\Schemas\Components\FileUpload::make('thumbnail_path')
+                Components\FileUpload::make('thumbnail_path')
                     ->label('Primary Thumbnail Image')
                     ->image()
                     ->directory('thumbnails')
@@ -87,7 +87,7 @@ class ProductResource extends Resource
                     ->imageEditor()
                     ->imagePreviewHeight('150'),
 
-                \Filament\Schemas\Components\FileUpload::make('images')
+                Components\FileUpload::make('images')
                     ->label('Additional Gallery Images')
                     ->image()
                     ->multiple()
