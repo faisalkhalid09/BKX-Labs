@@ -7,16 +7,16 @@
 .search-page-hero {
     background: #f8fafc; 
     border-bottom: 2px solid #e2e8f0; 
-    padding: 3rem 1rem; 
+    padding: 1.5rem 1rem; 
     text-align: center;
 }
-@media(min-width: 768px) { .search-page-hero { padding: 4rem 0; } }
+@media(min-width: 768px) { .search-page-hero { padding: 2rem 0; } }
 
 .search-bar-wrap {
-    display: flex; max-width: 800px; margin: 0 auto;
+    display: flex; max-width: 700px; margin: 0 auto;
     background: #fff; border: 2px solid #1e3a8a; border-radius: 0;
     overflow: hidden; box-shadow: 4px 4px 0 rgba(30,58,138,0.1); 
-    margin-bottom: 1.5rem; transition: all 0.2s;
+    margin-bottom: 0.5rem; transition: all 0.2s;
 }
 .search-bar-wrap:focus-within { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30,58,138,.1); }
 .search-bar-input {
@@ -376,42 +376,43 @@
 {{-- Search hero --}}
 <div class="search-page-hero">
     <div class="container">
-        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 mb-6 tracking-tight uppercase">Product Search</h1>
+        <h1 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Quick Search</h1>
         <form class="search-bar-wrap" action="{{ route('store.search') }}" method="GET" id="search-form">
-            <input class="search-bar-input" type="text" name="q"
+            <input class="search-bar-input !py-3 !text-sm" type="text" name="q"
                    value="{{ $query }}"
-                   placeholder="Enter keywords..."
+                   placeholder="Keywords..."
                    autocomplete="off" autofocus>
             {{-- Preserve other filters on search --}}
             <input type="hidden" name="category" value="{{ $category }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
-            <button class="search-bar-btn !rounded-none" type="submit">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <span class="hidden sm:inline ml-2 uppercase">Search</span>
+            <button class="search-bar-btn !rounded-none !py-3 !px-6" type="submit">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <span class="hidden sm:inline ml-2 uppercase text-xs">Search</span>
             </button>
         </form>
 
         @if ($query)
-            <p class="text-sm font-medium text-slate-500">
-                Found <span class="text-slate-900 font-black">{{ $products->count() }}</span> results for "<span class="text-primary font-black">{{ $query }}</span>"
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <span class="text-slate-900">{{ $products->count() }}</span> results for "{{ $query }}"
             </p>
         @else
-            <p class="text-sm font-medium text-slate-500">Exploring all <span class="text-slate-900 font-black">{{ $products->count() }}</span> digital artifacts</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Catalog Overview: <span class="text-slate-900">{{ $products->count() }}</span> Items</p>
         @endif
     </div>
 </div>
 
 {{-- Layout: sidebar + results --}}
-<div class="container">
-    <div class="search-layout">
+<div class="container !max-w-7xl">
+    <div class="search-layout !pt-6 !pb-12">
 
         {{-- Results Area --}}
         <div class="results-area">
-            <div class="results-header mb-8">
-                <p class="text-sm font-medium text-slate-400 uppercase tracking-widest flex items-center gap-3">
-                    <span class="w-8 h-[2px] bg-blue-600 rounded-full"></span>
-                    Displaying Results
+            <div class="results-header mb-4">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                    <span class="w-6 h-[2px] bg-blue-600 rounded-full"></span>
+                    Artifact Storefront
                 </p>
+            </div>
                 @if ($category && $category !== 'all')
                     <div class="mt-4 flex items-center gap-2">
                         <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/5 text-primary text-xs font-black ring-1 ring-primary/10">
@@ -470,29 +471,29 @@
 
         {{-- Sidebar Filters (Right Side) --}}
         <aside class="filter-sidebar">
-            <div class="sticky top-24">
-                <div class="bg-white border-2 border-slate-200 rounded-none p-6 shadow-[6px_6px_0_#e2e8f0]">
+            <div class="sticky top-20">
+                <div class="bg-white border-2 border-slate-200 rounded-none p-4 shadow-[4px_4px_0_#e2e8f0]">
                     <form id="filter-form" action="{{ route('store.search') }}" method="GET">
                         <input type="hidden" name="q" value="{{ $query }}">
                         
-                        <div class="flex items-center gap-3 mb-6 border-b-2 border-slate-100 pb-4">
-                            <span class="material-symbols-outlined text-primary font-bold">filter_alt</span>
-                            <h2 class="text-lg font-black text-slate-900 uppercase tracking-tight">Filters</h2>
+                        <div class="flex items-center gap-2 mb-4 border-b-2 border-slate-100 pb-2">
+                            <span class="material-symbols-outlined text-primary font-bold text-lg">filter_alt</span>
+                            <h2 class="text-sm font-black text-slate-900 uppercase tracking-tight">Filters</h2>
                         </div>
 
                         {{-- Category Group --}}
-                        <div class="mb-8">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Categories</p>
-                            <div class="space-y-1">
+                        <div class="mb-6">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Category</p>
+                            <div class="space-y-0.5">
                                 @foreach ($categories as $key => $label)
                                     <label class="flex items-center cursor-pointer group">
                                         <input type="radio" name="category" value="{{ $key }}"
                                                {{ $category === $key || ($key === 'all' && $category === '') ? 'checked' : '' }}
                                                class="hidden peer"
                                                onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between p-2 lg:p-3 border-2 border-slate-100 group-hover:border-slate-300 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
-                                            <span class="text-xs font-bold uppercase">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden">done</span>
+                                        <div class="w-full flex items-center justify-between py-1.5 px-3 border-2 border-slate-50 group-hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
+                                            <span class="text-[10px] font-black uppercase tracking-tight">{{ $label }}</span>
+                                            <span class="material-symbols-outlined text-xs peer-checked:block hidden">done</span>
                                         </div>
                                     </label>
                                 @endforeach
@@ -501,17 +502,17 @@
 
                         {{-- Sort Group --}}
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Sort Order</p>
-                            <div class="space-y-1">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Sort</p>
+                            <div class="space-y-0.5">
                                 @foreach (['relevance' => 'Featured', 'newest' => 'Newest', 'price_asc' => 'Price: Low', 'price_desc' => 'Price: High'] as $key => $label)
                                     <label class="flex items-center cursor-pointer group">
                                         <input type="radio" name="sort" value="{{ $key }}"
                                                {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}
                                                class="hidden peer"
                                                onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between p-2 lg:p-3 border-2 border-slate-100 group-hover:border-slate-300 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
-                                            <span class="text-xs font-bold uppercase">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden">done</span>
+                                        <div class="w-full flex items-center justify-between py-1.5 px-3 border-2 border-slate-50 group-hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
+                                            <span class="text-[10px] font-black uppercase tracking-tight">{{ $label }}</span>
+                                            <span class="material-symbols-outlined text-xs peer-checked:block hidden">done</span>
                                         </div>
                                     </label>
                                 @endforeach
