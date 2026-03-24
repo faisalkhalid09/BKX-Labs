@@ -38,7 +38,9 @@ class SearchController extends Controller
             'price_asc'  => $products->orderBy('price', 'asc'),
             'price_desc' => $products->orderBy('price', 'desc'),
             'newest'     => $products->orderBy('created_at', 'desc'),
-            default      => $products->inRandomOrder(),
+            default      => $query !== '' 
+                ? $products->orderByRaw( "CASE WHEN name LIKE ? THEN 0 ELSE 1 END, created_at DESC", ["%{$query}%"])
+                : $products->inRandomOrder(),
         };
 
         $products = $products->get();

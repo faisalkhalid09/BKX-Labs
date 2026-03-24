@@ -56,10 +56,9 @@
             <button 
                 type="submit"
                 id="submitBtn"
-                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base sm:text-lg rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base sm:text-lg rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed flex items-center justify-center"
             >
                 <span id="buttonText" class="text-white">Verify & Continue</span>
-                <span id="spinnerIcon" class="material-symbols-outlined text-base hidden animate-spin">sync</span>
             </button>
         </form>
 
@@ -84,11 +83,100 @@
                 <p class="text-xs sm:text-sm text-emerald-900 font-medium">Your email is protected with enterprise-grade encryption</p>
             </div>
         </div>
+
+        <!-- Redirect Message (Hidden by default) -->
+        <div id="redirectMessage" class="hidden">
+            <div class="text-center space-y-4">
+                <div class="flex justify-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl flex items-center justify-center shadow-md">
+                        <span class="material-symbols-outlined text-amber-600 text-2xl sm:text-3xl">schedule</span>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Session Expired</h2>
+                    <p class="text-sm sm:text-base text-slate-600 mt-3">Your session has expired. Please sign in again to continue.</p>
+                </div>
+                <div class="flex items-center justify-center gap-2 py-6">
+                    <p class="text-base text-slate-700 font-medium">Redirecting to Sign In<span id="dots" class="inline-block w-8">.</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+<style>
+@keyframes dots {
+    0% {
+        content: '.';
+    }
+    33% {
+        content: '..';
+    }
+    66% {
+        content: '...';
+    }
+}
+
+#dots {
+    animation: 0.6s steps(4, end) infinite;
+}
+
+#dots::after {
+    content: '.';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+</style>
+
 <script>
 let isAutoSubmitting = false;
+let hasShownError = false;
+
+// Check for 419 error and show custom message
+function checkForExpiredSession() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasError = document.querySelector('.alert.alert-error');
+    const errorText = hasError ? hasError.textContent : '';
+    
+    // Check if error contains CSRF/token/expired related messages
+    if (hasError && (errorText.includes('expired') || errorText.includes('token') || window.location.toString().includes('419'))) {
+        showExpiredSessionMessage();
+    }
+}
+
+function showExpiredSessionMessage() {
+    if (hasShownError) return;
+    hasShownError = true;
+    
+    const formContainer = document.querySelector('form').closest('.w-full');
+    const redirectMessage = document.getElementById('redirectMessage');
+    
+    formContainer.style.display = 'none';
+    redirectMessage.classList.remove('hidden');
+    
+    // Auto-redirect after 3 seconds
+    setTimeout(() => {
+        window.location.href = '{{ route('login') }}';
+    }, 3000);
+}
+
+// Add dots animation
+function animateDots() {
+    const dotsElement = document.getElementById('dots');
+    let dotCount = 0;
+    
+    setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        dotsElement.textContent = '.'.repeat(dotCount || 1);
+    }, 500);
+}
+
+// Check for error on page load
+window.addEventListener('load', function() {
+    checkForExpiredSession();
+    if (hasShownError) {
+        animateDots();
+    }
+});
 
 document.getElementById('otpForm').addEventListener('submit', function(e) {
     const codeInput = document.getElementById('code');
@@ -99,15 +187,13 @@ document.getElementById('otpForm').addEventListener('submit', function(e) {
         return;
     }
     
-    // Only show loading state if this is an auto-submit (6 digits entered)
+    // Show loading state if this is an auto-submit (6 digits entered)
     if (isAutoSubmitting) {
         const submitBtn = document.getElementById('submitBtn');
         const buttonText = document.getElementById('buttonText');
-        const spinnerIcon = document.getElementById('spinnerIcon');
         
         submitBtn.disabled = true;
         buttonText.textContent = 'Verifying...';
-        spinnerIcon.classList.remove('hidden');
     }
 });
 
