@@ -5,74 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'Digital Product Store') - BKX</title>
     
-    <!-- Tailwind Configuration from Stitch -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Production CSS/JS Build Pipeline -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "on-error": "#ffffff",
-                        "inverse-on-surface": "#eef0ff",
-                        "surface-tint": "#4059aa",
-                        "on-primary-fixed": "#00164e",
-                        "inverse-primary": "#b6c4ff",
-                        "on-error-container": "#93000a",
-                        "surface-container-highest": "#dae2fd",
-                        "error-container": "#ffdad6",
-                        "outline-variant": "#c5c5d3",
-                        "tertiary-fixed-dim": "#ffb691",
-                        "surface-container": "#eaedff",
-                        "primary-fixed-dim": "#b6c4ff",
-                        "primary-container": "#1e3a8a",
-                        "on-tertiary": "#ffffff",
-                        "background": "#faf8ff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-fixed-variant": "#773205",
-                        "on-surface": "#131b2e",
-                        "on-surface-variant": "#444651",
-                        "outline": "#757682",
-                        "surface-bright": "#faf8ff",
-                        "on-secondary-fixed": "#111a37",
-                        "surface-container-low": "#f2f3ff",
-                        "on-secondary": "#ffffff",
-                        "on-background": "#131b2e",
-                        "tertiary": "#4b1c00",
-                        "secondary": "#555d7e",
-                        "surface-dim": "#d2d9f4",
-                        "primary-fixed": "#dce1ff",
-                        "surface": "#faf8ff",
-                        "on-tertiary-container": "#f39461",
-                        "tertiary-fixed": "#ffdbcb",
-                        "error": "#ba1a1a",
-                        "secondary-fixed": "#dce1ff",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#555e7f",
-                        "inverse-surface": "#283044",
-                        "primary": "#00236f",
-                        "secondary-container": "#d0d8ff",
-                        "tertiary-container": "#6e2c00",
-                        "secondary-fixed-dim": "#bdc5eb",
-                        "on-primary-fixed-variant": "#264191",
-                        "on-tertiary-fixed": "#341100",
-                        "surface-variant": "#dae2fd",
-                        "surface-container-high": "#e2e7ff",
-                        "on-primary-container": "#90a8ff"
-                    },
-                    fontFamily: {
-                        "headline": ["Inter"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined {

@@ -1,11 +1,53 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --color-on-error: #ffffff;
+  --color-inverse-on-surface: #eef0ff;
+  --color-surface-tint: #4059aa;
+  --color-on-primary-fixed: #00164e;
+  --color-inverse-primary: #b6c4ff;
+  --color-on-error-container: #93000a;
+  --color-surface-container-highest: #dae2fd;
+  --color-error-container: #ffdad6;
+  --color-outline-variant: #c5c5d3;
+  --color-tertiary-fixed-dim: #ffb691;
+  --color-surface-container: #eaedff;
+  --color-primary-fixed-dim: #b6c4ff;
+  --color-primary-container: #1e3a8a;
+  --color-on-tertiary: #ffffff;
+  --color-background: #faf8ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-tertiary-fixed-variant: #773205;
+  --color-on-surface: #131b2e;
+  --color-on-surface-variant: #444651;
+  --color-outline: #757682;
+  --color-surface-bright: #faf8ff;
+  --color-on-secondary-fixed: #111a37;
+  --color-surface-container-low: #f2f3ff;
+  --color-on-secondary: #ffffff;
+  --color-on-background: #131b2e;
+  --color-tertiary: #4b1c00;
+  --color-secondary: #555d7e;
+  --color-surface-dim: #d2d9f4;
+  --color-primary-fixed: #dce1ff;
+  --color-surface: #faf8ff;
+  --color-on-tertiary-container: #f39461;
+  --color-tertiary-fixed: #ffdbcb;
+  --color-error: #ba1a1a;
+  --color-secondary-fixed: #dce1ff;
+  --color-on-primary: #ffffff;
+  --color-on-secondary-container: #555e7f;
+  --color-inverse-surface: #283044;
+  --color-primary: #00236f;
+  --color-secondary-container: #d0d8ff;
+  --color-tertiary-container: #6e2c00;
+  --color-secondary-fixed-dim: #bdc5eb;
+  --color-on-primary-fixed-variant: #264191;
+  --color-on-tertiary-fixed: #341100;
+  --color-surface-variant: #dae2fd;
+  --color-surface-container-high: #e2e7ff;
+  --color-on-primary-container: #90a8ff;
+  --font-headline: "Inter";
+  --font-body: "Inter";
+  --font-label: "Inter";
 }
