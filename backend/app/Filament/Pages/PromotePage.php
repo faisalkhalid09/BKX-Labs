@@ -13,10 +13,25 @@ class PromotePage extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-megaphone';
-    protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Promote Page';
-    protected static string | \Illuminate\Contracts\Support\Htmlable | null $title = 'Promote Products';
+    public static function getNavigationIcon(): string
+    {
+        return 'heroicon-o-megaphone';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Promote Page';
+    }
+
+    public function getTitle(): string
+    {
+        return 'Promote Products';
+    }
 
     protected string $view = 'filament.pages.promote-page';
 
