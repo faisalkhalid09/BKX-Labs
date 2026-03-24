@@ -28,7 +28,7 @@
 
 <!-- TopNavBar Shared Component -->
 <nav class="fixed top-0 w-full z-50 bg-slate-50 dark:bg-slate-950 font-['Inter'] tracking-tight antialiased border-b border-outline-variant/20">
-    <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-16 sm:h-20 max-w-[1920px] mx-auto">
+    <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-14 sm:h-16 max-w-[1920px] mx-auto">
         <!-- Logo -->
         <div class="flex items-center gap-8 md:gap-12">
             <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 40px; sm:height: 50px;">
@@ -96,7 +96,7 @@
     </div>
 </nav>
 
-<main class="pt-16 sm:pt-20">
+<main class="pt-14 sm:pt-16">
     @yield('content')
 </main>
 
@@ -115,6 +115,7 @@
     </div>
 </footer>
 
+@livewire('promoted-widget')
 @livewireScripts
 @stack('scripts')
 
