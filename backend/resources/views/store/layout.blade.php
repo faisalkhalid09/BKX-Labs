@@ -29,11 +29,22 @@
 <!-- TopNavBar Shared Component -->
 <nav class="fixed top-0 w-full z-50 bg-slate-50 dark:bg-slate-950 font-['Inter'] tracking-tight antialiased border-b border-outline-variant/20">
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-14 sm:h-16 max-w-[1920px] mx-auto">
-        <!-- Logo -->
-        <div class="flex items-center gap-8 md:gap-12">
-            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 40px; sm:height: 50px;">
+        <!-- Logo & Search Bar -->
+        <div class="flex items-center gap-6 md:gap-10 flex-1">
+            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 40px; sm:height: 50px;" class="shrink-0">
                 <img src="/brand-logo.png" alt="BKX Labs" style="height: 60px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.4) sm:scale(0.5); transform-origin: left center;" />
             </a>
+
+            <!-- Header Search (Desktop) -->
+            <form action="{{ route('store.search') }}" method="GET" class="hidden sm:flex items-center flex-1 max-w-md">
+                <div class="relative w-full group">
+                    <input type="text" name="q" value="{{ $query ?? '' }}"
+                           placeholder="Quick search..."
+                           class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 px-4 py-1.5 pl-10 text-xs font-bold uppercase tracking-tight focus:border-primary focus:bg-white transition-all outline-none rounded-none"
+                           autocomplete="off">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-primary transition-colors">search</span>
+                </div>
+            </form>
         </div>
         
         <!-- Desktop Navigation -->

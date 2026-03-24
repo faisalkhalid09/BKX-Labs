@@ -4,161 +4,267 @@
 
 @push('styles')
 <style>
-.search-page-hero {
-    background: #f8fafc; 
-    border-bottom: 2px solid #e2e8f0; 
-    padding: 1.5rem 1rem; 
-    text-align: center;
+/* Hero Section */
+.search-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 2rem 1rem 1.5rem;
 }
-@media(min-width: 768px) { .search-page-hero { padding: 2rem 0; } }
+@media(min-width: 768px) {
+    .search-hero { padding: 2.5rem 0 2rem; }
+}
 
-.search-bar-wrap {
-    display: flex; max-width: 700px; margin: 0 auto;
-    background: #fff; border: 2px solid #1e3a8a; border-radius: 0;
-    overflow: hidden; box-shadow: 4px 4px 0 rgba(30,58,138,0.1); 
-    margin-bottom: 0.5rem; transition: all 0.2s;
+.search-hero h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
-.search-bar-wrap:focus-within { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30,58,138,.1); }
-.search-bar-input {
-    flex: 1; border: none; outline: none; padding: .7rem 1rem;
-    font-size: .875rem; font-family: 'Inter', sans-serif; color: #0f172a; background: transparent;
+@media(min-width: 768px) {
+    .search-hero h1 { font-size: 2.25rem; margin-bottom: 1.5rem; }
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 100%;
+    background: white;
+    border: 2px solid #1e3a8a;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+.search-bar:focus-within {
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #0f172a;
     min-height: 44px;
 }
-@media(min-width: 640px) { .search-bar-input { padding: .9rem 1.1rem; font-size: .975rem; } }
-.search-bar-input::placeholder { color: #94a3b8; }
-.search-bar-btn {
-    background: #1e3a8a; color: #fff; border: none; cursor: pointer;
-    padding: 0 1rem; font-size: .75rem; font-weight: 600; font-family: 'Inter', sans-serif;
-    display: flex; align-items: center; gap: .4rem; transition: background .2s; flex-shrink: 0;
-    min-height: 44px;
-}
-@media(min-width: 640px) { .search-bar-btn { padding: 0 1.4rem; font-size: .875rem; } }
-.search-bar-btn:hover { background: #1e40af; }
+.search-bar input::placeholder { color: #94a3b8; }
 
-.search-meta { font-size: .8rem; color: #64748b; padding: 0 1rem; }
-@media(min-width: 640px) { .search-meta { font-size: .85rem; padding: 0; } }
+.search-bar button {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+.search-bar button:hover { background: #1e40af; }
+
+.search-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.75rem;
+}
 .search-meta strong { color: #0f172a; }
 
-/* Filter sidebar + results layout */
-.search-layout { 
-    display: grid; 
-    grid-template-columns: 1fr; 
-    gap: 1.5rem;
-    padding: 1.5rem 1rem 3rem; 
-    align-items: start;
-}
-@media(min-width: 1024px) { 
-    .search-layout { 
-        grid-template-columns: 1fr 300px; 
-        gap: 4rem;
-        padding: 4rem 0 8rem;
-    } 
-}
-
-/* Sidebar filters */
-.filter-sidebar { 
-    order: 2;
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-@media(min-width: 1024px) { .filter-sidebar { order: 2; position: sticky; top: 100px; } }
-
-.filter-card { 
-    padding: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #fff;
-}
-@media(min-width: 640px) { .filter-card { padding: 1.25rem; } }
-
-.filter-section-title { 
-    font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #64748b; 
-    margin-bottom: .75rem;
-}
-@media(min-width: 640px) { .filter-section-title { font-size: .7rem; margin-bottom: .875rem; } }
-
-.filter-option { 
-    display: flex; align-items: center; gap: .625rem; padding: .5rem 0; cursor: pointer;
-}
-@media(min-width: 640px) { .filter-option { padding: .35rem 0; } }
-
-.filter-option input[type=radio] { 
-    accent-color: #1e3a8a; width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;
-}
-@media(min-width: 640px) { .filter-option input[type=radio] { width: 15px; height: 15px; } }
-
-.filter-option label { 
-    font-size: .8rem; color: #374151; cursor: pointer; line-height: 1.4;
-}
-@media(min-width: 640px) { .filter-option label { font-size: .875rem; } }
-
-.filter-option input[type=radio]:checked + label { color: #1e3a8a; font-weight: 600; }
-
-.filter-divider {
-    margin: 1rem 0;
-    border: none;
-    border-top: 1px solid #e2e8f0;
-}
-@media(min-width: 640px) { .filter-divider { margin: 1.25rem 0; } }
-
-/* Results area */
-.results-area { order: 1; }
-@media(min-width: 1024px) { .results-area { order: 1; } }
-
-.results-header { 
-    display: flex; align-items: center; justify-content: space-between; 
-    margin-bottom: 1rem; flex-wrap: wrap; gap: .75rem;
-}
-@media(min-width: 640px) { .results-header { margin-bottom: 1.5rem; } }
-
-.results-count { font-size: .8rem; color: #64748b; }
-@media(min-width: 640px) { .results-count { font-size: .875rem; } }
-
-.results-count strong { color: #0f172a; font-weight: 700; }
-.sort-select {
-    border: 1.5px solid #e2e8f0; border-radius: 8px; padding: .35rem .75rem;
-    font-size: .75rem; font-family: 'Inter', sans-serif; color: #374151;
-    background: #fff; outline: none; cursor: pointer; transition: border-color .2s;
-    min-height: 44px;
-}
-@media(min-width: 640px) { 
-    .sort-select { 
-        padding: .45rem .875rem; 
-        font-size: .825rem;
-    } 
-}
-.sort-select:focus { border-color: #1e3a8a; }
-
-/* Product grid — same as catalog */
-.product-grid { 
-    display: grid; 
+/* Main Layout */
+.search-container {
+    display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
-@media(min-width: 640px) { 
-    .product-grid { 
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    } 
+@media(min-width: 1024px) {
+    .search-container {
+        grid-template-columns: 280px 1fr;
+        gap: 3rem;
+        padding: 2.5rem 1rem;
+    }
 }
-@media(min-width: 768px) { 
-    .product-grid { 
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1.25rem;
-    } 
+@media(min-width: 1280px) {
+    .search-container {
+        grid-template-columns: 320px 1fr;
+        gap: 4rem;
+        padding: 3rem 2rem;
+    }
 }
 
-.product-card { 
-    display: flex; flex-direction: column;
+/* Filter Sidebar */
+.filter-sidebar {
+    order: 2;
+}
+@media(min-width: 1024px) {
+    .filter-sidebar {
+        order: 1;
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+    }
+}
+
+.filter-section {
+    background: white;
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #fff;
-    overflow: hidden;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
-.product-card-thumb { 
-    aspect-ratio: 16/9;
+.filter-section-title {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.filter-section-title::before {
+    content: '';
+    width: 3px;
+    height: 16px;
+    background: #1e3a8a;
+    border-radius: 2px;
+}
+
+/* Filter Grid (2 or 3 columns) */
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+@media(min-width: 640px) {
+    .filter-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(min-width: 1024px) {
+    .filter-grid { grid-template-columns: 1fr; }
+}
+
+.filter-option {
+    position: relative;
+}
+
+.filter-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.filter-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+    text-align: center;
+    transition: all 0.2s;
+    min-height: 44px;
+    word-break: break-word;
+}
+
+.filter-option input[type="checkbox"]:checked + label {
+    background: #1e3a8a;
+    color: white;
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.filter-option label:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.filter-option input[type="checkbox"]:checked + label:hover {
+    background: #1e40af;
+    border-color: #1e40af;
+}
+
+/* Price Range Filter */
+.price-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-range input {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    min-height: 40px;
+}
+.price-range input:focus {
+    outline: none;
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+}
+
+/* Products Area */
+.products-area {
+    order: 1;
+}
+@media(min-width: 1024px) {
+    .products-area { order: 2; }
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+@media(min-width: 640px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(min-width: 768px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media(min-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(min-width: 1280px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Product Card */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+.product-card:hover {
+    border-color: #1e3a8a;
+    box-shadow: 0 8px 24px rgba(30, 58, 138, 0.12);
+}
+
+.product-image {
+    aspect-ratio: 1;
     background: #f1f5f9;
     display: flex;
     align-items: center;
@@ -166,300 +272,324 @@
     overflow: hidden;
     border-bottom: 1px solid #e2e8f0;
 }
-
-.product-card-thumb img { 
+.product-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+.product-card:hover .product-image img {
+    transform: scale(1.05);
 }
 
-.product-card-thumb-placeholder { 
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: #e2e8f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: #f97316;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    z-index: 10;
 }
 
-.product-card-thumb-placeholder svg { 
-    width: 20px;
-    height: 20px;
-    stroke: #94a3b8;
-}
-
-.product-card-body { 
+.product-body {
     padding: 1rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
-@media(min-width: 640px) { .product-card-body { padding: 1.125rem; } }
 
-.product-card-category { margin-bottom: .4rem; }
-@media(min-width: 640px) { .product-card-category { margin-bottom: .45rem; } }
-
-.product-card-name { 
-    font-size: .85rem;
+.product-category {
+    font-size: 0.7rem;
     font-weight: 700;
-    color: #0f172a;
-    margin-bottom: .25rem;
-    line-height: 1.35;
-}
-@media(min-width: 640px) { .product-card-name { font-size: .95rem; } }
-
-.product-card-desc { 
-    font-size: .75rem;
+    text-transform: uppercase;
     color: #64748b;
-    line-height: 1.5;
-    flex: 1;
-    margin-bottom: .75rem;
-}
-@media(min-width: 640px) { 
-    .product-card-desc { 
-        font-size: .8rem;
-        line-height: 1.6;
-        margin-bottom: .875rem;
-    } 
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
 }
 
-.product-card-footer { 
+.product-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-top: 0.75rem;
     border-top: 1px solid #f1f5f9;
-    padding-top: .75rem;
-    margin-top: auto;
-    gap: .5rem;
-    flex-wrap: wrap;
-}
-@media(min-width: 640px) { 
-    .product-card-footer { 
-        padding-top: .875rem;
-    } 
+    gap: 0.5rem;
 }
 
-.product-card-price { 
-    font-size: .95rem;
-    font-weight: 800;
-    color: #0f172a;
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #1e3a8a;
     letter-spacing: -0.02em;
 }
-@media(min-width: 640px) { .product-card-price { font-size: 1.1rem; } }
 
-.product-card-actions { 
-    display: flex;
-    gap: .4rem;
-    flex-wrap: wrap;
+.product-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    background: #1e3a8a;
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.product-cta:hover { background: #1e40af; }
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    margin: 2rem 0;
 }
 
-.no-results { 
-    text-align: center; 
-    padding: 2rem 1rem;
-}
-@media(min-width: 640px) { .no-results { padding: 4rem 1rem; } }
-
-.no-results-icon { 
-    width: 48px;
-    height: 48px;
-    background: #f1f5f9;
+.no-results-icon {
+    width: 64px;
+    height: 64px;
+    background: white;
+    border: 2px solid #e2e8f0;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem;
-}
-@media(min-width: 640px) { 
-    .no-results-icon { 
-        width: 52px;
-        height: 52px;
-    } 
+    font-size: 2rem;
 }
 
-.no-results h3 { 
-    font-size: .95rem;
-    font-weight: 700;
+.no-results h3 {
+    font-size: 1.25rem;
+    font-weight: 900;
     color: #0f172a;
-    margin-bottom: .375rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
 }
-@media(min-width: 640px) { .no-results h3 { font-size: 1.05rem; } }
 
-.no-results p { 
-    font-size: .8rem;
+.no-results p {
+    font-size: 0.9rem;
     color: #64748b;
-    max-width: 34ch;
-    margin: 0 auto 1.5rem;
+    margin-bottom: 1.5rem;
 }
-@media(min-width: 640px) { .no-results p { font-size: .875rem; } }
 
-.btn {
+.no-results a {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: .5rem .75rem;
-    border-radius: 6px;
-    font-size: .75rem;
-    font-weight: 600;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: #1e3a8a;
+    color: white;
     text-decoration: none;
-    transition: all .2s;
-    min-height: 36px;
-    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    transition: background 0.2s;
 }
-@media(min-width: 640px) {
-    .btn {
-        padding: .6rem .9rem;
-        font-size: .8rem;
-        min-height: 40px;
+.no-results a:hover { background: #1e40af; }
+
+/* Mobile Filter Toggle */
+.filter-toggle {
+    display: none;
+    margin-bottom: 1.5rem;
+}
+@media(max-width: 1023px) {
+    .filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: #1e3a8a;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        min-height: 44px;
     }
 }
 
-.btn-outline {
-    border: 1.5px solid #e2e8f0;
-    color: #374151;
-    background: #fff;
-}
-.btn-outline:hover { border-color: #1e3a8a; color: #1e3a8a; }
-
-.btn-ghost {
-    color: #1e3a8a;
-    background: transparent;
-}
-.btn-ghost:hover { background: #f0f4ff; }
-
-.btn-sm {
-    padding: .35rem .5rem;
-    font-size: .7rem;
-}
-@media(min-width: 640px) {
-    .btn-sm {
-        padding: .4rem .65rem;
-        font-size: .75rem;
-    }
-}
-
-.chip {
-    display: inline-block;
-    padding: .25rem .5rem;
-    border-radius: 4px;
-    font-size: .65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-}
-@media(min-width: 640px) {
-    .chip {
-        padding: .3rem .6rem;
-        font-size: .7rem;
-    }
-}
-
-.chip-blue { background: #e0e7ff; color: #3730a3; }
-
+/* Container */
 .container {
-    max-width: 1440px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
 }
-@media(min-width: 640px) { .container { padding: 0 1.5rem; } }
-@media(min-width: 768px) { .container { padding: 0 3rem; } }
-
-.card {
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+@media(min-width: 768px) {
+    .container { padding: 0 2rem; }
 }
 </style>
 @endpush
 
 @section('content')
-{{-- Search hero --}}
-<div class="search-page-hero">
+
+{{-- Hero Section --}}
+<div class="search-hero">
     <div class="container">
-        <h1 class="text-xl sm:text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Quick Search</h1>
-        <form class="search-bar-wrap" action="{{ route('store.search') }}" method="GET" id="search-form">
-            <input class="search-bar-input !py-3 !text-sm" type="text" name="q"
-                   value="{{ $query }}"
-                   placeholder="Keywords..."
-                   autocomplete="off" autofocus>
-            {{-- Preserve other filters on search --}}
-            <input type="hidden" name="category" value="{{ $category }}">
-            <input type="hidden" name="sort" value="{{ $sort }}">
-            <button class="search-bar-btn !rounded-none !py-3 !px-6" type="submit">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <span class="hidden sm:inline ml-2 uppercase text-xs">Search</span>
+        <h1>Search Products</h1>
+
+        <form class="search-bar" action="{{ route('store.search') }}" method="GET" id="search-form">
+            <input type="text" name="q" placeholder="What are you looking for?" 
+                   value="{{ $query }}" autocomplete="off" autofocus>
+            <button type="submit">
+                <span class="material-symbols-outlined">search</span>
+                <span class="hidden sm:inline">Search</span>
             </button>
         </form>
 
-        @if ($query)
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                <span class="text-slate-900">{{ $products->count() }}</span> results for "{{ $query }}"
-            </p>
-        @else
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Catalog Overview: <span class="text-slate-900">{{ $products->count() }}</span> Items</p>
-        @endif
+        <div class="search-meta">
+            @if ($query)
+                Found <strong>{{ $products->count() }}</strong> results for <strong>"{{ $query }}"</strong>
+            @else
+                Browsing <strong>{{ $products->count() }}</strong> products
+            @endif
+        </div>
     </div>
 </div>
 
-{{-- Layout: sidebar + results --}}
-<div class="container !max-w-7xl">
-    <div class="search-layout !pt-6 !pb-12">
+{{-- Main Content --}}
+<div class="container">
+    <div class="search-container">
 
-        {{-- Results Area --}}
-        <div class="results-area">
-            <div class="results-header mb-4">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                    <span class="w-6 h-[2px] bg-blue-600 rounded-full"></span>
-                    Artifact Storefront
-                </p>
-            </div>
-                @if ($category && $category !== 'all')
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/5 text-primary text-xs font-black ring-1 ring-primary/10">
-                            {{ $categories[$category] ?? $category }}
-                        </span>
+        {{-- FILTERS SIDEBAR --}}
+        <aside class="filter-sidebar">
+
+            {{-- CATEGORY FILTER --}}
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <span class="material-symbols-outlined text-sm">category</span>
+                    Category
+                </h3>
+                <form id="filter-form" method="GET" action="{{ route('store.search') }}">
+                    <input type="hidden" name="q" value="{{ $query }}">
+
+                    <div class="filter-grid">
+                        @foreach ($categories as $key => $label)
+                            <div class="filter-option">
+                                <input type="checkbox" id="cat-{{ $key }}" name="category[]" 
+                                       value="{{ $key }}" class="filter-checkbox"
+                                       {{ in_array($key, (array)$category) ? 'checked' : '' }}>
+                                <label for="cat-{{ $key }}">{{ $label }}</label>
+                            </div>
+                        @endforeach
                     </div>
-                @endif
+                </form>
             </div>
 
+            {{-- PRICE FILTER --}}
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <span class="material-symbols-outlined text-sm">price_check</span>
+                    Price
+                </h3>
+                <div class="price-range">
+                    <input type="number" id="price-min" placeholder="Min" min="0" value="{{ request('price_min', '') }}">
+                    <span style="color: #cbd5e1;">—</span>
+                    <input type="number" id="price-max" placeholder="Max" min="0" value="{{ request('price_max', '') }}">
+                </div>
+                <button onclick="applyPriceFilter()" style="width: 100%; margin-top: 0.75rem; padding: 0.6rem; background: #1e3a8a; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; min-height: 40px;">
+                    Apply
+                </button>
+            </div>
+
+            {{-- SORT FILTER --}}
+            <div class="filter-section">
+                <h3 class="filter-section-title">
+                    <span class="material-symbols-outlined text-sm">sort</span>
+                    Sort
+                </h3>
+                <div class="filter-grid">
+                    @foreach (['relevance' => 'Featured', 'newest' => 'Newest', 'price_asc' => 'Price: Low→High', 'price_desc' => 'Price: High→Low'] as $key => $label)
+                        <div class="filter-option">
+                            <input type="radio" id="sort-{{ $key }}" name="sort" 
+                                   value="{{ $key }}" class="sort-radio"
+                                   {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}>
+                            <label for="sort-{{ $key }}">{{ $label }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- CLEAR FILTERS --}}
+            @if ($query || $category || request('price_min') || request('price_max'))
+                <a href="{{ route('store.search') }}" style="display: block; text-align: center; padding: 0.75rem; background: #f8fafc; color: #1e3a8a; text-decoration: none; border: 2px solid #e2e8f0; border-radius: 8px; font-weight: 700; cursor: pointer; min-height: 44px; line-height: 1.75;">
+                    Clear All Filters
+                </a>
+            @endif
+        </aside>
+
+        {{-- PRODUCTS AREA --}}
+        <div class="products-area">
             @if ($products->isEmpty())
-                <div class="py-20 px-8 border-4 border-slate-200 rounded-none bg-slate-50 text-center">
-                    <h3 class="text-2xl font-black text-slate-900 mb-2 uppercase">No matches found</h3>
-                    <p class="text-slate-500 max-w-sm mx-auto mb-8">Try adjusting your filters.</p>
-                    <a href="{{ route('store.search') }}" class="btn btn-outline px-8 !rounded-none border-2">Clear all</a>
+                <div class="no-results">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No Products Found</h3>
+                    <p>Try adjusting your filters or search terms</p>
+                    <a href="{{ route('store.search') }}">
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">refresh</span>
+                        Clear Filters
+                    </a>
                 </div>
             @else
                 <div class="product-grid">
                     @foreach ($products as $product)
-                        <div class="relative bg-white dark:bg-slate-900 border-2 border-slate-200 overflow-hidden hover:border-blue-900 transition-all duration-200 rounded-none">
+                        <div class="product-card">
                             @if($product->is_promoted)
-                                <div class="absolute top-0 left-0 z-20 px-3 py-1 bg-primary text-white text-[10px] font-black uppercase tracking-widest shadow-sm">
-                                    Sponsored
-                                </div>
+                                <div class="product-badge">Sponsored</div>
                             @endif
-                            
-                            <div class="aspect-video bg-slate-100 overflow-hidden relative border-b-2 border-slate-200 rounded-none">
+
+                            <div class="product-image" style="position: relative;">
                                 @if ($product->thumbnail_path)
-                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" 
+                                         alt="{{ $product->name }}">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center opacity-20">
-                                        <span class="material-symbols-outlined text-6xl">inventory_2</span>
-                                    </div>
+                                    <span class="material-symbols-outlined" style="font-size: 3rem; color: #cbd5e1;">inventory_2</span>
                                 @endif
                             </div>
 
-                            <div class="p-6">
-                                <span class="inline-block px-2 py-0.5 bg-slate-200 text-[10px] font-black text-slate-700 uppercase tracking-widest mb-4">
-                                    {{ str_replace('_', ' ', $product->category) }}
-                                </span>
-                                <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight">{{ $product->name }}</h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-6">{{ $product->short_description }}</p>
-                                
-                                <div class="flex items-center justify-between pt-5 border-t-2 border-slate-100">
-                                    <span class="text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
-                                    <a href="{{ route('store.show', $product->slug) }}" class="flex items-center gap-2 px-5 py-2 bg-primary text-white text-xs font-black hover:bg-blue-900 transition-colors !rounded-none">
-                                        VIEW DETAILS
-                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            <div class="product-body">
+                                <div class="product-category">{{ str_replace('_', ' ', $product->category) }}</div>
+                                <h3 class="product-name">{{ $product->name }}</h3>
+                                <p class="product-desc">{{ $product->short_description ?? 'High quality product' }}</p>
+
+                                <div class="product-footer" style="margin-top: auto;">
+                                    <span class="product-price">${{ number_format($product->price, 2) }}</span>
+                                    <a href="{{ route('store.show', $product->slug) }}" class="product-cta">
+                                        VIEW
+                                        <span class="material-symbols-outlined" style="font-size: 0.85rem;">arrow_forward</span>
                                     </a>
                                 </div>
                             </div>
@@ -468,36 +598,57 @@
                 </div>
             @endif
         </div>
+    </div>
+</div>
 
-        {{-- Sidebar Filters (Right Side) --}}
-        <aside class="filter-sidebar">
-            <div class="sticky top-20">
-                <div class="bg-white border-2 border-slate-200 rounded-none p-4 shadow-[4px_4px_0_#e2e8f0]">
-                    <form id="filter-form" action="{{ route('store.search') }}" method="GET">
-                        <input type="hidden" name="q" value="{{ $query }}">
-                        
-                        <div class="flex items-center gap-2 mb-4 border-b-2 border-slate-100 pb-2">
-                            <span class="material-symbols-outlined text-primary font-bold text-lg">filter_alt</span>
-                            <h2 class="text-sm font-black text-slate-900 uppercase tracking-tight">Filters</h2>
-                        </div>
+@endsection
 
-                        {{-- Category Group --}}
-                        <div class="mb-6">
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Category</p>
-                            <div class="space-y-0.5">
-                                @foreach ($categories as $key => $label)
-                                    <label class="flex items-center cursor-pointer group">
-                                        <input type="radio" name="category" value="{{ $key }}"
-                                               {{ $category === $key || ($key === 'all' && $category === '') ? 'checked' : '' }}
-                                               class="hidden peer"
-                                               onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between py-1.5 px-3 border-2 border-slate-50 group-hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
-                                            <span class="text-[10px] font-black uppercase tracking-tight">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-xs peer-checked:block hidden">done</span>
-                                        </div>
-                                    </label>
-                                @endforeach
-                            </div>
+@push('scripts')
+<script>
+// Price filter
+function applyPriceFilter() {
+    const minPrice = document.getElementById('price-min').value;
+    const maxPrice = document.getElementById('price-max').value;
+    const url = new URL(window.location);
+    
+    if (minPrice) url.searchParams.set('price_min', minPrice);
+    else url.searchParams.delete('price_min');
+    
+    if (maxPrice) url.searchParams.set('price_max', maxPrice);
+    else url.searchParams.delete('price_max');
+    
+    window.location = url.toString();
+}
+
+// Category filter
+document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const form = document.getElementById('filter-form');
+        const formData = new FormData(form);
+        const url = new URL(window.location);
+        
+        // Clear existing category params
+        url.searchParams.delete('category[]');
+        
+        // Add selected categories
+        formData.getAll('category[]').forEach(val => {
+            url.searchParams.append('category[]', val);
+        });
+        
+        window.location = url.toString();
+    });
+});
+
+// Sort filter
+document.querySelectorAll('.sort-radio').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const url = new URL(window.location);
+        url.searchParams.set('sort', this.value);
+        window.location = url.toString();
+    });
+});
+</script>
+@endpush
                         </div>
 
                         {{-- Sort Group --}}
