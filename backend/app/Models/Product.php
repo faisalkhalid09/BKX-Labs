@@ -19,12 +19,14 @@ class Product extends Model
         'thumbnail_path',
         'images',
         'is_active',
+        'is_promoted',
     ];
 
     protected $casts = [
-        'price'     => 'decimal:2',
-        'is_active' => 'boolean',
-        'images'    => 'array',
+        'price'       => 'decimal:2',
+        'is_active'   => 'boolean',
+        'is_promoted' => 'boolean',
+        'images'      => 'array',
     ];
 
     protected static function booted(): void
