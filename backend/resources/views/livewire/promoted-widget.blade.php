@@ -1,3 +1,4 @@
+<div>
 @if($product)
 <div class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 w-72 shadow-2xl rounded-xl border border-outline-variant/30 overflow-hidden transform transition-all duration-500 hover:-translate-y-1 group bg-surface-container-lowest">
     <div class="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-bl-lg z-10 shadow-sm">
@@ -24,3 +25,4 @@
     </a>
 </div>
 @endif
+</div>
