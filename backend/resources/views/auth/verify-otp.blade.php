@@ -88,36 +88,48 @@
 </div>
 
 <script>
+let isAutoSubmitting = false;
+
 document.getElementById('otpForm').addEventListener('submit', function(e) {
-    const submitBtn = document.getElementById('submitBtn');
-    const buttonText = document.getElementById('buttonText');
-    const spinnerIcon = document.getElementById('spinnerIcon');
+    const codeInput = document.getElementById('code');
     
-    submitBtn.disabled = true;
-    buttonText.textContent = 'Verifying...';
-    spinnerIcon.classList.remove('hidden');
+    // Only allow submission with 6 digits
+    if (codeInput.value.length !== 6) {
+        e.preventDefault();
+        return;
+    }
+    
+    // Only show loading state if this is an auto-submit (6 digits entered)
+    if (isAutoSubmitting) {
+        const submitBtn = document.getElementById('submitBtn');
+        const buttonText = document.getElementById('buttonText');
+        const spinnerIcon = document.getElementById('spinnerIcon');
+        
+        submitBtn.disabled = true;
+        buttonText.textContent = 'Verifying...';
+        spinnerIcon.classList.remove('hidden');
+    }
 });
 
-// Auto-focus next field when 6 digits entered
+// Auto-submit when 6 digits entered
 document.getElementById('code').addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9]/g, '');
     
     if (this.value.length === 6) {
-        // Auto-submit when 6 digits entered
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        const buttonText = document.getElementById('buttonText');
-        const spinnerIcon = document.getElementById('spinnerIcon');
-        buttonText.textContent = 'Verifying...';
-        spinnerIcon.classList.remove('hidden');
-        
         // Show visual feedback
         this.classList.remove('border-slate-300');
         this.classList.add('border-green-500');
+        
+        // Trigger form submission
+        isAutoSubmitting = true;
+        setTimeout(() => {
+            document.getElementById('otpForm').submit();
+        }, 300);
     } else {
         // Reset styling if not 6 digits
         this.classList.remove('border-green-500');
         this.classList.add('border-slate-300');
+        isAutoSubmitting = false;
     }
 });
 </script>
