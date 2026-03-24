@@ -402,7 +402,7 @@ nav form[action*="search"] { display: none !important; }
     <div class="container">
         <h1>Search Products</h1>
 
-        <form class="search-bar" action="{{ route('store.search') }}" method="GET" id="search-form">
+        <form class="search-bar" action="{{ route('store.search') }}" method="GET">
             <input type="text" name="q" placeholder="What are you looking for?" 
                    value="{{ $query }}" autocomplete="off" autofocus>
             <button type="submit">
@@ -482,13 +482,9 @@ nav form[action*="search"] { display: none !important; }
         <div class="products-area">
             @if ($products->isEmpty())
                 <div class="no-results">
-                    <div class="no-results-icon">🔍</div>
                     <h3>No Products Found</h3>
                     <p>Try adjusting your filters or search terms</p>
-                    <a href="{{ route('store.search') }}">
-                        <span class="material-symbols-outlined" style="font-size: 1rem;">refresh</span>
-                        Clear Filters
-                    </a>
+                    <a href="{{ route('store.search') }}">Clear Filters</a>
                 </div>
             @else
                 <div class="product-grid">
@@ -503,20 +499,20 @@ nav form[action*="search"] { display: none !important; }
                                     <img src="{{ asset('storage/' . $product->thumbnail_path) }}" 
                                          alt="{{ $product->name }}">
                                 @else
-                                    <span class="material-symbols-outlined" style="font-size: 3rem; color: #cbd5e1;">inventory_2</span>
+                                    <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #cbd5e1;">inventory_2</span>
                                 @endif
                             </div>
 
                             <div class="product-body">
                                 <div class="product-category">{{ str_replace('_', ' ', $product->category) }}</div>
                                 <h3 class="product-name">{{ $product->name }}</h3>
-                                <p class="product-desc">{{ $product->short_description ?? 'High quality product' }}</p>
+                                <p class="product-desc">{{ $product->short_description ?? 'Quality product' }}</p>
 
                                 <div class="product-footer" style="margin-top: auto;">
                                     <span class="product-price">${{ number_format($product->price, 2) }}</span>
                                     <a href="{{ route('store.show', $product->slug) }}" class="product-cta">
-                                        VIEW
-                                        <span class="material-symbols-outlined" style="font-size: 0.85rem;">arrow_forward</span>
+                                        View
+                                        <span class="material-symbols-outlined" style="font-size: 0.8rem;">arrow_forward</span>
                                     </a>
                                 </div>
                             </div>
@@ -532,7 +528,6 @@ nav form[action*="search"] { display: none !important; }
 
 @push('scripts')
 <script>
-// Price filter
 function applyPriceFilter() {
     const minPrice = document.getElementById('price-min').value;
     const maxPrice = document.getElementById('price-max').value;
@@ -547,17 +542,13 @@ function applyPriceFilter() {
     window.location = url.toString();
 }
 
-// Category filter
 document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         const form = document.getElementById('filter-form');
         const formData = new FormData(form);
         const url = new URL(window.location);
         
-        // Clear existing category params
         url.searchParams.delete('category[]');
-        
-        // Add selected categories
         formData.getAll('category[]').forEach(val => {
             url.searchParams.append('category[]', val);
         });
@@ -566,7 +557,6 @@ document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
     });
 });
 
-// Sort filter
 document.querySelectorAll('.sort-radio').forEach(radio => {
     radio.addEventListener('change', function() {
         const url = new URL(window.location);
