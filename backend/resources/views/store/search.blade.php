@@ -158,7 +158,8 @@
     position: relative;
 }
 
-.filter-option input[type="checkbox"] {
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -182,7 +183,7 @@
     word-break: break-word;
 }
 
-.filter-option input[type="checkbox"]:checked + label {
+.filter-option input:checked + label {
     background: #1e3a8a;
     color: white;
     border-color: #1e3a8a;
@@ -194,7 +195,7 @@
     background: #f8fafc;
 }
 
-.filter-option input[type="checkbox"]:checked + label:hover {
+.filter-option input:checked + label:hover {
     background: #1e40af;
     border-color: #1e40af;
 }
@@ -257,6 +258,7 @@
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s;
+    height: 100%;
 }
 .product-card:hover {
     border-color: #1e3a8a;
@@ -271,6 +273,7 @@
     justify-content: center;
     overflow: hidden;
     border-bottom: 1px solid #e2e8f0;
+    position: relative;
 }
 .product-image img {
     width: 100%;
@@ -420,29 +423,6 @@
 }
 .no-results a:hover { background: #1e40af; }
 
-/* Mobile Filter Toggle */
-.filter-toggle {
-    display: none;
-    margin-bottom: 1.5rem;
-}
-@media(max-width: 1023px) {
-    .filter-toggle {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-        background: #1e3a8a;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 0.9rem;
-        min-height: 44px;
-    }
-}
-
-/* Container */
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -571,7 +551,7 @@
                                 <div class="product-badge">Sponsored</div>
                             @endif
 
-                            <div class="product-image" style="position: relative;">
+                            <div class="product-image">
                                 @if ($product->thumbnail_path)
                                     <img src="{{ asset('storage/' . $product->thumbnail_path) }}" 
                                          alt="{{ $product->name }}">
@@ -647,51 +627,5 @@ document.querySelectorAll('.sort-radio').forEach(radio => {
         window.location = url.toString();
     });
 });
-</script>
-@endpush
-                        </div>
-
-                        {{-- Sort Group --}}
-                        <div>
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Sort</p>
-                            <div class="space-y-0.5">
-                                @foreach (['relevance' => 'Featured', 'newest' => 'Newest', 'price_asc' => 'Price: Low', 'price_desc' => 'Price: High'] as $key => $label)
-                                    <label class="flex items-center cursor-pointer group">
-                                        <input type="radio" name="sort" value="{{ $key }}"
-                                               {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}
-                                               class="hidden peer"
-                                               onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between py-1.5 px-3 border-2 border-slate-50 group-hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
-                                            <span class="text-[10px] font-black uppercase tracking-tight">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-xs peer-checked:block hidden">done</span>
-                                        </div>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </aside>
-    </div>
-</div>
-
-@endsection
-
-@push('scripts')
-<script>
-// Radio filters auto-submit — keep category in sync when sorting changes and vice versa
-const filterForm = document.getElementById('filter-form');
-const hiddenCat  = document.getElementById('hidden-category');
-
-if (filterForm) {
-    const catRadios  = filterForm.querySelectorAll('input[name=category]');
-    catRadios.forEach(r => {
-        r.addEventListener('change', () => {
-            hiddenCat.value = r.value;
-            filterForm.submit();
-        });
-    });
-}
 </script>
 @endpush
