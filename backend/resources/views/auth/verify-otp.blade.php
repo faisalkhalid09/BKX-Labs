@@ -1,39 +1,124 @@
 @extends('store.layout')
 @section('title', 'Verify Verification Code')
 @section('content')
-<div style="min-height:80vh;display:flex;align-items:center;justify-content:center;padding:3rem 1rem;background:#f8fafc;">
-    <div class="card" style="width:100%;max-width:400px;padding:2.5rem;text-align:center;">
-        <div style="margin-bottom:1.5rem;">
-            <div style="width:48px;height:48px;background:#eff6ff;color:#1e3a8a;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+<div class="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 px-4 sm:px-6 bg-gradient-to-br from-slate-50 to-slate-100">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border border-slate-200 p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-7">
+        <!-- Header Section -->
+        <div class="text-center space-y-3 sm:space-y-4">
+            <div class="flex justify-center">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center shadow-md">
+                    <span class="material-symbols-outlined text-blue-600 text-2xl sm:text-3xl">mail_lock</span>
+                </div>
             </div>
-            <h1 style="font-size:1.4rem;font-weight:800;color:#0f172a;letter-spacing:-0.03em;">Check your email</h1>
-            <p style="font-size:.875rem;color:#64748b;margin-top:.5rem;">We've sent a 6-digit verification code to <strong>{{ $email }}</strong>. Enter it below to continue.</p>
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Verify your email</h1>
+                <p class="text-sm sm:text-base text-slate-600 mt-2">We sent a 6-digit code to <br class="sm:hidden"><strong class="text-slate-900">{{ $email }}</strong></p>
+            </div>
         </div>
 
+        <!-- Error Messages -->
         @if ($errors->any())
-            <div class="alert alert-error" style="text-align:left;margin-bottom:1.25rem;">
-                @foreach ($errors->all() as $error) <div>{{ $error }}</div> @endforeach
+            <div class="bg-red-50 border border-red-200 rounded-xl p-4 space-y-2">
+                <div class="flex gap-3 items-start">
+                    <span class="material-symbols-outlined text-red-600 text-lg flex-shrink-0 mt-0.5">error</span>
+                    <div class="flex-1">
+                        @foreach ($errors->all() as $error)
+                            <p class="text-sm text-red-700 font-medium">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         @endif
 
-        <form action="{{ route('verify.otp') }}" method="POST">
+        <!-- OTP Form -->
+        <form action="{{ route('verify.otp') }}" method="POST" id="otpForm" class="space-y-5 sm:space-y-6">
             @csrf
             
-            <div class="form-group" style="text-align:left;">
-                <label class="form-label" for="code">Verification Code</label>
-                <input class="form-input" type="text" id="code" name="code"
-                       required autocomplete="one-time-code" placeholder="123456"
-                       style="font-size:1.5rem;letter-spacing:0.25em;text-align:center;font-weight:700;padding:.75rem;"
-                       maxlength="6" autofocus>
+            <!-- OTP Input Field -->
+            <div class="space-y-2">
+                <label for="code" class="block text-sm font-semibold text-slate-900">Verification Code</label>
+                <input 
+                    type="text" 
+                    id="code" 
+                    name="code"
+                    required 
+                    autocomplete="one-time-code" 
+                    placeholder="000000"
+                    maxlength="6"
+                    autofocus
+                    class="w-full h-14 sm:h-16 px-4 sm:px-5 text-center text-2xl sm:text-4xl font-bold tracking-widest bg-white border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all duration-200 placeholder-slate-400"
+                    inputmode="numeric"
+                />
+                <p class="text-xs sm:text-sm text-slate-500 text-center">Enter the 6-digit code from your email</p>
             </div>
-            
-            <button type="submit" class="btn btn-primary btn-full" style="font-size:.95rem;padding:.7rem;margin-top:1rem;">Verify & Continue</button>
+
+            <!-- Submit Button -->
+            <button 
+                type="submit"
+                id="submitBtn"
+                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold text-base sm:text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+                <span id="buttonText">Verify & Continue</span>
+                <span id="spinnerIcon" class="material-symbols-outlined text-lg hidden animate-spin">sync</span>
+            </button>
         </form>
 
-        <p style="font-size:.825rem;color:#64748b;margin-top:1.5rem;">
-            Code didn't arrive? Please check your spam folder or return to <a href="{{ route('login') }}" style="color:#1e3a8a;font-weight:600;">Sign In</a> to request a new one.
-        </p>
+        <!-- Resend Code Section -->
+        <div class="border-t border-slate-200 pt-5 sm:pt-6 space-y-3">
+            <p class="text-sm text-slate-600 text-center">
+                Code didn't arrive? Check your spam folder or 
+                <button 
+                    type="button"
+                    onclick="window.location.href='{{ route('login') }}'"
+                    class="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+                >
+                    request a new one
+                </button>
+            </p>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-200 rounded-xl p-3 sm:p-4 flex gap-3 items-start">
+            <span class="material-symbols-outlined text-emerald-700 text-lg flex-shrink-0">verified_user</span>
+            <div class="flex-1">
+                <p class="text-xs sm:text-sm text-emerald-900 font-medium">Your email is protected with enterprise-grade encryption</p>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+document.getElementById('otpForm').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('submitBtn');
+    const buttonText = document.getElementById('buttonText');
+    const spinnerIcon = document.getElementById('spinnerIcon');
+    
+    submitBtn.disabled = true;
+    buttonText.textContent = 'Verifying...';
+    spinnerIcon.classList.remove('hidden');
+});
+
+// Auto-focus next field when 6 digits entered
+document.getElementById('code').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    
+    if (this.value.length === 6) {
+        // Auto-submit when 6 digits entered
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        const buttonText = document.getElementById('buttonText');
+        const spinnerIcon = document.getElementById('spinnerIcon');
+        buttonText.textContent = 'Verifying...';
+        spinnerIcon.classList.remove('hidden');
+        
+        // Show visual feedback
+        this.classList.remove('border-slate-300');
+        this.classList.add('border-green-500');
+    } else {
+        // Reset styling if not 6 digits
+        this.classList.remove('border-green-500');
+        this.classList.add('border-slate-300');
+    }
+});
+</script>
 @endsection
