@@ -31,7 +31,7 @@
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-14 sm:h-16 max-w-[1920px] mx-auto">
         <!-- Logo -->
         <div class="flex items-center gap-8 md:gap-12">
-            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 40px; sm:height: 50px;">
+            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 20px; sm:height: 25px;">
                 <img src="/brand-logo.png" alt="BKX Labs" style="height: 140px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.4) sm:scale(0.5); transform-origin: left center;" />
             </a>
         </div>
