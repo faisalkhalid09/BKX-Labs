@@ -30,17 +30,15 @@ class SearchController extends Controller
             $products->where('category', $category);
         }
 
-        // Sorting
+        // Priority Sorting: Promoted products always come first
+        $products->orderBy('is_promoted', 'desc');
+
+        // Second-tier Sorting
         match ($sort) {
             'price_asc'  => $products->orderBy('price', 'asc'),
             'price_desc' => $products->orderBy('price', 'desc'),
             'newest'     => $products->orderBy('created_at', 'desc'),
-            default      => $products->orderByRaw(
-                $query !== ''
-                    ? "CASE WHEN name LIKE ? THEN 0 ELSE 1 END, created_at DESC"
-                    : "created_at DESC",
-                $query !== '' ? ["%{$query}%"] : []
-            ),
+            default      => $products->inRandomOrder(),
         };
 
         $products = $products->get();

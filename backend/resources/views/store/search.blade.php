@@ -45,10 +45,10 @@
     padding: 1.5rem 1rem 3rem; 
     align-items: start;
 }
-@media(min-width: 768px) { 
+@media(min-width: 1024px) { 
     .search-layout { 
-        grid-template-columns: 220px 1fr; 
-        gap: 2.5rem;
+        grid-template-columns: 1fr 280px; 
+        gap: 3rem;
         padding: 2.5rem 0 5rem;
     } 
 }
@@ -60,7 +60,7 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-@media(min-width: 768px) { .filter-sidebar { order: 1; } }
+@media(min-width: 1024px) { .filter-sidebar { order: 2; position: sticky; top: 100px; } }
 
 .filter-card { 
     padding: 1rem;
@@ -102,7 +102,7 @@
 
 /* Results area */
 .results-area { order: 1; }
-@media(min-width: 768px) { .results-area { order: 2; } }
+@media(min-width: 1024px) { .results-area { order: 1; } }
 
 .results-header { 
     display: flex; align-items: center; justify-content: space-between; 
@@ -400,70 +400,36 @@
     </div>
 </div>
 
-{{-- Layout: sidebar + results --}}
-<div class="container">
-    <div class="search-layout">
-
-        {{-- Sidebar Filters --}}
-        <aside class="filter-sidebar">
-            <div class="filter-card">
-                <form id="filter-form" action="{{ route('store.search') }}" method="GET">
-                    <input type="hidden" name="q" value="{{ $query }}">
-
-                    {{-- Category --}}
-                    <p class="filter-section-title">Category</p>
-                    @foreach ($categories as $key => $label)
-                        <div class="filter-option">
-                            <input type="radio" name="category" id="cat_{{ $key }}" value="{{ $key }}"
-                                   {{ $category === $key || ($key === 'all' && $category === '') ? 'checked' : '' }}
-                                   onchange="document.getElementById('filter-form').submit()">
-                            <label for="cat_{{ $key }}">{{ $label }}</label>
-                        </div>
-                    @endforeach
-
-                    <hr class="filter-divider">
-
-                    {{-- Sort --}}
-                    <p class="filter-section-title">Sort By</p>
-                    @foreach (['relevance' => 'Relevance', 'newest' => 'Newest', 'price_asc' => 'Price: Low to High', 'price_desc' => 'Price: High to Low'] as $key => $label)
-                        <div class="filter-option">
-                            <input type="radio" name="sort" id="sort_{{ $key }}" value="{{ $key }}"
-                                   {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}
-                                   onchange="document.getElementById('filter-form').submit()">
-                            <label for="sort_{{ $key }}">{{ $label }}</label>
-                        </div>
-                    @endforeach
-
-                    <input type="hidden" name="category" value="{{ $category ?: 'all' }}" id="hidden-category">
-                </form>
-            </div>
-        </aside>
-
         {{-- Results --}}
         <div class="results-area">
             <div class="results-header">
                 <p class="results-count">
-                    <strong>{{ $products->count() }}</strong> {{ Str::plural('product', $products->count()) }}
-                    @if ($category && $category !== 'all') in <strong class="hidden sm:inline">{{ $categories[$category] ?? $category }}</strong>@endif
+                    Found <strong>{{ $products->count() }}</strong> {{ Str::plural('product', $products->count()) }}
+                    @if ($category && $category !== 'all') in <strong class="text-blue-700 bg-blue-50 px-2 py-0.5 rounded">{{ $categories[$category] ?? $category }}</strong>@endif
                 </p>
             </div>
 
             @if ($products->isEmpty())
-                <div class="no-results">
+                <div class="no-results bg-slate-50 border border-dashed border-slate-300 rounded-2xl">
                     <div class="no-results-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                     </div>
-                    <h3>No products found</h3>
-                    <p>Try different keywords or remove filters to see all products.</p>
-                    <a href="{{ route('store.search') }}" class="btn btn-outline mt-4">Clear search</a>
+                    <h3 class="text-xl font-black">No matches found</h3>
+                    <p class="mt-2">Try different keywords or browse our catalog.</p>
+                    <a href="{{ route('store.search') }}" class="btn btn-outline mt-6">Clear all filters</a>
                 </div>
             @else
                 <div class="product-grid">
                     @foreach ($products as $product)
-                        <div class="card product-card">
-                            <div class="product-card-thumb">
+                        <div class="card product-card group hover:border-blue-700/30 transition-all duration-300">
+                            @if($product->is_promoted)
+                                <div class="absolute top-2 left-2 z-10 bg-primary text-on-primary text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded shadow-sm">
+                                    Promoted
+                                </div>
+                            @endif
+                            <div class="product-card-thumb relative">
                                 @if ($product->thumbnail_path)
-                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}">
+                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}" class="group-hover:scale-105 transition-transform duration-500">
                                 @else
                                     <div class="product-card-thumb-placeholder">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
@@ -472,14 +438,14 @@
                             </div>
                             <div class="product-card-body">
                                 <div class="product-card-category">
-                                    <span class="chip chip-blue">{{ ucwords(str_replace('_', ' ', $product->category)) }}</span>
+                                    <span class="chip chip-blue opacity-80">{{ ucwords(str_replace('_', ' ', $product->category)) }}</span>
                                 </div>
                                 <div class="product-card-name">{{ $product->name }}</div>
                                 <div class="product-card-desc">{{ $product->short_description }}</div>
                                 <div class="product-card-footer">
                                     <span class="product-card-price">${{ number_format($product->price, 2) }}</span>
                                     <div class="product-card-actions">
-                                        <a href="{{ route('store.show', $product->slug) }}" class="btn btn-ghost">Details</a>
+                                        <a href="{{ route('store.show', $product->slug) }}" class="btn btn-ghost hover:shadow-lg transition-all rounded-lg text-sm">View Details &rarr;</a>
                                     </div>
                                 </div>
                             </div>
@@ -489,8 +455,53 @@
             @endif
         </div>
 
-    </div>
-</div>
+        {{-- Sidebar Filters (Now on the Right) --}}
+        <aside class="filter-sidebar">
+            <div class="filter-card shadow-lg shadow-slate-200/50 border-slate-200/80">
+                <form id="filter-form" action="{{ route('store.search') }}" method="GET">
+                    <input type="hidden" name="q" value="{{ $query }}">
+                    
+                    <div class="flex items-center gap-2 mb-6 border-b border-slate-100 pb-4">
+                        <span class="material-symbols-outlined text-blue-900 text-xl font-bold">tune</span>
+                        <p class="font-black text-sm text-slate-900 tracking-tight">Filter Results</p>
+                    </div>
+
+                    {{-- Category --}}
+                    <p class="filter-section-title">Niche / Category</p>
+                    <div class="space-y-1">
+                        @foreach ($categories as $key => $label)
+                            <div class="filter-option group pr-4 rounded-md hover:bg-slate-50 transition-colors">
+                                <input type="radio" name="category" id="cat_{{ $key }}" value="{{ $key }}"
+                                       {{ $category === $key || ($key === 'all' && $category === '') ? 'checked' : '' }}
+                                       onchange="document.getElementById('filter-form').submit()">
+                                <label for="cat_{{ $key }}" class="font-medium group-hover:text-blue-900 transition-colors">{{ $label }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <hr class="filter-divider">
+
+                    {{-- Sort --}}
+                    <p class="filter-section-title">Preference</p>
+                    <div class="space-y-1">
+                        @foreach (['relevance' => 'All (Shuffled)', 'newest' => 'Latest Arrivals', 'price_asc' => 'Lowest Price', 'price_desc' => 'Highest Price'] as $key => $label)
+                            <div class="filter-option group pr-4 rounded-md hover:bg-slate-50 transition-colors transition-colors">
+                                <input type="radio" name="sort" id="sort_{{ $key }}" value="{{ $key }}"
+                                       {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}
+                                       onchange="document.getElementById('filter-form').submit()">
+                                <label for="sort_{{ $key }}" class="font-medium group-hover:text-blue-900 transition-colors">{{ $label }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <input type="hidden" name="category" value="{{ $category ?: 'all' }}" id="hidden-category">
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-slate-100 italic text-[11px] text-slate-400 text-center px-4 leading-relaxed">
+                    Sponsoring these niche products helps fund our community builders.
+                </div>
+            </div>
+        </aside>
 
 @endsection
 

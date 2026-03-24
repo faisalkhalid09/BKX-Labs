@@ -1,12 +1,17 @@
-<div>
+<div x-data="{ showWidget: true }" x-init="setTimeout(() => showWidget = false, 60000)" x-show="showWidget" x-transition.duration.500ms>
 @if($product)
-<div class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 w-72 shadow-2xl rounded-xl border border-outline-variant/30 overflow-hidden transform transition-all duration-500 hover:-translate-y-1 group bg-surface-container-lowest">
-    <div class="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-bl-lg z-10 shadow-sm">
+<div class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 w-[calc(100vw-2rem)] sm:w-72 shadow-2xl rounded-xl border border-outline-variant/30 overflow-hidden transform transition-all duration-500 hover:-translate-y-1 group bg-surface-container-lowest">
+    <!-- Close Button -->
+    <button @click="showWidget = false" class="absolute top-2 right-2 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-slate-900/10 hover:bg-slate-900/20 dark:bg-slate-100/10 dark:hover:bg-slate-100/20 text-slate-800 dark:text-slate-200 transition-colors" aria-label="Close promotion">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+
+    <div class="absolute top-0 left-0 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-br-lg z-10 shadow-sm">
         Promoted
     </div>
     
     <a href="{{ route('store.show', $product->slug) }}" class="block w-full h-full">
-        <div class="h-36 w-full bg-surface-container overflow-hidden">
+        <div class="h-32 sm:h-36 w-full bg-surface-container overflow-hidden">
             @if($product->thumbnail_path)
                 <img src="{{ Storage::url($product->thumbnail_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             @else
@@ -15,11 +20,11 @@
                 </div>
             @endif
         </div>
-        <div class="p-4 bg-white dark:bg-slate-900 border-t border-outline-variant/10">
-            <h4 class="font-bold text-sm text-slate-900 dark:text-slate-100 truncate pr-6">{{ $product->name }}</h4>
-            <div class="flex justify-between items-center mt-3">
-                <span class="text-blue-700 dark:text-blue-400 font-bold text-base">${{ number_format($product->price, 2) }}</span>
-                <span class="text-[11px] text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded px-3 py-1.5 font-bold transition-colors">Details &rarr;</span>
+        <div class="p-3 sm:p-4 bg-white dark:bg-slate-900 border-t border-outline-variant/10">
+            <h4 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 truncate pr-8">{{ $product->name }}</h4>
+            <div class="flex justify-between items-center mt-2 sm:mt-3">
+                <span class="text-blue-700 dark:text-blue-400 font-bold text-sm sm:text-base">${{ number_format($product->price, 2) }}</span>
+                <span class="text-[10px] sm:text-[11px] text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded px-2 sm:px-3 py-1 sm:py-1.5 font-bold transition-colors">Details &rarr;</span>
             </div>
         </div>
     </a>
