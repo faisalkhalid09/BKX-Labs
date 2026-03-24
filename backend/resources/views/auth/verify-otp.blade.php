@@ -56,10 +56,10 @@
             <button 
                 type="submit"
                 id="submitBtn"
-                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold text-base sm:text-lg rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base sm:text-lg rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
             >
-                <span id="buttonText">Verify & Continue</span>
-                <span id="spinnerIcon" class="material-symbols-outlined text-lg hidden animate-spin">sync</span>
+                <span id="buttonText" class="text-white">Verify & Continue</span>
+                <span id="spinnerIcon" class="material-symbols-outlined text-base hidden animate-spin">sync</span>
             </button>
         </form>
 
