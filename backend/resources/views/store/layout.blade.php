@@ -32,7 +32,7 @@
         <!-- Logo -->
         <div class="flex items-center gap-8 md:gap-12">
             <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 40px; sm:height: 50px;">
-                <img src="/brand-logo.png" alt="BKX Labs" style="height: 100px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.4) sm:scale(0.5); transform-origin: left center;" />
+                <img src="/brand-logo.png" alt="BKX Labs" style="height: 60px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.4) sm:scale(0.5); transform-origin: left center;" />
             </a>
         </div>
         
