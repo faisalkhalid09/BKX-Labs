@@ -5,18 +5,18 @@
 @push('styles')
 <style>
 .search-page-hero {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); 
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
+    background: #f8fafc; 
+    border-bottom: 2px solid #e2e8f0; 
     padding: 3rem 1rem; 
     text-align: center;
 }
-@media(min-width: 768px) { .search-page-hero { padding: 5rem 0; } }
+@media(min-width: 768px) { .search-page-hero { padding: 4rem 0; } }
 
 .search-bar-wrap {
     display: flex; max-width: 800px; margin: 0 auto;
-    background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
-    overflow: hidden; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); 
-    margin-bottom: 1.5rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff; border: 2px solid #1e3a8a; border-radius: 0;
+    overflow: hidden; box-shadow: 4px 4px 0 rgba(30,58,138,0.1); 
+    margin-bottom: 1.5rem; transition: all 0.2s;
 }
 .search-bar-wrap:focus-within { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30,58,138,.1); }
 .search-bar-input {
@@ -376,18 +376,18 @@
 {{-- Search hero --}}
 <div class="search-page-hero">
     <div class="container">
-        <h1 class="text-4xl sm:text-6xl font-black text-slate-900 mb-8 tracking-tighter">Search Artifacts</h1>
-        <form class="search-bar-wrap group" action="{{ route('store.search') }}" method="GET" id="search-form">
+        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 mb-6 tracking-tight uppercase">Product Search</h1>
+        <form class="search-bar-wrap" action="{{ route('store.search') }}" method="GET" id="search-form">
             <input class="search-bar-input" type="text" name="q"
                    value="{{ $query }}"
-                   placeholder="Search AI models, scripts, templates..."
+                   placeholder="Enter keywords..."
                    autocomplete="off" autofocus>
             {{-- Preserve other filters on search --}}
             <input type="hidden" name="category" value="{{ $category }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
-            <button class="search-bar-btn" type="submit">
+            <button class="search-bar-btn !rounded-none" type="submit">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <span class="hidden sm:inline ml-2">Search</span>
+                <span class="hidden sm:inline ml-2 uppercase">Search</span>
             </button>
         </form>
 
@@ -422,28 +422,24 @@
             </div>
 
             @if ($products->isEmpty())
-                <div class="py-24 px-8 border-2 border-dashed border-slate-200 rounded-[32px] bg-slate-50/50 text-center">
-                    <div class="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center mx-auto mb-6 border border-slate-100">
-                        <span class="material-symbols-outlined text-4xl text-slate-300">search_off</span>
-                    </div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-2">No matches found</h3>
-                    <p class="text-slate-500 max-w-sm mx-auto mb-8">Try adjusting your filters or search keywords.</p>
-                    <a href="{{ route('store.search') }}" class="btn btn-outline px-8 rounded-2xl">Clear all</a>
+                <div class="py-20 px-8 border-4 border-slate-200 rounded-none bg-slate-50 text-center">
+                    <h3 class="text-2xl font-black text-slate-900 mb-2 uppercase">No matches found</h3>
+                    <p class="text-slate-500 max-w-sm mx-auto mb-8">Try adjusting your filters.</p>
+                    <a href="{{ route('store.search') }}" class="btn btn-outline px-8 !rounded-none border-2">Clear all</a>
                 </div>
             @else
                 <div class="product-grid">
                     @foreach ($products as $product)
-                        <div class="relative group bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl overflow-hidden hover:border-blue-600/30 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500">
+                        <div class="relative bg-white dark:bg-slate-900 border-2 border-slate-200 overflow-hidden hover:border-blue-900 transition-all duration-200 rounded-none">
                             @if($product->is_promoted)
-                                <div class="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-tighter">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <div class="absolute top-0 left-0 z-20 px-3 py-1 bg-primary text-white text-[10px] font-black uppercase tracking-widest shadow-sm">
                                     Sponsored
                                 </div>
                             @endif
                             
-                            <div class="aspect-video bg-slate-100 dark:bg-slate-800 overflow-hidden relative border-b border-slate-100 dark:border-slate-800">
+                            <div class="aspect-video bg-slate-100 overflow-hidden relative border-b-2 border-slate-200 rounded-none">
                                 @if ($product->thumbnail_path)
-                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center opacity-20">
                                         <span class="material-symbols-outlined text-6xl">inventory_2</span>
@@ -452,18 +448,16 @@
                             </div>
 
                             <div class="p-6">
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-[9px] font-black text-blue-700 uppercase tracking-widest">
-                                        {{ str_replace('_', ' ', $product->category) }}
-                                    </span>
-                                </div>
+                                <span class="inline-block px-2 py-0.5 bg-slate-200 text-[10px] font-black text-slate-700 uppercase tracking-widest mb-4">
+                                    {{ str_replace('_', ' ', $product->category) }}
+                                </span>
                                 <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight">{{ $product->name }}</h3>
                                 <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-6">{{ $product->short_description }}</p>
                                 
-                                <div class="flex items-center justify-between pt-5 border-t border-slate-100 dark:border-slate-800">
+                                <div class="flex items-center justify-between pt-5 border-t-2 border-slate-100">
                                     <span class="text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
-                                    <a href="{{ route('store.show', $product->slug) }}" class="flex items-center gap-2 px-5 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-black group-hover:bg-primary transition-colors">
-                                        View details
+                                    <a href="{{ route('store.show', $product->slug) }}" class="flex items-center gap-2 px-5 py-2 bg-primary text-white text-xs font-black hover:bg-blue-900 transition-colors !rounded-none">
+                                        VIEW DETAILS
                                         <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                     </a>
                                 </div>
@@ -477,30 +471,28 @@
         {{-- Sidebar Filters (Right Side) --}}
         <aside class="filter-sidebar">
             <div class="sticky top-24">
-                <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-[32px] p-8 shadow-2xl shadow-slate-200/40 dark:shadow-none bg-gradient-to-br from-white to-slate-50/30">
+                <div class="bg-white border-2 border-slate-200 rounded-none p-6 shadow-[6px_6px_0_#e2e8f0]">
                     <form id="filter-form" action="{{ route('store.search') }}" method="GET">
                         <input type="hidden" name="q" value="{{ $query }}">
                         
-                        <div class="flex items-center gap-4 mb-8">
-                            <div class="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary font-bold">tune</span>
-                            </div>
-                            <h2 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">Filter Results</h2>
+                        <div class="flex items-center gap-3 mb-6 border-b-2 border-slate-100 pb-4">
+                            <span class="material-symbols-outlined text-primary font-bold">filter_alt</span>
+                            <h2 class="text-lg font-black text-slate-900 uppercase tracking-tight">Filters</h2>
                         </div>
 
                         {{-- Category Group --}}
-                        <div class="mb-10">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Categories</p>
-                            <div class="space-y-2">
+                        <div class="mb-8">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Categories</p>
+                            <div class="space-y-1">
                                 @foreach ($categories as $key => $label)
-                                    <label class="flex items-center group cursor-pointer">
+                                    <label class="flex items-center cursor-pointer group">
                                         <input type="radio" name="category" value="{{ $key }}"
                                                {{ $category === $key || ($key === 'all' && $category === '') ? 'checked' : '' }}
                                                class="hidden peer"
                                                onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-100 group-hover:bg-slate-50 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all duration-300">
-                                            <span class="text-sm font-bold tracking-tight">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden font-bold">done</span>
+                                        <div class="w-full flex items-center justify-between p-2 lg:p-3 border-2 border-slate-100 group-hover:border-slate-300 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
+                                            <span class="text-xs font-bold uppercase">{{ $label }}</span>
+                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden">done</span>
                                         </div>
                                     </label>
                                 @endforeach
@@ -509,25 +501,21 @@
 
                         {{-- Sort Group --}}
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Sort By</p>
-                            <div class="space-y-2">
-                                @foreach (['relevance' => 'Featured', 'newest' => 'Newest First', 'price_asc' => 'Price: Low-High', 'price_desc' => 'Price: High-Low'] as $key => $label)
-                                    <label class="flex items-center group cursor-pointer">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Sort Order</p>
+                            <div class="space-y-1">
+                                @foreach (['relevance' => 'Featured', 'newest' => 'Newest', 'price_asc' => 'Price: Low', 'price_desc' => 'Price: High'] as $key => $label)
+                                    <label class="flex items-center cursor-pointer group">
                                         <input type="radio" name="sort" value="{{ $key }}"
                                                {{ $sort === $key || ($key === 'relevance' && $sort === '') ? 'checked' : '' }}
                                                class="hidden peer"
                                                onchange="document.getElementById('filter-form').submit()">
-                                        <div class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-100 group-hover:bg-slate-50 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all duration-300">
-                                            <span class="text-sm font-bold tracking-tight">{{ $label }}</span>
-                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden font-bold">done</span>
+                                        <div class="w-full flex items-center justify-between p-2 lg:p-3 border-2 border-slate-100 group-hover:border-slate-300 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all rounded-none">
+                                            <span class="text-xs font-bold uppercase">{{ $label }}</span>
+                                            <span class="material-symbols-outlined text-sm peer-checked:block hidden">done</span>
                                         </div>
                                     </label>
                                 @endforeach
                             </div>
-                        </div>
-
-                        <div class="mt-10 pt-6 border-t border-slate-100 dark:border-slate-800 text-[10px] italic text-slate-400 text-center px-4 leading-relaxed uppercase tracking-widest font-black">
-                            Sponsered logic is <span class="text-blue-600">active</span>
                         </div>
                     </form>
                 </div>
