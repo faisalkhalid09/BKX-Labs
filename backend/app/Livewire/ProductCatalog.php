@@ -50,7 +50,7 @@ class ProductCatalog extends Component
         }
 
         return view('livewire.product-catalog', [
-            'products' => $query->latest()->get(),
+            'products' => $query->orderBy('is_promoted', 'desc')->inRandomOrder()->get(),
         ]);
     }
 }

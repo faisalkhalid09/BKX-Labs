@@ -48,7 +48,7 @@ Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function
 });
 
 // Allow checkout page to be visited before auth (redirects inside controller)
-Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
+// Removed duplicate public route to ensure middleware handles redirection correctly.
 
 // ──────────────────────────────────────
 //  Stripe Webhook (no CSRF / no auth)

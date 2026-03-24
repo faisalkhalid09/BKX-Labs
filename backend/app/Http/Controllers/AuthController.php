@@ -136,7 +136,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
         Auth::user()->update(['last_login_at' => now()]);
 
-        return redirect()->intended(route('downloads.index'));
+        return redirect()->intended(route('store.index'));
     }
     public function logout(Request $request)
     {

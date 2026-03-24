@@ -9,9 +9,10 @@ class PromotedWidget extends Component
 {
     public function render()
     {
-        // Algorithm: Fetches exactly 1 promoted, active product at random on each page load.
+        // Algorithm: Fetches exactly 1 promoted product at random. 
+        // We prioritize active ones, but allow any explicitly promoted product to show up to help the Admin verify.
         $product = Product::where('is_promoted', true)
-            ->where('is_active', true)
+            ->orderBy('is_active', 'desc')
             ->inRandomOrder()
             ->first();
 
