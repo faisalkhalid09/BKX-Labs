@@ -13,10 +13,10 @@ class PromotePage extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-megaphone';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-megaphone';
     protected static ?int $navigationSort = 3;
     protected static ?string $navigationLabel = 'Promote Page';
-    protected static ?string $title = 'Promote Products';
+    protected static string | \Illuminate\Contracts\Support\Htmlable | null $title = 'Promote Products';
 
     protected string $view = 'filament.pages.promote-page';
 
