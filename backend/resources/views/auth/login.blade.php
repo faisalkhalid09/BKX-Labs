@@ -57,13 +57,13 @@
                             required 
                             autocomplete="current-password" 
                             placeholder="••••••••"
-                            class="w-full px-3 py-2 sm:py-2.5 pr-10 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-xs sm:text-sm placeholder-on-surface-variant/50 min-h-[40px]"
+                            class="w-full px-3 py-2 sm:py-2.5 pr-12 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-xs sm:text-sm placeholder-on-surface-variant/50 min-h-[40px]"
                         >
                         <button 
                             type="button" 
                             onclick="togglePasswordVisibility('password', 'toggleBtn')"
                             id="toggleBtn"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            class="absolute right-1 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-surface-container w-10 h-10 flex items-center justify-center"
                             aria-label="Show password"
                         >
                             <svg id="toggleBtn-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>

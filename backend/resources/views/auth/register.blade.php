@@ -90,7 +90,7 @@
                             type="button" 
                             onclick="togglePasswordVisibility('password', 'toggleBtn1')"
                             id="toggleBtn1"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            class="absolute right-1 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-surface-container w-10 h-10 flex items-center justify-center"
                             aria-label="Show password"
                         >
                             <svg id="toggleBtn1-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -127,7 +127,7 @@
                             type="button" 
                             onclick="togglePasswordVisibility('password_confirmation', 'toggleBtn2')"
                             id="toggleBtn2"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            class="absolute right-1 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-surface-container w-10 h-10 flex items-center justify-center"
                             aria-label="Show password"
                         >
                             <svg id="toggleBtn2-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -204,17 +204,20 @@ document.getElementById('password').addEventListener('input', function() {
     
     if (password.length >= 8) strength++;
     if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
-    if (password.match(/[0-9]/) && password.match(/[!@#$%^&*]/)) strength++;
+    if (password.match(/[0-9]/) || password.match(/[!@#$%^&*(),.?":{}|<>]/)) strength++;
     
-    const colors = ['bg-outline-variant/20', 'bg-error', 'bg-warning', 'bg-success'];
+    const colors = ['bg-outline-variant/20', 'bg-red-500', 'bg-amber-500', 'bg-emerald-500'];
     const labels = ['Password strength', 'Weak', 'Good', 'Strong'];
     
     for (let i = 1; i <= 3; i++) {
         const el = document.getElementById('strength-' + i);
-        el.className = 'h-1 flex-1 rounded-full transition-colors ' + (i <= strength ? colors[strength] : 'bg-outline-variant/20');
+        el.className = 'h-1.5 flex-1 rounded-full transition-all duration-300 ' + (i <= strength ? colors[strength] : 'bg-outline-variant/20');
     }
     
-    document.getElementById('strength-text').textContent = labels[strength];
+    const strengthText = document.getElementById('strength-text');
+    strengthText.textContent = labels[strength];
+    strengthText.className = 'text-xs font-bold transition-colors duration-300 ' + 
+        (strength === 1 ? 'text-red-500' : strength === 2 ? 'text-amber-500' : strength === 3 ? 'text-emerald-500' : 'text-on-surface-variant');
 });
 
 // Form submission loading state
