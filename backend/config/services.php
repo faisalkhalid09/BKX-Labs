@@ -47,4 +47,10 @@ return [
         'redirect'      => env('GOOGLE_REDIRECT_URL'),
     ],
 
+    'lemon-squeezy' => [
+        'store_id'       => env('LEMON_SQUEEZY_STORE_ID'),
+        'api_key'        => env('LEMON_SQUEEZY_API_KEY'),
+        'signing_secret' => env('LEMON_SQUEEZY_SIGNING_SECRET'),
+    ],
+
 ];

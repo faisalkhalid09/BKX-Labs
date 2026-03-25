@@ -58,10 +58,10 @@ Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function
 // Removed duplicate public route to ensure middleware handles redirection correctly.
 
 // ──────────────────────────────────────
-//  Stripe Webhook (no CSRF / no auth)
+//  Lemon Squeezy Webhook (no CSRF / no auth)
 // ──────────────────────────────────────
-Route::post('/webhook/stripe', [WebhookController::class, 'handle'])
-    ->name('webhook.stripe')
+Route::post('/webhook/lemon-squeezy', [WebhookController::class, 'handle'])
+    ->name('webhook.lemon_squeezy')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // ──────────────────────────────────────

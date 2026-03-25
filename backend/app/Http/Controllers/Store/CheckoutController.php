@@ -7,8 +7,6 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Stripe\Stripe;
-use Stripe\PaymentIntent;
 
 class CheckoutController extends Controller
 {
@@ -37,23 +35,28 @@ class CheckoutController extends Controller
             return redirect()->route('login')->with('info', 'Please log in to complete your purchase.');
         }
 
-        // ==========================================
-        // DUMMY PAYMENT FLOW
-        // ==========================================
-        foreach ($cart as $productId => $item) {
-            Order::create([
-                'user_id'                    => Auth::id(),
-                'product_id'                 => $productId,
-                'status'                     => 'paid',
-                'amount'                     => $item['price'],
-                'stripe_payment_intent_id'   => 'dummy_pi_' . uniqid(),
-                'download_expires_at'        => now()->addHours(48),
-            ]);
+        $user = Auth::user();
+        
+        $productIds = array_keys($cart);
+        $products = Product::whereIn('id', $productIds)->get();
+        
+        $variantId = null;
+        foreach ($products as $product) {
+            if ($product->lemon_squeezy_variant_id) {
+                $variantId = $product->lemon_squeezy_variant_id;
+                break;
+            }
         }
 
-        session()->forget('cart');
+        if (!$variantId) {
+            return back()->with('error', 'Payment is currently unavailable for these items.');
+        }
 
-        return redirect()->route('downloads.index')
-            ->with('success', 'Payment successful! You can now download your digital products.');
+        return $user->checkout($variantId)
+            ->withCustomData([
+                'user_id' => $user->id,
+                'product_ids' => json_encode($productIds),
+            ])
+            ->withRedirectUrl(route('checkout.success'));
     }
 }

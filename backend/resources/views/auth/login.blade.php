@@ -26,7 +26,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('login') }}" method="POST" class="space-y-3 sm:space-y-4">
+            <form action="{{ route('login') }}" method="POST" class="space-y-3 sm:space-y-4" x-data="{ agreed: false }">
                 @csrf
                 
                 <!-- Email Field -->
@@ -77,8 +77,30 @@
                     @enderror
                 </div>
 
+                <!-- Terms Acceptance -->
+                <div class="pt-2">
+                    <label class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200/40 dark:border-slate-800/40 cursor-pointer hover:border-primary/20 transition-all group">
+                        <div class="relative flex items-center">
+                            <input 
+                                type="checkbox" 
+                                name="terms" 
+                                id="terms_checkbox"
+                                x-model="agreed"
+                                required
+                                class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary/20 cursor-pointer"
+                            >
+                        </div>
+                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                            I agree to the <a href="{{ url('/store/terms') }}" target="_blank" class="text-primary font-bold hover:underline">Master Terms & Conditions</a>, <a href="{{ url('/store/terms?tab=privacy') }}" target="_blank" class="text-primary font-bold hover:underline">Privacy Policy</a> and <a href="{{ url('/store/terms?tab=dmca') }}" target="_blank" class="text-primary font-bold hover:underline">DMCA Policy</a>.
+                        </span>
+                    </label>
+                    @error('terms')
+                        <p class="text-red-500 text-[10px] mt-1 ml-1 font-bold">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Remember Me & Forgot Password -->
-                <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center justify-between gap-2 pt-1">
                     <label class="flex items-center gap-2 cursor-pointer min-h-[36px]">
                         <input 
                             type="checkbox" 
@@ -97,6 +119,8 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
+                    :disabled="!agreed"
+                    :class="!agreed ? 'opacity-50 cursor-not-allowed grayscale' : ''"
                     class="w-full mt-4 sm:mt-5 py-2.5 sm:py-3 px-3 bg-primary text-on-primary font-bold rounded-lg text-xs sm:text-sm hover:bg-primary-container active:scale-[0.98] transition-all shadow-lg shadow-primary/20 min-h-[40px] flex items-center justify-center gap-2"
                 >
                     <span>Sign In</span>
@@ -105,6 +129,7 @@
 
                 <!-- Google Sign In Button -->
                 <a href="{{ route('auth.google.redirect') }}" 
+                   :class="!agreed ? 'opacity-50 pointer-events-none grayscale' : ''"
                    class="w-full mt-3 py-2.5 sm:py-3 px-3 bg-white dark:bg-slate-900 border border-outline-variant/30 text-on-surface font-bold rounded-lg text-xs sm:text-sm hover:bg-surface-container transition-all min-h-[40px] flex items-center justify-center gap-3">
                     <svg width="18" height="18" viewBox="0 0 24 24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>

@@ -12,7 +12,8 @@ class Order extends Model
         'product_id',
         'status',
         'amount',
-        'stripe_payment_intent_id',
+        'lemon_squeezy_id',
+        'lemon_squeezy_order_id',
         'download_expires_at',
     ];
 

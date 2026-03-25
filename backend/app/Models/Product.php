@@ -20,6 +20,7 @@ class Product extends Model
         'images',
         'is_active',
         'is_promoted',
+        'lemon_squeezy_variant_id',
     ];
 
     protected $casts = [
