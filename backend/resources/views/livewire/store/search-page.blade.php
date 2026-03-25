@@ -202,15 +202,26 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        max-width: 100%;
     }
 
     .price-range input {
         flex: 1;
+        min-width: 0;
         border: 1px solid #e2e8f0;
         border-radius: 6px;
         padding: 0.5rem;
         font-size: 0.8rem;
         min-height: 40px;
+        box-sizing: border-box;
+    }
+    .price-range input::-webkit-outer-spin-button,
+    .price-range input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .price-range input[type=number] {
+        -moz-appearance: textfield;
     }
     .price-range input:focus {
         outline: none;
