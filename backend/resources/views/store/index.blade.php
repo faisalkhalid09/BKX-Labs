@@ -43,16 +43,14 @@
         
         <div class="hidden lg:flex lg:col-span-4 justify-end relative">
             <div class="relative w-full max-w-sm">
-                <!-- Gradient Background -->
-                <div class="absolute -inset-16 bg-gradient-to-br from-blue-100 via-blue-50 to-transparent dark:from-blue-900/30 dark:via-blue-950/20 dark:to-transparent rounded-full blur-3xl opacity-60"></div>
+                <!-- Premium Gradient Background -->
+                <div class="absolute -inset-8 bg-gradient-to-br from-blue-200 via-cyan-100 to-blue-100 dark:from-blue-900/40 dark:via-cyan-900/40 dark:to-blue-900/30 rounded-3xl blur-3xl opacity-70"></div>
                 
-                <div class="relative flex items-center justify-center aspect-square">
-                    <div class="w-full h-full flex items-center justify-center">
-                        <img src="{{ asset('brand-logo.png') }}" 
-                             alt="BKX Labs Logo" 
-                             class="w-4/5 h-4/5 object-contain drop-shadow-xl"
-                             loading="lazy">
-                    </div>
+                <div class="relative flex items-center justify-center">
+                    <img src="{{ asset('brand-logo.png') }}" 
+                         alt="BKX Labs - Engineering Excellence" 
+                         class="w-full h-auto object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite]"
+                         loading="lazy">
                 </div>
             </div>
         </div>

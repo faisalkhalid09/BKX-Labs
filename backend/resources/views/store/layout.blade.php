@@ -29,12 +29,12 @@
 <!-- TopNavBar Shared Component -->
 <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md font-['Inter'] tracking-tight antialiased border-b border-slate-200/60 dark:border-slate-800/60">
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-14 sm:h-16 max-w-6xl mx-auto">
-        <!-- Logo -->
-        <a href="{{ url('/store') }}" class="shrink-0 flex items-center gap-2 hover:opacity-80 transition-opacity group">
-            <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
-                <span class="text-white font-black text-lg">B</span>
-            </div>
-            <span class="hidden sm:inline font-black text-lg tracking-tighter text-slate-900 dark:text-white group-hover:text-primary transition-colors">BKX Labs</span>
+        <!-- Logo Only -->
+        <a href="{{ url('/store') }}" class="shrink-0 flex items-center hover:opacity-80 transition-opacity">
+            <img src="{{ asset('brand-logo.png') }}" 
+                 alt="BKX Labs" 
+                 class="h-7 sm:h-8 w-auto object-contain drop-shadow-sm"
+                 loading="lazy">
         </a>
         
         <!-- Desktop Navigation -->
