@@ -63,6 +63,7 @@
             
             <div class="flex items-center gap-4">
                 @auth
+                    @if(!($isLegalPage ?? false))
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 group">
                             <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 group-hover:border-primary/30 transition-all">
@@ -110,20 +111,25 @@
                             </form>
                         </div>
                     </div>
+                    @endif
                 @else
                     <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-xs font-medium">Sign in</a>
                     <a href="{{ route('register') }}" class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95 whitespace-nowrap">Get Started</a>
                 @endauth
                 
+                @if(!($isLegalPage ?? false))
                 <div class="relative">
                     @livewire('cart')
                 </div>
+                @endif
             </div>
         </div>
 
         <!-- Mobile Cart & Menu -->
         <div class="lg:hidden flex items-center gap-2">
-            @livewire('cart')
+            @if(!($isLegalPage ?? false))
+                @livewire('cart')
+            @endif
             <button class="mobile-menu-btn w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" id="mobile-menu-toggle" aria-label="Toggle menu">
                 <span class="material-symbols-outlined text-[20px] leading-none text-slate-900 dark:text-slate-100">menu</span>
             </button>
@@ -133,7 +139,9 @@
     <!-- Mobile Menu Drawer -->
     <div class="mobile-menu hidden fixed top-16 sm:top-20 left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200/60 dark:border-slate-800/60 flex-col max-h-[calc(100vh-4rem)] overflow-y-auto z-40 lg:hidden" id="mobile-menu">
         <div class="px-6 py-6 space-y-4 flex flex-col">
-            <a href="{{ url('/store') }}" class="{{ request()->is('store') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium">Catalog</a>
+            @if(!($isLegalPage ?? false))
+                <a href="{{ url('/store') }}" class="{{ request()->is('store') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium">Catalog</a>
+            @endif
             @auth
                 <div class="pt-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
                     <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Account</p>
