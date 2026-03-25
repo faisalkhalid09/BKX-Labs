@@ -28,11 +28,11 @@
 
 <!-- TopNavBar Shared Component -->
 <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md font-['Inter'] tracking-tight antialiased border-b border-slate-200/60 dark:border-slate-800/60">
-    <div class="flex justify-between items-center w-full px-8 sm:px-12 md:px-20 lg:px-32 h-16 sm:h-20 max-w-7xl mx-auto">
+    <div class="flex justify-between items-center w-full px-8 md:px-16 lg:px-56 h-16 sm:h-20 max-w-[1440px] mx-auto">
         <!-- Logo & Search Bar -->
         <div class="flex items-center gap-6 md:gap-10 flex-1">
             <a href="{{ url('/store') }}" class="shrink-0 flex items-center h-10 sm:h-12 overflow-hidden">
-                <img src="/logo.png" alt="BKX Labs" class="h-16 sm:h-20 w-auto object-contain object-left scale-[0.45] sm:scale-[0.5] origin-left" />
+                <img src="{{ asset('logo.png') }}" alt="BKX Labs" class="h-16 sm:h-20 w-auto object-contain object-left scale-[0.45] sm:scale-[0.5] origin-left" />
             </a>
 
             <!-- Header Search (Desktop) -->
@@ -116,7 +116,7 @@
 
 <!-- Footer Shared Component -->
 <footer class="w-full border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950 font-['Inter'] mt-20">
-    <div class="max-w-7xl mx-auto px-8 sm:px-12 md:px-20 lg:px-32 py-12 md:py-16">
+    <div class="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-56 py-12 md:py-16">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
             <div class="md:col-span-4">
                 <span class="text-xl font-black text-primary tracking-tighter">BKX Labs</span>

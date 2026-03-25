@@ -14,8 +14,8 @@
 
 @section('content')
 <!-- Hero Section: Premium Minimalist -->
-<section class="bg-white dark:bg-slate-950 pt-16 sm:pt-24 pb-12 sm:pb-20 px-8 sm:px-12 md:px-20 lg:px-32 overflow-hidden border-b border-slate-50 dark:border-slate-900">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<section class="bg-white dark:bg-slate-950 pt-16 sm:pt-24 pb-12 sm:pb-20 px-8 md:px-16 lg:px-56 overflow-hidden border-b border-slate-50 dark:border-slate-900">
+    <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div class="md:col-span-12 lg:col-span-8">
             <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-black tracking-tightest mb-6 sm:mb-8 text-slate-900 dark:text-white leading-[0.9] sm:leading-[0.85]">
                 Engineering <br class="hidden sm:block" /><span class="text-primary tracking-tighter">Excellence.</span>
@@ -38,7 +38,7 @@
                 <div class="relative w-full h-full flex items-center justify-center">
                     <img src="{{ asset('logo.png') }}" 
                          alt="BKX Labs Logo" 
-                         class="w-full h-full object-contain opacity-5 dark:opacity-10 grayscale brightness-0 dark:brightness-200">
+                         class="w-full h-full object-contain filter dark:invert-0 brightness-110">
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
 </section>
 
 <!-- Main Content Area -->
-<div class="max-w-7xl mx-auto px-8 sm:px-12 md:px-20 lg:px-32 py-12 sm:py-16">
+<div class="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-56 py-12 sm:py-16">
     @livewire('product-catalog')
 </div>
 @endsection
