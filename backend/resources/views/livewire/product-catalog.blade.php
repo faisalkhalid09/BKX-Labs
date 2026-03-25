@@ -45,8 +45,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-12" wire:loading.class.add="opacity-50" style="transition:opacity .2s;">
             @foreach ($products as $product)
                 <!-- Product Card -->
-                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-2xl sm:rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 {{ $product->is_promoted ? 'ring-2 ring-blue-500/70 border border-blue-400 dark:border-blue-500/50' : '' }}">
-                    <div class="aspect-[16/10] sm:aspect-[4/5] bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-2xl sm:rounded-[2rem]">
+                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-[4px] overflow-hidden transition-all duration-500 hover:-translate-y-1 {{ $product->is_promoted ? 'promoted-card-animated border border-transparent' : 'border border-slate-200 dark:border-slate-800' }}">
+                    <div class="aspect-square bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-[2px]">
                         @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
 
                         @if($product->is_promoted)
@@ -93,7 +93,7 @@
                                 {{ $product->name }}
                             </h3>
                         </a>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-4 sm:mb-6">
                             {{ $product->short_description }}
                         </p>
                         
@@ -120,5 +120,25 @@
     @keyframes slideInUp {
         from { transform: translateY(100%); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
+    }
+
+    .promoted-card-animated {
+        border: 2px solid transparent;
+        background:
+            linear-gradient(var(--card-bg, #ffffff), var(--card-bg, #ffffff)) padding-box,
+            linear-gradient(120deg, #1d4ed8, #38bdf8, #2563eb, #60a5fa, #1d4ed8) border-box;
+        background-size: 100% 100%, 260% 260%;
+        animation: promotedBorderFlow 2.8s linear infinite;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .promoted-card-animated {
+            --card-bg: #020617;
+        }
+    }
+
+    @keyframes promotedBorderFlow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 260% 50%; }
     }
 </style>
