@@ -128,7 +128,6 @@
         </div>
     </div>
 </div>
-@endsection
 
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -234,3 +233,4 @@
 @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
 @endpush
+@endsection

@@ -387,12 +387,15 @@ nav form[action*="search"] { display: none !important; }
 .no-results a:hover { background: #1e40af; }
 
 .container {
-    max-width: 1120px;
+    max-width: 1152px;
     margin: 0 auto;
-    padding: 0 0.8rem;
+    padding: 0 1rem;
+}
+@media(min-width: 640px) {
+    .container { padding: 0 1.5rem; }
 }
 @media(min-width: 768px) {
-    .container { padding: 0 1.6rem; }
+    .container { padding: 0 2rem; }
 }
 </style>
 @endpush
