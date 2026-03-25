@@ -124,6 +124,7 @@
                 @endif
             </div>
         </div>
+        @endif
 
         <!-- Mobile Cart & Menu -->
         <div class="lg:hidden flex items-center gap-2">
