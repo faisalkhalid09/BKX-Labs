@@ -31,40 +31,42 @@
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-12 sm:h-14 max-w-[1920px] mx-auto">
         <!-- Logo & Search Bar -->
         <div class="flex items-center gap-4 md:gap-6 flex-1">
-
+            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 32px; sm:height: 40px;" class="shrink-0">
+                <img src="/logo.png" alt="BKX Labs" style="height: 100%; width: auto; object-fit: contain; object-position: left center;" />
+            </a>
 
             <!-- Header Search (Desktop) -->
             <form action="{{ route('store.search') }}" method="GET" class="hidden sm:flex items-center flex-1 max-w-xs">
                 <div class="relative w-full group">
                     <input type="text" name="q" value="{{ $query ?? '' }}"
                            placeholder="Quick search..."
-                           class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 px-3 py-1 pl-8 text-xs font-bold uppercase tracking-tight focus:border-primary focus:bg-white transition-all outline-none rounded-none"
+                           class="w-full bg-slate-100 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 px-4 py-1.5 pl-10 text-xs font-bold uppercase tracking-tight focus:border-primary focus:bg-white transition-all outline-none rounded-none"
                            autocomplete="off">
-                    <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-base group-focus-within:text-primary transition-colors">search</span>
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-primary transition-colors">search</span>
                 </div>
             </form>
         </div>
         
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center gap-6">
-            <div class="flex items-center gap-6">
-                <a class="{{ request()->is('store') ? 'text-blue-900 dark:text-blue-400 font-bold border-b-2 border-blue-900 dark:border-blue-400 pb-0.5' : 'text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300' }} transition-colors text-xs" href="{{ url('/store') }}">Catalog</a>
+        <div class="hidden md:flex items-center gap-8">
+            <div class="flex items-center gap-8">
+                <a class="{{ request()->is('store') ? 'text-blue-900 dark:text-blue-400 font-bold border-b-2 border-blue-900 dark:border-blue-400 pb-1' : 'text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300' }} transition-colors text-sm" href="{{ url('/store') }}">Catalog</a>
                 @auth
-                    <a class="{{ request()->is('downloads*') ? 'text-blue-900 dark:text-blue-400 font-bold border-b-2 border-blue-900 dark:border-blue-400 pb-0.5' : 'text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300' }} transition-colors text-xs" href="{{ url('/downloads') }}">My Downloads</a>
+                    <a class="{{ request()->is('downloads*') ? 'text-blue-900 dark:text-blue-400 font-bold border-b-2 border-blue-900 dark:border-blue-400 pb-1' : 'text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300' }} transition-colors text-sm" href="{{ url('/downloads') }}">My Downloads</a>
                 @endauth
             </div>
             
-            <div class="h-5 w-[1px] bg-outline-variant/30"></div>
+            <div class="h-6 w-[1px] bg-outline-variant/30"></div>
             
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
                 @auth
                     <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                         @csrf
-                        <button type="submit" class="text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium text-xs">Log out</button>
+                        <button type="submit" class="text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium text-sm">Log out</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium text-xs">Sign in</a>
-                    <a href="{{ route('register') }}" class="bg-primary text-on-primary px-3 py-1.5 rounded text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 whitespace-nowrap">Get Started</a>
+                    <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium text-sm">Sign in</a>
+                    <a href="{{ route('register') }}" class="bg-primary text-on-primary px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-bold flex items-center gap-2 transition-all active:scale-95 whitespace-nowrap">Get Started</a>
                 @endauth
                 
                 @livewire('cart')
@@ -105,7 +107,7 @@
     </div>
 </nav>
 
-<main class="pt-14 sm:pt-16">
+<main class="pt-12 sm:pt-14">
     @yield('content')
 </main>
 
