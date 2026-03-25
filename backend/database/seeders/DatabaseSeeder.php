@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RestrictedUserSeeder::class,
             ReceiptTemplateSeeder::class,
+            DemoProductsSeeder::class,
         ]);
     }
 }
