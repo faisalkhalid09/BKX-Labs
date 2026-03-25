@@ -1,7 +1,7 @@
 <div style="position:relative;">
     {{-- Cart button --}}
-    <button class="cart-btn p-1.5 sm:p-0" wire:click="toggle" aria-label="Open cart" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #374151; min-width: 40px; min-height: 40px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <button class="cart-btn w-10 h-10 p-0 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" wire:click="toggle" aria-label="Open cart" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; color: #374151; min-width: 40px; min-height: 40px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         @if (count($this->cart) > 0)
             <span class="cart-badge" style="position: absolute; top: -6px; right: -6px; background: #1e3a8a; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold;">{{ count($this->cart) }}</span>
         @endif
