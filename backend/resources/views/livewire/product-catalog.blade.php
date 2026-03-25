@@ -83,9 +83,12 @@
                     </div>
 
                     <div class="catalog-product-body pt-3 sm:pt-4 pb-2 px-2 sm:px-3 flex flex-col {{ $product->is_promoted ? 'bg-white' : '' }}">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-[10px] font-bold uppercase tracking-wider border border-slate-200 dark:border-slate-700">
                                 {{ str_replace('_', ' ', $product->category) }}
+                            </span>
+                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20">
+                                ${{ number_format($product->price, 2) }}
                             </span>
                         </div>
                         <a href="{{ route('store.show', $product->slug) }}">

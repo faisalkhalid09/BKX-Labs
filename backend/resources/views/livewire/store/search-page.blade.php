@@ -344,6 +344,42 @@
         margin-bottom: 0.5rem;
     }
 
+    .product-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-type-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.22rem 0.5rem;
+        border-radius: 6px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #334155;
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .product-price-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.22rem 0.5rem;
+        border-radius: 6px;
+        background: rgba(30, 58, 138, 0.08);
+        border: 1px solid rgba(30, 58, 138, 0.2);
+        color: #1e3a8a;
+        font-size: 0.62rem;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
     .product-name {
         font-size: 0.9rem;
         font-weight: 800;
@@ -716,7 +752,10 @@
                                     </div>
 
                                     <div class="product-body {{ $product->is_promoted ? 'product-body-promoted' : '' }}">
-                                        <div class="product-category">{{ str_replace('_', ' ', $product->category) }}</div>
+                                        <div class="product-meta-row">
+                                            <span class="product-type-pill">{{ str_replace('_', ' ', $product->category) }}</span>
+                                            <span class="product-price-pill">${{ number_format($product->price, 2) }}</span>
+                                        </div>
                                         <h3 class="product-name">
                                             <a href="{{ route('store.show', $product->slug) }}" class="hover:text-primary transition-colors text-inherit decoration-none">
                                                 {{ $product->name }}
