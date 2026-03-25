@@ -437,6 +437,111 @@
     @media(min-width: 768px) {
         .container { padding: 0 2rem; }
     }
+    /* Mobile Filter Drawer */
+    .mobile-filter-header {
+        display: none;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+    }
+    .mobile-filter-header h2 {
+        font-size: 1rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #0f172a;
+        margin: 0;
+    }
+    
+    .filter-drawer-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(4px);
+        z-index: 99;
+    }
+
+    @media(max-width: 1023px) {
+        .filter-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            margin-bottom: 0;
+            border-radius: 0;
+            overflow-y: auto;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        }
+        .filter-sidebar.active {
+            right: 0;
+        }
+        .mobile-filter-header {
+            display: flex;
+        }
+        .filter-drawer-backdrop.active {
+            display: block;
+        }
+        .filter-section {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 0;
+            padding: 1.5rem;
+        }
+    }
+
+    .mobile-filter-btn {
+        display: none;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        padding: 0.85rem;
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        color: #1e3a8a;
+        font-weight: 700;
+        font-size: 0.9rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    @media(max-width: 1023px) {
+        .mobile-filter-btn { display: flex; }
+    }
+    .mobile-filter-btn:hover { border-color: #1e3a8a; background: #f8fafc; }
+
+    /* Scaling for small devices */
+    @media(max-width: 1023px) {
+        .search-container { gap: 1.5rem; padding: 1.5rem 1rem; }
+    }
+ 
+    @media(max-width: 640px) {
+        .search-hero { padding: 1.5rem 1rem 1rem; }
+        .search-hero h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .search-bar input { padding: 0.6rem 0.85rem; font-size: 0.9rem; }
+        .search-bar .search-btn { padding: 0 1rem; }
+ 
+        .product-grid { gap: 1rem; }
+        .product-name { font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .product-desc { font-size: 0.75rem; margin-bottom: 0.75rem; -webkit-line-clamp: 1; }
+        .product-price { font-size: 1rem; }
+        .product-body { padding: 0.75rem; }
+        .product-image { aspect-ratio: 16/10; }
+        .product-badge { top: 0.5rem; right: 0.5rem; font-size: 0.6rem; padding: 0.3rem 0.5rem; }
+        .product-cta { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+        .product-footer { padding-top: 0.5rem; }
+    }
     </style>
     @endpush
 
@@ -468,8 +573,21 @@
     <div class="container">
         <div class="search-container">
 
+            <button class="mobile-filter-btn" wire:click="$set('showMobileFilters', true)">
+                <span class="material-symbols-outlined">filter_list</span>
+                Filters & Sorting
+            </button>
+
+            <div class="filter-drawer-backdrop @if($showMobileFilters) active @endif" wire:click="$set('showMobileFilters', false)"></div>
+
             {{-- FILTERS SIDEBAR --}}
-            <aside class="filter-sidebar">
+            <aside class="filter-sidebar @if($showMobileFilters) active @endif">
+                <div class="mobile-filter-header">
+                    <h2>Filters</h2>
+                    <button class="p-2" wire:click="$set('showMobileFilters', false)">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
 
                 {{-- CATEGORY FILTER --}}
                 <div class="filter-section">

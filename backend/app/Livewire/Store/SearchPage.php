@@ -15,6 +15,7 @@ class SearchPage extends Component
     public $price_min = '';
     public $price_max = '';
     public $sort = 'relevance';
+    public $showMobileFilters = false;
 
     // Categories mapping
     public array $categories_map = [
