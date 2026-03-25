@@ -616,6 +616,41 @@
         .product-cta { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
         .product-footer { padding-top: 0.5rem; }
     }
+
+    @media(max-width: 440px) {
+        .product-card {
+            grid-template-rows: 52% 48%;
+        }
+
+        .product-body {
+            padding: 0.55rem;
+        }
+
+        .product-desc {
+            display: none;
+        }
+
+        .product-name {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            -webkit-line-clamp: 1;
+        }
+
+        .product-footer {
+            padding-top: 0.45rem;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            line-height: 1.1;
+        }
+
+        .product-cta {
+            padding: 0.35rem 0.55rem;
+            font-size: 0.62rem;
+            white-space: nowrap;
+        }
+    }
     </style>
     @endpush
 

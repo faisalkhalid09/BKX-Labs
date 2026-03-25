@@ -130,6 +130,9 @@ class AuthController extends Controller
                 'password' => $data['password'],
             ]);
             $request->session()->forget('pending_registration');
+            
+            Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
+            
             Auth::login($user);
         } else {
             $user = User::where('email', $email)->first();

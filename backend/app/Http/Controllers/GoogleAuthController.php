@@ -36,6 +36,8 @@ class GoogleAuthController extends Controller
                     'google_id' => $googleUser->id,
                     'password'  => null, // Password is not required for Google users
                 ]);
+
+                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
             }
 
             Auth::login($user, true);

@@ -92,20 +92,20 @@
                             </span>
                         </div>
                         <a href="{{ route('store.show', $product->slug) }}">
-                            <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                            <h3 class="catalog-product-name text-sm sm:text-base font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-1 sm:line-clamp-2">
                                 {{ $product->name }}
                             </h3>
                         </a>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-4 pb-1">
+                        <p class="catalog-product-desc text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-4 pb-1">
                             {{ $product->short_description }}
                         </p>
                         
-                        <div class="mt-auto flex items-center justify-between pt-4 sm:pt-6 border-t border-slate-50 dark:border-slate-900">
+                        <div class="catalog-product-footer mt-auto flex items-center justify-between pt-4 sm:pt-6 border-t border-slate-50 dark:border-slate-900">
                             <div class="flex flex-col">
                                 <span class="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Price</span>
-                                <span class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
+                                <span class="catalog-product-price text-lg sm:text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
                             </div>
-                            <a href="{{ route('store.show', $product->slug) }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <a href="{{ route('store.show', $product->slug) }}" class="catalog-product-details bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
                                 Details
                             </a>
                         </div>
@@ -147,6 +147,40 @@
 
     .catalog-product-body {
         min-height: 0;
+    }
+
+    @media (max-width: 440px) {
+        .catalog-product-card {
+            grid-template-rows: 52% 48%;
+        }
+
+        .catalog-product-body {
+            padding: 0.55rem;
+        }
+
+        .catalog-product-desc {
+            display: none;
+        }
+
+        .catalog-product-name {
+            font-size: 0.95rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .catalog-product-footer {
+            padding-top: 0.45rem;
+        }
+
+        .catalog-product-price {
+            font-size: 1rem;
+            line-height: 1.1;
+        }
+
+        .catalog-product-details {
+            padding: 0.35rem 0.55rem;
+            font-size: 0.62rem;
+            white-space: nowrap;
+        }
     }
 
     @media (prefers-color-scheme: dark) {
