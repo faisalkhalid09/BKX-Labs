@@ -26,7 +26,12 @@
 </head>
 <body class="bg-background text-on-background antialiased">
 
+@php
+    $hideStoreHeader = request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('verify.otp');
+@endphp
+
 <!-- TopNavBar Shared Component -->
+@unless($hideStoreHeader)
 <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md font-['Inter'] tracking-tight antialiased border-b border-slate-200/60 dark:border-slate-800/60">
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-14 sm:h-16 max-w-6xl mx-auto">
         <!-- Logo Only -->
@@ -143,8 +148,9 @@
         </div>
     </div>
 </nav>
+@endunless
 
-<main class="pt-14 sm:pt-16 min-h-screen">
+<main class="{{ $hideStoreHeader ? 'pt-0' : 'pt-14 sm:pt-16' }} min-h-screen">
     @yield('content')
 </main>
 

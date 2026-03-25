@@ -5,6 +5,9 @@
     <div class="w-full max-w-md">
         <!-- Logo/Branding -->
         <div class="text-center mb-5 sm:mb-6">
+            <a href="{{ url('/store') }}" class="inline-flex justify-center mb-4 hover:opacity-85 transition-opacity" aria-label="Go to BKX Labs Store">
+                <img src="/brand-logo.png" alt="BKX Labs" class="h-8 sm:h-9 w-auto object-contain">
+            </a>
             <h1 class="text-lg sm:text-xl font-black text-on-surface mb-1.5 tracking-tight">Welcome Back</h1>
             <p class="text-xs sm:text-sm text-on-surface-variant">Sign in to access your downloads and purchases</p>
         </div>
