@@ -494,7 +494,11 @@ nav form[action*="search"] { display: none !important; }
                 <div class="product-grid">
                     @foreach ($products as $product)
                         <div class="product-card">
-                            @if($product->is_promoted)
+                            @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
+                            
+                            @if($isOwned)
+                                <div class="product-badge" style="background: #10b981;">Owned</div>
+                            @elseif($product->is_promoted)
                                 <div class="product-badge">Sponsored</div>
                             @endif
 
@@ -514,8 +518,8 @@ nav form[action*="search"] { display: none !important; }
 
                                 <div class="product-footer" style="margin-top: auto;">
                                     <span class="product-price">${{ number_format($product->price, 2) }}</span>
-                                    <a href="{{ route('store.show', $product->slug) }}" class="product-cta">
-                                        VIEW
+                                    <a href="{{ route('store.show', $product->slug) }}" class="product-cta" @if($isOwned) style="background: #10b981;" @endif>
+                                        @if($isOwned) VIEW OWNED @else VIEW @endif
                                         <span class="material-symbols-outlined" style="font-size: 0.85rem;">arrow_forward</span>
                                     </a>
                                 </div>

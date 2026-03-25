@@ -24,6 +24,15 @@ class ProductCatalog extends Component
 
     public function addToCart(int $productId): void
     {
+        if (auth()->check() && auth()->user()->orders()
+            ->where('product_id', $productId)
+            ->where('status', 'paid')
+            ->where('download_expires_at', '>', now())
+            ->exists()) {
+            session()->flash('error', 'You already have active access to this product.');
+            return;
+        }
+
         $product = Product::findOrFail($productId);
         $cart    = session()->get('cart', []);
 
@@ -49,8 +58,11 @@ class ProductCatalog extends Component
             $query->where('category', $this->activeCategory);
         }
 
+        $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
+
         return view('livewire.product-catalog', [
             'products' => $query->orderBy('is_promoted', 'desc')->inRandomOrder()->get(),
+            'activePurchasedIds' => $activePurchasedIds,
         ]);
     }
 }

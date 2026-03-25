@@ -6,6 +6,12 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="bg-red-500 text-white px-4 py-3 rounded-lg mb-6 sm:mb-8 text-xs sm:text-sm font-semibold animate-[slideIn_0.3s_ease-out]">
+            {{ session('error') }}
+        </div>
+    @endif
+
     {{-- Filter Row: Tonal Layering --}}
     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 sm:mb-16 gap-4 sm:gap-6">
         <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
@@ -38,25 +44,33 @@
                 <!-- Product Card -->
                 <div class="group bg-surface-container-lowest p-3 sm:p-5 rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 border border-outline-variant/20 hover:border-outline-variant/40 flex flex-col h-full">
                     <div class="aspect-[4/3] bg-surface-container-low mb-3 sm:mb-6 overflow-hidden rounded-xl flex items-center justify-center relative">
-                        <!-- Top-right absolute add to cart button on hover -->
-                        <div class="absolute top-2 sm:top-3 right-2 sm:right-3 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 z-10">
-                            <button class="bg-surface-container-lowest text-primary p-2 sm:p-2.5 rounded-full shadow-lg hover:bg-primary hover:text-on-primary transition-colors disabled:opacity-50 min-h-[44px] min-w-[44px] flex items-center justify-center" 
+                        @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
+
+                        @if($isOwned)
+                            <div class="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
+                                <span class="bg-[#10b981] text-white px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-lg">Owned</span>
+                            </div>
+                        @else
+                            <!-- Top-right absolute add to cart button on hover -->
+                            <div class="absolute top-2 sm:top-3 right-2 sm:right-3 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                <button class="bg-surface-container-lowest text-primary p-2 sm:p-2.5 rounded-full shadow-lg hover:bg-primary hover:text-on-primary transition-colors disabled:opacity-50 min-h-[44px] min-w-[44px] flex items-center justify-center" 
+                                        wire:click="addToCart({{ $product->id }})"
+                                        wire:loading.attr="disabled"
+                                        title="Quick Add">
+                                    <span wire:loading.remove wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined text-base sm:text-[18px]">shopping_cart_checkout</span>
+                                    <span wire:loading wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined text-base sm:text-[18px] animate-spin">refresh</span>
+                                </button>
+                            </div>
+
+                            <!-- Mobile quick add button - always visible on mobile -->
+                            <button class="sm:hidden absolute bottom-2 right-2 left-2 bg-primary text-on-primary py-2 rounded-lg font-semibold text-xs transition-all hover:bg-primary-container active:scale-95 group-hover:hidden flex items-center justify-center gap-1 min-h-[44px]"
                                     wire:click="addToCart({{ $product->id }})"
                                     wire:loading.attr="disabled"
-                                    title="Quick Add">
-                                <span wire:loading.remove wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined text-base sm:text-[18px]">shopping_cart_checkout</span>
-                                <span wire:loading wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined text-base sm:text-[18px] animate-spin">refresh</span>
+                                    title="Add to Cart">
+                                <span class="material-symbols-outlined text-base">shopping_cart_checkout</span>
+                                <span>Add</span>
                             </button>
-                        </div>
-
-                        <!-- Mobile quick add button - always visible on mobile -->
-                        <button class="sm:hidden absolute bottom-2 right-2 left-2 bg-primary text-on-primary py-2 rounded-lg font-semibold text-xs transition-all hover:bg-primary-container active:scale-95 group-hover:hidden flex items-center justify-center gap-1 min-h-[44px]"
-                                wire:click="addToCart({{ $product->id }})"
-                                wire:loading.attr="disabled"
-                                title="Add to Cart">
-                            <span class="material-symbols-outlined text-base">shopping_cart_checkout</span>
-                            <span>Add</span>
-                        </button>
+                        @endif
 
                         <a href="{{ route('store.show', $product->slug) }}" class="w-full h-full block">
                             @if ($product->thumbnail_path)

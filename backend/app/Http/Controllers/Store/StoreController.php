@@ -26,11 +26,28 @@ class StoreController extends Controller
             ProductView::track($product->id);
         } catch (\Throwable) {}
 
-        return view('store.show', compact('product'));
+        $isBought = false;
+        if (auth()->check()) {
+            $isBought = auth()->user()->orders()
+                ->where('product_id', $product->id)
+                ->where('status', 'paid')
+                ->where('download_expires_at', '>', now())
+                ->exists();
+        }
+
+        return view('store.show', compact('product', 'isBought'));
     }
 
     public function addToCart(Product $product)
     {
+        if (auth()->check() && auth()->user()->orders()
+            ->where('product_id', $product->id)
+            ->where('status', 'paid')
+            ->where('download_expires_at', '>', now())
+            ->exists()) {
+            return redirect()->route('store.show', $product->slug)->with('error', 'You already have active access to this product.');
+        }
+
         $cart = session()->get('cart', []);
         
         if (!isset($cart[$product->id])) {
@@ -48,6 +65,14 @@ class StoreController extends Controller
 
     public function addToCartOnly(Product $product)
     {
+        if (auth()->check() && auth()->user()->orders()
+            ->where('product_id', $product->id)
+            ->where('status', 'paid')
+            ->where('download_expires_at', '>', now())
+            ->exists()) {
+            return redirect()->back()->with('error', 'You already have active access to this product.');
+        }
+
         $cart = session()->get('cart', []);
         
         if (!isset($cart[$product->id])) {

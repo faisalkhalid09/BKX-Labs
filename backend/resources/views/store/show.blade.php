@@ -100,21 +100,33 @@
                     @livewire('store.product-price', ['product' => $product])
                     
                     <div class="space-y-3 sm:space-y-4">
-                        <form action="{{ route('store.add_to_cart', $product) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="w-full py-3 sm:py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-sm sm:text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary/20 min-h-[48px]">
-                                Purchase Now
-                                <span class="material-symbols-outlined text-lg sm:text-xl">arrow_forward</span>
-                            </button>
-                        </form>
-                        
-                        <form action="{{ route('store.add_to_cart_only', $product) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="w-full py-3 sm:py-4 rounded-xl bg-surface text-primary border border-primary/20 font-bold tracking-tight text-sm sm:text-lg hover:border-primary hover:bg-primary/5 active:scale-[0.98] transition-all flex items-center justify-center gap-2 sm:gap-3 min-h-[48px]">
-                                Add to Cart
-                                <span class="material-symbols-outlined text-lg sm:text-xl">add_shopping_cart</span>
-                            </button>
-                        </form>
+                        @if($isBought)
+                            <div class="bg-[#10b981]/10 border border-[#10b981]/20 rounded-xl p-4 text-center">
+                                <span class="material-symbols-outlined text-[#10b981] text-3xl mb-2">check_circle</span>
+                                <h4 class="text-[#10b981] font-bold text-lg">Already Owned</h4>
+                                <p class="text-on-surface-variant text-sm mt-1">You have active access to this product.</p>
+                                <a href="{{ route('downloads.index') }}" class="mt-4 inline-flex items-center gap-2 bg-[#10b981] text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-[#059669] transition-all">
+                                    Go to My Library
+                                    <span class="material-symbols-outlined text-sm">download</span>
+                                </a>
+                            </div>
+                        @else
+                            <form action="{{ route('store.add_to_cart', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full py-3 sm:py-4 rounded-xl bg-primary text-white font-bold tracking-tight text-sm sm:text-lg hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-primary/20 min-h-[48px]">
+                                    Purchase Now
+                                    <span class="material-symbols-outlined text-lg sm:text-xl">arrow_forward</span>
+                                </button>
+                            </form>
+                            
+                            <form action="{{ route('store.add_to_cart_only', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full py-3 sm:py-4 rounded-xl bg-surface text-primary border border-primary/20 font-bold tracking-tight text-sm sm:text-lg hover:border-primary hover:bg-primary/5 active:scale-[0.98] transition-all flex items-center justify-center gap-2 sm:gap-3 min-h-[48px]">
+                                    Add to Cart
+                                    <span class="material-symbols-outlined text-lg sm:text-xl">add_shopping_cart</span>
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 

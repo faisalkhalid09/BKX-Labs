@@ -61,4 +61,12 @@ class User extends Authenticatable implements FilamentUser
             'password'          => 'hashed',
         ];
     }
+    public function getActivePurchasedProductIds(): array
+    {
+        return $this->orders()
+            ->where('status', 'paid')
+            ->where('download_expires_at', '>', now())
+            ->pluck('product_id')
+            ->toArray();
+    }
 }

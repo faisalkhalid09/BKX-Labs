@@ -53,6 +53,8 @@ class SearchController extends Controller
             'other'    => 'Other',
         ];
 
-        return view('store.search', compact('products', 'query', 'category', 'sort', 'categories'));
+        $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
+
+        return view('store.search', compact('products', 'query', 'category', 'sort', 'categories', 'activePurchasedIds'));
     }
 }

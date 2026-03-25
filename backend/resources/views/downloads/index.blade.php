@@ -61,7 +61,9 @@
                                 @endif
                             @endif
                         </div>
-                        <h3 class="text-2xl font-bold text-on-surface tracking-tight mb-3 truncate hover:text-primary transition-colors cursor-pointer">{{ $order->product->name }}</h3>
+                        <a href="{{ route('store.show', $order->product->slug) }}">
+                            <h3 class="text-2xl font-bold text-on-surface tracking-tight mb-3 truncate hover:text-primary transition-colors cursor-pointer">{{ $order->product->name }}</h3>
+                        </a>
                         <div class="flex items-center gap-4 text-sm font-medium text-on-surface-variant flex-wrap">
                             <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">receipt</span> Order #{{ $order->id }}</span>
                             <span class="w-1.5 h-1.5 rounded-full bg-outline-variant/50"></span>
