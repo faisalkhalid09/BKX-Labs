@@ -31,8 +31,8 @@
                 <div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-cyan-500/20 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="relative aspect-square flex items-center justify-center">
-                    <img src="/logo.png" 
-                         alt="BKX Labs" 
+                    <img src="{{ asset('assets/images/bkx_3d_logo.png') }}" 
+                         alt="BKX Labs 3D Logo" 
                          class="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(30,58,138,0.3)] animate-[float_6s_ease-in-out_infinite]">
                 </div>
             </div>
