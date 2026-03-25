@@ -15,8 +15,8 @@ Route::get('/', function () {
 
 // Google Auth Routes
 Route::get('/debug-route', function() { return "Debug OK"; });
-Route::get('/auth/google/redirect', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/auth/google/redirect', [\App\Http\Controllers\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 // ──────────────────────────────────────
 //  Auth Routes
