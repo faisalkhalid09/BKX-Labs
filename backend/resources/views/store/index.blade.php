@@ -48,7 +48,7 @@
                 <div class="absolute -inset-20 bg-slate-50 dark:bg-slate-900/50 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="relative w-full h-full flex items-center justify-center">
-                    <img src="{{ asset('logo.png') }}" 
+                    <img src="{{ asset('logo-hero.png') }}" 
                          alt="BKX Labs Logo" 
                          class="w-full h-full object-contain">
                 </div>
