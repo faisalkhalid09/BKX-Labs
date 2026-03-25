@@ -47,7 +47,7 @@
                 <div class="absolute -inset-8 bg-gradient-to-br from-blue-200 via-cyan-100 to-blue-100 dark:from-blue-900/40 dark:via-cyan-900/40 dark:to-blue-900/30 rounded-3xl blur-3xl opacity-70"></div>
                 
                 <div class="relative flex items-center justify-center">
-                    <img src="{{ asset('logo transparent.png') }}" 
+                    <img src="{{ asset('logo-transparent.png') }}" 
                          alt="BKX Labs - Engineering Excellence" 
                          class="w-full h-auto object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite]"
                          loading="lazy">

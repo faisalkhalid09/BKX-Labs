@@ -31,7 +31,7 @@
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-14 sm:h-16 max-w-6xl mx-auto">
         <!-- Logo Only -->
         <a href="{{ url('/store') }}" class="shrink-0 flex items-center hover:opacity-80 transition-opacity">
-            <img src="{{ asset('logo transparent.png') }}" 
+            <img src="{{ asset('logo-transparent.png') }}" 
                  alt="BKX Labs" 
                  class="h-7 sm:h-8 w-auto object-contain drop-shadow-sm"
                  loading="lazy">
