@@ -12,6 +12,7 @@
 </style>
 @endpush
 
+@section('content')
 <!-- Hero Section: Premium Minimalist -->
 <section class="bg-white dark:bg-slate-950 pt-16 sm:pt-24 pb-12 sm:pb-20 px-6 md:px-10 overflow-hidden border-b border-slate-50 dark:border-slate-900">
     <div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
