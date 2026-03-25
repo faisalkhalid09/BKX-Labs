@@ -24,9 +24,21 @@
                 Expert-grade AI models, automation scripts, and workflow templates designed to accelerate your engineering teams and modernize your stack.
             </p>
             
-            <div class="mt-8 sm:mt-12 flex flex-wrap gap-4">
-                <a href="#catalog" class="bg-primary text-on-primary px-10 py-4 rounded-full text-sm font-bold transition-all hover:shadow-2xl hover:shadow-primary/30 active:scale-95">Explore Catalog</a>
-                <a href="{{ route('register') }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 px-10 py-4 rounded-full text-sm font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95">Create Account</a>
+            <div class="mt-10 sm:mt-16 max-w-2xl w-full">
+                <form action="{{ route('store.search') }}" method="GET" class="relative p-[6px] rounded-2xl bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 shadow-2xl overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-600 via-yellow-600 via-green-600 via-blue-600 to-purple-600 blur-xl opacity-20 animate-[pulse_3s_infinite]"></div>
+                    <div class="relative bg-white dark:bg-slate-950 rounded-[0.8rem] flex items-center overflow-hidden">
+                        <span class="material-symbols-outlined pl-5 text-slate-400">search</span>
+                        <input type="text" name="q" placeholder="Search for AI models, scripts, templates..." 
+                               class="flex-1 bg-transparent border-none px-4 py-5 text-sm sm:text-base focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 font-medium outline-none"
+                               autocomplete="off">
+                        <button type="submit" class="bg-primary text-white px-8 py-5 text-sm font-black uppercase tracking-widest hover:bg-primary/90 transition-colors flex items-center gap-2">
+                            <span>Search</span>
+                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-4 text-[10px] uppercase tracking-widest text-slate-400 font-bold px-2">Popular: <span class="text-slate-600 dark:text-slate-300">LLM Models, Python Scripts, UI Kits</span></p>
             </div>
         </div>
         
@@ -36,7 +48,7 @@
                 <div class="absolute -inset-20 bg-slate-50 dark:bg-slate-900/50 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="relative w-full h-full flex items-center justify-center">
-                    <img src="{{ asset('logo.png') }}" 
+                    <img src="/logo.png" 
                          alt="BKX Labs Logo" 
                          class="w-full h-full object-contain">
                 </div>
