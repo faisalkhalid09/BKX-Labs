@@ -16,7 +16,7 @@ class SearchPage extends Component
     public $price_max = '';
     public $sort = 'relevance';
 
-    // Categories mapping (matches SearchController)
+    // Categories mapping
     public array $categories_map = [
         'ai_model' => 'AI Models',
         'script'   => 'Scripts',
@@ -43,7 +43,6 @@ class SearchPage extends Component
 
     public function updated($propertyName)
     {
-        // Reset pagination when search/filters change
         if (in_array($propertyName, ['q', 'category', 'price_min', 'price_max', 'sort'])) {
             $this->resetPage();
         }
@@ -63,7 +62,6 @@ class SearchPage extends Component
     {
         $products = Product::query()->where('is_active', true);
 
-        // Keyword search
         if ($this->q !== '') {
             $products->where(function ($query) {
                 $query->where('name', 'like', "%{$this->q}%")
@@ -72,12 +70,10 @@ class SearchPage extends Component
             });
         }
 
-        // Category filter
         if (!empty($this->category)) {
             $products->whereIn('category', $this->category);
         }
 
-        // Price filter
         if ($this->price_min !== '') {
             $products->where('price', '>=', (float) $this->price_min);
         }
@@ -85,10 +81,8 @@ class SearchPage extends Component
             $products->where('price', '<=', (float) $this->price_max);
         }
 
-        // Priority Sorting: Promoted products first
         $products->orderBy('is_promoted', 'desc');
 
-        // Sorting
         match ($this->sort) {
             'price_asc'  => $products->orderBy('price', 'asc'),
             'price_desc' => $products->orderBy('price', 'desc'),
@@ -99,12 +93,11 @@ class SearchPage extends Component
         };
 
         $products = $products->get();
-
         $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
 
         return view('livewire.store.search-page', [
             'products' => $products,
             'activePurchasedIds' => $activePurchasedIds,
-        ])->layout('store.layout');
+        ])->extends('store.layout')->section('content');
     }
 }
