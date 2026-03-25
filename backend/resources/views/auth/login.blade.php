@@ -63,7 +63,7 @@
                             type="button" 
                             onclick="togglePasswordVisibility('password', 'toggleBtn')"
                             id="toggleBtn"
-                            class="absolute right-1 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-surface-container w-10 h-10 flex items-center justify-center"
+                            class="absolute right-1 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded hover:bg-surface-container w-8 h-8 flex items-center justify-center"
                             aria-label="Show password"
                         >
                             <svg id="toggleBtn-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
