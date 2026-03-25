@@ -25,9 +25,8 @@
             </p>
             
             <div class="mt-10 sm:mt-16 max-w-2xl w-full">
-                <form action="{{ route('store.search') }}" method="GET" class="relative p-[6px] rounded-2xl bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 shadow-2xl overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-r from-red-600 via-yellow-600 via-green-600 via-blue-600 to-purple-600 blur-xl opacity-20 animate-[pulse_3s_infinite]"></div>
-                    <div class="relative bg-white dark:bg-slate-950 rounded-[0.8rem] flex items-center overflow-hidden">
+                <form action="{{ route('store.search') }}" method="GET" class="relative rounded-2xl border-2 border-primary/20 focus-within:border-primary shadow-sm overflow-hidden group transition-all duration-300">
+                    <div class="relative bg-white dark:bg-slate-950 flex items-center overflow-hidden">
                         <span class="material-symbols-outlined pl-5 text-slate-400">search</span>
                         <input type="text" name="q" placeholder="Search for AI models, scripts, templates..." 
                                class="flex-1 bg-transparent border-none px-4 py-5 text-sm sm:text-base focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 font-medium outline-none"
@@ -43,14 +42,17 @@
         </div>
         
         <div class="hidden lg:flex lg:col-span-4 justify-end relative">
-            <div class="relative w-full max-w-xs aspect-square">
-                <!-- Subtle Background Element -->
-                <div class="absolute -inset-20 bg-slate-50 dark:bg-slate-900/50 rounded-full blur-3xl opacity-50"></div>
+            <div class="relative w-full max-w-sm">
+                <!-- Gradient Background -->
+                <div class="absolute -inset-16 bg-gradient-to-br from-blue-100 via-blue-50 to-transparent dark:from-blue-900/30 dark:via-blue-950/20 dark:to-transparent rounded-full blur-3xl opacity-60"></div>
                 
-                <div class="relative w-full h-full flex items-center justify-center">
-                    <img src="{{ asset('logo-hero.png') }}" 
-                         alt="BKX Labs Logo" 
-                         class="w-full h-full object-contain">
+                <div class="relative flex items-center justify-center aspect-square">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <img src="{{ asset('brand-logo.png') }}" 
+                             alt="BKX Labs Logo" 
+                             class="w-4/5 h-4/5 object-contain drop-shadow-xl"
+                             loading="lazy">
+                    </div>
                 </div>
             </div>
         </div>
