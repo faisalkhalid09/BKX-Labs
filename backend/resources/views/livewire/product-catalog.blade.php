@@ -45,8 +45,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-12" wire:loading.class.add="opacity-50" style="transition:opacity .2s;">
             @foreach ($products as $product)
                 <!-- Product Card -->
-                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-[4px] overflow-hidden transition-all duration-500 hover:-translate-y-1 {{ $product->is_promoted ? 'promoted-card-animated border border-transparent' : 'border border-slate-200 dark:border-slate-800' }}">
-                    <div class="aspect-square bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-[2px]">
+                <div class="catalog-product-card group relative bg-white dark:bg-slate-950 rounded-[4px] overflow-hidden transition-all duration-500 hover:-translate-y-1 {{ $product->is_promoted ? 'promoted-card-animated border border-transparent' : 'border border-slate-200 dark:border-slate-800' }}">
+                    <div class="catalog-product-media bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-[2px]">
                         @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
 
                         @if($product->is_promoted)
@@ -82,18 +82,18 @@
                         @endif
                     </div>
 
-                    <div class="pt-4 sm:pt-6 pb-2 px-2 flex-1 flex flex-col">
+                    <div class="catalog-product-body pt-3 sm:pt-4 pb-2 px-2 sm:px-3 flex flex-col">
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
                                 {{ str_replace('_', ' ', $product->category) }}
                             </span>
                         </div>
                         <a href="{{ route('store.show', $product->slug) }}">
-                            <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                            <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-2">
                                 {{ $product->name }}
                             </h3>
                         </a>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-4 sm:mb-6">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-4">
                             {{ $product->short_description }}
                         </p>
                         
@@ -102,7 +102,7 @@
                                 <span class="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Price</span>
                                 <span class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
                             </div>
-                            <a href="{{ route('store.show', $product->slug) }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full text-[10px] sm:text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <a href="{{ route('store.show', $product->slug) }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
                                 Details
                             </a>
                         </div>
@@ -130,6 +130,20 @@
         background-size: 100% 100%, 180% 180%;
         animation: promotedBorderFlow 2.8s linear infinite;
         box-shadow: 0 10px 28px rgba(29, 78, 216, 0.22);
+    }
+
+    .catalog-product-card {
+        aspect-ratio: 1 / 1;
+        display: grid;
+        grid-template-rows: 56% 44%;
+    }
+
+    .catalog-product-media {
+        height: 100%;
+    }
+
+    .catalog-product-body {
+        min-height: 0;
     }
 
     @media (prefers-color-scheme: dark) {

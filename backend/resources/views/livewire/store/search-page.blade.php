@@ -259,14 +259,15 @@
 
     /* Product Card */
     .product-card {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 56% 44%;
+        aspect-ratio: 1 / 1;
         background: white;
         border: 1px solid #e2e8f0;
         border-radius: 4px;
         overflow: hidden;
         transition: all 0.3s;
-        height: 100%;
+        height: auto;
     }
     .product-card:hover {
         border-color: #1e3a8a;
@@ -288,7 +289,7 @@
     }
 
     .product-image {
-        aspect-ratio: 1;
+        height: 100%;
         background: #f1f5f9;
         display: flex;
         align-items: center;
@@ -320,10 +321,14 @@
     }
 
     .product-body {
-        padding: 1rem;
-        flex: 1;
+        padding: 0.75rem;
         display: flex;
         flex-direction: column;
+        min-height: 0;
+    }
+
+    @media(min-width: 640px) {
+        .product-body { padding: 0.9rem; }
     }
 
     .product-category {
@@ -336,10 +341,10 @@
     }
 
     .product-name {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 800;
         color: #0f172a;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.35rem;
         line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -348,22 +353,30 @@
     }
 
     .product-desc {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: #64748b;
         line-height: 1.4;
-        margin-bottom: 1rem;
+        margin-bottom: 0.65rem;
         flex: 1;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
+    }
+
+    @media(min-width: 768px) {
+        .product-desc {
+            font-size: 0.8rem;
+            -webkit-line-clamp: 2;
+            margin-bottom: 0.9rem;
+        }
     }
 
     .product-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-top: 0.75rem;
+        padding-top: 0.55rem;
         border-top: 1px solid #f1f5f9;
         gap: 0.5rem;
     }
@@ -556,7 +569,7 @@
         .product-desc { font-size: 0.75rem; margin-bottom: 0.75rem; -webkit-line-clamp: 1; }
         .product-price { font-size: 1rem; }
         .product-body { padding: 0.75rem; }
-        .product-image { aspect-ratio: 16/10; }
+        .product-image { height: 100%; }
         .product-badge { top: 0.5rem; right: 0.5rem; font-size: 0.6rem; padding: 0.3rem 0.5rem; }
         .product-cta { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
         .product-footer { padding-top: 0.5rem; }
