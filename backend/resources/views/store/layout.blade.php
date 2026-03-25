@@ -33,7 +33,7 @@
         <a href="{{ url('/store') }}" class="shrink-0 flex items-center hover:opacity-80 transition-opacity">
             <img src="/brand-logo.png" 
                  alt="BKX Labs" 
-                 class="h-7 sm:h-8 w-auto object-contain drop-shadow-sm"
+                 class="h-6 sm:h-7 w-auto object-cover scale-110 drop-shadow-sm"
                  loading="lazy">
         </a>
         
