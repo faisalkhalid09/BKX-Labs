@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Google Auth Routes
+Route::get('/auth/google/redirect', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
 // ──────────────────────────────────────
 //  Auth Routes
 // ──────────────────────────────────────
@@ -25,12 +29,6 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/verify-otp', [AuthController::class, 'showVerifyOtp'])->name('verify.otp');
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
-
-// Google Auth Routes
-Route::prefix('auth/google')->group(function () {
-    Route::get('redirect', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-    Route::get('callback', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
-});
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
