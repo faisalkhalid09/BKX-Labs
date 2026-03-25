@@ -31,9 +31,7 @@
     <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-12 sm:h-14 max-w-[1920px] mx-auto">
         <!-- Logo & Search Bar -->
         <div class="flex items-center gap-4 md:gap-6 flex-1">
-            <a href="{{ url('/store') }}" style="display: flex; align-items: center; overflow: hidden; height: 32px; sm:height: 40px;" class="shrink-0">
-                <img src="/brand-logo.png" alt="BKX Labs" style="height: 48px; width: auto; object-fit: contain; object-position: left center; transform: scale(0.35) sm:scale(0.4); transform-origin: left center;" />
-            </a>
+
 
             <!-- Header Search (Desktop) -->
             <form action="{{ route('store.search') }}" method="GET" class="hidden sm:flex items-center flex-1 max-w-xs">
