@@ -274,13 +274,13 @@
     }
 
     .product-card.product-card-promoted {
-        border: 2px solid #f59e0b;
-        box-shadow: 0 10px 26px rgba(245, 158, 11, 0.16);
+        border: 2px solid #2563eb;
+        box-shadow: 0 10px 26px rgba(37, 99, 235, 0.16);
     }
 
     .product-card.product-card-promoted:hover {
-        border-color: #d97706;
-        box-shadow: 0 12px 30px rgba(217, 119, 6, 0.2);
+        border-color: #1d4ed8;
+        box-shadow: 0 12px 30px rgba(29, 78, 216, 0.2);
     }
 
     .product-image {
@@ -305,7 +305,7 @@
         position: absolute;
         top: 0.75rem;
         right: 0.75rem;
-        background: #f97316;
+        background: #2563eb;
         color: white;
         font-size: 0.7rem;
         font-weight: 900;
