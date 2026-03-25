@@ -273,6 +273,16 @@
         box-shadow: 0 8px 24px rgba(30, 58, 138, 0.12);
     }
 
+    .product-card.product-card-promoted {
+        border: 2px solid #f59e0b;
+        box-shadow: 0 10px 26px rgba(245, 158, 11, 0.16);
+    }
+
+    .product-card.product-card-promoted:hover {
+        border-color: #d97706;
+        box-shadow: 0 12px 30px rgba(217, 119, 6, 0.2);
+    }
+
     .product-image {
         aspect-ratio: 1;
         background: #f1f5f9;
@@ -658,13 +668,15 @@
                     @else
                         <div class="product-grid">
                             @foreach ($products as $product)
-                                <div class="product-card">
+                                <div class="product-card {{ $product->is_promoted ? 'product-card-promoted' : '' }}">
                                     @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
                                     
+                                    @if($product->is_promoted)
+                                        <div class="product-badge">Promoted</div>
+                                    @endif
+
                                     @if($isOwned)
-                                        <div class="product-badge" style="background: #10b981;">Owned</div>
-                                    @elseif($product->is_promoted)
-                                        <div class="product-badge">Sponsored</div>
+                                        <div class="product-badge" style="left: 0.75rem; right: auto; background: #10b981;">Owned</div>
                                     @endif
 
                                     <div class="product-image">
