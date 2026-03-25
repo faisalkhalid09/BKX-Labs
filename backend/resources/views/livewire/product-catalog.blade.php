@@ -45,9 +45,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-12" wire:loading.class.add="opacity-50" style="transition:opacity .2s;">
             @foreach ($products as $product)
                 <!-- Product Card -->
-                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-2xl sm:rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2">
+                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-2xl sm:rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 {{ $product->is_promoted ? 'ring-2 ring-amber-400/70 border border-amber-300 dark:border-amber-500/40' : '' }}">
                     <div class="aspect-[16/10] sm:aspect-[4/5] bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-2xl sm:rounded-[2rem]">
                         @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
+
+                        @if($product->is_promoted)
+                            <div class="absolute top-4 right-4 z-10">
+                                <span class="bg-amber-500/95 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl">Promoted</span>
+                            </div>
+                        @endif
 
                         @if($isOwned)
                             <div class="absolute top-4 left-4 z-10">

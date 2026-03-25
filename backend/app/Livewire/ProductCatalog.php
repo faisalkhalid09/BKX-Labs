@@ -52,16 +52,26 @@ class ProductCatalog extends Component
 
     public function render()
     {
-        $query = Product::where('is_active', true);
+        $baseQuery = Product::where('is_active', true);
 
         if ($this->activeCategory !== 'all') {
-            $query->where('category', $this->activeCategory);
+            $baseQuery->where('category', $this->activeCategory);
         }
+
+        $promotedProducts = (clone $baseQuery)
+            ->where('is_promoted', true)
+            ->inRandomOrder()
+            ->get();
+
+        $regularProducts = (clone $baseQuery)
+            ->where('is_promoted', false)
+            ->inRandomOrder()
+            ->get();
 
         $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
 
         return view('livewire.product-catalog', [
-            'products' => $query->orderBy('is_promoted', 'desc')->inRandomOrder()->get(),
+            'products' => $promotedProducts->concat($regularProducts),
             'activePurchasedIds' => $activePurchasedIds,
         ]);
     }

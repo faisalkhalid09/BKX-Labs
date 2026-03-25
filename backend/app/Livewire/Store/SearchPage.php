@@ -61,10 +61,10 @@ class SearchPage extends Component
 
     public function render()
     {
-        $products = Product::query()->where('is_active', true);
+        $baseQuery = Product::query()->where('is_active', true);
 
         if ($this->q !== '') {
-            $products->where(function ($query) {
+            $baseQuery->where(function ($query) {
                 $query->where('name', 'like', "%{$this->q}%")
                       ->orWhere('short_description', 'like', "%{$this->q}%")
                       ->orWhere('description', 'like', "%{$this->q}%");
@@ -72,28 +72,27 @@ class SearchPage extends Component
         }
 
         if (!empty($this->category)) {
-            $products->whereIn('category', $this->category);
+            $baseQuery->whereIn('category', $this->category);
         }
 
         if ($this->price_min !== '') {
-            $products->where('price', '>=', (float) $this->price_min);
+            $baseQuery->where('price', '>=', (float) $this->price_min);
         }
         if ($this->price_max !== '') {
-            $products->where('price', '<=', (float) $this->price_max);
+            $baseQuery->where('price', '<=', (float) $this->price_max);
         }
 
-        $products->orderBy('is_promoted', 'desc');
+        $promotedQuery = (clone $baseQuery)->where('is_promoted', true);
+        $regularQuery = (clone $baseQuery)->where('is_promoted', false);
 
         match ($this->sort) {
-            'price_asc'  => $products->orderBy('price', 'asc'),
-            'price_desc' => $products->orderBy('price', 'desc'),
-            'newest'     => $products->orderBy('created_at', 'desc'),
-            default      => $this->q !== '' 
-                ? $products->orderByRaw( "CASE WHEN name LIKE ? THEN 0 ELSE 1 END, created_at DESC", ["%{$this->q}%"])
-                : $products->inRandomOrder(),
+            'price_asc'  => [$promotedQuery->orderBy('price', 'asc'), $regularQuery->orderBy('price', 'asc')],
+            'price_desc' => [$promotedQuery->orderBy('price', 'desc'), $regularQuery->orderBy('price', 'desc')],
+            'newest'     => [$promotedQuery->orderBy('created_at', 'desc'), $regularQuery->orderBy('created_at', 'desc')],
+            default      => [$promotedQuery->inRandomOrder(), $regularQuery->inRandomOrder()],
         };
 
-        $products = $products->get();
+        $products = $promotedQuery->get()->concat($regularQuery->get());
         $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
 
         return view('livewire.store.search-page', [
