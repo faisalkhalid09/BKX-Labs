@@ -135,33 +135,63 @@
         to { transform: translateY(0); opacity: 1; }
     }
 
-    .promoted-card-animated {
-        border: 3px solid transparent;
-        background:
-            linear-gradient(var(--card-bg, #ffffff), var(--card-bg, #ffffff)) padding-box,
-            linear-gradient(120deg, #0f3bbf 0%, #1d4ed8 16%, #2563eb 33%, #38bdf8 50%, #2563eb 67%, #1d4ed8 84%, #0f3bbf 100%) border-box;
-        background-size: 100% 100%, 180% 180%;
-        animation: promotedBorderFlow 2.8s linear infinite;
-        box-shadow: 0 10px 28px rgba(29, 78, 216, 0.22);
-    }
-
     .catalog-product-card {
-        aspect-ratio: 1 / 1;
-        display: grid;
-        grid-template-rows: 60% 40%;
+        display: flex;
+        flex-direction: column;
+        min-height: 360px;
     }
 
     .catalog-product-media {
-        height: 100%;
+        aspect-ratio: 16 / 10;
+        height: auto;
+        flex-shrink: 0;
     }
 
     .catalog-product-body {
         min-height: 0;
+        flex: 1;
+    }
+
+    .promoted-card-animated {
+        position: relative;
+        border: 1px solid #2563eb;
+        box-shadow: 0 10px 28px rgba(29, 78, 216, 0.22);
+        isolation: isolate;
+    }
+
+    .promoted-card-animated > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    @supports (-webkit-mask: linear-gradient(#000 0 0)) {
+        .promoted-card-animated {
+            border-color: transparent;
+        }
+
+        .promoted-card-animated::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 3px;
+            background: linear-gradient(120deg, #0f3bbf 0%, #1d4ed8 16%, #2563eb 33%, #38bdf8 50%, #2563eb 67%, #1d4ed8 84%, #0f3bbf 100%);
+            background-size: 200% 200%;
+            animation: promotedBorderFlow 2.2s linear infinite;
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            pointer-events: none;
+            z-index: 0;
+        }
     }
 
     @media (max-width: 440px) {
         .catalog-product-card {
-            grid-template-rows: 52% 48%;
+            min-height: 330px;
+        }
+
+        .catalog-product-media {
+            aspect-ratio: 3 / 2;
         }
 
         .catalog-product-body {
@@ -193,14 +223,8 @@
         }
     }
 
-    @media (prefers-color-scheme: dark) {
-        .promoted-card-animated {
-            --card-bg: #020617;
-        }
-    }
-
     @keyframes promotedBorderFlow {
         0% { background-position: 0% 50%; }
-        100% { background-position: 180% 50%; }
+        100% { background-position: 200% 50%; }
     }
 </style>
