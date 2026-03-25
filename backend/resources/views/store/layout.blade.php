@@ -66,10 +66,10 @@
         </div>
 
         <!-- Mobile Cart & Menu -->
-        <div class="lg:hidden flex items-center gap-3">
+        <div class="lg:hidden flex items-center gap-2">
             @livewire('cart')
-            <button class="mobile-menu-btn p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" id="mobile-menu-toggle" aria-label="Toggle menu">
-                <span class="material-symbols-outlined text-2xl text-slate-900 dark:text-slate-100">menu</span>
+            <button class="mobile-menu-btn w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span class="material-symbols-outlined text-[20px] leading-none text-slate-900 dark:text-slate-100">menu</span>
             </button>
         </div>
     </div>
