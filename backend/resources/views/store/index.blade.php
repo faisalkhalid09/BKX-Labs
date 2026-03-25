@@ -13,32 +13,32 @@
 @endpush
 
 @section('content')
-<!-- Hero Section: Premium Minimalist (Compact) -->
-<section class="bg-white dark:bg-slate-950 pt-10 sm:pt-14 pb-8 sm:pb-12 px-6 md:px-10 overflow-hidden border-b border-slate-50 dark:border-slate-900">
-    <div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-        <div class="md:col-span-12 lg:col-span-9">
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tightest mb-4 sm:mb-6 text-slate-900 dark:text-white leading-[1.1] sm:leading-[1.0]">
-                Engineering <span class="text-primary text-2xl sm:text-4xl md:text-5xl block sm:inline italic font-medium tracking-tight">Excellence.</span>
+<!-- Hero Section: Premium Minimalist -->
+<section class="bg-white dark:bg-slate-950 pt-16 sm:pt-24 pb-12 sm:pb-20 px-6 md:px-10 overflow-hidden border-b border-slate-50 dark:border-slate-900">
+    <div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div class="md:col-span-12 lg:col-span-8">
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tightest mb-6 sm:mb-8 text-slate-900 dark:text-white leading-[0.9] sm:leading-[0.85]">
+                Engineering <br class="hidden sm:block" /><span class="text-primary tracking-tighter">Excellence.</span>
             </h1>
-            <p class="text-sm sm:text-lg text-slate-500 dark:text-slate-400 font-medium max-w-xl leading-relaxed">
+            <p class="text-base sm:text-xl text-slate-500 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
                 Expert-grade AI models, automation scripts, and workflow templates designed to accelerate your engineering teams and modernize your stack.
             </p>
             
-            <div class="mt-6 sm:mt-10 flex flex-wrap gap-3">
-                <a href="#catalog" class="bg-primary text-on-primary px-6 py-3 rounded-full text-xs font-bold transition-all hover:shadow-xl hover:shadow-primary/20 active:scale-95">Explore Catalog</a>
-                <a href="{{ route('register') }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 px-6 py-3 rounded-full text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95">Create Account</a>
+            <div class="mt-8 sm:mt-12 flex flex-wrap gap-4">
+                <a href="#catalog" class="bg-primary text-on-primary px-8 py-4 rounded-full text-sm font-bold transition-all hover:shadow-2xl hover:shadow-primary/30 active:scale-95">Explore Catalog</a>
+                <a href="{{ route('register') }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 px-8 py-4 rounded-full text-sm font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95">Create Account</a>
             </div>
         </div>
         
-        <div class="hidden lg:flex lg:col-span-3 justify-end relative">
-            <div class="relative w-full max-w-[240px] aspect-square">
+        <div class="hidden lg:flex lg:col-span-4 justify-end relative">
+            <div class="relative w-full max-w-sm aspect-square">
                 <!-- Subtle Background Element -->
-                <div class="absolute -inset-6 bg-slate-50 dark:bg-slate-900/40 rounded-full blur-2xl opacity-40"></div>
+                <div class="absolute -inset-10 bg-slate-50 dark:bg-slate-900/50 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="relative w-full h-full flex items-center justify-center">
                     <img src="{{ asset('logo.png') }}" 
-                         alt="BKX Labs" 
-                         class="w-full h-full object-contain opacity-5 dark:opacity-10 grayscale brightness-0 dark:brightness-200">
+                         alt="BKX Labs Logo" 
+                         class="w-full h-full object-contain opacity-10 dark:opacity-20 grayscale brightness-0 dark:brightness-200">
                 </div>
             </div>
         </div>
