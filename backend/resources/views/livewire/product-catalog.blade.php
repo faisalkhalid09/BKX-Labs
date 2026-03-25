@@ -42,11 +42,11 @@
             <button class="bg-primary text-on-primary px-8 py-3 rounded-full text-sm font-bold transition-all hover:shadow-xl active:scale-95" wire:click="setCategory('all')">View All Products</button>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12" wire:loading.class.add="opacity-50" style="transition:opacity .2s;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-12" wire:loading.class.add="opacity-50" style="transition:opacity .2s;">
             @foreach ($products as $product)
                 <!-- Product Card -->
-                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2">
-                    <div class="aspect-[4/5] bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-[2rem]">
+                <div class="group relative flex flex-col h-full bg-white dark:bg-slate-950 rounded-2xl sm:rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2">
+                    <div class="aspect-[16/10] sm:aspect-[4/5] bg-slate-50 dark:bg-slate-900/50 overflow-hidden relative rounded-2xl sm:rounded-[2rem]">
                         @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
 
                         @if($isOwned)
@@ -67,7 +67,7 @@
 
                         @unless($isOwned)
                             <!-- Quick Action Button -->
-                            <button class="absolute bottom-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-primary p-4 rounded-2xl shadow-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-primary hover:text-white disabled:opacity-50" 
+                            <button class="absolute bottom-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-primary p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-primary hover:text-white disabled:opacity-50" 
                                     wire:click="addToCart({{ $product->id }})"
                                     wire:loading.attr="disabled">
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined">add_shopping_cart</span>
@@ -76,14 +76,14 @@
                         @endif
                     </div>
 
-                    <div class="pt-6 pb-2 px-2 flex-1 flex flex-col">
+                    <div class="pt-4 sm:pt-6 pb-2 px-2 flex-1 flex flex-col">
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
                                 {{ str_replace('_', ' ', $product->category) }}
                             </span>
                         </div>
                         <a href="{{ route('store.show', $product->slug) }}">
-                            <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors">
+                            <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-2">
                                 {{ $product->name }}
                             </h3>
                         </a>
@@ -91,12 +91,12 @@
                             {{ $product->short_description }}
                         </p>
                         
-                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-slate-50 dark:border-slate-900">
+                        <div class="mt-auto flex items-center justify-between pt-4 sm:pt-6 border-t border-slate-50 dark:border-slate-900">
                             <div class="flex flex-col">
-                                <span class="text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Price</span>
-                                <span class="text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
+                                <span class="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Price</span>
+                                <span class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">${{ number_format($product->price, 2) }}</span>
                             </div>
-                            <a href="{{ route('store.show', $product->slug) }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-6 py-3 rounded-full text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <a href="{{ route('store.show', $product->slug) }}" class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full text-[10px] sm:text-xs font-bold transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
                                 Details
                             </a>
                         </div>
