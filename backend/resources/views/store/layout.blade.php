@@ -62,11 +62,11 @@
                 @auth
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
-                        <button type="submit" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-xs font-medium">Log out</button>
+                        <button type="submit" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-[10px] uppercase tracking-wider font-semibold">Log out</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-xs font-medium">Sign in</a>
-                    <a href="{{ route('register') }}" class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95 whitespace-nowrap">Get Started</a>
+                    <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-[10px] uppercase tracking-wider font-semibold">Sign in</a>
+                    <a href="{{ route('register') }}" class="bg-primary text-on-primary px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95 whitespace-nowrap">Get Started</a>
                 @endauth
                 
                 <div class="relative">
