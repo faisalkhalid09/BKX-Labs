@@ -155,6 +155,7 @@
 </main>
 
 <!-- Footer Shared Component -->
+@unless($hideStoreHeader)
 <footer class="w-full border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950 font-['Inter'] mt-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
@@ -196,6 +197,7 @@
         </div>
     </div>
 </footer>
+@endunless
 
 @livewireScripts
 @stack('scripts')
