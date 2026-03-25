@@ -50,10 +50,53 @@
             
             <div class="flex items-center gap-4">
                 @auth
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-xs font-medium">Log out</button>
-                    </form>
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 group">
+                            <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 group-hover:border-primary/30 transition-all">
+                                <span class="material-symbols-outlined text-[18px]">person</span>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">{{ explode(' ', auth()->user()->name)[0] }}</span>
+                        </button>
+
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800/60 rounded-xl shadow-xl py-2 z-[60]"
+                             style="display: none;">
+                            
+                            <div class="px-4 py-2 border-b border-slate-100 dark:border-slate-900 mb-1">
+                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Account</p>
+                                <p class="text-xs font-bold text-slate-900 dark:text-white truncate">{{ auth()->user()->name }}</p>
+                            </div>
+
+                            <a href="{{ route('profile') }}" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
+                                <span class="material-symbols-outlined text-[16px]">settings</span>
+                                Profile Settings
+                            </a>
+                            <a href="{{ route('profile') }}?tab=security" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
+                                <span class="material-symbols-outlined text-[16px]">shield</span>
+                                Security
+                            </a>
+                            <a href="{{ route('profile') }}?tab=preferences" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
+                                <span class="material-symbols-outlined text-[16px]">mail</span>
+                                Preferences
+                            </a>
+
+                            <div class="h-px bg-slate-100 dark:bg-slate-900 my-1"></div>
+
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all text-left">
+                                    <span class="material-symbols-outlined text-[16px]">logout</span>
+                                    Log out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 @else
                     <a href="{{ route('login') }}" class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-xs font-medium">Sign in</a>
                     <a href="{{ route('register') }}" class="bg-primary text-on-primary px-4 py-2 rounded-full text-xs font-bold transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95 whitespace-nowrap">Get Started</a>
@@ -79,20 +122,24 @@
         <div class="px-6 py-6 space-y-4 flex flex-col">
             <a href="{{ url('/store') }}" class="{{ request()->is('store') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium">Catalog</a>
             @auth
-                <a href="{{ url('/downloads') }}" class="{{ request()->is('downloads*') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium">My Downloads</a>
-            @endauth
-            
-            <div class="border-t border-slate-100 dark:border-slate-900 pt-4">
-                @auth
-                    <form action="{{ route('logout') }}" method="POST">
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-900 space-y-4">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Account</p>
+                    <a href="{{ url('/downloads') }}" class="{{ request()->is('downloads*') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium block">My Downloads</a>
+                    <a href="{{ route('profile') }}" class="{{ request()->is('profile*') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium block">Profile Settings</a>
+                    <a href="{{ route('profile') }}?tab=security" class="text-slate-700 dark:text-slate-300 text-sm font-medium block">Security</a>
+                    <a href="{{ route('profile') }}?tab=preferences" class="text-slate-700 dark:text-slate-300 text-sm font-medium block">Preferences</a>
+                    
+                    <form action="{{ route('logout') }}" method="POST" class="pt-2">
                         @csrf
-                        <button type="submit" class="w-full text-left text-slate-700 dark:text-slate-300 text-sm font-medium">Log out</button>
+                        <button type="submit" class="w-full text-left text-red-500 text-sm font-bold">Log out</button>
                     </form>
-                @else
+                </div>
+            @else
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-900">
                     <a href="{{ route('login') }}" class="text-slate-700 dark:text-slate-300 text-sm font-medium block">Sign in</a>
                     <a href="{{ route('register') }}" class="mt-4 bg-primary text-on-primary px-4 py-3 rounded-xl text-sm font-bold text-center block transition-all active:scale-95">Get Started</a>
-                @endauth
-            </div>
+                </div>
+            @endauth
         </div>
     </div>
 </nav>
@@ -129,7 +176,7 @@
                 <div class="space-y-4">
                     <h4 class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">Connect</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">Contact</a></li>
+                        <li><a href="https://bkxlabs.com/contact" class="text-sm text-slate-500 hover:text-primary transition-colors">Contact</a></li>
                         <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">Support</a></li>
                     </ul>
                 </div>

@@ -66,8 +66,12 @@ Route::post('/webhook/stripe', [WebhookController::class, 'handle'])
 // ──────────────────────────────────────
 //  My Downloads (auth required)
 // ──────────────────────────────────────
-Route::middleware('auth')->prefix('downloads')->name('downloads.')->group(function () {
-    Route::get('/',                 [DownloadController::class, 'index'])->name('index');
-    Route::get('/{order}/receipt',  [DownloadController::class, 'receipt'])->name('receipt');
-    Route::get('/{order}',          [DownloadController::class, 'download'])->name('download');
+Route::middleware('auth')->group(function () {
+    Route::prefix('downloads')->name('downloads.')->group(function () {
+        Route::get('/',                 [DownloadController::class, 'index'])->name('index');
+        Route::get('/{order}/receipt',  [DownloadController::class, 'receipt'])->name('receipt');
+        Route::get('/{order}',          [DownloadController::class, 'download'])->name('download');
+    });
+
+    Route::get('/profile', \App\Livewire\ProfileSettings::class)->name('profile');
 });
