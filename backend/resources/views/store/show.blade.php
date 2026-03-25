@@ -4,7 +4,7 @@
 @section('description', $product->short_description)
 
 @section('content')
-<div class="max-w-[1152px] mx-auto px-4 sm:px-6 md:px-12 py-4 sm:py-6 md:py-10">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-10">
     <!-- Breadcrumbs -->
     <nav class="flex items-center gap-1 text-xs text-slate-500 mb-4 sm:mb-5 font-medium overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 sm:pb-0" style="-webkit-overflow-scrolling: touch;">
         <a href="{{ url('/store') }}" class="hover:text-primary transition-colors whitespace-nowrap">Catalog</a>

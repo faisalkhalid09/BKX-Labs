@@ -2,7 +2,7 @@
 @section('title', 'Secure Checkout')
 
 @section('content')
-<div class="max-w-[1152px] mx-auto px-4 sm:px-6 md:px-12 py-5 sm:py-8 md:py-13">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-5 sm:py-8 md:py-13">
     
     <!-- Back Navigation -->
     <a href="{{ url('/store') }}" class="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-500 font-medium hover:text-primary transition-colors mb-5 sm:mb-8 group min-h-[40px]">
