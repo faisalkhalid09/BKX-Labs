@@ -1,6 +1,6 @@
 <div x-data="{ showWidget: true }" x-init="setTimeout(() => showWidget = false, 60000)" x-show="showWidget" x-transition.duration.500ms>
 @if($product)
-<div class="fixed bottom-3 right-3 sm:bottom-5 sm:right-5 z-50 w-[calc(100vw-1.5rem)] sm:w-56 shadow-2xl rounded-lg border border-outline-variant/30 overflow-hidden transform transition-all duration-500 hover:-translate-y-1 group bg-surface-container-lowest">
+<div class="hidden md:block fixed bottom-5 right-5 z-50 w-56 shadow-2xl rounded-lg border border-outline-variant/30 overflow-hidden transform transition-all duration-500 hover:-translate-y-1 group bg-surface-container-lowest">
     <!-- Close Button -->
     <button @click="showWidget = false" class="absolute top-1.5 right-1.5 z-20 w-7 h-7 flex items-center justify-center rounded-full bg-slate-900/10 hover:bg-slate-900/20 dark:bg-slate-100/10 dark:hover:bg-slate-100/20 text-slate-800 dark:text-slate-200 transition-colors" aria-label="Close promotion">
         <span class="material-symbols-outlined text-base">close</span>
