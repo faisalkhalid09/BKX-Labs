@@ -147,9 +147,6 @@
     </div>
 </footer>
 
-@if(request()->routeIs('store.index') || request()->routeIs('store.search'))
-    @livewire('promoted-widget')
-@endif
 @livewireScripts
 @stack('scripts')
 
