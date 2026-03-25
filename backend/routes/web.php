@@ -6,6 +6,7 @@ use App\Http\Controllers\Store\CheckoutController;
 use App\Http\Controllers\Store\WebhookController;
 use App\Http\Controllers\Store\DownloadController;
 use App\Http\Controllers\AuthController;
+use App\Livewire\Store\SearchPage;
 
 // Welcome (existing)
 Route::get('/', function () {
@@ -32,7 +33,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // ──────────────────────────────────────
 Route::prefix('store')->name('store.')->group(function () {
     Route::get('/',         [StoreController::class, 'index'])->name('index');
-    Route::get('/search',   \App\Http\Controllers\Store\SearchController::class)->name('search');
+    Route::get('/search',   SearchPage::class)->name('search');
+
     Route::post('/{product:slug}/cart', [StoreController::class, 'addToCart'])->name('add_to_cart');
     Route::post('/{product:slug}/cart-only', [StoreController::class, 'addToCartOnly'])->name('add_to_cart_only');
     Route::get('/{slug}',   [StoreController::class, 'show'])->name('show');

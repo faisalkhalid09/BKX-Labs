@@ -5,26 +5,26 @@
 
 @section('content')
 <!-- Hero Section: High-Contrast Inversion -->
-<section class="bg-primary-container text-on-primary py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12">
-    <div class="max-w-[1920px] mx-auto grid grid-cols-12 gap-6 sm:gap-8 items-center">
+<section class="bg-primary-container text-on-primary py-12 sm:py-19 md:py-25 px-4 sm:px-6 md:px-12">
+    <div class="max-w-[1920px] mx-auto grid grid-cols-12 gap-5 sm:gap-6 items-center">
         <div class="col-span-12 md:col-span-7">
-            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 md:mb-8 leading-none">
+            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-3 sm:mb-5 md:mb-6 leading-none">
                 Digital Product Store
             </h1>
-            <p class="text-base sm:text-lg md:text-xl text-on-primary-container font-light max-w-2xl leading-relaxed">
+            <p class="text-sm sm:text-base md:text-lg text-on-primary-container font-light max-w-2xl leading-relaxed">
                 Expert-grade AI models, automation scripts, and workflow templates designed to accelerate your engineering teams.
             </p>
         </div>
         <div class="hidden md:block col-span-5 relative">
             <div class="aspect-square bg-white/5 rounded-xl border border-white/10 flex items-center justify-center backdrop-blur-sm shadow-2xl">
-                <span class="material-symbols-outlined text-8xl md:text-[100px] lg:text-[120px] text-on-primary-container/30">inventory_2</span>
+                <span class="material-symbols-outlined text-6xl md:text-[80px] lg:text-[96px] text-on-primary-container/30">inventory_2</span>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Main Content Area -->
-<div class="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-20">
+<div class="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-12 py-10 sm:py-13 md:py-16">
     @livewire('product-catalog')
 </div>
 @endsection
