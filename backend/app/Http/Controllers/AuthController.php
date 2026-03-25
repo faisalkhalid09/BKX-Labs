@@ -30,11 +30,17 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+        if (RateLimiter::tooManyAttempts('login:' . $request->ip(), 10)) {
+            Log::alert('Suspicious login activity (brute force attempt) from IP: ' . $request->ip());
+            return back()->withErrors(['email' => 'Too many login attempts. Please try again later.'])->onlyInput('email');
+        }
+
         if ($user && is_null($user->password)) {
             return back()->withErrors(['email' => 'This account is linked with Google. Please sign in with Google.'])->onlyInput('email');
         }
 
         if (Auth::validate($credentials)) {
+            RateLimiter::clear('login:' . $request->ip());
             RateLimiter::hit('otp.generate:' . $request->ip() . '|' . $request->input('email'), 300);
             
             $this->generateAndSendOtp($credentials['email']);
@@ -44,6 +50,8 @@ class AuthController extends Controller
             
             return redirect()->route('verify.otp');
         }
+
+        RateLimiter::hit('login:' . $request->ip(), 600); // 10 min throttle
 
         return back()->withErrors(['email' => 'Invalid credentials.'])->onlyInput('email');
     }

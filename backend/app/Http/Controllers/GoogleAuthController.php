@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
+use Laravel\Socialite\Two\InvalidStateException;
+
 class GoogleAuthController extends Controller
 {
     public function redirectToGoogle()
@@ -17,6 +19,12 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
+
+            // Security check: Ensure Google email is verified
+            if (!isset($googleUser->user['email_verified']) || $googleUser->user['email_verified'] !== true) {
+                \Log::alert('Google Auth Attempt with unverified email: ' . $googleUser->email);
+                return redirect()->route('login')->withErrors(['email' => 'Your Google account email must be verified to sign in.']);
+            }
             
             // Find user by google_id OR email
             $user = User::where('google_id', $googleUser->id)
@@ -44,10 +52,13 @@ class GoogleAuthController extends Controller
             $request->session()->regenerate();
             $user->update(['last_login_at' => now()]);
 
-            return redirect()->route('store.index')->with('success', 'Logged in successfully with Google!');
+            return redirect()->intended(route('store.index'))->with('success', 'Logged in successfully with Google!');
 
+        } catch (InvalidStateException $e) {
+            \Log::warning('Google Auth State Mismatch (Session Timeout): ' . $request->ip());
+            return redirect()->route('login')->withErrors(['email' => 'Login session expired. Please try again.']);
         } catch (\Exception $e) {
-            \Log::error('Google Auth Error: ' . $e->getMessage());
+            \Log::error('Google Auth Critical Error: ' . $e->getMessage());
             return redirect()->route('login')->withErrors(['email' => 'Google authentication failed. Please try again.']);
         }
     }
