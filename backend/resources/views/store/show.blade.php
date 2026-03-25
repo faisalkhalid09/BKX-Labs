@@ -96,16 +96,18 @@
                 </div>
                 
                 <!-- Pricing & Action -->
-                <div class="pt-2 sm:pt-4 border-t border-outline-variant/20 space-y-2 sm:space-y-3">
-                    @livewire('store.product-price', ['product' => $product])
-                    
-                    <div class="space-y-1.5 sm:space-y-2">
+                <div class="pt-3 sm:pt-4 border-t border-outline-variant/20 space-y-3 sm:space-y-4">
+                    <div class="rounded-xl border border-outline-variant/20 bg-surface p-3 sm:p-4 space-y-3">
+                        @livewire('store.product-price', ['product' => $product])
+                        <div class="h-px bg-outline-variant/20"></div>
+
+                        <div class="space-y-2 sm:space-y-2.5">
                         @if($isBought)
-                            <div class="bg-[#10b981]/10 border border-[#10b981]/20 rounded-lg p-2 text-center">
+                            <div class="bg-[#10b981]/10 border border-[#10b981]/20 rounded-lg p-3 text-center">
                                 <span class="material-symbols-outlined text-[#10b981] text-lg mb-0.5">check_circle</span>
                                 <h4 class="text-[#10b981] font-bold text-sm">Already Owned</h4>
-                                <p class="text-on-surface-variant text-xs mt-0.5">
-                                <a href="{{ route('downloads.index') }}" class="mt-2 inline-flex items-center gap-1 bg-[#10b981] text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-[#059669] transition-all">
+                                <p class="text-on-surface-variant text-xs mt-0.5">You already have this product in your library.</p>
+                                <a href="{{ route('downloads.index') }}" class="mt-2 inline-flex items-center justify-center gap-1 bg-[#10b981] text-white px-3 py-2 rounded text-xs font-bold hover:bg-[#059669] transition-all min-h-[40px]">
                                     Go to My Library
                                     <span class="material-symbols-outlined text-xs">download</span>
                                 </a>
@@ -113,20 +115,21 @@
                         @else
                             <form action="{{ route('store.add_to_cart', $product) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full py-2 sm:py-2.5 rounded-lg bg-primary text-white font-bold tracking-tight text-xs hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-1 shadow-lg shadow-primary/20 min-h-[36px]">
+                                <button type="submit" class="w-full py-2.5 sm:py-3 rounded-lg bg-primary text-white font-bold tracking-tight text-xs sm:text-sm hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 min-h-[42px]">
                                     Purchase Now
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
                                 </button>
                             </form>
                             
                             <form action="{{ route('store.add_to_cart_only', $product) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full py-2 sm:py-2.5 rounded-lg bg-surface text-primary border border-primary/20 font-bold tracking-tight text-xs hover:border-primary hover:bg-primary/5 active:scale-[0.98] transition-all flex items-center justify-center gap-1 min-h-[36px]">
+                                <button type="submit" class="w-full py-2.5 sm:py-3 rounded-lg bg-surface-container-low text-primary border border-primary/30 font-bold tracking-tight text-xs sm:text-sm hover:border-primary hover:bg-surface-container active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 min-h-[42px]">
                                     Add to Cart
                                     <span class="material-symbols-outlined text-base">add_shopping_cart</span>
                                 </button>
                             </form>
                         @endif
+                        </div>
                     </div>
                 </div>
                 
