@@ -13,7 +13,7 @@ class GoogleAuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(\Illuminate\Http\Request $request)
     {
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -39,11 +39,13 @@ class GoogleAuthController extends Controller
             }
 
             Auth::login($user, true);
+            $request->session()->regenerate();
             $user->update(['last_login_at' => now()]);
 
             return redirect()->route('store.index')->with('success', 'Logged in successfully with Google!');
 
         } catch (\Exception $e) {
+            \Log::error('Google Auth Error: ' . $e->getMessage());
             return redirect()->route('login')->withErrors(['email' => 'Google authentication failed. Please try again.']);
         }
     }

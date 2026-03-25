@@ -96,7 +96,7 @@
                                 {{ $product->name }}
                             </h3>
                         </a>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-4">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-4 pb-1">
                             {{ $product->short_description }}
                         </p>
                         

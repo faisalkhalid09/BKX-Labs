@@ -29,6 +29,11 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Too many attempts. Please try again in 5 minutes.'])->onlyInput('email');
         }
 
+        $user = User::where('email', $request->email)->first();
+        if ($user && is_null($user->password)) {
+            return back()->withErrors(['email' => 'This account is linked with Google. Please sign in with Google.'])->onlyInput('email');
+        }
+
         if (Auth::validate($credentials)) {
             RateLimiter::hit('otp.generate:' . $request->ip() . '|' . $request->input('email'), 300);
             

@@ -396,7 +396,8 @@
         font-size: 0.75rem;
         color: #64748b;
         line-height: 1.4;
-        margin-bottom: 0.65rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.2rem;
         flex: 1;
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -408,7 +409,8 @@
         .product-desc {
             font-size: 0.8rem;
             -webkit-line-clamp: 2;
-            margin-bottom: 0.9rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.2rem;
         }
     }
 
