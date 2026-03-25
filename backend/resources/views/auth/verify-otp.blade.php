@@ -1,18 +1,18 @@
 @extends('store.layout')
 @section('title', 'Verify Verification Code')
 @section('content')
-<div class="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 px-4 sm:px-6 bg-gradient-to-br from-slate-50 to-slate-100">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border border-slate-200 p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-7">
+<div class="min-h-screen flex flex-col items-center justify-center py-4 sm:py-6 md:py-8 px-4 sm:px-6 bg-gradient-to-br from-slate-50 to-slate-100">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg border border-slate-200 p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
         <!-- Header Section -->
-        <div class="text-center space-y-3 sm:space-y-4">
+        <div class="text-center space-y-2 sm:space-y-3">
             <div class="flex justify-center">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center shadow-md">
-                    <span class="material-symbols-outlined text-blue-600 text-2xl sm:text-3xl">mail_lock</span>
+                <div class="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl flex items-center justify-center shadow-md">
+                    <span class="material-symbols-outlined text-blue-600 text-lg sm:text-xl">mail_lock</span>
                 </div>
             </div>
             <div>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Verify your email</h1>
-                <p class="text-sm sm:text-base text-slate-600 mt-2">We sent a 6-digit code to <br class="sm:hidden"><strong class="text-slate-900">{{ $email }}</strong></p>
+                <h1 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Verify your email</h1>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1.5">We sent a 6-digit code to <br class="sm:hidden"><strong class="text-slate-900">{{ $email }}</strong></p>
             </div>
         </div>
 
@@ -31,12 +31,12 @@
         @endif
 
         <!-- OTP Form -->
-        <form action="{{ route('verify.otp') }}" method="POST" id="otpForm" class="space-y-5 sm:space-y-6">
+        <form action="{{ route('verify.otp') }}" method="POST" id="otpForm" class="space-y-3 sm:space-y-4">
             @csrf
             
             <!-- OTP Input Field -->
-            <div class="space-y-2">
-                <label for="code" class="block text-sm font-semibold text-slate-900">Verification Code</label>
+            <div class="space-y-1.5">
+                <label for="code" class="block text-xs font-semibold text-slate-900">Verification Code</label>
                 <input 
                     type="text" 
                     id="code" 
@@ -46,25 +46,25 @@
                     placeholder="000000"
                     maxlength="6"
                     autofocus
-                    class="w-full h-14 sm:h-16 px-4 sm:px-5 text-center text-2xl sm:text-4xl font-bold tracking-widest bg-white border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all duration-200 placeholder-slate-400"
+                    class="w-full h-10 sm:h-11 px-3 sm:px-4 text-center text-lg sm:text-xl font-bold tracking-widest bg-white border-2 border-slate-300 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all duration-200 placeholder-slate-400"
                     inputmode="numeric"
                 />
-                <p class="text-xs sm:text-sm text-slate-500 text-center">Enter the 6-digit code from your email</p>
+                <p class="text-xs text-slate-500 text-center">Enter the 6-digit code from your email</p>
             </div>
 
             <!-- Submit Button -->
             <button 
                 type="submit"
                 id="submitBtn"
-                class="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base sm:text-lg rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed flex items-center justify-center"
+                class="w-full h-10 sm:h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed flex items-center justify-center"
             >
                 <span id="buttonText" class="text-white">Verify & Continue</span>
             </button>
         </form>
 
         <!-- Resend Code Section -->
-        <div class="border-t border-slate-200 pt-5 sm:pt-6 space-y-3">
-            <p class="text-sm text-slate-600 text-center">
+        <div class="border-t border-slate-200 pt-3 sm:pt-4 space-y-2">
+            <p class="text-xs text-slate-600 text-center">
                 Code didn't arrive? Check your spam folder or 
                 <button 
                     type="button"
@@ -77,24 +77,24 @@
         </div>
 
         <!-- Security Badge -->
-        <div class="bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-200 rounded-xl p-3 sm:p-4 flex gap-3 items-start">
-            <span class="material-symbols-outlined text-emerald-700 text-lg flex-shrink-0">verified_user</span>
+        <div class="bg-gradient-to-r from-emerald-50 to-emerald-50 border border-emerald-200 rounded-lg p-2.5 sm:p-3 flex gap-2 items-start">
+            <span class="material-symbols-outlined text-emerald-700 text-sm flex-shrink-0 mt-0.5">verified_user</span>
             <div class="flex-1">
-                <p class="text-xs sm:text-sm text-emerald-900 font-medium">Your email is protected with enterprise-grade encryption</p>
+                <p class="text-xs text-emerald-900 font-medium">Your email is protected with enterprise-grade encryption</p>
             </div>
         </div>
 
         <!-- Redirect Message (Hidden by default) -->
         <div id="redirectMessage" class="hidden">
-            <div class="text-center space-y-4">
+            <div class="text-center space-y-3">
                 <div class="flex justify-center">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl flex items-center justify-center shadow-md">
-                        <span class="material-symbols-outlined text-amber-600 text-2xl sm:text-3xl">schedule</span>
+                    <div class="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg flex items-center justify-center shadow-md">
+                        <span class="material-symbols-outlined text-amber-600 text-lg sm:text-xl">schedule</span>
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Session Expired</h2>
-                    <p class="text-sm sm:text-base text-slate-600 mt-3">Your session has expired. Please sign in again to continue.</p>
+                    <h2 class="text-base sm:text-lg font-bold text-slate-900">Session Expired</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-2">Your session has expired. Please sign in again to continue.</p>
                 </div>
                 <div class="flex items-center justify-center gap-2 py-6">
                     <p class="text-base text-slate-700 font-medium">Redirecting to Sign In<span id="dots" class="inline-block w-8">.</span></p>

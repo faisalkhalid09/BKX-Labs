@@ -3,9 +3,18 @@
 @section('title', 'Digital Product Store')
 @section('description', 'Browse and purchase AI models, automation scripts, and digital templates from BKX Labs.')
 
+@push('styles')
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-20px) rotate(2deg); }
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Hero Section: High-Contrast Inversion -->
-<section class="bg-primary-container text-on-primary py-12 sm:py-19 md:py-25 px-4 sm:px-6 md:px-12">
+<section class="bg-primary-container text-on-primary py-12 sm:py-19 md:py-25 px-4 sm:px-6 md:px-12 overflow-hidden">
     <div class="max-w-[1920px] mx-auto grid grid-cols-12 gap-5 sm:gap-6 items-center">
         <div class="col-span-12 md:col-span-7">
             <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-3 sm:mb-5 md:mb-6 leading-none">
@@ -15,9 +24,17 @@
                 Expert-grade AI models, automation scripts, and workflow templates designed to accelerate your engineering teams.
             </p>
         </div>
+        
         <div class="hidden md:block col-span-5 relative">
-            <div class="aspect-square bg-white/5 rounded-xl border border-white/10 flex items-center justify-center backdrop-blur-sm shadow-2xl">
-                <span class="material-symbols-outlined text-6xl md:text-[80px] lg:text-[96px] text-on-primary-container/30">inventory_2</span>
+            <div class="relative group">
+                <!-- Outer Glow -->
+                <div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-cyan-500/20 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative aspect-square flex items-center justify-center">
+                    <img src="{{ asset('assets/images/bkx_3d_logo.png') }}" 
+                         alt="BKX Labs 3D Logo" 
+                         class="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(30,58,138,0.3)] animate-[float_6s_ease-in-out_infinite]">
+                </div>
             </div>
         </div>
     </div>

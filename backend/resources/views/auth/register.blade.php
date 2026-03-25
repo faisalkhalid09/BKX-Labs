@@ -1,19 +1,19 @@
 @extends('store.layout')
 @section('title', 'Create Account')
 @section('content')
-<div class="min-h-screen flex flex-col items-center justify-center py-8 sm:py-12 md:py-16 px-4 sm:px-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+<div class="min-h-screen flex flex-col items-center justify-center py-4 sm:py-6 md:py-8 px-4 sm:px-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
     <div class="w-full max-w-md">
         <!-- Logo/Branding -->
-        <div class="text-center mb-8 sm:mb-10">
-            <h1 class="text-2xl sm:text-3xl font-black text-on-surface mb-2 tracking-tight">Create Account</h1>
-            <p class="text-sm sm:text-base text-on-surface-variant">Join BKX Labs to access exclusive digital products</p>
+        <div class="text-center mb-5 sm:mb-6">
+            <h1 class="text-lg sm:text-xl font-black text-on-surface mb-1.5 tracking-tight">Create Account</h1>
+            <p class="text-xs sm:text-sm text-on-surface-variant">Join BKX Labs to access exclusive digital products</p>
         </div>
 
         <!-- Card -->
-        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-6 sm:p-8 shadow-lg">
+        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-4 sm:p-5 shadow-lg">
             <!-- Error Messages -->
             @if ($errors->any())
-                <div class="mb-6 p-4 bg-error/10 border border-error/30 rounded-lg">
+                <div class="mb-4 p-3 bg-error/10 border border-error/30 rounded-lg">
                     <div class="flex gap-3 mb-2">
                         <span class="material-symbols-outlined text-error text-xl flex-shrink-0">error</span>
                         <div class="flex-1">
@@ -31,12 +31,12 @@
                 </div>
             @endif
 
-            <form action="{{ route('register') }}" method="POST" class="space-y-4 sm:space-y-5">
+            <form action="{{ route('register') }}" method="POST" class="space-y-3 sm:space-y-4">
                 @csrf
                 
                 <!-- Full Name Field -->
                 <div>
-                    <label for="name" class="block text-xs sm:text-sm font-bold text-on-surface mb-1.5 sm:mb-2">Full Name</label>
+                    <label for="name" class="block text-xs font-bold text-on-surface mb-1 sm:mb-1.5">Full Name</label>
                     <input 
                         type="text" 
                         id="name" 
@@ -45,7 +45,7 @@
                         required 
                         autocomplete="name" 
                         placeholder="John Doe"
-                        class="w-full px-4 py-3 sm:py-3.5 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-sm sm:text-base placeholder-on-surface-variant/50 min-h-[44px]"
+                        class="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-xs sm:text-sm placeholder-on-surface-variant/50 min-h-[40px]"
                     >
                     @error('name')
                         <p class="text-error text-xs sm:text-sm mt-1.5">{{ $message }}</p>
@@ -54,7 +54,7 @@
 
                 <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-xs sm:text-sm font-bold text-on-surface mb-1.5 sm:mb-2">Email Address</label>
+                    <label for="email" class="block text-xs font-bold text-on-surface mb-1 sm:mb-1.5">Email Address</label>
                     <input 
                         type="email" 
                         id="email" 
@@ -63,7 +63,7 @@
                         required 
                         autocomplete="email" 
                         placeholder="you@example.com"
-                        class="w-full px-4 py-3 sm:py-3.5 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-sm sm:text-base placeholder-on-surface-variant/50 min-h-[44px]"
+                        class="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-outline-variant/30 bg-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none text-on-surface text-xs sm:text-sm placeholder-on-surface-variant/50 min-h-[40px]"
                     >
                     @error('email')
                         <p class="text-error text-xs sm:text-sm mt-1.5">{{ $message }}</p>
