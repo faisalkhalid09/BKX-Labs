@@ -4,9 +4,16 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'Digital Product Store') - BKX</title>
-    
+
+    @php
+        $hasViteManifest = file_exists(public_path('build/manifest.json'));
+        $hasViteHot = file_exists(storage_path('vite.hot'));
+    @endphp
+
     <!-- Production CSS/JS Build Pipeline -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if($hasViteManifest || $hasViteHot)
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <style>
@@ -33,12 +40,12 @@
 <!-- TopNavBar Shared Component -->
 @unless($hideStoreHeader)
 <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md font-['Inter'] tracking-tight antialiased border-b border-slate-200/60 dark:border-slate-800/60">
-    <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-14 sm:h-16 max-w-6xl mx-auto">
+    <div class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-16 sm:h-20 max-w-6xl mx-auto">
         <!-- Logo Only -->
         <a href="{{ url('/store') }}" class="shrink-0 flex items-center hover:opacity-80 transition-opacity">
-            <img src="/brand-logo.png" 
-                 alt="BKX Labs" 
-                 class="h-[1.875rem] sm:h-[2.1875rem] w-auto object-cover scale-110 drop-shadow-sm"
+              <img src="/brand-logo.png" 
+                  alt="BKX Labs" 
+                  class="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
                  loading="lazy">
         </a>
         
@@ -123,7 +130,7 @@
     </div>
 
     <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu hidden fixed top-14 sm:top-16 left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200/60 dark:border-slate-800/60 flex-col max-h-[calc(100vh-4rem)] overflow-y-auto z-40 lg:hidden" id="mobile-menu">
+    <div class="mobile-menu hidden fixed top-16 sm:top-20 left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200/60 dark:border-slate-800/60 flex-col max-h-[calc(100vh-4rem)] overflow-y-auto z-40 lg:hidden" id="mobile-menu">
         <div class="px-6 py-6 space-y-4 flex flex-col">
             <a href="{{ url('/store') }}" class="{{ request()->is('store') ? 'text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} text-sm font-medium">Catalog</a>
             @auth
@@ -150,7 +157,7 @@
 </nav>
 @endunless
 
-<main class="{{ $hideStoreHeader ? 'pt-0' : 'pt-14 sm:pt-16' }} min-h-screen">
+<main class="{{ $hideStoreHeader ? 'pt-0' : 'pt-16 sm:pt-20' }} min-h-screen">
     @yield('content')
 </main>
 
