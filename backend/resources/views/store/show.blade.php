@@ -139,7 +139,7 @@
                         <span class="material-symbols-outlined text-primary text-[10px]">verified_user</span>
                     </div>
                     <p class="text-xs text-on-surface-variant leading-relaxed font-bold">
-                        Secured by Stripe
+                        Secured by Lemon Squeezy
                     </p>
                 </div>
             </div>

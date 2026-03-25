@@ -59,8 +59,8 @@ class OrderResource extends Resource
                         default    => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('amount')->money('USD')->sortable(),
-                Tables\Columns\TextColumn::make('stripe_payment_intent_id')
-                    ->label('Stripe PI')
+                Tables\Columns\TextColumn::make('lemon_squeezy_order_id')
+                    ->label('Lemon Squeezy Order')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('download_expires_at')
                     ->label('Download Expires')

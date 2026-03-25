@@ -56,7 +56,7 @@
                         Proceed to Checkout
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
-                    <p style="text-align:center;font-size:0.65rem;color:#94a3b8;margin-top:0.5rem;">Secure checkout via Stripe</p>
+                    <p style="text-align:center;font-size:0.65rem;color:#94a3b8;margin-top:0.5rem;">Secure checkout via Lemon Squeezy</p>
                 </div>
             @endif
         </div>

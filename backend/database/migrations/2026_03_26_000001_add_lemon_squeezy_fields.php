@@ -9,15 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('lemon_squeezy_variant_id')->nullable()->after('price');
+            $table->string('lemon_squeezy_variant_id')->nullable();
         });
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('lemon_squeezy_id')->nullable()->after('amount');
-            $table->string('lemon_squeezy_order_id')->nullable()->after('lemon_squeezy_id');
-            // Keep stripe_payment_intent_id for now to avoid breaking existing data if any, 
-            // but we can make it nullable or remove it later.
-            $table->string('stripe_payment_intent_id')->nullable()->change();
+            $table->string('lemon_squeezy_id')->nullable();
+            $table->string('lemon_squeezy_order_id')->nullable();
+            // Drop stripe_payment_intent_id
+            $table->dropColumn('stripe_payment_intent_id');
         });
     }
 

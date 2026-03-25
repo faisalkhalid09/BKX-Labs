@@ -22,8 +22,9 @@ class ProductSeeder extends Seeder
             [
                 'name'              => 'Laravel SaaS Starter Kit',
                 'slug'              => 'laravel-saas-starter-kit',
-                'short_description' => 'Full-stack SaaS boilerplate with auth, Stripe billing, admin panel, and multi-tenancy ready.',
-                'description'       => "Skip months of setup — ship your SaaS in days.\n\nIncludes:\n- Laravel 12 + Filament Admin\n- Stripe subscription billing\n- Role-based access control\n- Multi-tenant architecture\n- Full documentation",
+                'short_description' => 'Full-stack SaaS boilerplate with auth, Lemon Squeezy billing, admin panel, and multi-tenancy ready.',
+                'description'       => "Skip months of setup — ship your SaaS in days.\n\nIncludes:\n- Laravel 12 + Filament Admin\n- Lemon Squeezy subscription billing\n- Role-based access control\n- Multi-tenant architecture\n- Full documentation",
+                'lemon_squeezy_variant_id' => 'placeholder_variant_id',
                 'price'             => 79.00,
                 'category'          => 'script',
                 'is_active'         => true,
