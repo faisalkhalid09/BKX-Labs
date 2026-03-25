@@ -69,12 +69,12 @@ input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; marg
             <!-- Price Range -->
             <div class="space-y-4 pt-8 border-t border-slate-100 dark:border-slate-800/50">
                 <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Price Range</h3>
-                <div class="flex items-center gap-2">
+                <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                     <input type="number" id="price-min" placeholder="Min" value="{{ request('price_min') }}"
-                           class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary transition-all">
+                           class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-primary transition-all">
                     <span class="text-slate-300">-</span>
                     <input type="number" id="price-max" placeholder="Max" value="{{ request('price_max') }}"
-                           class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary transition-all">
+                           class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-primary transition-all">
                 </div>
                 <button onclick="applyPriceFilter()" class="w-full bg-slate-900 dark:bg-slate-800 text-white py-2 rounded-lg text-xs font-bold hover:bg-black transition-all">
                     Apply Filter
