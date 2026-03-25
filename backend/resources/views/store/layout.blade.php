@@ -32,7 +32,7 @@
         <!-- Logo -->
         <div class="flex items-center gap-6 md:gap-10">
             <a href="{{ url('/store') }}" class="shrink-0 flex items-center h-8 sm:h-10">
-                <img src="{{ asset('brand-logo.png') }}" alt="BKX Labs" class="h-8 sm:h-10 w-auto object-contain object-left" />
+                <img src="{{ asset('logo-header.png') }}" alt="BKX Labs" class="h-8 sm:h-10 w-auto object-contain object-left" />
             </a>
         </div>
         
