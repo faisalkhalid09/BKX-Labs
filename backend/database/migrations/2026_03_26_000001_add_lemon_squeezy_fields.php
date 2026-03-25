@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('lemon_squeezy_id')->nullable();
             $table->string('lemon_squeezy_order_id')->nullable();
-            // Drop stripe_payment_intent_id
+            // Drop old payment column
             $table->dropColumn('stripe_payment_intent_id');
         });
     }

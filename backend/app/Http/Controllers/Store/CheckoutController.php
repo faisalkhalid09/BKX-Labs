@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -49,14 +50,21 @@ class CheckoutController extends Controller
         }
 
         if (!$variantId) {
-            return back()->with('error', 'Payment is currently unavailable for these items.');
+            // Log this for debugging
+            Log::warning('Checkout failed: No variant ID found for products in cart: ' . implode(', ', $productIds));
+            return back()->with('error', 'Product configuration error. Please contact support.');
         }
 
-        return $user->checkout($variantId)
-            ->withCustomData([
-                'user_id' => $user->id,
-                'product_ids' => json_encode($productIds),
-            ])
-            ->withRedirectUrl(route('checkout.success'));
+        try {
+            return $user->checkout($variantId)
+                ->withCustomData([
+                    'user_id' => $user->id,
+                    'product_ids' => json_encode($productIds),
+                ])
+                ->withRedirectUrl(route('checkout.success'));
+        } catch (\Exception $e) {
+            Log::error('Lemon Squeezy Checkout Error: ' . $e->getMessage());
+            return back()->with('error', 'Could not initiate payment. Please try again later.');
+        }
     }
 }

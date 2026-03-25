@@ -38,7 +38,7 @@ class OrderResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components([]); // Orders are read-only — created via Stripe checkout
+        return $schema->components([]); // Orders are read-only — created via Lemon Squeezy checkout
     }
 
     public static function table(Table $table): Table

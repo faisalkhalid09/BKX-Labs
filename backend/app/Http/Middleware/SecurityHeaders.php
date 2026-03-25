@@ -19,7 +19,7 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         
         // Content Security Policy (CSP)
-        // Added Lemon Squeezy domains and removed Stripe
+        // Added Lemon Squeezy domains
         $csp = "default-src 'self'; " .
                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.lemonsqueezy.com https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
