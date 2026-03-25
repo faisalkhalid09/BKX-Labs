@@ -27,7 +27,13 @@
         </div>
         <div class="flex items-center gap-3 text-xs uppercase tracking-widest font-black text-slate-400 dark:text-slate-600">
             <span class="material-symbols-outlined text-sm">grid_view</span>
-            <span>{{ $products->count() }} {{ Str::plural('Results', $products->count()) }}</span>
+            <span>{{ $products->total() }} {{ Str::plural('Results', $products->total()) }}</span>
+            <select wire:model.live="perPage" class="ml-1 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 text-[11px] font-bold uppercase tracking-wide">
+                <option value="10">10 / page</option>
+                <option value="20">20 / page</option>
+                <option value="50">50 / page</option>
+                <option value="100">100 / page</option>
+            </select>
         </div>
     </div>
 
@@ -112,6 +118,10 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+
+        <div class="mt-8">
+            {{ $products->links() }}
         </div>
     @endif
 </div>

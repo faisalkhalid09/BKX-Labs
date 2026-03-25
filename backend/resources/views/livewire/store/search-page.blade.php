@@ -446,6 +446,20 @@
     }
     .product-cta:hover { background: #1e40af; }
 
+    .catalog-product-card {
+        aspect-ratio: 1 / 1;
+        display: grid;
+        grid-template-rows: 60% 40%;
+    }
+
+    .catalog-product-media {
+        height: 100%;
+    }
+
+    .catalog-product-body {
+        min-height: 0;
+    }
+
     @keyframes promotedBorderFlow {
         0% { background-position: 0% 50%; }
         100% { background-position: 180% 50%; }
@@ -618,6 +632,10 @@
     }
 
     @media(max-width: 440px) {
+        .catalog-product-card {
+            grid-template-rows: 52% 48%;
+        }
+
         .product-card {
             grid-template-rows: 52% 48%;
         }
@@ -670,10 +688,19 @@
 
             <div class="search-meta">
                 @if ($q)
-                    Found <strong>{{ $products->count() }}</strong> results for <strong>"{{ $q }}"</strong>
+                    Found <strong>{{ $products->total() }}</strong> results for <strong>"{{ $q }}"</strong>
                 @else
-                    Browsing <strong>{{ $products->count() }}</strong> products
+                    Browsing <strong>{{ $products->total() }}</strong> products
                 @endif
+            </div>
+
+            <div class="mt-3 flex justify-end">
+                <select wire:model.live="perPage" class="px-2 py-1 rounded-md border border-slate-200 bg-white text-slate-600 text-xs font-bold uppercase tracking-wide">
+                    <option value="10">10 / page</option>
+                    <option value="20">20 / page</option>
+                    <option value="50">50 / page</option>
+                    <option value="100">100 / page</option>
+                </select>
             </div>
         </div>
     </div>
@@ -767,7 +794,7 @@
                     @else
                         <div class="product-grid">
                             @foreach ($products as $product)
-                                <div class="product-card {{ $product->is_promoted ? 'product-card-promoted' : '' }}">
+                                <div class="catalog-product-card group relative bg-white rounded-[4px] overflow-hidden transition-all duration-500 hover:-translate-y-1 {{ $product->is_promoted ? 'product-card-promoted border border-transparent' : 'border border-slate-200' }}">
                                     @php $isOwned = in_array($product->id, $activePurchasedIds); @endphp
                                     
                                     @if($product->is_promoted)
@@ -778,7 +805,7 @@
                                         <div class="product-badge" style="left: 0.75rem; right: auto; background: #10b981;">Owned</div>
                                     @endif
 
-                                    <div class="product-image">
+                                    <div class="catalog-product-media product-image">
                                         <a href="{{ route('store.show', $product->slug) }}" class="w-full h-full block">
                                             @if ($product->thumbnail_path)
                                                 <img src="{{ asset('storage/' . $product->thumbnail_path) }}" alt="{{ $product->name }}">
@@ -788,10 +815,14 @@
                                         </a>
                                     </div>
 
-                                    <div class="product-body {{ $product->is_promoted ? 'product-body-promoted' : '' }}">
-                                        <div class="product-meta-row">
-                                            <span class="product-type-pill">{{ str_replace('_', ' ', $product->category) }}</span>
-                                            <span class="product-price-pill">${{ number_format($product->price, 2) }}</span>
+                                    <div class="catalog-product-body product-body {{ $product->is_promoted ? 'product-body-promoted bg-white' : '' }}">
+                                        <div class="flex items-center justify-between gap-2 mb-3">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider border border-slate-200">
+                                                {{ str_replace('_', ' ', $product->category) }}
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20">
+                                                ${{ number_format($product->price, 2) }}
+                                            </span>
                                         </div>
                                         <h3 class="product-name">
                                             <a href="{{ route('store.show', $product->slug) }}" class="hover:text-primary transition-colors text-inherit decoration-none">
@@ -810,6 +841,10 @@
                                     </div>
                                 </div>
                             @endforeach
+                        </div>
+
+                        <div class="mt-8">
+                            {{ $products->links() }}
                         </div>
                     @endif
                 </div>

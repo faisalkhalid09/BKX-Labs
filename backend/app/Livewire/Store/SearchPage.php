@@ -15,6 +15,7 @@ class SearchPage extends Component
     public $price_min = '';
     public $price_max = '';
     public $sort = 'relevance';
+    public int $perPage = 10;
     public $showMobileFilters = false;
 
     // Categories mapping
@@ -31,6 +32,7 @@ class SearchPage extends Component
         'price_min' => ['except' => ''],
         'price_max' => ['except' => ''],
         'sort' => ['except' => 'relevance'],
+        'perPage' => ['except' => 10],
     ];
 
     public function mount()
@@ -40,11 +42,19 @@ class SearchPage extends Component
         $this->price_min = request()->get('price_min', '');
         $this->price_max = request()->get('price_max', '');
         $this->sort = request()->get('sort', 'relevance');
+        $this->perPage = (int) request()->get('perPage', 10);
+        if (!in_array($this->perPage, [10, 20, 50, 100], true)) {
+            $this->perPage = 10;
+        }
     }
 
     public function updated($propertyName)
     {
-        if (in_array($propertyName, ['q', 'category', 'price_min', 'price_max', 'sort'])) {
+        if (in_array($propertyName, ['q', 'category', 'price_min', 'price_max', 'sort', 'perPage'])) {
+            if ($propertyName === 'perPage' && !in_array($this->perPage, [10, 20, 50, 100], true)) {
+                $this->perPage = 10;
+            }
+
             $this->resetPage();
         }
     }
@@ -82,17 +92,16 @@ class SearchPage extends Component
             $baseQuery->where('price', '<=', (float) $this->price_max);
         }
 
-        $promotedQuery = (clone $baseQuery)->where('is_promoted', true);
-        $regularQuery = (clone $baseQuery)->where('is_promoted', false);
+        $baseQuery->orderByDesc('is_promoted');
 
         match ($this->sort) {
-            'price_asc'  => [$promotedQuery->orderBy('price', 'asc'), $regularQuery->orderBy('price', 'asc')],
-            'price_desc' => [$promotedQuery->orderBy('price', 'desc'), $regularQuery->orderBy('price', 'desc')],
-            'newest'     => [$promotedQuery->orderBy('created_at', 'desc'), $regularQuery->orderBy('created_at', 'desc')],
-            default      => [$promotedQuery->inRandomOrder(), $regularQuery->inRandomOrder()],
+            'price_asc'  => $baseQuery->orderBy('price', 'asc'),
+            'price_desc' => $baseQuery->orderBy('price', 'desc'),
+            'newest'     => $baseQuery->orderBy('created_at', 'desc'),
+            default      => $baseQuery->orderByRaw("MD5(CONCAT(products.id, ?))", [now()->format('Y-m-d')]),
         };
 
-        $products = $promotedQuery->get()->concat($regularQuery->get());
+        $products = $baseQuery->paginate($this->perPage);
         $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
 
         return view('livewire.store.search-page', [

@@ -4,10 +4,14 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductCatalog extends Component
 {
+    use WithPagination;
+
     public string $activeCategory = 'all';
+    public int $perPage = 10;
 
     public array $categories = [
         'all'      => 'All Products',
@@ -20,6 +24,17 @@ class ProductCatalog extends Component
     public function setCategory(string $category): void
     {
         $this->activeCategory = $category;
+        $this->resetPage();
+    }
+
+    public function updatedPerPage(): void
+    {
+        $allowed = [10, 20, 50, 100];
+        if (!in_array($this->perPage, $allowed, true)) {
+            $this->perPage = 10;
+        }
+
+        $this->resetPage();
     }
 
     public function addToCart(int $productId): void
@@ -52,26 +67,22 @@ class ProductCatalog extends Component
 
     public function render()
     {
-        $baseQuery = Product::where('is_active', true);
+        $query = Product::where('is_active', true);
 
         if ($this->activeCategory !== 'all') {
-            $baseQuery->where('category', $this->activeCategory);
+            $query->where('category', $this->activeCategory);
         }
 
-        $promotedProducts = (clone $baseQuery)
-            ->where('is_promoted', true)
-            ->inRandomOrder()
-            ->get();
-
-        $regularProducts = (clone $baseQuery)
-            ->where('is_promoted', false)
-            ->inRandomOrder()
-            ->get();
+        // Keep promoted products first, then pseudo-shuffle deterministically for pagination stability.
+        $products = $query
+            ->orderByDesc('is_promoted')
+            ->orderByRaw("MD5(CONCAT(products.id, ?))", [now()->format('Y-m-d')])
+            ->paginate($this->perPage);
 
         $activePurchasedIds = auth()->check() ? auth()->user()->getActivePurchasedProductIds() : [];
 
         return view('livewire.product-catalog', [
-            'products' => $promotedProducts->concat($regularProducts),
+            'products' => $products,
             'activePurchasedIds' => $activePurchasedIds,
         ]);
     }
