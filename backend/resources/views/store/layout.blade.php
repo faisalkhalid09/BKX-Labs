@@ -45,11 +45,12 @@
         <a href="{{ url('/store') }}" class="shrink-0 flex items-center hover:opacity-80 transition-opacity">
               <img src="/brand-logo.png" 
                   alt="BKX Labs" 
-                  class="h-10 sm:h-12 w-auto object-contain drop-shadow-sm"
+                  class="h-[2.875rem] sm:h-[3.45rem] w-auto object-contain drop-shadow-sm"
                  loading="lazy">
         </a>
         
         <!-- Desktop Navigation -->
+        @if(!($isLegalPage ?? false))
         <div class="hidden lg:flex items-center gap-8">
             <div class="flex items-center gap-8">
                 <a class="{{ request()->is('store') ? 'text-primary dark:text-blue-400 font-semibold' : 'text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-300' }} transition-colors text-xs uppercase tracking-wider" href="{{ url('/store') }}">Catalog</a>
