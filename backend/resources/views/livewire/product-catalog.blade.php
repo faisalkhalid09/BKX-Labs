@@ -51,7 +51,7 @@
 
                         @if($product->is_promoted)
                             <div class="absolute top-4 right-4 z-10">
-                                <span class="bg-blue-600 text-white px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl">Promoted</span>
+                                <span class="bg-blue-600 text-white px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl" style="color:#ffffff;">Promoted</span>
                             </div>
                         @endif
 
@@ -123,12 +123,13 @@
     }
 
     .promoted-card-animated {
-        border: 2px solid transparent;
+        border: 3px solid transparent;
         background:
             linear-gradient(var(--card-bg, #ffffff), var(--card-bg, #ffffff)) padding-box,
-            linear-gradient(120deg, #1d4ed8, #38bdf8, #2563eb, #60a5fa, #1d4ed8) border-box;
-        background-size: 100% 100%, 260% 260%;
+            linear-gradient(120deg, #0f3bbf 0%, #1d4ed8 16%, #2563eb 33%, #38bdf8 50%, #2563eb 67%, #1d4ed8 84%, #0f3bbf 100%) border-box;
+        background-size: 100% 100%, 180% 180%;
         animation: promotedBorderFlow 2.8s linear infinite;
+        box-shadow: 0 10px 28px rgba(29, 78, 216, 0.22);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -139,6 +140,6 @@
 
     @keyframes promotedBorderFlow {
         0% { background-position: 0% 50%; }
-        100% { background-position: 260% 50%; }
+        100% { background-position: 180% 50%; }
     }
 </style>

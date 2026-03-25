@@ -274,13 +274,13 @@
     }
 
     .product-card.product-card-promoted {
-        border: 2px solid transparent;
+        border: 3px solid transparent;
         background:
             linear-gradient(#ffffff, #ffffff) padding-box,
-            linear-gradient(120deg, #1d4ed8, #38bdf8, #2563eb, #60a5fa, #1d4ed8) border-box;
-        background-size: 100% 100%, 260% 260%;
+            linear-gradient(120deg, #0f3bbf 0%, #1d4ed8 16%, #2563eb 33%, #38bdf8 50%, #2563eb 67%, #1d4ed8 84%, #0f3bbf 100%) border-box;
+        background-size: 100% 100%, 180% 180%;
         animation: promotedBorderFlow 2.8s linear infinite;
-        box-shadow: 0 10px 26px rgba(37, 99, 235, 0.16);
+        box-shadow: 0 10px 28px rgba(29, 78, 216, 0.22);
     }
 
     .product-card.product-card-promoted:hover {
@@ -310,7 +310,7 @@
         top: 0.75rem;
         right: 0.75rem;
         background: #2563eb;
-        color: white;
+        color: #ffffff;
         font-size: 0.7rem;
         font-weight: 900;
         padding: 0.4rem 0.6rem;
@@ -393,7 +393,7 @@
 
     @keyframes promotedBorderFlow {
         0% { background-position: 0% 50%; }
-        100% { background-position: 260% 50%; }
+        100% { background-position: 180% 50%; }
     }
 
     /* No Results */
