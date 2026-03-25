@@ -82,7 +82,7 @@
                         @endif
                     </div>
 
-                    <div class="catalog-product-body pt-3 sm:pt-4 pb-2 px-2 sm:px-3 flex flex-col">
+                    <div class="catalog-product-body pt-3 sm:pt-4 pb-2 px-2 sm:px-3 flex flex-col {{ $product->is_promoted ? 'bg-white' : '' }}">
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
                                 {{ str_replace('_', ' ', $product->category) }}
@@ -135,7 +135,7 @@
     .catalog-product-card {
         aspect-ratio: 1 / 1;
         display: grid;
-        grid-template-rows: 56% 44%;
+        grid-template-rows: 60% 40%;
     }
 
     .catalog-product-media {

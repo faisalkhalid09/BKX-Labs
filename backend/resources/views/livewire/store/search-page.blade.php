@@ -260,7 +260,7 @@
     /* Product Card */
     .product-card {
         display: grid;
-        grid-template-rows: 56% 44%;
+        grid-template-rows: 60% 40%;
         aspect-ratio: 1 / 1;
         background: white;
         border: 1px solid #e2e8f0;
@@ -325,6 +325,10 @@
         display: flex;
         flex-direction: column;
         min-height: 0;
+    }
+
+    .product-body-promoted {
+        background: #ffffff;
     }
 
     @media(min-width: 640px) {
@@ -711,7 +715,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="product-body">
+                                    <div class="product-body {{ $product->is_promoted ? 'product-body-promoted' : '' }}">
                                         <div class="product-category">{{ str_replace('_', ' ', $product->category) }}</div>
                                         <h3 class="product-name">
                                             <a href="{{ route('store.show', $product->slug) }}" class="hover:text-primary transition-colors text-inherit decoration-none">
