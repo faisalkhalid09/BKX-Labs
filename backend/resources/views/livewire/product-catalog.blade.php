@@ -3,7 +3,7 @@
     @if (session()->has('added'))
         <div class="fixed bottom-8 right-8 z-[100] bg-primary text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[slideInUp_0.3s_ease-out]">
             <span class="material-symbols-outlined text-xl">check_circle</span>
-            <span class="text-sm font-bold">{{ session('added') }} added to cart</span>
+            <span class="text-sm font-bold">{{ session('added') }}</span>
         </div>
     @endif
 
