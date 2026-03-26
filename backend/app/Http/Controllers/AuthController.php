@@ -67,6 +67,7 @@ class AuthController extends Controller
             'name'                  => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'email:rfc,dns', 'unique:users'],
             'password'              => ['required', 'min:8', 'confirmed'],
+            'terms'                 => ['accepted'],
         ]);
 
         if (RateLimiter::tooManyAttempts('otp.generate:' . $request->ip() . '|' . $request->input('email'), 3)) {

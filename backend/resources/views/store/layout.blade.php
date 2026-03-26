@@ -91,11 +91,11 @@
                                 <span class="material-symbols-outlined text-[16px]">settings</span>
                                 Profile Settings
                             </a>
-                            <a href="{{ route('profile') }}?tab=security" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
+                            <a href="{{ route('profile') . '?tab=security' }}" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
                                 <span class="material-symbols-outlined text-[16px]">shield</span>
                                 Security
                             </a>
-                            <a href="{{ route('profile') }}?tab=preferences" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
+                            <a href="{{ route('profile') . '?tab=preferences' }}" class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-primary transition-all">
                                 <span class="material-symbols-outlined text-[16px]">mail</span>
                                 Preferences
                             </a>
@@ -187,21 +187,21 @@
                     <h4 class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">Shop</h4>
                     <ul class="space-y-2">
                         <li><a href="{{ url('/store') }}" class="text-sm text-slate-500 hover:text-primary transition-colors">Catalog</a></li>
-                        <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">New Arrivals</a></li>
+                        <li><a href="{{ url('/downloads') }}" class="text-sm text-slate-500 hover:text-primary transition-colors">My Downloads</a></li>
                     </ul>
                 </div>
                 <div class="space-y-4">
                     <h4 class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">Legal</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="{{ route('store.terms', ['tab' => 'privacy']) }}" class="text-sm text-slate-500 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('store.terms') }}" class="text-sm text-slate-500 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="{{ route('store.terms', ['tab' => 'dmca']) }}" class="text-sm text-slate-500 hover:text-primary transition-colors">DMCA Policy</a></li>
                     </ul>
                 </div>
                 <div class="space-y-4">
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">Connect</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">Support</h4>
                     <ul class="space-y-2">
-                        <li><a href="https://bkxlabs.com/contact" class="text-sm text-slate-500 hover:text-primary transition-colors">Contact</a></li>
-                        <li><a href="#" class="text-sm text-slate-500 hover:text-primary transition-colors">Support</a></li>
+                        <li><a href="https://bkxlabs.com/contact" class="text-sm text-slate-500 hover:text-primary transition-colors">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
