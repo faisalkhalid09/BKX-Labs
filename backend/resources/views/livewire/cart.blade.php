@@ -60,8 +60,7 @@
                     <p style="text-align:center;font-size:0.65rem;color:#94a3b8;margin-top:0.5rem;">Secure checkout via Lemon Squeezy</p>
                 </div>
             @endif
-
-    @if ($isOpen)
+        </div>
         <style>
             @keyframes slideInRight {
                 from { transform: translateX(100%); }
