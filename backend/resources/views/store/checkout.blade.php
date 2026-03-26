@@ -89,12 +89,6 @@
                                 <span class="text-on-surface font-black text-sm leading-snug">{{ $item['name'] }}</span>
                                 <span class="text-on-surface font-black text-sm whitespace-nowrap">${{ number_format($item['price'], 2) }}</span>
                             </div>
-                            <div class="flex items-center gap-2 text-[10px] text-on-surface-variant font-bold opacity-60">
-                                <span class="material-symbols-outlined text-xs">digital_outofhome</span>
-                                <span>Lifetime License</span>
-                                <span class="mx-1">•</span>
-                                <span>Instant Delivery</span>
-                            </div>
                         </div>
                     @endforeach
                 </div>
