@@ -30,8 +30,8 @@
                 </button>
             @endif
 
-            {{-- Page Numbers (Glassmorphism inspired) --}}
-            <div class="flex items-center bg-slate-50 dark:bg-slate-900/50 p-1 rounded-2xl border border-slate-100 dark:border-slate-800/40 gap-1">
+            {{-- Page Numbers (Desktop: Full list, Mobile: Simple) --}}
+            <div class="hidden md:flex items-center bg-slate-50 dark:bg-slate-900/50 p-1 rounded-2xl border border-slate-100 dark:border-slate-800/40 gap-1">
                 @foreach ($elements as $element)
                     @if (is_string($element))
                         <span class="w-9 h-9 flex items-center justify-center text-slate-400 text-xs font-black select-none tracking-widest">•••</span>
@@ -54,6 +54,14 @@
                     @endif
                 @endforeach
             </div>
+
+            {{-- Mobile-only page indicator --}}
+            <div class="flex md:hidden items-center bg-slate-50 dark:bg-slate-900/50 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800/40 px-4">
+                <span class="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">
+                    Page {{ $paginator->currentPage() }}
+                </span>
+            </div>
+
 
             {{-- Next --}}
             @if ($paginator->hasMorePages())

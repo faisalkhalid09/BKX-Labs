@@ -35,7 +35,7 @@
     @livewireStyles
     @stack('styles')
 </head>
-<body class="bg-background text-on-background antialiased">
+<body class="bg-background text-on-background antialiased overflow-x-hidden">
 
 @php
     $hideStoreHeader = request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('verify.otp');
