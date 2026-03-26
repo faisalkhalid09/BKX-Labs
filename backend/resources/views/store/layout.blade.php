@@ -27,7 +27,7 @@
         }
         .mobile-menu-open { overflow: hidden; }
         .mobile-menu-active { display: flex; }
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
             .mobile-menu-btn { display: none !important; }
             .mobile-menu { display: none !important; }
         }
