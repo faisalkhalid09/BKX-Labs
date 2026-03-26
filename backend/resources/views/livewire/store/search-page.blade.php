@@ -702,8 +702,8 @@
             <div class="search-bar">
                 <input type="text" wire:model.live.debounce.300ms="q" placeholder="Type to search..." autocomplete="off" autofocus>
                 <div class="search-btn">
-                    <span class="material-symbols-outlined" wire:loading.remove wire:target="q">search</span>
-                    <span class="material-symbols-outlined animate-spin" wire:loading wire:target="q">refresh</span>
+                    <span class="material-symbols-outlined leading-none" wire:loading.remove wire:target="q">search</span>
+                    <span class="material-symbols-outlined animate-spin leading-none" wire:loading wire:target="q">refresh</span>
                     <span class="hidden sm:inline">Searching</span>
                 </div>
             </div>
