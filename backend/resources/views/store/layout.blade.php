@@ -57,9 +57,9 @@
         @if(!($isLegalPage ?? false))
         <div class="hidden lg:flex items-center gap-8">
             <div class="flex items-center gap-8">
-                <a class="{{ request()->is('store') ? 'text-primary dark:text-blue-400 font-semibold' : 'text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-300' }} transition-colors text-xs uppercase tracking-wider" href="{{ url('/store') }}">Catalog</a>
+                <a wire:navigate class="{{ request()->is('store') ? 'text-primary dark:text-blue-400 font-semibold' : 'text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-300' }} transition-colors text-xs uppercase tracking-wider" href="{{ url('/store') }}">Catalog</a>
                 @auth
-                    <a class="{{ request()->is('downloads*') ? 'text-primary dark:text-blue-400 font-semibold' : 'text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-300' }} transition-colors text-xs uppercase tracking-wider" href="{{ url('/downloads') }}">My Downloads</a>
+                    <a wire:navigate class="{{ request()->is('downloads*') ? 'text-primary dark:text-blue-400 font-semibold' : 'text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-300' }} transition-colors text-xs uppercase tracking-wider" href="{{ url('/downloads') }}">My Downloads</a>
                 @endauth
             </div>
             

@@ -9,10 +9,11 @@
 
     {{-- Backdrop --}}
     @if ($isOpen)
-        <div style="position:fixed;inset:0;background:rgba(15,23,42,.35);z-index:200;backdrop-filter:blur(2px);" wire:click="toggle"></div>
+        <div style="position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:200;" wire:click="toggle"></div>
 
         {{-- Drawer --}}
-        <div style="position:fixed;top:0;right:0;height:100vh;width:100%;max-width:300px;background:#fff;z-index:300;display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,.12);">
+        <div style="position:fixed;top:0;right:0;height:100vh;width:100%;max-width:320px;background:#fff;z-index:210;display:flex;flex-direction:column;box-shadow:-10px 0 50px rgba(0,0,0,0.15);animation: slideInRight .3s ease-out;">
+
             {{-- Header --}}
             <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid #e2e8f0;min-height:48px;">
                 <div>
@@ -60,5 +61,12 @@
                 </div>
             @endif
         </div>
-    @endif
+@if ($isOpen)
+<style>
+    @keyframes slideInRight {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+</style>
+@endif
 </div>
