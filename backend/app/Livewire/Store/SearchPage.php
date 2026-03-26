@@ -98,7 +98,7 @@ class SearchPage extends Component
             'price_asc'  => $baseQuery->orderBy('price', 'asc'),
             'price_desc' => $baseQuery->orderBy('price', 'desc'),
             'newest'     => $baseQuery->orderBy('created_at', 'desc'),
-            default      => $baseQuery->orderByRaw("MD5(CONCAT(products.id, ?))", [now()->format('Y-m-d')]),
+            default      => $baseQuery->orderByDesc('created_at'),
         };
 
         $products = $baseQuery->paginate($this->perPage);

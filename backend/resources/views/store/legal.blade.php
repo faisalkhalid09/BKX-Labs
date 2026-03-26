@@ -154,7 +154,7 @@
                         <section class="space-y-4">
                             <h2 class="text-lg font-black text-slate-900 dark:text-white">2. Submitting a Takedown Notice</h2>
                             <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                If you believe your copyright is being infringed, please send a written notification to <strong class="text-slate-900 dark:text-white">legal@bkxlabs.com</strong> with the subject line "Urgent: Copyright Infringement Notice".
+                                If you believe your copyright is being infringed, please send a written notification to <strong class="text-slate-900 dark:text-white">contact@bkxlabs.com</strong> with the subject line "Urgent: Copyright Infringement Notice".
                             </p>
                         </section>
                     </div>

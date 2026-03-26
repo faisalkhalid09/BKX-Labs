@@ -11,7 +11,7 @@ class StoreController extends Controller
 {
     public function index()
     {
-        try { StorePageView::track('store'); } catch (\Throwable) {}
+        dispatch(function () { try { StorePageView::track('store'); } catch (\Throwable) {} })->afterResponse();
         return view('store.index');
     }
 
@@ -21,10 +21,12 @@ class StoreController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        try {
-            StorePageView::track('product');
-            ProductView::track($product->id);
-        } catch (\Throwable) {}
+        dispatch(function () use ($product) {
+            try {
+                StorePageView::track('product');
+                ProductView::track($product->id);
+            } catch (\Throwable) {}
+        })->afterResponse();
 
         $isBought = false;
         if (auth()->check()) {
