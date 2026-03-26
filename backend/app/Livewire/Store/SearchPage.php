@@ -69,6 +69,11 @@ class SearchPage extends Component
         $this->resetPage();
     }
 
+    public function paginationView(): string
+    {
+        return 'vendor.livewire.custom-pagination';
+    }
+
     public function render()
     {
         $baseQuery = Product::query()->where('is_active', true);

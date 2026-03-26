@@ -77,27 +77,7 @@
                     @enderror
                 </div>
 
-                <!-- Terms Acceptance -->
-                <div class="pt-2">
-                    <label class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200/40 dark:border-slate-800/40 cursor-pointer hover:border-primary/20 transition-all group">
-                        <div class="relative flex items-center">
-                            <input 
-                                type="checkbox" 
-                                name="terms" 
-                                id="terms_checkbox"
-                                x-model="agreed"
-                                required
-                                class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary/20 cursor-pointer"
-                            >
-                        </div>
-                        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
-                            I agree to the <a href="{{ url('/store/terms') }}" target="_blank" class="text-primary font-bold hover:underline">Master Terms & Conditions</a>, <a href="{{ url('/store/terms?tab=privacy') }}" target="_blank" class="text-primary font-bold hover:underline">Privacy Policy</a> and <a href="{{ url('/store/terms?tab=dmca') }}" target="_blank" class="text-primary font-bold hover:underline">DMCA Policy</a>.
-                        </span>
-                    </label>
-                    @error('terms')
-                        <p class="text-red-500 text-[10px] mt-1 ml-1 font-bold">{{ $message }}</p>
-                    @enderror
-                </div>
+
 
                 <!-- Remember Me & Forgot Password -->
                 <div class="flex items-center justify-between gap-2 pt-1">

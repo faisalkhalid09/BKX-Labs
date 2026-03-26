@@ -65,6 +65,11 @@ class ProductCatalog extends Component
         session()->flash('added', $product->name . ' added to cart!');
     }
 
+    public function paginationView(): string
+    {
+        return 'vendor.livewire.custom-pagination';
+    }
+
     public function render()
     {
         // Cache product list for 10 minutes — invalidate when products change

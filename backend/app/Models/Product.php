@@ -38,6 +38,28 @@ class Product extends Model
             }
         });
 
+        // Bust product catalog cache when anything changes
+        static::saved(function () {
+            // Bust all paginated catalog cache keys
+            foreach (['all', 'ai_model', 'script', 'template', 'other'] as $cat) {
+                for ($pg = 1; $pg <= 20; $pg++) {
+                    foreach ([10, 20, 50, 100] as $pp) {
+                        \Illuminate\Support\Facades\Cache::forget("catalog_{$cat}_p{$pg}_pp{$pp}");
+                    }
+                }
+            }
+        });
+
+        static::deleted(function () {
+            foreach (['all', 'ai_model', 'script', 'template', 'other'] as $cat) {
+                for ($pg = 1; $pg <= 20; $pg++) {
+                    foreach ([10, 20, 50, 100] as $pp) {
+                        \Illuminate\Support\Facades\Cache::forget("catalog_{$cat}_p{$pg}_pp{$pp}");
+                    }
+                }
+            }
+        });
+
         static::deleting(function (Product $product) {
             if ($product->thumbnail_path) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($product->thumbnail_path);

@@ -17,12 +17,15 @@ class WebhookController extends Controller
         
         $secret = config('services.lemon-squeezy.signing_secret');
         
-        if ($secret) {
-            $computedSignature = hash_hmac('sha256', $request->getContent(), $secret);
-            if (!hash_equals($computedSignature, (string) $signature)) {
-                Log::error('Lemon Squeezy webhook signature verification failed.');
-                return response()->json(['error' => 'Invalid signature'], 400);
-            }
+        if (!$secret) {
+            Log::critical('Lemon Squeezy webhook: LEMON_SQUEEZY_SIGNING_SECRET is not set.');
+            return response()->json(['error' => 'Webhook not configured'], 500);
+        }
+        
+        $computedSignature = hash_hmac('sha256', $request->getContent(), $secret);
+        if (!hash_equals($computedSignature, (string) $signature)) {
+            Log::error('Lemon Squeezy webhook signature verification failed.');
+            return response()->json(['error' => 'Invalid signature'], 400);
         }
 
         $eventName = $payload['meta']['event_name'] ?? null;
