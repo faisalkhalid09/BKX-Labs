@@ -72,7 +72,7 @@ class ProductCatalog extends Component
 
         $products = Cache::remember($cacheKey, 600, function () {
             $query = Product::where('is_active', true)
-                ->select(['id', 'name', 'slug', 'price', 'category', 'short_description', 'is_promoted', 'image']);
+                ->select(['id', 'name', 'slug', 'price', 'category', 'short_description', 'is_promoted']);
 
             if ($this->activeCategory !== 'all') {
                 $query->where('category', $this->activeCategory);

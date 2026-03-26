@@ -26,7 +26,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('login') }}" method="POST" class="space-y-3 sm:space-y-4" x-data="{ agreed: false }">
+            <form action="{{ route('login') }}" method="POST" class="space-y-3 sm:space-y-4">
                 @csrf
                 
                 <!-- Email Field -->
@@ -119,8 +119,6 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
-                    :disabled="!agreed"
-                    :class="!agreed ? 'opacity-50 cursor-not-allowed grayscale' : ''"
                     class="w-full mt-4 sm:mt-5 py-2.5 sm:py-3 px-3 bg-primary text-on-primary font-bold rounded-lg text-xs sm:text-sm hover:bg-primary-container active:scale-[0.98] transition-all shadow-lg shadow-primary/20 min-h-[40px] flex items-center justify-center gap-2"
                 >
                     <span>Sign In</span>
@@ -129,7 +127,6 @@
 
                 <!-- Google Sign In Button -->
                 <a href="{{ route('auth.google.redirect') }}" 
-                   :class="!agreed ? 'opacity-50 pointer-events-none grayscale' : ''"
                    class="w-full mt-3 py-2.5 sm:py-3 px-3 bg-white dark:bg-slate-900 border border-outline-variant/30 text-on-surface font-bold rounded-lg text-xs sm:text-sm hover:bg-surface-container transition-all min-h-[40px] flex items-center justify-center gap-3">
                     <svg width="18" height="18" viewBox="0 0 24 24">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
