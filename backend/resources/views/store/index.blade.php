@@ -14,7 +14,7 @@
 
 @section('content')
 <!-- Hero Section: Premium Minimalist -->
-<section class="bg-white dark:bg-slate-950 pt-12 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 md:px-8 overflow-hidden border-b border-slate-50 dark:border-slate-900">
+<section class="bg-white dark:bg-slate-950 pt-4 sm:pt-8 pb-12 sm:pb-16 px-4 sm:px-6 md:px-8 overflow-hidden border-b border-slate-50 dark:border-slate-900">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div class="md:col-span-12 lg:col-span-8">
             <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-black tracking-tightest mb-4 sm:mb-8 text-slate-900 dark:text-white leading-[1.1] sm:leading-[0.85]">
