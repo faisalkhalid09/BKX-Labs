@@ -66,10 +66,14 @@ class User extends Authenticatable implements FilamentUser
     }
     public function getActivePurchasedProductIds(): array
     {
-        return $this->orders()
-            ->where('status', 'paid')
-            ->where('download_expires_at', '>', now())
-            ->pluck('product_id')
-            ->toArray();
+        return \Illuminate\Support\Facades\Cache::remember(
+            'user_purchased_ids_' . $this->id,
+            60,
+            fn () => $this->orders()
+                ->where('status', 'paid')
+                ->where('download_expires_at', '>', now())
+                ->pluck('product_id')
+                ->toArray()
+        );
     }
 }
