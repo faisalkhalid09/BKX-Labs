@@ -27,13 +27,13 @@
             <div class="mt-8 sm:mt-16 max-w-2xl w-full">
                 <form action="{{ route('store.search') }}" method="GET" class="relative rounded-xl sm:rounded-2xl border-2 border-primary/20 focus-within:border-primary shadow-sm overflow-hidden group transition-all duration-300">
                     <div class="relative bg-white dark:bg-slate-950 flex items-center overflow-hidden">
-                        <span class="material-symbols-outlined pl-4 sm:pl-5 text-slate-400 text-lg sm:text-xl">search</span>
+                        <span class="material-symbols-outlined pl-4 sm:pl-5 text-slate-400 text-lg sm:text-xl leading-none flex-shrink-0">search</span>
                         <input type="text" name="q" placeholder="Search products..." 
-                               class="flex-1 bg-transparent border-none px-3 sm:px-4 py-4 sm:py-5 text-sm sm:text-base focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 font-medium outline-none"
+                               class="flex-1 bg-transparent border-none pl-2 pr-4 sm:pr-6 py-4 sm:py-5 text-sm sm:text-base focus:ring-0 text-slate-900 dark:text-white placeholder-slate-400 font-medium outline-none"
                                autocomplete="off">
-                        <button type="submit" class="bg-primary text-white px-5 sm:px-8 py-4 sm:py-5 text-xs sm:text-sm font-black uppercase tracking-widest hover:bg-primary/90 transition-colors flex items-center gap-2">
+                        <button type="submit" class="bg-primary text-white px-4 sm:px-8 py-4 sm:py-5 text-xs sm:text-sm font-black uppercase tracking-widest hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 shrink-0">
                             <span class="hidden sm:inline">Search</span>
-                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                            <span class="material-symbols-outlined text-lg leading-none">arrow_forward</span>
                         </button>
                     </div>
                 </form>
