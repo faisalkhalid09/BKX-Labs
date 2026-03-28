@@ -170,6 +170,23 @@
     margin-bottom: 1.5rem;
 }
 
+/* About CTA Section */
+.about-cta {
+    background: white;
+}
+
+.about-cta .cta-content h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.about-cta .cta-content p {
+    color: var(--text-gray);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .founder-container {
@@ -200,6 +217,10 @@
     }
 
     .philosophy-tagline {
+        font-size: 24px;
+    }
+
+    .about-cta .cta-content h2 {
         font-size: 24px;
     }
 }
