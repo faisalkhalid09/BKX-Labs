@@ -245,7 +245,7 @@ const Home = () => {
                             Your software is fixable. Let's prove it.
                         </h2>
                         <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '18px', marginBottom: '2rem', maxWidth: '550px', margin: '0 auto 2rem auto' }}>
-                            Every rescue starts with a free Technical Health Check. You'll walk away with clarity on
+                            Every rescue starts with a Technical Health Check. You'll walk away with clarity on
                             the state of your system — no strings attached.
                         </p>
                         <Button variant="primary" href="/contact">
