@@ -1,7 +1,8 @@
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
-import { Target, Users, Eye, Linkedin } from 'lucide-react';
+import { Target, Users, Eye, Linkedin, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './About.css';
 
@@ -67,6 +68,8 @@ const About = () => {
                             <img
                                 src="/me.jpeg"
                                 alt="Faisal Khalid - Founder and Lead Architect at BKX Labs, enterprise software development expert specializing in project rescue and scalable systems"
+                                draggable="false"
+                                onContextMenu={(e) => e.preventDefault()}
                             />
                         </div>
                         <div className="founder-bio">
@@ -90,10 +93,10 @@ const About = () => {
                                 <span>Connect on LinkedIn</span>
                             </a>
                             <p className="founder-description">
-                                With deep roots in complex computer science principles and software engineering,
-                                Faisal built BKX Labs to give clients more control and visibility than traditional
-                                agencies ever offer. His background spans enterprise architecture, scalable
-                                systems design, and leading cross-functional development teams.
+                                Combining deep software engineering expertise with a ruthless focus on business ROI,
+                                Faisal built BKX Labs to rescue founders from technical debt and vendor lock-in.
+                                His background spans scalable systems architecture and leading cross-functional
+                                crisis-management teams.
                             </p>
                             <p className="founder-description">
                                 Every project at BKX Labs is personally overseen to ensure it meets our rigorous
@@ -153,6 +156,21 @@ const About = () => {
                             specifically for your codebase, your constraints, and your business goals —
                             with full transparency every step of the way.
                         </p>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Final CTA */}
+            <Section className="about-cta">
+                <Container>
+                    <div className="cta-content" style={{ textAlign: 'center' }}>
+                        <h2>Ready to stop firefighting and start shipping?</h2>
+                        <p style={{ marginBottom: '2rem', fontSize: '18px', color: 'var(--text-gray)' }}>
+                            Book a Rescue Strategy Call to see if your codebase qualifies for our Diagnostic Audit.
+                        </p>
+                        <Link to="/contact" className="btn btn-primary">
+                            Book a Rescue Strategy Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                        </Link>
                     </div>
                 </Container>
             </Section>
