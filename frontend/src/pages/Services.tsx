@@ -42,9 +42,9 @@ const Services = () => {
     return (
         <div>
             <SEO
-                title="Software Rescue Services - Audit, Stabilize, Modernize"
-                description="BKX Labs offers a complete software rescue funnel: Diagnostic Audits, Emergency Triage & Stabilization, and long-term Modernization Retainers. We also build greenfield applications and provide ongoing engineering support."
-                keywords="codebase audit, software triage, technical debt removal, project rescue services, emergency stabilization, legacy modernization, Laravel, React, Flutter, Node.js"
+                title="Software Rescue & Enterprise Development Services"
+                description="BKX Labs offers a complete software rescue funnel: Diagnostic Audits, Emergency Triage & Stabilization, and long-term Modernization Retainers. Our expert engineering team ensures your project is stable and scalable."
+                keywords="codebase audit, software triage, technical debt removal, project rescue services, emergency stabilization, legacy modernization, hire laravel developers, react engineering, outsource software development pakistan"
                 structuredData={structuredData}
             />
             <Hero

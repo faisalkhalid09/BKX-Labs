@@ -21,8 +21,10 @@ const SEO = ({
     structuredData
 }: SEOProps) => {
     const location = useLocation();
-    const baseUrl = 'https://bkxlabs.com';
-    const fullUrl = canonical || `${baseUrl}${location.pathname}`;
+    
+    // Use VITE_APP_URL if defined, fallback to production domain
+    const baseUrl = import.meta.env.VITE_APP_URL || 'https://bkxlabs.com';
+    const fullUrl = canonical || `${baseUrl}${location.pathname.replace(/\/$/, '') || '/'}`;
     const fullTitle = `${title} | BKX Labs`;
 
     useEffect(() => {
@@ -71,16 +73,52 @@ const SEO = ({
         canonicalLink.setAttribute('href', fullUrl);
 
         // Structured Data (JSON-LD)
+        // We handle multiple potential script tags and ensure our page-specific one is unique
         if (structuredData) {
-            let scriptTag = document.querySelector('script[type="application/ld+json"]');
+            const scriptId = 'json-ld-page-specific';
+            let scriptTag = document.getElementById(scriptId);
             if (!scriptTag) {
                 scriptTag = document.createElement('script');
+                scriptTag.id = scriptId;
                 scriptTag.setAttribute('type', 'application/ld+json');
                 document.head.appendChild(scriptTag);
             }
             scriptTag.textContent = JSON.stringify(structuredData);
         }
-    }, [title, description, keywords, ogImage, ogType, fullUrl, fullTitle, structuredData]);
+
+        // Add Breadcrumb Schema
+        const pathSegments = location.pathname.split('/').filter(Boolean);
+        if (pathSegments.length > 0) {
+            const breadcrumbId = 'json-ld-breadcrumb';
+            let breadcrumbScript = document.getElementById(breadcrumbId);
+            if (!breadcrumbScript) {
+                breadcrumbScript = document.createElement('script');
+                breadcrumbScript.id = breadcrumbId;
+                breadcrumbScript.setAttribute('type', 'application/ld+json');
+                document.head.appendChild(breadcrumbScript);
+            }
+
+            const breadcrumbData = {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": baseUrl
+                    },
+                    ...pathSegments.map((segment, index) => ({
+                        "@type": "ListItem",
+                        "position": index + 2,
+                        "name": segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' '),
+                        "item": `${baseUrl}/${pathSegments.slice(0, index + 1).join('/')}`
+                    }))
+                ]
+            };
+            breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+        }
+    }, [location.pathname, fullUrl, fullTitle, description, keywords, ogImage, ogType, structuredData, baseUrl]);
 
     return null; // This component doesn't render anything
 };

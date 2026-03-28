@@ -27,9 +27,9 @@ const About = () => {
     return (
         <div>
             <SEO
-                title="About Us - BKX Labs Leadership & Mission"
-                description="Meet the team behind BKX Labs. Founded by Faisal Khalid, we eliminate the 'black box' of software development through transparency, enterprise-grade engineering, and proven project rescue expertise."
-                keywords="BKX Labs, Faisal Khalid, software development company, transparent development, project management, enterprise software team"
+                title="About BKX Labs | Leadership & Project Rescue Mission"
+                description="Learn about BKX Labs, the specialized engineering team businesses call when their software is failing. Founded by Faisal Khalid, we focus on transparency, enterprise-grade engineering, and proven project rescue expertise."
+                keywords="BKX Labs, Faisal Khalid, software development team pakistan, project rescue experts, enterprise architect, transparent software development, hire senior developers"
                 structuredData={structuredData}
             />
             <Hero

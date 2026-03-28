@@ -43,9 +43,9 @@ const Process = () => {
     return (
         <div>
             <SEO
-                title="Our Development Process - Transparent Phase-Wise Delivery"
-                description="Discover BKX Labs transparent 5-step development workflow: Discovery, Setup, Execution, Updates, and Delivery. Milestone-based payments, weekly demos, and dedicated project managers ensure complete visibility."
-                keywords="software development process, agile development, project management, milestone payments, transparent workflow, dedicated project manager"
+                title="The Rescue Protocol | Our Software Development Process"
+                description="Explore BKX Labs' transparent 5-step development workflow: Diagnostic Audit, Triage, and Modernization. Our milestone-based process ensures complete visibility into your project rescue."
+                keywords="software development process, project rescue protocol, agile engineering pakistan, transparent development workflow, milestone payments, technical audit process"
                 structuredData={structuredData}
             />
             <Hero

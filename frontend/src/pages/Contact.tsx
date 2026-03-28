@@ -52,9 +52,9 @@ const Contact = () => {
     return (
         <div>
             <SEO
-                title="Contact Us - Book Your Rescue Strategy Call"
-                description="Contact BKX Labs for expert software rescue. Book a complimentary Rescue Strategy Call to see if your codebase qualifies for a Diagnostic Audit."
-                keywords="software rescue, codebase audit, technical debt, project takeover, BKX Labs contact"
+                title="Contact BKX Labs | Book Your Rescue Strategy Call"
+                description="Get in touch with BKX Labs for expert software rescue and enterprise development. Book a complimentary Rescue Strategy Call to diagnose your codebase issues today."
+                keywords="contact software developers, hire project rescue team, codebase audit request, software development consultation pakistan, BKX Labs support"
                 structuredData={structuredData}
             />
             <Hero

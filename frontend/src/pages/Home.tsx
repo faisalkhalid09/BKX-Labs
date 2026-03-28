@@ -32,9 +32,9 @@ const Home = () => {
     return (
         <div>
             <SEO
-                title="Software Rescue Specialists | Stalled Project Recovery"
-                description="BKX Labs rescues stalled and failing software projects. Our specialized engineering team takes over broken codebases, stops the bleeding, and gets you to production. Request a Technical Health Check today."
-                keywords="software rescue, stalled project recovery, failed codebase takeover, technical debt removal, project rescue team, Laravel, React, Node.js, Flutter, enterprise software"
+                title="Enterprise Software Development & Project Rescue Specialists"
+                description="BKX Labs specializes in enterprise software development and rescuing stalled or failing projects. We take over broken codebases, stabilize infrastructure, and deliver production-ready solutions. Get your project back on track today."
+                keywords="software development pakistan, enterprise software development, project rescue services, fix failing software, stalled project recovery, custom software solutions, hire react developers, laravel experts, legacy modernization"
                 structuredData={structuredData}
             />
             {/* Hero Section */}

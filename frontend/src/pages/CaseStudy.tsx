@@ -37,9 +37,9 @@ const CaseStudy = () => {
     return (
         <div>
             <SEO
-                title="Case Studies - Real Project Success Stories"
-                description="Explore BKX Labs proven track record: Class Moalimy (EdTech rescue, 40% cost reduction), LocaGed (100x faster search, 94% OCR accuracy). Real metrics from real projects."
-                keywords="software project rescue, case studies, EdTech development, document management system, Laravel projects, enterprise software examples"
+                title="Software Rescue Case Studies | Success Stories & Results"
+                description="Explore real-world software rescue results: Class Moalimy (EdTech rescue, 40% cost reduction), LocaGed (100x faster search). Proven engineering excellence in project recovery."
+                keywords="software rescue case studies, project recovery success stories, edtech development rescue, laravel elasticsearch results, enterprise software portfolio"
                 ogType="article"
                 structuredData={structuredData}
             />
