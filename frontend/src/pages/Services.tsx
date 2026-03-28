@@ -322,9 +322,9 @@ const Services = () => {
                             <div className="service-detail">
                                 <h4>Our Approach</h4>
                                 <p>
-                                    All greenfield projects begin with a documented SRS and architecture review
-                                    before any code is written. Each phase delivers a working, testable build.
-                                    You pay per milestone, not per month.
+                                    All greenfield projects begin with a documented architecture review. 
+                                    We deliver enterprise-grade Minimum Viable Products (MVPs) on fixed-price, 
+                                    fixed-timeline contracts. No scope creep, no hourly billing surprises.
                                 </p>
                             </div>
 
@@ -406,9 +406,10 @@ const Services = () => {
                 <Container>
                     <div className="services-intro">
                         <p>
-                            Not sure which service fits your situation? Every engagement starts with a free
-                            discovery call where we assess your project and recommend the right starting point.
-                            No sales pitch — just an honest assessment.
+                            Not sure which service fits your situation? Every engagement starts with a 
+                            complimentary 15-minute Rescue Strategy Call. We assess your business situation, 
+                            the state of your current team, and recommend the right technical starting point. 
+                            No high-pressure sales — just a candid assessment of whether your project can be saved.
                         </p>
                     </div>
                 </Container>
@@ -420,11 +421,11 @@ const Services = () => {
                     <div className="cta-content">
                         <h2>Let's Fix What's Broken.</h2>
                         <p>
-                            Start with a free Technical Health Check. You'll walk away with a clear picture of
-                            your system's state — no strings attached.
+                            Stop guessing why your application is failing. Book a Strategy Call today to 
+                            see if your codebase qualifies for our Diagnostic Audit.
                         </p>
                         <Link to="/contact" className="btn btn-primary">
-                            Request a Free Health Check <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                            Book a Rescue Strategy Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
                         </Link>
                     </div>
                 </Container>
