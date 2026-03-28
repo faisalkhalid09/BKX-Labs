@@ -90,64 +90,57 @@ const Home = () => {
                 </Container>
             </Section>
 
-            {/* The 3-Phase Rescue Funnel */}
-            <Section className="rescue-section">
+            {/* The 3-Phase Rescue Funnel (Overhauled UI) */}
+            <Section className="protocol-section">
                 <Container>
-                    <h2 className="text-center section-heading">The Rescue Protocol</h2>
-                    <p className="text-center section-subheading">
-                        We don't guess. We follow a battle-tested three-phase process that turns failing software
-                        into production-ready systems.
-                    </p>
-                    <div className="rescue-phases">
-                        <div className="rescue-phase">
-                            <div className="phase-number">01</div>
-                            <div className="phase-icon"><Search size={36} strokeWidth={1.5} /></div>
-                            <h3>The Diagnostic Audit</h3>
+                    <div className="protocol-grid">
+                        <div className="protocol-sticky">
+                            <span className="accent-label">Methodology</span>
+                            <h2>The Rescue Protocol</h2>
                             <p>
-                                A forensic deep-dive into your codebase, infrastructure, and architecture. We identify
-                                exactly what is broken, why it's broken, and what it will take to fix it — before a
-                                single line of code is changed. You receive a full written report.
+                                We don't believe in "rewriting from scratch." We employ a systematic, low-risk approach to stabilizing and evolving mission-critical software.
                             </p>
-                            <ul className="phase-items">
-                                <li>Full codebase security & quality audit</li>
-                                <li>Architecture bottleneck analysis</li>
-                                <li>Infrastructure & deployment review</li>
-                                <li>Written Health Report with findings</li>
-                            </ul>
+                            <a href="/process" className="protocol-explore-btn">
+                                Explore our Process 
+                                <div className="arrow-icon">
+                                    <TrendingUp size={16} />
+                                </div>
+                            </a>
                         </div>
-
-                        <div className="rescue-phase">
-                            <div className="phase-number">02</div>
-                            <div className="phase-icon"><Wrench size={36} strokeWidth={1.5} /></div>
-                            <h3>Triage &amp; Stabilization</h3>
-                            <p>
-                                We stop the bleeding first. Critical server crashes get patched, security holes get
-                                sealed, and proper CI/CD pipelines get established so your team regains confidence
-                                that deployments won't bring the system down.
-                            </p>
-                            <ul className="phase-items">
-                                <li>Emergency crash & security patching</li>
-                                <li>CI/CD pipeline establishment</li>
-                                <li>Database integrity & backup systems</li>
-                                <li>Performance baseline restoration</li>
-                            </ul>
-                        </div>
-
-                        <div className="rescue-phase">
-                            <div className="phase-number">03</div>
-                            <div className="phase-icon"><TrendingUp size={36} strokeWidth={1.5} /></div>
-                            <h3>Modernization Retainer</h3>
-                            <p>
-                                A long-term, systematic refactoring plan using modern stacks — Laravel, Node.js, React,
-                                Flutter — that removes technical debt without pausing business operations. Your product
-                                evolves while staying live.
-                            </p>
-                            <ul className="phase-items">
-                                <li>Systematic legacy code modernization</li>
-                                <li>Performance & scalability upgrades</li>
-                                <li>Zero-downtime migration strategy</li>
-                                <li>New feature development on clean foundation</li>
-                            </ul>
+                        
+                        <div className="protocol-steps">
+                            {/* Step 1 */}
+                            <div className="protocol-step">
+                                <div className="step-number">01</div>
+                                <div className="step-content">
+                                    <h3>Diagnostic</h3>
+                                    <p>
+                                        A forensic deep-dive into your codebase, infrastructure, and architecture. We identify exactly what is broken, why it's broken, and what it will take to fix it — before a single line of code is changed.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            {/* Step 2 */}
+                            <div className="protocol-step">
+                                <div className="step-number">02</div>
+                                <div className="step-content">
+                                    <h3>Triage</h3>
+                                    <p>
+                                        Immediate intervention on critical failure points. We implement stability patterns, automated testing, and CI/CD pipelines to stop the bleeding and restore confidence.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            {/* Step 3 */}
+                            <div className="protocol-step">
+                                <div className="step-number">03</div>
+                                <div className="step-content">
+                                    <h3>Modernization</h3>
+                                    <p>
+                                        Iterative architectural evolution. We transition your system to modern, scalable patterns without downtime or feature freezes, ensuring a future-proof foundation.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </Container>

@@ -187,20 +187,154 @@ h3 {
     margin: 0;
 }
 
-/* CTA Section */
-.cta-section {
+/* New Protocol Section (Methodology) */
+.protocol-section {
+    background: white;
+    padding: 10rem 0;
+}
+
+.protocol-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+    .protocol-grid {
+        flex-direction: row;
+        gap: 8rem;
+    }
+
+    .protocol-sticky {
+        width: 40%;
+        position: sticky;
+        top: 8rem;
+    }
+
+    .protocol-steps {
+        width: 60%;
+    }
+}
+
+.protocol-sticky .accent-label {
+    display: block;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.protocol-sticky h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.protocol-sticky p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.protocol-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.protocol-step {
+    display: flex;
+    gap: 2rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border-light);
+    transition: all 0.5s ease;
+}
+
+.protocol-step:last-child {
+    border-bottom: none;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
     background: var(--secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary);
+    transition: all 0.5s ease;
 }
 
-.cta-block {
+.protocol-step:hover .step-number {
     background: var(--primary);
-    padding: 4rem 2rem;
-    border-radius: 12px;
-    text-align: center;
     color: white;
-    box-shadow: var(--shadow-md);
+    transform: scale(1.05);
 }
 
+.step-content {
+    padding-top: 0.5rem;
+}
+
+.step-content h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    text-align: left;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.step-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.protocol-explore-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.protocol-explore-btn:hover {
+    color: var(--accent);
+}
+
+.protocol-explore-btn .arrow-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.protocol-explore-btn:hover .arrow-icon {
+    border-color: var(--accent);
+    transform: translateX(8px);
+}
+
+/* Original Card Styles (Kept for other sections) */
 .cta-block h2 {
     font-size: 32px;
     max-width: 600px;
