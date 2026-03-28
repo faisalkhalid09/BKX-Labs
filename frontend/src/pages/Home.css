@@ -335,6 +335,68 @@ h3 {
     transform: translateX(8px);
 }
 
+/* Responsive overrides */
+@media (max-width: 1024px) {
+    .protocol-section {
+        padding: 6rem 0;
+    }
+
+    .protocol-grid {
+        gap: 3rem;
+    }
+
+    .protocol-sticky {
+        width: 100%;
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .protocol-steps {
+        width: 100%;
+        gap: 3rem;
+    }
+
+    .protocol-sticky h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .protocol-section {
+        padding: 5rem 0;
+    }
+
+    .protocol-step {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-bottom: 3rem;
+    }
+
+    .step-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+
+    .step-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .step-content p {
+        font-size: 1rem;
+    }
+
+    .protocol-sticky h2 {
+        font-size: 2.5rem;
+    }
+
+    .protocol-sticky p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+}
+
 /* Original Card Styles (Kept for other sections) */
 .cta-block h2 {
     font-size: 32px;

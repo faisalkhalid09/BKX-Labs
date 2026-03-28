@@ -261,14 +261,29 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .pm-intro {
+        padding: 1.5rem;
+    }
+
+    .pm-intro p {
+        font-size: 1rem;
+    }
+
     .step-header {
-        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
     }
 
     .step-number {
         width: 50px;
         height: 50px;
         font-size: 22px;
+    }
+
+    .step-description {
+        font-size: 1rem;
+        text-align: center;
     }
 
     .step-details {
@@ -281,12 +296,11 @@
     }
 
     .payment-milestones {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .payment-milestones {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .milestone {
+        padding: 1.5rem;
     }
 }

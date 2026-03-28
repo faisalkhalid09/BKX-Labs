@@ -189,9 +189,13 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .mission-section {
+        padding: 1.5rem;
+    }
+
     .founder-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
         text-align: center;
     }
 
@@ -204,23 +208,28 @@
         display: none;
     }
 
+    .founder-bio h3 {
+        font-size: 1.75rem;
+    }
+
     .mission-text,
     .founder-description,
     .team-details p,
     .philosophy-text {
-        font-size: 16px;
+        font-size: 1rem;
+        text-align: center;
     }
 
     .team-highlight {
-        font-size: 18px;
+        font-size: 1.1rem;
         padding: 1.5rem;
     }
 
     .philosophy-tagline {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     .about-cta .cta-content h2 {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 }

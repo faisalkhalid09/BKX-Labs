@@ -182,20 +182,39 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .services-intro {
+        padding: 1.5rem;
+    }
+
     .service-header {
         flex-direction: column;
         text-align: center;
+        gap: 1rem;
     }
 
     .service-details-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .service-value {
-        font-size: 16px;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
     }
 
     .tech-tags span {
         font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .service-header h2 {
+        font-size: 1.5rem;
     }
 }

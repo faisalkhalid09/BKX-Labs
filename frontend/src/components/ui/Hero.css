@@ -42,6 +42,12 @@
     text-align: center;
 }
 
+@media (max-width: 1024px) {
+    .hero {
+        padding: 8rem 0 6rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero {
         padding: 7rem 0 5rem;
@@ -49,5 +55,6 @@
 
     .hero-subtitle {
         font-size: 1.1rem;
+        padding: 0 1rem;
     }
 }
