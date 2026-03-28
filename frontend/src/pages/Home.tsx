@@ -7,7 +7,6 @@ import SEO from '../components/ui/SEO';
 import {
     AlertTriangle,
     Search,
-    Wrench,
     TrendingUp,
     CheckCircle,
     FileText,
