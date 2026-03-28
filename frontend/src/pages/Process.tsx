@@ -81,27 +81,27 @@ const Process = () => {
                             <h2>The Diagnostic Audit</h2>
                         </div>
                         <p className="step-description">
-                            We start by deeply understanding your business goals, target users, and technical
-                            requirements. This phase ensures we're aligned before a single line of code is written.
+                            We do not write a single line of remediation code until we understand the full scope.
+                            Our forensic audit maps the codebase, security posture, and architecture before anything changes.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
                                 <h4>What Happens</h4>
                                 <ul>
-                                    <li>In-depth requirements discussion via video call</li>
-                                    <li>Feature breakdown and prioritization</li>
-                                    <li>Timeline and budget estimation</li>
-                                    <li>Technology stack recommendations</li>
+                                    <li>Deep-dive codebase inspection</li>
+                                    <li>Infrastructure & security scanning</li>
+                                    <li>SQL Query & Performance profiling</li>
+                                    <li>Dependency & licensing review</li>
                                 </ul>
                             </div>
                             <div className="detail-column deliverables">
                                 <h4>What You Get</h4>
                                 <ul>
-                                    <li>Software Requirements Specification (SRS) Document</li>
-                                    <li>Project Scope Document</li>
-                                    <li>Initial Wireframes / UI Mockups</li>
-                                    <li>Detailed Project Timeline</li>
-                                    <li>Fixed-price or Milestone-based Quote</li>
+                                    <li>Numerical Code Health Score</li>
+                                    <li>Security Vulnerability List</li>
+                                    <li>Architecture Refactoring Roadmap</li>
+                                    <li>Infrastructure Audit Report</li>
+                                    <li>Fixed-price stabilization quote</li>
                                 </ul>
                             </div>
                         </div>
@@ -127,21 +127,21 @@ const Process = () => {
                             <div className="detail-column">
                                 <h4>What Happens</h4>
                                 <ul>
-                                    <li>Dedicated Project Manager assigned</li>
-                                    <li>Specialized development team assembled</li>
-                                    <li>Project phases and milestones defined</li>
-                                    <li>Communication channels established</li>
-                                    <li>Development environment setup</li>
+                                    <li>Emergency patching of fatal errors</li>
+                                    <li>Closing open security holes</li>
+                                    <li>Fixing broken deployment pipelines</li>
+                                    <li>Establishing system monitoring</li>
+                                    <li>Zero-downtime recovery path</li>
                                 </ul>
                             </div>
                             <div className="detail-column deliverables">
                                 <h4>What You Get</h4>
                                 <ul>
-                                    <li>Team Introduction & Contact Details</li>
-                                    <li>Project Roadmap with Phase Breakdown</li>
-                                    <li>Access to Project Management Dashboard</li>
-                                    <li>Communication Schedule (Weekly Calls)</li>
-                                    <li>Git Repository Access (Optional)</li>
+                                    <li>Production Server Stabilized</li>
+                                    <li>CI/CD Pipelines Fixed & Functional</li>
+                                    <li>Critical Crash Bugs Patched</li>
+                                    <li>Monitoring Dashboard Access</li>
+                                    <li>Verified Data Recovery Report</li>
                                 </ul>
                             </div>
                         </div>
@@ -312,24 +312,19 @@ const Process = () => {
                         </p>
                         <div className="payment-milestones">
                             <div className="milestone">
-                                <div className="milestone-percent">20%</div>
-                                <h4>Initial Deposit</h4>
-                                <p>Upon project kickoff and scope approval</p>
+                                <div className="milestone-percent">1</div>
+                                <h4>Diagnostic Audit</h4>
+                                <p>100% paid upfront before the codebase review begins.</p>
                             </div>
                             <div className="milestone">
-                                <div className="milestone-percent">30%</div>
-                                <h4>Mid-Project</h4>
-                                <p>After completion of core development phases</p>
+                                <div className="milestone-percent">2</div>
+                                <h4>Stabilization</h4>
+                                <p>Fixed-price milestone to stop the bleeding and patch risks.</p>
                             </div>
                             <div className="milestone">
-                                <div className="milestone-percent">30%</div>
-                                <h4>Pre-Delivery</h4>
-                                <p>Upon successful UAT and final review</p>
-                            </div>
-                            <div className="milestone">
-                                <div className="milestone-percent">20%</div>
-                                <h4>Final Release</h4>
-                                <p>After production deployment and handover</p>
+                                <div className="milestone-percent">3</div>
+                                <h4>Modernization</h4>
+                                <p>Flat monthly fee for ongoing refactoring and features.</p>
                             </div>
                         </div>
                         <p className="payment-note">
