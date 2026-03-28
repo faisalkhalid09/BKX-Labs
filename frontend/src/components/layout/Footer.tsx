@@ -17,12 +17,12 @@ const Footer = () => {
                         }}>
                             <img
                                 src="/brand-logo.png"
-                                alt="BKX Labs Logo - Reliable Software Development Phase by Phase"
+                                alt="BKX Labs Logo - Specialized Software Rescue & Engineering"
                                 style={{ height: '45px', display: 'block' }}
                             />
                         </div>
                         <p className="footer-tagline">
-                            Reliable software products, delivered phase by phase
+                            Specialized software rescue & engineering. We fix what's broken.
                         </p>
                     </div>
 

@@ -120,7 +120,7 @@ const CaseStudy = () => {
 
                             {/* The Closer Impact */}
                             <div className="case-section-block">
-                                <h3>The "Closer" Impact</h3>
+                                <h3>The Rescue Impact</h3>
                                 <p>
                                     We didn't just complete the remaining 80% - we optimized the entire system.
                                     Database queries were reduced from 200+ to under 50 per page load. AWS costs
@@ -264,7 +264,7 @@ const CaseStudy = () => {
 
                             {/* The Closer Impact */}
                             <div className="case-section-block">
-                                <h3>The "Closer" Impact</h3>
+                                <h3>The Rescue Impact</h3>
                                 <p>
                                     The transformation was dramatic. Search queries dropped from 10+ seconds to under
                                     100 milliseconds. OCR accuracy improved from 65% to 94% through image preprocessing.
@@ -355,10 +355,10 @@ const CaseStudy = () => {
                         <h2>Have a Stalled Project?</h2>
                         <p>
                             We specialize in rescuing complex codebases and delivering results.
-                            Let's discuss how we can help you reach production.
+                            Book a Rescue Strategy Call to see if your codebase qualifies for our Diagnostic Audit.
                         </p>
                         <Link to="/contact" className="btn btn-primary">
-                            Book a Technical Consultation <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                            Book a Rescue Strategy Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
                         </Link>
                     </div>
                 </Container>

@@ -41,7 +41,7 @@ const Contact = () => {
         "@context": "https://schema.org",
         "@type": "ContactPage",
         "name": "Contact BKX Labs",
-        "description": "Get in touch with BKX Labs for your software development project. We respond within 24 hours.",
+        "description": "Get in touch with BKX Labs to book your Rescue Strategy Call. We specialize in taking over stalled or failing software projects.",
         "mainEntity": {
             "@type": "Organization",
             "name": "BKX Labs",
@@ -52,14 +52,14 @@ const Contact = () => {
     return (
         <div>
             <SEO
-                title="Contact Us - Get Your Free Project Consultation"
-                description="Contact BKX Labs for expert software development services. Book a free technical consultation. We respond within 24 hours. Email: contact@bkxlabs.com"
-                keywords="contact software developer, software development consultation, project quote, BKX Labs contact"
+                title="Contact Us - Book Your Rescue Strategy Call"
+                description="Contact BKX Labs for expert software rescue. Book a complimentary Rescue Strategy Call to see if your codebase qualifies for a Diagnostic Audit."
+                keywords="software rescue, codebase audit, technical debt, project takeover, BKX Labs contact"
                 structuredData={structuredData}
             />
             <Hero
                 title="Contact Us"
-                subtitle="Let's discuss your project and define a clear roadmap"
+                subtitle="Let's diagnose your system and get your project back on track."
             />
 
             <Section>
@@ -115,11 +115,11 @@ const Contact = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="message">Project Brief *</label>
+                                    <label htmlFor="message">How can we help? (e.g., stalled project, tech debt, rescue mission) *</label>
                                     <textarea
                                         id="message"
                                         rows={6}
-                                        {...register('message', { required: 'Please provide a brief description of your project' })}
+                                        {...register('message', { required: 'Please describe your situation' })}
                                         className={errors.message ? 'error' : ''}
                                     />
                                     {errors.message && <span className="error-message">{errors.message.message}</span>}
