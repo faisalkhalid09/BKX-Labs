@@ -43,9 +43,9 @@ const Process = () => {
     return (
         <div>
             <SEO
-                title="The Rescue Protocol | Our Software Development Process"
-                description="Explore BKX Labs' transparent 5-step development workflow: Diagnostic Audit, Triage, and Modernization. Our milestone-based process ensures complete visibility into your project rescue."
-                keywords="software development process, project rescue protocol, agile engineering pakistan, transparent development workflow, milestone payments, technical audit process"
+                title="The Rescue Protocol | High-Stakes Software Recovery Process"
+                description="The auditable 5-step process for taking over failing software, stabilizing codebase risks, and restoring production confidence. Real engineering for real crisis."
+                keywords="software rescue protocol, project recovery process, stable codebase delivery, software triage steps, technical debt remediation process, fix broken software"
                 structuredData={structuredData}
             />
             <Hero

@@ -1,7 +1,7 @@
 @extends('store.layout')
 
-@section('title', 'Digital Engineering Store | AI Models & Automation Scripts')
-@section('description', 'Browse and purchase premium AI models, automation scripts, and expert-grade digital templates from BKX Labs.')
+@section('title', 'Engineering Assets Store | AI & Automation scripts')
+@section('description', 'High-performance AI models, automation scripts, and technical templates for international enterprise engineering.')
 
 @push('styles')
 <style>

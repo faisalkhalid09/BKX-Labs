@@ -37,9 +37,9 @@ const CaseStudy = () => {
     return (
         <div>
             <SEO
-                title="Software Rescue Case Studies | Success Stories & Results"
-                description="Explore real-world software rescue results: Class Moalimy (EdTech rescue, 40% cost reduction), LocaGed (100x faster search). Proven engineering excellence in project recovery."
-                keywords="software rescue case studies, project recovery success stories, edtech development rescue, laravel elasticsearch results, enterprise software portfolio"
+                title="Software Rescue Portfolio | Real Project Recovery Results"
+                description="Forensic audits and rescue execution for international EdTech and Enterprise DMS platforms. See how we stabilized failing codebases and delivered production results."
+                keywords="software rescue portfolio, project recovery success stories, edtech development rescue, laravel elasticsearch results, enterprise software portfolio, fix broken codebase"
                 ogType="article"
                 structuredData={structuredData}
             />
