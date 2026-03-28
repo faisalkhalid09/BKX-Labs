@@ -28,13 +28,13 @@
 }
 
 .logo-img {
-    height: 64px;
+    height: 38px;
     width: auto;
     transition: height 0.3s ease;
 }
 
 .navbar.scrolled .logo-img {
-    height: 52px;
+    height: 32px;
 }
 
 /* Desktop Navigation */
@@ -229,14 +229,14 @@
     }
 
     .logo-img {
-        height: 40px;
+        height: 24px;
     }
 }
 
 /* Ultra-small devices (< 350px) */
 @media (max-width: 350px) {
     .logo-img {
-        height: 32px;
+        height: 22px;
         /* Prevent overlap on tiny screens */
     }
 

@@ -49,8 +49,8 @@ const Process = () => {
                 structuredData={structuredData}
             />
             <Hero
-                title="Our Workflow"
-                subtitle="A transparent, roadmap-driven development process designed for international clients who demand visibility and reliability"
+                title="The Rescue Protocol"
+                subtitle="A structured, auditable process for taking over failing software, stabilizing it, and bringing it to production — with complete visibility at every step."
             />
 
             {/* PM Introduction */}
@@ -60,12 +60,12 @@ const Process = () => {
                         <div className="pm-icon">
                             <UserCheck size={48} strokeWidth={1.5} />
                         </div>
-                        <h2>Your Dedicated Project Manager</h2>
+                        <h2>Every Rescue Has a Lead</h2>
                         <p>
-                            From day one, you'll be assigned a dedicated Project Manager who serves as your
-                            <strong> single point of contact</strong>. They coordinate with our development team,
-                            provide regular updates, and ensure your project stays on track. No chasing multiple
-                            people - just one professional who knows your project inside and out.
+                            The moment you engage BKX Labs, you are assigned a dedicated Lead Engineer and a
+                            <strong> dedicated Project Manager</strong>. The Engineer owns the technical decisions.
+                            The PM owns your communication. You always know who to call, and you always get a
+                            straight answer — not "I'll check with the team."
                         </p>
                     </div>
                 </Container>
@@ -78,7 +78,7 @@ const Process = () => {
                         <div className="step-header">
                             <div className="step-number">1</div>
                             <div className="step-icon"><Search size={32} /></div>
-                            <h2>Discovery & Scope</h2>
+                            <h2>The Diagnostic Audit</h2>
                         </div>
                         <p className="step-description">
                             We start by deeply understanding your business goals, target users, and technical
@@ -116,11 +116,12 @@ const Process = () => {
                         <div className="step-header">
                             <div className="step-number">2</div>
                             <div className="step-icon"><Settings size={32} /></div>
-                            <h2>Project Setup</h2>
+                            <h2>Triage &amp; Emergency Stabilization</h2>
                         </div>
                         <p className="step-description">
-                            Once scope is approved, we assemble your dedicated team and establish the
-                            infrastructure for seamless collaboration and progress tracking.
+                            Informed by the audit findings, the team immediately addresses critical failures:
+                            crashes, security holes, and deployment risks. The goal is to stop active damage
+                            and restore operational confidence — without taking your system offline.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -155,11 +156,12 @@ const Process = () => {
                         <div className="step-header">
                             <div className="step-number">3</div>
                             <div className="step-icon"><Code size={32} /></div>
-                            <h2>Phase-wise Execution</h2>
+                            <h2>Systematic Modernization</h2>
                         </div>
                         <p className="step-description">
-                            Development proceeds in clearly defined phases, each with specific outcomes,
-                            timelines, and deliverables. You see progress at every step - no black boxes.
+                            With stability restored, development proceeds in clearly defined 2-week sprints.
+                            Each sprint has a fixed scope, defined deliverables, and ends with a working demo
+                            you can test. Technical debt is removed systematically — not all at once.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -233,7 +235,7 @@ const Process = () => {
                         <div className="step-header">
                             <div className="step-number">5</div>
                             <div className="step-icon"><Rocket size={32} /></div>
-                            <h2>Delivery & Review</h2>
+                            <h2>Handover & Long-term Retainer</h2>
                         </div>
                         <p className="step-description">
                             final handover includes comprehensive testing, documentation, and deployment

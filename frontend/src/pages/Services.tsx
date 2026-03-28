@@ -2,7 +2,7 @@ import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Link } from 'react-router-dom';
-import { Monitor, Smartphone, Zap, Palette, Headphones, ArrowRight } from 'lucide-react';
+import { Search, Wrench, TrendingUp, Hammer, Headphones, ArrowRight } from 'lucide-react';
 import SEO from '../components/ui/SEO';
 import './Services.css';
 
@@ -13,28 +13,28 @@ const Services = () => {
         "itemListElement": [
             {
                 "@type": "Service",
-                "name": "Web Application Development",
-                "description": "Custom web applications that automate workflows and scale with your business"
+                "name": "Diagnostic Codebase Audit",
+                "description": "A forensic review of your existing software, security posture, and architecture to identify exactly what's broken and why."
             },
             {
                 "@type": "Service",
-                "name": "Mobile Development",
-                "description": "Native-quality mobile applications for iOS and Android"
+                "name": "Triage & Stabilization",
+                "description": "Emergency patching of crashes, security holes, and deployment pipelines to restore system stability."
             },
             {
                 "@type": "Service",
-                "name": "MVP Development",
-                "description": "Rapid product validation for investors and market testing"
+                "name": "Modernization Retainer",
+                "description": "Systematic long-term refactoring and re-engineering using modern stacks without pausing business operations."
             },
             {
                 "@type": "Service",
-                "name": "UI/UX Design",
-                "description": "User-centered design that converts visitors into customers"
+                "name": "Greenfield Development",
+                "description": "Net-new application development for clients starting from scratch who want it done right the first time."
             },
             {
                 "@type": "Service",
-                "name": "Ongoing Support & Maintenance",
-                "description": "Comprehensive maintenance packages for production applications"
+                "name": "Ongoing Engineering Support",
+                "description": "Dedicated engineering bandwidth on retainer for product teams that need consistent, reliable development support."
             }
         ]
     };
@@ -42,14 +42,14 @@ const Services = () => {
     return (
         <div>
             <SEO
-                title="Software Development Services - Web, Mobile, MVP & UI/UX"
-                description="Comprehensive software development services: Web applications, mobile apps, MVP development, UI/UX design, and ongoing support. Expert Laravel, React, Node.js, and Flutter development with transparent delivery."
-                keywords="web development services, mobile app development, MVP development, UI/UX design, Laravel development, React development, Flutter, software consulting, custom software"
+                title="Software Rescue Services - Audit, Stabilize, Modernize"
+                description="BKX Labs offers a complete software rescue funnel: Diagnostic Audits, Emergency Triage & Stabilization, and long-term Modernization Retainers. We also build greenfield applications and provide ongoing engineering support."
+                keywords="codebase audit, software triage, technical debt removal, project rescue services, emergency stabilization, legacy modernization, Laravel, React, Flutter, Node.js"
                 structuredData={structuredData}
             />
             <Hero
                 title="Our Services"
-                subtitle="Enterprise-grade software solutions delivered through a transparent, phase-wise process with documented milestones"
+                subtitle="We specialize in taking broken, stalled, or over-engineered systems and turning them into stable, scalable products. Every engagement starts with a diagnosis."
             />
 
             {/* Intro */}
@@ -57,68 +57,194 @@ const Services = () => {
                 <Container>
                     <div className="services-intro">
                         <p>
-                            We combine technical excellence with structured project management to deliver
-                            software that scales. Every engagement follows our proven roadmap methodology -
-                            complete with documentation, staging environments, and regular demos.
+                            Whether your project was abandoned by a previous team, is drowning in technical debt,
+                            or simply needs to be built correctly from the start — we have a structured service
+                            pathway designed for your exact situation. We don't guess; we follow the evidence.
                         </p>
                     </div>
                 </Container>
             </Section>
 
-            {/* Service 1: Web Applications */}
+            {/* Service 1: Diagnostic Audit */}
             <Section className="service-section">
                 <Container>
                     <div className="service-block">
                         <div className="service-header">
                             <div className="service-icon-wrapper">
-                                <Monitor size={40} strokeWidth={1.5} />
+                                <Search size={40} strokeWidth={1.5} />
                             </div>
-                            <h2>Web Applications</h2>
+                            <h2>Phase 1: Diagnostic Codebase Audit</h2>
                         </div>
 
                         <p className="service-value">
-                            Custom web applications that automate manual workflows, centralize data, and give
-                            your team the tools they need to work smarter. From internal dashboards to
-                            customer-facing platforms, we engineer solutions that scale with your business.
+                            Before a single line of code is changed, we need to understand the full picture. Our
+                            audit team conducts a forensic review of your codebase, infrastructure, and security
+                            posture — producing a written report that tells you exactly what is broken, why, and
+                            what it will take to fix it.
                         </p>
 
                         <div className="service-details-grid">
                             <div className="service-detail">
-                                <h4>What We Build</h4>
+                                <h4>What We Examine</h4>
                                 <ul>
-                                    <li>Admin dashboards & analytics platforms</li>
-                                    <li>Customer portals & self-service systems</li>
-                                    <li>Internal workflow automation tools</li>
-                                    <li>SaaS products & multi-tenant applications</li>
-                                    <li>API integrations & third-party connectors</li>
+                                    <li>Code quality, structure & architectural patterns</li>
+                                    <li>Security vulnerabilities & exposed attack surfaces</li>
+                                    <li>Database schema design & query performance</li>
+                                    <li>Deployment pipelines & server configuration</li>
+                                    <li>Third-party dependency risks & version drift</li>
+                                </ul>
+                            </div>
+
+                            <div className="service-detail">
+                                <h4>Audit Tools & Methods</h4>
+                                <div className="tech-tags">
+                                    <span>Static Analysis</span>
+                                    <span>OWASP Review</span>
+                                    <span>Dependency Scanning</span>
+                                    <span>Load Testing</span>
+                                    <span>DB Query Profiling</span>
+                                    <span>CI/CD Inspection</span>
+                                    <span>Architecture Mapping</span>
+                                    <span>Log Analysis</span>
+                                </div>
+                            </div>
+
+                            <div className="service-detail">
+                                <h4>What You Receive</h4>
+                                <ul>
+                                    <li>Full written Technical Health Report</li>
+                                    <li>Severity-ranked list of issues (Critical / High / Medium)</li>
+                                    <li>Remediation roadmap with time estimates</li>
+                                    <li>Architecture diagram of current state</li>
+                                </ul>
+                            </div>
+
+                            <div className="service-detail best-for">
+                                <h4>Best For</h4>
+                                <p>
+                                    Any business that has inherited a codebase, experienced a failed agency transition,
+                                    or suspects their technical debt has become a strategic liability. The audit
+                                    stands alone — no obligation to proceed further.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Service 2: Triage & Stabilization */}
+            <Section className="service-section alt">
+                <Container>
+                    <div className="service-block">
+                        <div className="service-header">
+                            <div className="service-icon-wrapper">
+                                <Wrench size={40} strokeWidth={1.5} />
+                            </div>
+                            <h2>Phase 2: Triage &amp; Stabilization</h2>
+                        </div>
+
+                        <p className="service-value">
+                            We stop the bleeding. Informed by the diagnostic audit, our engineers systematically
+                            patch critical crashes, seal security vulnerabilities, and establish the foundational
+                            engineering practices — CI/CD, monitoring, proper deployment — that your system
+                            should have had from day one.
+                        </p>
+
+                        <div className="service-details-grid">
+                            <div className="service-detail">
+                                <h4>What We Fix</h4>
+                                <ul>
+                                    <li>Server crashes, memory leaks & fatal errors</li>
+                                    <li>Security holes: SQL injection, XSS, auth bypasses</li>
+                                    <li>Broken or absent CI/CD deployment pipelines</li>
+                                    <li>Data integrity issues & corrupted state</li>
+                                    <li>Performance bottlenecks causing timeouts</li>
                                 </ul>
                             </div>
 
                             <div className="service-detail">
                                 <h4>Technology Stack</h4>
                                 <div className="tech-tags">
+                                    <span>Laravel</span>
+                                    <span>Node.js</span>
+                                    <span>React</span>
+                                    <span>PostgreSQL</span>
+                                    <span>MySQL</span>
+                                    <span>Redis</span>
+                                    <span>Docker</span>
+                                    <span>GitHub Actions</span>
+                                    <span>AWS</span>
+                                    <span>Nginx</span>
+                                    <span>Laravel Sanctum</span>
+                                    <span>Elasticsearch</span>
+                                </div>
+                            </div>
+
+                            <div className="service-detail">
+                                <h4>Our Approach</h4>
+                                <p>
+                                    Stabilization is performed live — we do not take your existing system offline.
+                                    All changes go through a staging environment for validation before production
+                                    deployment. You are notified and approve every critical change before it ships.
+                                </p>
+                            </div>
+
+                            <div className="service-detail best-for">
+                                <h4>Best For</h4>
+                                <p>
+                                    Teams in crisis mode — systems crashing in production, customer data at risk,
+                                    or a product that cannot be shipped because it's too unstable. We treat this
+                                    as an emergency and scope accordingly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Service 3: Modernization Retainer */}
+            <Section className="service-section">
+                <Container>
+                    <div className="service-block">
+                        <div className="service-header">
+                            <div className="service-icon-wrapper">
+                                <TrendingUp size={40} strokeWidth={1.5} />
+                            </div>
+                            <h2>Phase 3: Modernization Retainer</h2>
+                        </div>
+
+                        <p className="service-value">
+                            Stabilization buys you time. Modernization buys you the future. Our retainer model
+                            provides dedicated engineering bandwidth to systematically remove technical debt,
+                            refactor critical systems, and build the new features your business needs — all
+                            without pausing operations.
+                        </p>
+
+                        <div className="service-details-grid">
+                            <div className="service-detail">
+                                <h4>What We Deliver</h4>
+                                <ul>
+                                    <li>Systematic legacy-to-modern stack migration</li>
+                                    <li>New feature development on clean architecture</li>
+                                    <li>Database restructuring & performance tuning</li>
+                                    <li>Mobile app development (Flutter / React Native)</li>
+                                    <li>API redesign & third-party integrations</li>
+                                </ul>
+                            </div>
+
+                            <div className="service-detail">
+                                <h4>Retainer Stack</h4>
+                                <div className="tech-tags">
+                                    <span>Laravel</span>
+                                    <span>Node.js</span>
                                     <span>React</span>
                                     <span>Next.js</span>
                                     <span>Vue.js</span>
-                                    <span>Angular</span>
+                                    <span>Flutter</span>
                                     <span>TypeScript</span>
-                                    <span>Node.js</span>
-                                    <span>Express.js</span>
-                                    <span>Laravel</span>
-                                    <span>PHP</span>
-                                    <span>Python</span>
-                                    <span>Django</span>
-                                    <span>FastAPI</span>
-                                    <span>Ruby on Rails</span>
-                                    <span>ASP.NET Core</span>
-                                    <span>Java Spring Boot</span>
-                                    <span>PostgreSQL</span>
-                                    <span>MySQL</span>
-                                    <span>MongoDB</span>
-                                    <span>Redis</span>
                                     <span>AWS</span>
-                                    <span>Google Cloud</span>
-                                    <span>Azure</span>
+                                    <span>PostgreSQL</span>
+                                    <span>Redis</span>
                                     <span>Docker</span>
                                     <span>Kubernetes</span>
                                 </div>
@@ -127,17 +253,18 @@ const Services = () => {
                             <div className="service-detail">
                                 <h4>Our Approach</h4>
                                 <p>
-                                    Every web application follows our phase-wise delivery model. You receive
-                                    documented requirements, access to a staging environment for preview,
-                                    and weekly progress demos before final deployment.
+                                    Retainers operate in 2-week sprints with a fixed deliverable scope per sprint.
+                                    You receive a weekly update, a working demo at the end of each sprint, and full
+                                    transparency into the backlog. Cancel with 30 days' notice — no lock-in.
                                 </p>
                             </div>
 
                             <div className="service-detail best-for">
                                 <h4>Best For</h4>
                                 <p>
-                                    Growing businesses looking to digitize operations, SaaS founders building
-                                    their first product, and enterprises needing custom internal tools.
+                                    Businesses that have stabilized and are ready to invest in their product's
+                                    long-term health. Also ideal for startups that want a senior engineering team
+                                    without the overhead of full-time hires.
                                 </p>
                             </div>
                         </div>
@@ -145,105 +272,32 @@ const Services = () => {
                 </Container>
             </Section>
 
-            {/* Service 2: Mobile Development */}
+            {/* Service 4: Greenfield Development */}
             <Section className="service-section alt">
                 <Container>
                     <div className="service-block">
                         <div className="service-header">
                             <div className="service-icon-wrapper">
-                                <Smartphone size={40} strokeWidth={1.5} />
+                                <Hammer size={40} strokeWidth={1.5} />
                             </div>
-                            <h2>Mobile Development</h2>
+                            <h2>Greenfield Development</h2>
                         </div>
 
                         <p className="service-value">
-                            Native-quality mobile applications that deliver seamless user experiences across
-                            devices. We build API-driven, performance-optimized apps that integrate smoothly
-                            with your existing systems and scale to millions of users.
+                            Not everything needs rescuing. If you're starting from scratch, we build it correctly
+                            the first time — with the infrastructure, security, and architectural decisions that
+                            prevent the problems we spend so much time fixing for other clients.
                         </p>
 
                         <div className="service-details-grid">
                             <div className="service-detail">
                                 <h4>What We Build</h4>
                                 <ul>
-                                    <li>Cross-platform apps (iOS & Android)</li>
-                                    <li>Native Android applications</li>
-                                    <li>Consumer-facing mobile products</li>
-                                    <li>Enterprise mobile solutions</li>
-                                    <li>Real-time & offline-capable apps</li>
-                                </ul>
-                            </div>
-
-                            <div className="service-detail">
-                                <h4>Technology Stack</h4>
-                                <div className="tech-tags">
-                                    <span>Flutter</span>
-                                    <span>Dart</span>
-                                    <span>React Native</span>
-                                    <span>Kotlin</span>
-                                    <span>Java</span>
-                                    <span>Swift</span>
-                                    <span>Objective-C</span>
-                                    <span>Expo</span>
-                                    <span>Firebase</span>
-                                    <span>SQLite</span>
-                                    <span>Realm</span>
-                                    <span>REST APIs</span>
-                                    <span>GraphQL</span>
-                                    <span>WebSockets</span>
-                                    <span>Push Notifications</span>
-                                    <span>App Store Connect</span>
-                                    <span>Google Play Console</span>
-                                </div>
-                            </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
-                                    Mobile projects include wireframes before development, beta builds for
-                                    testing, and full Play Store / App Store submission support. Every
-                                    milestone includes a working build you can install and test.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Best For</h4>
-                                <p>
-                                    Startups launching their first mobile product, businesses extending
-                                    web platforms to mobile, and companies needing field-service apps.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </Container>
-            </Section>
-
-            {/* Service 3: MVP Development */}
-            <Section className="service-section">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Zap size={40} strokeWidth={1.5} />
-                            </div>
-                            <h2>MVP Development</h2>
-                        </div>
-
-                        <p className="service-value">
-                            Transform your idea into a functional product - fast. We specialize in building
-                            Minimum Viable Products that are lean enough to validate your concept, yet
-                            robust enough to scale when you're ready.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Build</h4>
-                                <ul>
-                                    <li>Investor-ready product demos</li>
-                                    <li>Market validation prototypes</li>
-                                    <li>Core feature implementations</li>
-                                    <li>Scalable architecture foundations</li>
-                                    <li>User feedback collection systems</li>
+                                    <li>SaaS products & multi-tenant web applications</li>
+                                    <li>Cross-platform mobile apps (iOS & Android)</li>
+                                    <li>Internal workflow automation & admin dashboards</li>
+                                    <li>Customer-facing portals & self-service platforms</li>
+                                    <li>MVP products for investor validation</li>
                                 </ul>
                             </div>
 
@@ -253,111 +307,32 @@ const Services = () => {
                                     <span>React</span>
                                     <span>Next.js</span>
                                     <span>Vue.js</span>
+                                    <span>TypeScript</span>
                                     <span>Node.js</span>
-                                    <span>Express.js</span>
                                     <span>Laravel</span>
                                     <span>Python</span>
-                                    <span>Django</span>
-                                    <span>Firebase</span>
-                                    <span>Supabase</span>
+                                    <span>Flutter</span>
                                     <span>PostgreSQL</span>
-                                    <span>MongoDB</span>
-                                    <span>Vercel</span>
-                                    <span>Netlify</span>
-                                    <span>Railway</span>
-                                    <span>Stripe</span>
-                                    <span>PayPal</span>
-                                    <span>Twilio</span>
-                                    <span>SendGrid</span>
+                                    <span>Redis</span>
+                                    <span>AWS</span>
+                                    <span>Docker</span>
                                 </div>
                             </div>
 
                             <div className="service-detail">
                                 <h4>Our Approach</h4>
                                 <p>
-                                    MVP projects follow an accelerated timeline with weekly deliverables.
-                                    We focus on core features first, document everything for future
-                                    development, and build with scale in mind — not throwaway code.
+                                    All greenfield projects begin with a documented SRS and architecture review
+                                    before any code is written. Each phase delivers a working, testable build.
+                                    You pay per milestone, not per month.
                                 </p>
                             </div>
 
                             <div className="service-detail best-for">
                                 <h4>Best For</h4>
                                 <p>
-                                    Early-stage startups preparing for investor pitches, entrepreneurs
-                                    validating market demand, and innovators testing new product concepts.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </Container>
-            </Section>
-
-            {/* Service 4: UI/UX Design */}
-            <Section className="service-section alt">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Palette size={40} strokeWidth={1.5} />
-                            </div>
-                            <h2>UI/UX Design</h2>
-                        </div>
-
-                        <p className="service-value">
-                            User-centered design that converts visitors into customers. We create interfaces
-                            that are intuitive, visually compelling, and optimized for the actions that
-                            matter most to your business.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Deliver</h4>
-                                <ul>
-                                    <li>User research & persona development</li>
-                                    <li>Information architecture</li>
-                                    <li>Wireframes & interactive prototypes</li>
-                                    <li>High-fidelity UI designs</li>
-                                    <li>Design systems & component libraries</li>
-                                </ul>
-                            </div>
-
-                            <div className="service-detail">
-                                <h4>Tools & Methods</h4>
-                                <div className="tech-tags">
-                                    <span>Figma</span>
-                                    <span>Adobe XD</span>
-                                    <span>Sketch</span>
-                                    <span>Adobe Photoshop</span>
-                                    <span>Adobe Illustrator</span>
-                                    <span>InVision</span>
-                                    <span>Zeplin</span>
-                                    <span>Principle</span>
-                                    <span>Framer</span>
-                                    <span>Prototyping</span>
-                                    <span>Wireframing</span>
-                                    <span>User Testing</span>
-                                    <span>A/B Testing</span>
-                                    <span>Design Systems</span>
-                                    <span>Responsive Design</span>
-                                    <span>Accessibility (WCAG)</span>
-                                </div>
-                            </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
-                                    Design is delivered in phases: research → wireframes → visual design →
-                                    prototype. Each phase includes client review and sign-off before
-                                    proceeding, ensuring alignment every step of the way.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Best For</h4>
-                                <p>
-                                    Businesses redesigning existing products, startups needing investor-ready
-                                    mockups, and teams seeking a cohesive design language across platforms.
+                                    Startups building their first product, enterprises commissioning internal tools,
+                                    and founders who have been burned before and want it done right.
                                 </p>
                             </div>
                         </div>
@@ -373,24 +348,24 @@ const Services = () => {
                             <div className="service-icon-wrapper">
                                 <Headphones size={40} strokeWidth={1.5} />
                             </div>
-                            <h2>Ongoing Support & Maintenance</h2>
+                            <h2>Ongoing Engineering Support</h2>
                         </div>
 
                         <p className="service-value">
-                            Your software is an asset that needs care. Our maintenance packages ensure
-                            your applications stay secure, performant, and aligned with evolving business
-                            needs - without the overhead of a full-time engineering team.
+                            For product teams that need consistent, reliable engineering bandwidth without the
+                            cost of full-time hires. We integrate with your existing processes, attend your
+                            standups, and deliver reliably — sprint after sprint.
                         </p>
 
                         <div className="service-details-grid">
                             <div className="service-detail">
                                 <h4>What's Included</h4>
                                 <ul>
-                                    <li>Bug fixes & issue resolution</li>
-                                    <li>Security patches & updates</li>
-                                    <li>Performance monitoring & optimization</li>
-                                    <li>Feature enhancements & iterations</li>
-                                    <li>Database maintenance & backups</li>
+                                    <li>Dedicated engineering hours per month</li>
+                                    <li>Bug triage, fixes & production monitoring</li>
+                                    <li>Security patches & dependency updates</li>
+                                    <li>Feature enhancements & product iterations</li>
+                                    <li>Proactive performance optimization</li>
                                 </ul>
                             </div>
 
@@ -398,30 +373,43 @@ const Services = () => {
                                 <h4>Support Models</h4>
                                 <div className="tech-tags">
                                     <span>Monthly Retainer</span>
-                                    <span>Hourly Packages</span>
-                                    <span>Priority Response</span>
+                                    <span>Dedicated Squad</span>
+                                    <span>Priority SLA</span>
                                     <span>24/7 Monitoring</span>
-                                    <span>Dedicated Team</span>
+                                    <span>Sprint-based</span>
                                 </div>
                             </div>
 
                             <div className="service-detail">
                                 <h4>Our Approach</h4>
                                 <p>
-                                    Support engagements include a dedicated point of contact, documented
-                                    issue tracking, and regular health reports. We proactively identify
-                                    issues before they impact your users.
+                                    A dedicated Lead Engineer and PM own your engagement. Weekly health reports,
+                                    transparent issue tracking, and regular proactive recommendations — not just
+                                    reactive firefighting.
                                 </p>
                             </div>
 
                             <div className="service-detail best-for">
                                 <h4>Best For</h4>
                                 <p>
-                                    Businesses with live applications needing ongoing care, companies without
-                                    in-house dev teams, and products requiring regular feature updates.
+                                    Product companies with live applications, funded startups scaling their teams,
+                                    and enterprises whose internal teams need specialist augmentation.
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Also offer greenfield for Context */}
+            <Section>
+                <Container>
+                    <div className="services-intro">
+                        <p>
+                            Not sure which service fits your situation? Every engagement starts with a free
+                            discovery call where we assess your project and recommend the right starting point.
+                            No sales pitch — just an honest assessment.
+                        </p>
                     </div>
                 </Container>
             </Section>
@@ -430,13 +418,13 @@ const Services = () => {
             <Section className="services-cta">
                 <Container>
                     <div className="cta-content">
-                        <h2>Ready to Build Something Great?</h2>
+                        <h2>Let's Fix What's Broken.</h2>
                         <p>
-                            Every project starts with a free discovery call. Let's discuss your
-                            requirements and create a roadmap tailored to your goals.
+                            Start with a free Technical Health Check. You'll walk away with a clear picture of
+                            your system's state — no strings attached.
                         </p>
                         <Link to="/contact" className="btn btn-primary">
-                            Book a Discovery Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                            Request a Free Health Check <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
                         </Link>
                     </div>
                 </Container>

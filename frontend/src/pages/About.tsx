@@ -33,7 +33,7 @@ const About = () => {
             />
             <Hero
                 title="About Us"
-                subtitle="Building enterprise-grade software through transparency and trust"
+                subtitle="The specialized engineering team businesses call when their software is failing and they need it fixed."
             />
 
             {/* Section 1: The Mission */}
@@ -45,14 +45,14 @@ const About = () => {
                         </div>
                         <h2>Our Mission</h2>
                         <p className="mission-text">
-                            We started BKX Labs to eliminate the "black box" of software development. Our mission is to
-                            provide international clients with enterprise-grade software through a transparent,
-                            roadmap-driven process that respects your budget and timeline.
+                            BKX Labs was built to solve one of the most common — and most costly — problems in the software industry:
+                            projects that stall, agencies that disappear, and codebases that become liabilities instead of assets.
+                            Our mission is to be the team that businesses can call when everything else has failed.
                         </p>
                         <p className="mission-text">
-                            Too many businesses have been burned by agencies that overpromise and underdeliver.
-                            We believe you deserve complete visibility into every phase of your project - from
-                            the first line of code to final deployment.
+                            We combine forensic-level technical auditing with pragmatic, production-focused engineering.
+                            We don't rebuild for the sake of rebuilding — we stabilize what can be saved, replace what can't,
+                            and modernize everything systematically so your business never has to be in this position again.
                         </p>
                     </div>
                 </Container>
@@ -114,19 +114,20 @@ const About = () => {
                         </div>
                         <h2>Our Team</h2>
                         <p className="team-highlight">
-                            A curated collective of 20+ specialists, hand-picked for their technical
-                            excellence and communication skills.
+                            A 25-person team of specialists in software rescue, infrastructure engineering, and
+                            full-stack development — hand-picked for their technical depth and crisis-management experience.
                         </p>
                         <div className="team-details">
                             <p>
-                                Our virtual team consists of specialized Frontend and Backend Developers,
-                                UI/UX Designers, and dedicated Project Managers — each vetted for their
-                                expertise and ability to work seamlessly across time zones.
+                                Our team consists of Lead Engineers who specialize in inheriting broken codebases,
+                                Security Specialists who audit and patch vulnerabilities, DevOps Engineers who establish
+                                proper CI/CD pipelines, and Project Managers who translate technical reality into
+                                clear business communication.
                             </p>
                             <p>
-                                While our team operates virtually, every member follows a rigorous internal
-                                quality standard personally vetted by our founder. This ensures consistent
-                                delivery, clear communication, and enterprise-level code quality on every project.
+                                Every team member has been personally evaluated for both technical skill and
+                                the ability to work calmly under pressure. Rescue work is high-stakes — the team
+                                we put on your project has done this before.
                             </p>
                         </div>
                     </div>
@@ -141,15 +142,16 @@ const About = () => {
                             <Eye size={48} strokeWidth={1.5} />
                         </div>
                         <h2>Our Philosophy</h2>
-                        <p className="philosophy-tagline">Visibility over Guesses</p>
+                        <p className="philosophy-tagline">Diagnose Before You Prescribe</p>
                         <p className="philosophy-text">
-                            We believe you should never be left wondering about the status of your project.
-                            Our transparency-first approach means you get regular updates, documented
-                            milestones, and complete access to project progress at every stage.
+                            Every failed software project we've ever seen was the result of someone skipping
+                            the diagnosis and jumping straight to the solution. We never do that. Every engagement
+                            begins with understanding the problem completely before proposing how to solve it.
                         </p>
                         <p className="philosophy-text">
-                            No surprises. No hidden costs. Just clear communication and reliable delivery -
-                            exactly what you'd expect from a true technology partner.
+                            This means you never get a one-size-fits-all approach. You get a plan built
+                            specifically for your codebase, your constraints, and your business goals —
+                            with full transparency every step of the way.
                         </p>
                     </div>
                 </Container>

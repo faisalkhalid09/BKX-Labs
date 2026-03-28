@@ -13,13 +13,17 @@
     margin-right: auto;
 }
 
-/* Advantage Section (Cards) */
+/* Problem Section */
+.problem-section {
+    background: var(--secondary);
+}
+
+/* Card icon & text */
 .card-icon-wrapper {
     margin-bottom: 1.5rem;
     color: var(--accent);
     display: flex;
     justify-content: center;
-    /* Centered icon */
 }
 
 .card-text {
@@ -27,70 +31,94 @@
     font-size: 16px;
     line-height: 1.6;
     text-align: center;
-    /* Centered text */
 }
 
 h3 {
     color: var(--primary-dark);
     text-align: center;
-    /* Centered heading */
 }
 
-/* Technical Depth Section */
-.tech-section {
-    background: var(--secondary);
-}
-
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.tech-item {
+/* Rescue Phases Section */
+.rescue-section {
     background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
+}
+
+.rescue-phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.rescue-phase {
+    background: var(--secondary);
+    border-radius: 12px;
+    padding: 2rem;
     border: 1px solid var(--border-light);
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.tech-item:hover {
-    transform: translateY(-4px);
+.rescue-phase:hover {
     box-shadow: var(--shadow-md);
-    border-color: var(--accent);
+    transform: translateY(-4px);
 }
 
-.tech-icon {
-    color: var(--primary);
-}
-
-.tech-item:hover .tech-icon {
-    color: var(--accent);
-}
-
-.tech-item span {
-    font-weight: 600;
-    color: var(--text-dark);
+.phase-number {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--border-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
     font-family: var(--font-heading);
 }
 
-/* Services Section */
-.services-section {
-    background: white;
+.phase-icon {
+    color: var(--accent);
+    margin-bottom: 1rem;
 }
 
-/* Guarantee Section */
-/* Guarantee Section */
+.rescue-phase h3 {
+    text-align: left;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    font-size: 20px;
+}
+
+.rescue-phase p {
+    color: var(--text-gray);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.phase-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.phase-items li {
+    color: var(--text-gray);
+    font-size: 14px;
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.5;
+}
+
+.phase-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Guarantee Section — flat, no gradient */
 .guarantee-section {
-    background: var(--primary-gradient);
+    background: var(--primary);
     color: white;
 }
 
@@ -128,11 +156,10 @@ h3 {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    /* Glassmorphism Lite */
+    background: rgba(255, 255, 255, 0.07);
     padding: 2.5rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .g-point {
@@ -178,31 +205,28 @@ h3 {
     font-size: 32px;
     max-width: 600px;
     margin: 0 auto 2rem auto;
+    color: white;
 }
 
 /* Responsive */
-/* Responsive */
-@media (max-width: 768px) {
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
+@media (max-width: 900px) {
+    .rescue-phases {
+        grid-template-columns: 1fr;
     }
+}
 
+@media (max-width: 768px) {
     .cta-block h2 {
         font-size: 24px;
     }
 }
 
 @media (max-width: 480px) {
-    .tech-grid {
-        grid-template-columns: 1fr;
-    }
-
     .cta-block {
         padding: 2.5rem 1.5rem;
     }
 }
 
-/* Ultra-small devices (< 350px) */
 @media (max-width: 350px) {
     .guarantee-points {
         padding: 1.5rem 1rem;
