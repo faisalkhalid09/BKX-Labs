@@ -191,6 +191,7 @@ h3 {
 .protocol-section {
     background: white;
     padding: 10rem 0;
+    overflow: visible !important;
 }
 
 .protocol-grid {
