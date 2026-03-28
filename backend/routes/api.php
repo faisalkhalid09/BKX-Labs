@@ -13,6 +13,8 @@ Route::get('/test', function () {
     ]);
 });
 
+Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track']);
+
 Route::post('/contact', [ContactController::class, 'submit']);
 // Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 

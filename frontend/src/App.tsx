@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -12,8 +13,15 @@ import PdfViewer from './pages/PdfViewer';
 import RezgoDemo from './pages/RezgoDemo';
 
 import ScrollToTop from './components/ui/ScrollToTop';
+import { trackPageView } from './api/analytics';
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
+
   return (
     <>
       <ScrollToTop />
