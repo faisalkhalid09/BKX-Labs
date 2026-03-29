@@ -57,7 +57,11 @@ try {
     $channel->setType('web_hook');
     $channel->setAddress($webhookUrl);
     $channel->setToken($webhookToken);
-    $channel->setExpiration(time() + (30 * 24 * 60 * 60) * 1000); 
+    
+    // Google expects expiration in milliseconds since epoch.
+    // 30 days = 30 * 24 * 60 * 60 * 1000 milliseconds
+    $expirationMs = (time() + (30 * 24 * 60 * 60)) * 1000;
+    $channel->setExpiration($expirationMs); 
 
     $response = $service->events->watch($calendarId, $channel);
 
