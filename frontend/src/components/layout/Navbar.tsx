@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import './Navbar.css';
@@ -7,6 +7,8 @@ import './Navbar.css';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isContactMenuOpen, setIsContactMenuOpen] = useState(false);
+    const contactMenuRef = useRef<HTMLLIElement | null>(null);
     const location = useLocation();
     
     // Derive store URL from environment variable or API URL
@@ -15,7 +17,21 @@ const Navbar = () => {
     // Close menu when route changes
     useEffect(() => {
         setIsOpen(false);
+        setIsContactMenuOpen(false);
     }, [location]);
+
+    // Close desktop contact dropdown when clicking elsewhere.
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!contactMenuRef.current) return;
+            if (!contactMenuRef.current.contains(event.target as Node)) {
+                setIsContactMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     // Handle scroll for glass effect with hysteresis to prevent shaking
     useEffect(() => {
@@ -61,8 +77,27 @@ const Navbar = () => {
                                     Store
                                 </a>
                             </li>
-                            <li><Link to="/schedule">Schedule Call</Link></li>
-                            <li><Link to="/contact" className="nav-cta">Contact</Link></li>
+                            <li
+                                ref={contactMenuRef}
+                                className="contact-dropdown"
+                                onMouseEnter={() => setIsContactMenuOpen(true)}
+                                onMouseLeave={() => setIsContactMenuOpen(false)}
+                            >
+                                <button
+                                    type="button"
+                                    className="nav-cta nav-contact-trigger"
+                                    aria-expanded={isContactMenuOpen}
+                                    aria-haspopup="true"
+                                    onClick={() => setIsContactMenuOpen((prev) => !prev)}
+                                >
+                                    Contact Us
+                                </button>
+
+                                <div className={`contact-dropdown-menu ${isContactMenuOpen ? 'open' : ''}`}>
+                                    <Link to="/schedule" className="contact-dropdown-option">Schedule a Call</Link>
+                                    <Link to="/contact" className="contact-dropdown-option secondary">Contact Page</Link>
+                                </div>
+                            </li>
                         </ul>
                     )}
 
@@ -96,7 +131,7 @@ const Navbar = () => {
                                         Store
                                     </a>
                                 </li>
-                                <li><Link to="/schedule" className="btn btn-secondary w-full">Schedule Call</Link></li>
+                                <li><Link to="/schedule" className="btn btn-secondary w-full">Schedule a Call</Link></li>
                                 <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
                             </>
                         )}
