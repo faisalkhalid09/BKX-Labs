@@ -89,7 +89,7 @@ const BookingPage: React.FC = () => {
   const availableDates = Object.keys(slotsData);
 
   return (
-    <div className="booking-container">
+    <div id="bkx-booking-portal" className="booking-container">
       <div className="booking-header">
         <h1>Schedule a Strategy Session</h1>
         <p>Pick a time that works for you. All meetings include a Google Meet link sent to your email.</p>
