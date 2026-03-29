@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MeetingResource\Pages;
 use App\Models\Lead;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,38 +29,37 @@ class MeetingResource extends Resource
 
     protected static ?string $slug = 'meetings';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Attendee Information')
-                    ->schema([
-                        Forms\Components\TextInput::make('first_name')
-                            ->required(),
-                        Forms\Components\TextInput::make('last_name')
-                            ->required(),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required(),
-                    ])->columns(2),
-                
-                Forms\Components\Section::make('Meeting Details')
-                    ->schema([
-                        Forms\Components\DateTimePicker::make('meeting_time')
-                            ->required(),
-                        Forms\Components\TextInput::make('google_event_id')
-                            ->label('Google Event ID')
-                            ->disabled(),
-                    ])->columns(2),
+        return $schema->components([
+            \Filament\Schemas\Components\Section::make('Attendee Information')
+                ->schema([
+                    \Filament\Forms\Components\TextInput::make('first_name')
+                        ->required(),
+                    \Filament\Forms\Components\TextInput::make('last_name')
+                        ->required(),
+                    \Filament\Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->required(),
+                ])->columns(2),
+            
+            \Filament\Schemas\Components\Section::make('Meeting Details')
+                ->schema([
+                    \Filament\Forms\Components\DateTimePicker::make('meeting_time')
+                        ->required(),
+                    \Filament\Forms\Components\TextInput::make('google_event_id')
+                        ->label('Google Event ID')
+                        ->disabled(),
+                ])->columns(2),
 
-                Forms\Components\Section::make('Project & Codebase State')
-                    ->schema([
-                        Forms\Components\Textarea::make('website_url')
-                            ->label('Website URL or Codebase State')
-                            ->required()
-                            ->columnSpanFull(),
-                    ]),
-            ]);
+            \Filament\Schemas\Components\Section::make('Project & Codebase State')
+                ->schema([
+                    \Filament\Forms\Components\Textarea::make('website_url')
+                        ->label('Website URL or Codebase State')
+                        ->required()
+                        ->columnSpanFull(),
+                ]),
+        ]);
     }
 
     public static function table(Table $table): Table
