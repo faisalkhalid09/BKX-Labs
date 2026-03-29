@@ -2,159 +2,183 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Audit Report - {{ $report->client_name }}</title>
+    <title>Technical Audit - {{ $report->client_name }}</title>
     <style>
         @page {
-            margin: 0cm;
+            margin: 0;
         }
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #1a1a1a;
-            line-height: 1.5;
+            font-family: 'Helvetica', sans-serif;
             margin: 0;
             padding: 0;
+            background: #ffffff;
+            color: #1a202c;
         }
         .page {
-            width: 21cm;
-            height: 29.7cm;
-            padding: 2cm;
-            box-sizing: border-box;
+            width: 210mm;
+            height: 297mm;
             page-break-after: always;
             position: relative;
+            overflow: hidden;
         }
-        .header {
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
+        .dark-page {
+            background: #0b1120;
+            color: #ffffff;
         }
-        .logo {
-            height: 40px;
+        
+        /* Sidebar Layout */
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
         }
-        .title {
-            font-size: 28px;
+        .content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 65%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* Page 1: Cover */
+        .cover-content {
+            padding: 80px 50px;
+        }
+        .logo-header {
+            height: 45px;
+            margin-bottom: 80px;
+        }
+        .hero-title {
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #111827;
+        }
+        .hero-subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .meta-container {
+            margin-top: 100px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .meta-row {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .meta-label {
+            font-weight: bold;
+            color: #9ca3af;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .meta-value {
+            font-size: 16px;
+            color: #111827;
+        }
+
+        /* Page 3: Health Scores */
+        .score-grid {
+            margin-top: 60px;
+            text-align: center;
+        }
+        .score-card {
+            margin-bottom: 40px;
+        }
+        .score-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+        .score-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            padding: 0 20px;
+        }
+
+        /* Page 4: Findings */
+        .finding-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        .finding-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f8fafc;
+        }
+        .finding-text {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* Page 5: Roadmap */
+        .roadmap-container {
+            margin-top: 40px;
+        }
+        .phase-box {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 40px;
+            border-left: 2px solid #1e293b;
+        }
+        .phase-dot {
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #3b82f6;
+        }
+        .phase-tag {
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .phase-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .phase-duration {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .verdict-banner {
+            background: #ef4444;
+            color: white;
+            padding: 20px;
+            text-align: center;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: 100px;
-        }
-        .subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-top: 10px;
-        }
-        .meta-table {
-            width: 100%;
-            margin-top: 50px;
-            border-collapse: collapse;
-        }
-        .meta-table td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .label {
-            font-weight: bold;
-            width: 30%;
-            color: #444;
-        }
-        
-        /* Dashboard - Page 3 */
-        .gauge-container {
-            text-align: center;
             margin-top: 50px;
         }
-        .gauge {
-            display: inline-block;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 15px solid #eee;
-            position: relative;
-            margin: 20px;
-        }
-        .gauge-inner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .gauge-label {
-            margin-top: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
         
-        /* Scores Logic */
-        .score-red { border-color: #ef4444; }
-        .score-orange { border-color: #f97316; }
-        .score-green { border-color: #22c55e; }
-        
-        /* Page 4 - Metrics */
-        .chart-box {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .bar-container {
-            width: 100%;
-            height: 20px;
-            background: #ddd;
-            border-radius: 10px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        .bar {
-            height: 100%;
-            background: #3b82f6;
-        }
-        .bar-optimized {
-            background: #10b981;
-        }
-        
-        /* Page 5 - Roadmap */
-        .roadmap-step {
-            border-left: 4px solid #3b82f6;
-            padding-left: 20px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        .roadmap-step::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background: #3b82f6;
-            border-radius: 50%;
-        }
-        
-        .verdict-box {
-            background: #000;
-            color: #fff;
-            padding: 30px;
-            text-align: center;
-            margin-top: 50px;
-        }
-        .verdict-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #ef4444; /* Default Red for Safety */
-        }
-        
-        .footer-note {
-            position: absolute;
-            bottom: 2cm;
-            left: 2cm;
-            right: 2cm;
-            font-size: 10px;
-            color: #999;
-            text-align: center;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
+        /* Utils */
+        .text-gradient {
+            color: #3b82f6;
         }
     </style>
 </head>
@@ -162,145 +186,125 @@
 
     <!-- PAGE 1: COVER -->
     <div class="page">
-        <div class="header">
-            <img src="{{ public_path('brand-logo.png') }}" class="logo">
-        </div>
-        
-        <div class="title">Technical Audit &<br>Forensic Analysis</div>
-        <div class="subtitle">BKX Labs Internal Security & Performance Report</div>
-        
-        <table class="meta-table">
-            <tr>
-                <td class="label">CLIENT</td>
-                <td>{{ $report->client_name }}</td>
-            </tr>
-            <tr>
-                <td class="label">DATE</td>
-                <td>{{ $report->created_at->format('M d, Y') }}</td>
-            </tr>
-            <tr>
-                <td class="label">TECH STACK</td>
-                <td>{{ implode(', ', $report->tech_stack ?? []) }}</td>
-            </tr>
-            <tr>
-                <td class="label">AUDIT SCOPE</td>
-                <td>{{ $report->audit_scope }}</td>
-            </tr>
-        </table>
-        
-        <div class="footer-note">CONFIDENTIAL - FOR AUTHORIZED PERSONNEL ONLY</div>
-    </div>
-
-    <!-- PAGE 2: FINDINGS -->
-    <div class="page">
-        <h2>Forensic Findings</h2>
-        <div style="margin-bottom: 30px;">
-            <h3 style="color: #ef4444;">1. Critical Vulnerabilities</h3>
-            <div>{!! $report->critical_vulnerabilities !!}</div>
-        </div>
-        <div style="margin-bottom: 30px;">
-            <h3 style="color: #f97316;">2. Infrastructure Bottlenecks</h3>
-            <div>{!! $report->infrastructure_bottlenecks !!}</div>
-        </div>
-        <div>
-            <h3 style="color: #3b82f6;">3. Frontend Debt</h3>
-            <div>{!! $report->frontend_debt !!}</div>
+        <div class="cover-content">
+            <img src="{{ public_path('brand-logo.png') }}" class="logo-header">
+            
+            <div class="hero-subtitle">Technical Audit &</div>
+            <div class="hero-title">Forensic<br>Analysis</div>
+            
+            <div class="meta-container">
+                <div class="meta-row">
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">{{ $report->client_name }}</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label">Release Date</div>
+                    <div class="meta-value">{{ $report->created_at->format('M d, Y') }}</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label">Audit Engine</div>
+                    <div class="meta-value">BKX Labs Internal v4.2</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label">Primary Stack</div>
+                    <div class="meta-value">{{ implode(', ', $report->tech_stack ?? []) }}</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- PAGE 3: DASHBOARD (VITAL SIGNS) -->
-    <div class="page">
-        <h2>System Health Dashboard</h2>
-        <p>The following scores represent the primary health vectors of the codebase.</p>
-        
-        <div class="gauge-container">
-            <div class="gauge {{ $report->security_score < 40 ? 'score-red' : ($report->security_score < 70 ? 'score-orange' : 'score-green') }}">
-                <div class="gauge-inner">{{ $report->security_score }}%</div>
-                <div class="gauge-label">Security Posture</div>
-            </div>
+    <!-- PAGE 2: SYSTEM HEALTH SCORE -->
+    <div class="page dark-page">
+        <div class="sidebar" style="background-image: url('{{ public_path('assets/audit-report/dashboard-sidebar.png') }}')"></div>
+        <div class="content">
+            <h1 class="hero-subtitle" style="color: #3b82f6;">Technical Health</h1>
+            <h2 style="font-size: 32px; margin-top: 0;">System Score</h2>
             
-            <div class="gauge {{ $report->performance_score < 40 ? 'score-red' : ($report->performance_score < 70 ? 'score-orange' : 'score-green') }}">
-                <div class="gauge-inner">{{ $report->performance_score }}%</div>
-                <div class="gauge-label">Performance</div>
+            <div class="score-grid">
+                <div class="score-card">
+                    {!! $report->getScoreSvg($report->security_score) !!}
+                    <div class="score-title">Security Posture</div>
+                    <div class="score-desc">Critical vulnerabilities and credential exposure metrics.</div>
+                </div>
+                
+                <div class="score-card">
+                    {!! $report->getScoreSvg($report->performance_score) !!}
+                    <div class="score-title">Performance</div>
+                    <div class="score-desc">Latency benchmarks and resource utilization efficiency.</div>
+                </div>
+                
+                <div class="score-card">
+                    {!! $report->getScoreSvg($report->maintainability_score) !!}
+                    <div class="score-title">Maintainability</div>
+                    <div class="score-desc">Code quality, technical debt, and refactor priorities.</div>
+                </div>
             </div>
-            
-            <div class="gauge {{ $report->maintainability_score < 40 ? 'score-red' : ($report->maintainability_score < 70 ? 'score-orange' : 'score-green') }}">
-                <div class="gauge-inner">{{ $report->maintainability_score }}%</div>
-                <div class="gauge-label">Maintainability</div>
-            </div>
-        </div>
-        
-        <div style="margin-top: 50px; background: #f0fdf4; padding: 20px; border-left: 5px solid #22c55e;">
-            <strong>Overall Health Index: {{ $report->overall_health }}%</strong>
-            <p style="font-size: 14px;">Calculated based on 48 technical checkpoints across security, runtime, and architectural layers.</p>
         </div>
     </div>
 
-    <!-- PAGE 4: TECHNICAL METRICS -->
-    <div class="page">
-        <h2>Technical Metrics Analysis</h2>
-        <p>Current state vs. Optimized architectural benchmarks.</p>
-        
-        <div class="chart-box">
-            <strong>CPU Utilization (High Latency Spike Analysis)</strong>
-            <div class="bar-container">
-                <div class="bar" style="width: {{ $report->current_cpu }}%"></div>
-            </div>
-            <small>Current State: {{ $report->current_cpu }}% Avg Load</small>
+    <!-- PAGE 3: CRITICAL FINDINGS -->
+    <div class="page dark-page">
+        <div class="sidebar" style="background-image: url('{{ public_path('assets/audit-report/triage-sidebar.png') }}')"></div>
+        <div class="content">
+            <h1 class="hero-subtitle" style="color: #ef4444;">Forensic Data</h1>
+            <h2 style="font-size: 32px; margin-top: 0;">Critical Findings</h2>
             
-            <div class="bar-container">
-                <div class="bar bar-optimized" style="width: {{ $report->optimized_cpu }}%"></div>
+            <div class="finding-box" style="border-color: #ef4444;">
+                <div class="finding-title">Security & Vulnerabilities</div>
+                <div class="finding-text">{!! $report->critical_vulnerabilities !!}</div>
             </div>
-            <small>Optimized Target: {{ $report->optimized_cpu }}% Avg Load</small>
-        </div>
 
-        <div class="chart-box">
-            <strong>Memory Allocation (Leak & Garbage Collection)</strong>
-            <div class="bar-container">
-                <div class="bar" style="width: {{ $report->current_memory }}%"></div>
+            <div class="finding-box" style="border-color: #f97316;">
+                <div class="finding-title">Infrastructure Bottlenecks</div>
+                <div class="finding-text">{!! $report->infrastructure_bottlenecks !!}</div>
             </div>
-            <small>Current Usage: {{ $report->current_memory }}% Peak</small>
+
+            <div class="finding-box" style="border-color: #3b82f6;">
+                <div class="finding-title">Frontend Technical Debt</div>
+                <div class="finding-text">{!! $report->frontend_debt !!}</div>
+            </div>
             
-            <div class="bar-container">
-                <div class="bar bar-optimized" style="width: {{ $report->optimized_memory }}%"></div>
-            </div>
-            <small>Optimized Target: {{ $report->optimized_memory }}% Peak</small>
+            <p style="font-size: 12px; color: #64748b; margin-top: 40px; font-style: italic;">
+                Findings based on static code analysis and dynamic runtime profiling.
+            </p>
         </div>
-        
-        <p style="margin-top: 30px; color: #666;">
-            <em>Note: Metrics captured using real-time kernel-level monitoring and heap analysis.</em>
-        </p>
     </div>
 
-    <!-- PAGE 5: ROADMAP & DECISION -->
-    <div class="page">
-        <h2>Rescue Roadmap</h2>
-        
-        <div class="roadmap-step">
-            <strong>PHASE 1: STABILIZATION</strong>
-            <p>{{ $report->phase_1 }}</p>
-        </div>
-        
-        <div class="roadmap-step">
-            <strong>PHASE 2: OPTIMIZATION</strong>
-            <p>{{ $report->phase_2 }}</p>
-        </div>
-        
-        <div class="roadmap-step">
-            <strong>PHASE 3: SCALING</strong>
-            <p>{{ $report->phase_3 }}</p>
-        </div>
-        
-        <div class="verdict-box">
-            <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">The Status Verdict</div>
-            <div class="verdict-title" style="color: {{ $report->status_verdict === 'STABLE / READY' ? '#22c55e' : ($report->status_verdict === 'PROCEED WITH CAUTION' ? '#f97316' : '#ef4444') }}">
-                {{ $report->status_verdict }}
+    <!-- PAGE 4: RESCUE ROADMAP -->
+    <div class="page dark-page">
+        <div class="sidebar" style="background-image: url('{{ public_path('assets/audit-report/roadmap-sidebar.png') }}')"></div>
+        <div class="content">
+            <h1 class="hero-subtitle" style="color: #3b82f6;">Remediation</h1>
+            <h2 style="font-size: 32px; margin-top: 0;">Rescue Roadmap</h2>
+            
+            <div class="roadmap-container">
+                <div class="phase-box">
+                    <div class="phase-dot"></div>
+                    <div class="phase-tag">Phase 01</div>
+                    <div class="phase-title">Stabilization</div>
+                    <div class="phase-duration">{{ $report->phase_1_duration }}</div>
+                    <div class="finding-text">{{ $report->phase_1 }}</div>
+                </div>
+
+                <div class="phase-box">
+                    <div class="phase-dot"></div>
+                    <div class="phase-tag">Phase 02</div>
+                    <div class="phase-title">Optimization</div>
+                    <div class="phase-duration">{{ $report->phase_2_duration }}</div>
+                    <div class="finding-text">{{ $report->phase_2 }}</div>
+                </div>
+
+                <div class="phase-box">
+                    <div class="phase-dot"></div>
+                    <div class="phase-tag">Phase 03</div>
+                    <div class="phase-title">Scale-Ready</div>
+                    <div class="phase-duration">{{ $report->phase_3_duration }}</div>
+                    <div class="finding-text">{{ $report->phase_3 }}</div>
+                </div>
             </div>
-            <div style="margin-top: 20px; font-size: 14px;">
-                {{ $report->fastest_path }}
-            </div>
-            <div style="margin-top: 30px;">
-                <a href="{{ $report->upsell_link }}" style="color: #3b82f6; text-decoration: none; font-weight: bold; border: 1px solid #3b82f6; padding: 10px 20px;">BOOK RESCUE STRATEGY CALL</a>
+
+            <div class="verdict-banner" style="background: {{ $report->status_verdict === 'STABLE / READY' ? '#10b981' : ($report->status_verdict === 'PROCEED WITH CAUTION' ? '#f97316' : '#ef4444') }}">
+                Status Verdict: {{ $report->status_verdict }}
             </div>
         </div>
     </div>

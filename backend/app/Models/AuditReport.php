@@ -26,8 +26,11 @@ class AuditReport extends Model
         'optimized_memory',
         
         'phase_1',
+        'phase_1_duration',
         'phase_2',
+        'phase_2_duration',
         'phase_3',
+        'phase_3_duration',
         
         'status_verdict',
         'fastest_path',
@@ -56,6 +59,26 @@ class AuditReport extends Model
     {
         if ($score < 40) return '#ef4444'; // Red
         if ($score < 70) return '#f97316'; // Orange
-        return '#22c55e'; // Green
+        return '#3b82f6'; // Light Blue (matching the shared screens)
+    }
+
+    /**
+     * Generates a circular SVG gauge for the PDF.
+     */
+    public function getScoreSvg(int $score): string
+    {
+        $color = self::getScoreColor($score);
+        $radius = 45;
+        $circumference = 2 * M_PI * $radius;
+        $offset = $circumference - ($score / 100) * $circumference;
+
+        return "
+        <svg width=\"140\" height=\"140\" viewBox=\"0 0 100 100\">
+            <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"#334155\" stroke-width=\"8\" />
+            <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"$color\" stroke-width=\"8\"
+                stroke-dasharray=\"$circumference\" stroke-dashoffset=\"$offset\"
+                stroke-linecap=\"round\" transform=\"rotate(-90 50 50)\" />
+            <text x=\"50\" y=\"55\" font-family=\"Arial\" font-size=\"20\" fill=\"white\" text-anchor=\"middle\" font-weight=\"bold\">$score%</text>
+        </svg>";
     }
 }
