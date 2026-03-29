@@ -43,6 +43,46 @@
     font-weight: 500;
 }
 
+.urgent-callout {
+    margin-top: 1.25rem;
+    padding: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(30, 58, 138, 0.22);
+    background: linear-gradient(180deg, #f8fbff 0%, #f2f6ff 100%);
+}
+
+.urgent-callout h4 {
+    margin: 0 0 0.5rem;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.urgent-callout p {
+    margin: 0 0 0.9rem;
+    font-size: 0.93rem;
+    line-height: 1.7;
+    color: var(--text-gray);
+}
+
+.urgent-callout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.55rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    border: 1px solid rgba(30, 58, 138, 0.35);
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.urgent-callout-btn:hover {
+    border-color: rgba(30, 58, 138, 0.6);
+    background: #eef3ff;
+}
+
 .contact-form-wrapper {
     background: white;
     padding: 3rem;
@@ -153,6 +193,10 @@ button:disabled {
     .contact-info {
         padding: 0;
         text-align: center;
+    }
+
+    .urgent-callout {
+        text-align: left;
     }
 
     .contact-email {
