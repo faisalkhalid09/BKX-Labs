@@ -19,6 +19,7 @@ class Lead extends Model
         'last_name',
         'email',
         'meeting_time',
+        'website_url',
         'codebase_state',
         'google_event_id'
     ];

@@ -10,136 +10,147 @@
 }
 
 .booking-container {
-  max-width: 1200px;
-  margin: 100px auto;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  color: #fff;
-  animation: fadeInUp 0.8s ease-out;
+  max-width: 1100px;
+  margin: 120px auto 80px;
+  padding: 60px 40px;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  color: var(--text-dark);
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .booking-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .booking-header h1 {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  background: linear-gradient(90deg, #fff, #888);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .booking-header p {
-  font-size: 1.1rem;
-  color: #aaa;
+  font-size: 1.2rem;
+  color: var(--text-gray);
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .booking-layout {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 70px;
 }
 
 /* Date Selector */
 .date-selector h3,
 .time-selector h3,
 .form-section h3 {
-  font-size: 1.5rem;
-  margin-bottom: 25px;
-  color: #fff;
-  font-weight: 500;
+  font-size: 1.6rem;
+  margin-bottom: 30px;
+  color: var(--text-dark);
+  font-weight: 700;
+  border-left: 4px solid var(--primary);
+  padding-left: 15px;
 }
 
 .date-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 20px;
 }
 
 .date-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  padding: 25px 15px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  color: #ccc;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-gray);
 }
 
 .date-card:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-3px);
+  background: var(--secondary);
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
 }
 
 .date-card.active {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
 }
 
 .date-card .day-name {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .date-card .day-number {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .date-card .month-name {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 /* Time Selector */
 .time-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
 }
 
 .time-slot {
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
   cursor: pointer;
   text-align: center;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  color: var(--text-dark);
 }
 
 .time-slot:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--secondary);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .time-slot.active {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
 }
 
 /* Form Section */
 .form-section {
   display: none;
   animation: fadeInUp 0.5s ease-out;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .form-section.visible {
@@ -149,59 +160,74 @@
 .booking-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 24px;
 }
 
 .booking-form input,
 .booking-form textarea {
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: #fff;
-  font-size: 1rem;
+  padding: 18px;
+  background: var(--secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  color: var(--text-dark);
+  font-size: 1.05rem;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .booking-form input:focus,
 .booking-form textarea:focus {
-  border-color: #fff;
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.05);
 }
 
 .confirm-btn {
-  padding: 18px;
-  background: #fff;
-  color: #000;
+  padding: 20px;
+  background: var(--primary);
+  color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-  margin-top: 10px;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
 }
 
 .confirm-btn:disabled {
-  background: #555;
+  background: var(--text-gray);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .confirm-btn:hover:not(:disabled) {
-  background: #ddd;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
 }
 
 .form-note {
   text-align: center;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  margin-top: 10px;
+}
+
+.no-slots {
+  padding: 40px;
+  text-align: center;
+  background: var(--secondary);
+  border-radius: 12px;
+  color: var(--text-gray);
+  font-style: italic;
 }
 
 .booking-loader {
@@ -210,17 +236,17 @@
   align-items: center;
   justify-content: center;
   height: 60vh;
-  color: #fff;
+  color: var(--text-dark);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top: 3px solid #fff;
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-light);
+  border-top: 4px solid var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 @keyframes spin {
@@ -229,13 +255,16 @@
 
 @media (max-width: 768px) {
   .booking-container {
-    margin: 60px 15px;
-    padding: 20px;
+    margin: 80px 15px 40px;
+    padding: 30px 20px;
   }
   .booking-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
   .form-row {
     grid-template-columns: 1fr;
+  }
+  .date-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

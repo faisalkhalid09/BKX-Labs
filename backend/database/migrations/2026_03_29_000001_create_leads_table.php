@@ -17,6 +17,7 @@ return new class extends Migration
             $blueprint->string('last_name')->nullable();
             $blueprint->string('email');
             $blueprint->dateTime('meeting_time');
+            $blueprint->text('website_url')->nullable(); // The new question
             $blueprint->text('codebase_state')->nullable();
             $blueprint->string('google_event_id')->unique();
             $blueprint->timestamps();

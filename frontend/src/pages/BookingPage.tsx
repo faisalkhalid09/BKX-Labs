@@ -24,7 +24,7 @@ const BookingPage: React.FC = () => {
     first_name: '',
     last_name: '',
     email: '',
-    codebase_state: '',
+    website_url: '',
   });
 
   useEffect(() => {
@@ -169,10 +169,11 @@ const BookingPage: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
             <textarea
-              placeholder="Describe your current codebase state (e.g., legacy, refactor needed, new project)"
-              rows={3}
-              value={formData.codebase_state}
-              onChange={(e) => setFormData({ ...formData, codebase_state: e.target.value })}
+              placeholder="Website URL or briefly describe the current state of your codebase:"
+              rows={4}
+              required
+              value={formData.website_url}
+              onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
             ></textarea>
 
             <button type="submit" className="confirm-btn" disabled={submitting}>

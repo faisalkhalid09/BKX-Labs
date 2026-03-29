@@ -120,6 +120,7 @@ class BookingController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'start_time' => 'required|date',
+            'website_url' => 'required|string|max:1000', // Updated field
             'codebase_state' => 'nullable|string',
         ]);
 
@@ -127,11 +128,11 @@ class BookingController extends Controller
         $service = new Calendar($client);
 
         $startTime = Carbon::parse($request->start_time);
-        $endTime = $startTime->copy()->addMinutes(30);
+        $endTime = $startTime->copy()->addMinutes(15); // Updated duration
 
         $event = new Event([
             'summary' => 'Strategy Call: ' . $request->first_name . ' ' . $request->last_name,
-            'description' => "Lead Email: {$request->email}\nCodebase State: " . ($request->codebase_state ?? 'N/A'),
+            'description' => "Lead Email: {$request->email}\nWebsite/Codebase State: " . ($request->website_url),
             'start' => [
                 'dateTime' => $startTime->toRfc3339String(),
                 'timeZone' => config('app.timezone', 'Asia/Karachi'),
@@ -153,21 +154,35 @@ class BookingController extends Controller
 
         $optParams = ['conferenceDataVersion' => 1];
         $createdEvent = $service->events->insert(config('services.google.calendar_id', 'primary'), $event, $optParams);
+        $meetLink = $createdEvent->getHangoutLink();
 
         // Save lead to DB
-        Lead::create([
+        $lead = Lead::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'meeting_time' => $startTime,
+            'website_url' => $request->website_url, // Added new field
             'codebase_state' => $request->codebase_state,
             'google_event_id' => $createdEvent->getId(),
         ]);
 
+        try {
+            // Send confirmation email to user
+            \Illuminate\Support\Facades\Mail::to($lead->email)
+                ->send(new \App\Mail\BookingConfirmation($lead, $meetLink));
+
+            // Send notification email to admin
+            \Illuminate\Support\Facades\Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
+                ->send(new \App\Mail\BookingNotification($lead, $meetLink));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Booking email error: ' . $e->getMessage());
+        }
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Meeting booked successfully!',
-            'meet_link' => $createdEvent->getHangoutLink(),
+            'message' => 'Meeting booked successfully! Please check your email.',
+            'meet_link' => $meetLink,
             'event_id' => $createdEvent->getId(),
         ]);
     }
