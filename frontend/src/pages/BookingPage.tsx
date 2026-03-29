@@ -96,8 +96,11 @@ const BookingPage: React.FC = () => {
   if (loading) {
     return (
       <div className="booking-loader">
-        <div className="spinner"></div>
-        <p>Checking availability...</p>
+        <div className="loader-card">
+          <div className="spinner"></div>
+          <p className="loader-title">Checking availability...</p>
+          <p className="loader-subtitle">Fetching open slots from Google Calendar</p>
+        </div>
       </div>
     );
   }

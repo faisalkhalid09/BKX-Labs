@@ -25,6 +25,11 @@ class BookingController extends Controller
         $client->setClientSecret(config('services.google.client_secret'));
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
+        $client->setScopes([
+            Calendar::CALENDAR,
+            Calendar::CALENDAR_EVENTS,
+            Calendar::CALENDAR_READONLY,
+        ]);
 
         $refreshToken = Setting::get('google_calendar_refresh_token');
 
@@ -201,6 +206,11 @@ class BookingController extends Controller
 
             if (str_contains($e->getMessage(), 'Google Calendar not authenticated')) {
                 $publicMessage = 'Scheduling is temporarily unavailable. Please contact us directly while we reconnect calendar access.';
+                $httpStatus = 503;
+            }
+
+            if (str_contains($e->getMessage(), 'ACCESS_TOKEN_SCOPE_INSUFFICIENT') || str_contains($e->getMessage(), 'insufficient authentication scopes')) {
+                $publicMessage = 'Scheduling permissions expired. Please reconnect Google Calendar authorization and try again.';
                 $httpStatus = 503;
             }
 

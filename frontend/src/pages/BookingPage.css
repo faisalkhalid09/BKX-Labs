@@ -320,6 +320,18 @@
   justify-content: center;
   height: 62vh;
   color: var(--text-dark);
+  padding: 0 20px;
+}
+
+#bkx-booking-portal .loader-card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(30, 58, 138, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.07);
+  padding: 24px 30px;
 }
 
 #bkx-booking-portal .spinner {
@@ -329,7 +341,22 @@
   border-top: 4px solid var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+}
+
+#bkx-booking-portal .loader-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+#bkx-booking-portal .loader-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  text-align: center;
 }
 
 @keyframes spin {

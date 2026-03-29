@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Google\Client;
+use Google\Service\Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -77,7 +78,12 @@ class GoogleAuthController extends Controller
         $client->setRedirectUri(config('services.google.redirect'));
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
-        $client->addScope(\Google\Service\Calendar::CALENDAR_READONLY);
+        $client->setIncludeGrantedScopes(true);
+        $client->setScopes([
+            Calendar::CALENDAR,
+            Calendar::CALENDAR_EVENTS,
+            Calendar::CALENDAR_READONLY,
+        ]);
 
         return $client;
     }
