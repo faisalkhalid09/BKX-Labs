@@ -24,8 +24,8 @@ const AppointmentSuccess: React.FC = () => {
         </div>
 
         <div className="action-buttons">
-          <Link to="/" className="btn-primary">Back to Home</Link>
-          <Link to="/process" className="btn-secondary">Our Process</Link>
+          <Link to="/" className="success-btn primary">Back to Home</Link>
+          <Link to="/process" className="success-btn secondary">Our Process</Link>
         </div>
       </div>
     </div>
