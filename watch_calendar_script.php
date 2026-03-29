@@ -11,28 +11,36 @@
 
 require_once __DIR__ . '/backend/vendor/autoload.php';
 
-// Simulate Laravel bootstrap to access models/config
-// In a real Laravel app, you would use an Artisan command.
-// But for convenience, we can load the environment.
-
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Channel;
+use Dotenv\Dotenv;
 
-// IMPORTANT: This script assumes it's running in an environment where 
-// Laravel's Eloquent and Config are available, or where you manually
-// provide the refresh token.
+// Load .env from the backend directory
+if (file_exists(__DIR__ . '/backend/.env')) {
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/backend');
+    $dotenv->load();
+}
 
-$clientId = getenv('GOOGLE_CLIENT_ID') ?: '180015269257-i225c1doi3f46i1poja7ne1fu0i2lj6u.apps.googleusercontent.com';
-$clientSecret = getenv('GOOGLE_CLIENT_SECRET');
-$refreshToken = getenv('GOOGLE_REFRESH_TOKEN'); // Or fetch from DB if possible
-$calendarId = getenv('GOOGLE_CALENDAR_ID') ?: 'primary';
+$clientId = env('GOOGLE_CLIENT_ID', '180015269257-i225c1doi3f46i1poja7ne1fu0i2lj6u.apps.googleusercontent.com');
+$clientSecret = env('GOOGLE_CLIENT_SECRET');
+$refreshToken = env('GOOGLE_REFRESH_TOKEN'); 
+$calendarId = env('GOOGLE_CALENDAR_ID', 'primary');
 $webhookUrl = 'https://bkxlabs.com/api/webhooks/calendar';
-$webhookToken = getenv('GOOGLE_WEBHOOK_TOKEN');
+$webhookToken = env('GOOGLE_WEBHOOK_TOKEN');
+
+// Helper function to simulate Laravel's env() if not available
+if (!function_exists('env')) {
+    function env($key, $default = null) {
+        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+        return $value === false ? $default : $value;
+    }
+}
 
 if (!$clientSecret || !$refreshToken) {
-    echo "Error: GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN must be set.\n";
-    echo "Tip: Run 'php artisan tinker' and get the token from the settings table if needed.\n";
+    echo "Error: GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN must be set in backend/.env\n";
+    echo "Current Secret: " . ($clientSecret ? 'SET' : 'MISSING') . "\n";
+    echo "Current Token: " . ($refreshToken ? 'SET' : 'MISSING') . "\n";
     exit(1);
 }
 
