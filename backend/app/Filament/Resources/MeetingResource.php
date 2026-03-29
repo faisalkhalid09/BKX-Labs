@@ -15,10 +15,16 @@ class MeetingResource extends Resource
 {
     protected static ?string $model = Lead::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
-    
-    protected static ?string $navigationLabel = 'Meetings';
-    
+    public static function getNavigationIcon(): string
+    {
+        return 'heroicon-o-calendar-days';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Meetings';
+    }
+
     protected static ?string $modelLabel = 'Meeting';
 
     protected static ?string $slug = 'meetings';
