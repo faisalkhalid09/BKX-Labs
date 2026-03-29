@@ -113,6 +113,21 @@
     flex-wrap: wrap;
 }
 
+.appointment-success-container .meet-link-card {
+    background: #eef6ff;
+    border: 1px solid rgba(30, 58, 138, 0.2);
+    border-radius: 12px;
+    padding: 14px;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.appointment-success-container .meet-link-card p {
+    margin: 0 0 10px;
+    color: var(--text-dark);
+    text-align: center;
+}
+
 .appointment-success-container .success-btn {
     min-width: 170px;
     padding: 12px 18px;

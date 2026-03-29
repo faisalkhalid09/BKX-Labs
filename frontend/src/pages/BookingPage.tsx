@@ -81,7 +81,11 @@ const BookingPage: React.FC = () => {
       }
 
       if (response.ok && result.status === 'success') {
-        navigate('/appointment-success');
+        navigate('/appointment-success', {
+          state: {
+            meetLink: result.meet_link || '',
+          },
+        });
       } else {
         setSubmitError(result.message || 'Booking could not be completed right now. Please try again or contact us directly.');
       }

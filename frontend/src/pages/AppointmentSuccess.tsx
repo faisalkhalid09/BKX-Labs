@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './AppointmentSuccess.css';
 
 const AppointmentSuccess: React.FC = () => {
+  const location = useLocation();
+  const meetLink = (location.state as { meetLink?: string } | null)?.meetLink;
+
   return (
     <div className="appointment-success-container">
       <div className="success-content">
@@ -22,6 +26,13 @@ const AppointmentSuccess: React.FC = () => {
             <li>Have your codebase or technical documentation ready if applicable.</li>
           </ul>
         </div>
+
+        {meetLink ? (
+          <div className="meet-link-card">
+            <p>If your email is delayed, you can still join directly:</p>
+            <a href={meetLink} target="_blank" rel="noreferrer" className="success-btn primary">Open Google Meet Link</a>
+          </div>
+        ) : null}
 
         <div className="action-buttons">
           <Link to="/" className="success-btn primary">Back to Home</Link>
