@@ -16,6 +16,7 @@ import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
 
 import AppointmentSuccess from './pages/AppointmentSuccess';
+import BookingPage from './pages/BookingPage';
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
           <Route path="/TOS" element={<PdfViewer />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
+          <Route path="/schedule" element={<BookingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

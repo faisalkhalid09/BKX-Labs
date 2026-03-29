@@ -61,6 +61,7 @@ const Navbar = () => {
                                     Store
                                 </a>
                             </li>
+                            <li><Link to="/schedule">Schedule Call</Link></li>
                             <li><Link to="/contact" className="nav-cta">Contact</Link></li>
                         </ul>
                     )}
@@ -95,6 +96,7 @@ const Navbar = () => {
                                         Store
                                     </a>
                                 </li>
+                                <li><Link to="/schedule" className="btn btn-secondary w-full">Schedule Call</Link></li>
                                 <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
                             </>
                         )}

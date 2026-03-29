@@ -1,0 +1,241 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.booking-container {
+  max-width: 1200px;
+  margin: 100px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: #fff;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.booking-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.booking-header h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, #fff, #888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.booking-header p {
+  font-size: 1.1rem;
+  color: #aaa;
+}
+
+.booking-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Date Selector */
+.date-selector h3,
+.time-selector h3,
+.form-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 15px;
+}
+
+.date-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ccc;
+}
+
+.date-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.date-card.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.date-card .day-name {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.date-card .day-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.date-card .month-name {
+  font-size: 0.8rem;
+}
+
+/* Time Selector */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.time-slot {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.time-slot:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.time-slot.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+/* Form Section */
+.form-section {
+  display: none;
+  animation: fadeInUp 0.5s ease-out;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-section.visible {
+  display: block;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.booking-form input,
+.booking-form textarea {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus {
+  border-color: #fff;
+}
+
+.confirm-btn {
+  padding: 18px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 10px;
+}
+
+.confirm-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: #ddd;
+  transform: translateY(-2px);
+}
+
+.form-note {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.booking-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: #fff;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .booking-container {
+    margin: 60px 15px;
+    padding: 20px;
+  }
+  .booking-header h1 {
+    font-size: 2rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

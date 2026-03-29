@@ -21,6 +21,10 @@ Route::post('/webhooks/calendar', [App\Http\Controllers\GoogleCalendarWebhookCon
 // Google OAuth Authorization
 Route::get('/google/auth', [App\Http\Controllers\GoogleAuthController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [App\Http\Controllers\GoogleAuthController::class, 'handleGoogleCallback']);
+
+// Custom Booking Routes
+Route::get('/booking/slots', [App\Http\Controllers\BookingController::class, 'getAvailableSlots']);
+Route::post('/booking/create', [App\Http\Controllers\BookingController::class, 'createBooking']);
 // Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 
 Route::group(['prefix' => 'restricted'], function () {
