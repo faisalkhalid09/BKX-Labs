@@ -87,6 +87,8 @@
         .meta-value {
             font-size: 16px;
             color: #111827;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Page 3: Health Scores */
@@ -107,6 +109,7 @@
             font-size: 14px;
             color: #94a3b8;
             padding: 0 20px;
+            word-wrap: break-word;
         }
 
         /* Page 4: Findings */
@@ -116,6 +119,7 @@
             padding: 20px;
             margin-bottom: 25px;
             border-radius: 0 8px 8px 0;
+            word-wrap: break-word;
         }
         .finding-title {
             font-size: 18px;
@@ -126,6 +130,7 @@
         .finding-text {
             font-size: 14px;
             color: #94a3b8;
+            word-wrap: break-word;
         }
 
         /* Page 5: Roadmap */
