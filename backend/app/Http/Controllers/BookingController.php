@@ -10,8 +10,10 @@ use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
 use Google\Service\Calendar\FreeBusyRequest;
 use Google\Service\Calendar\FreeBusyRequestItem;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -132,11 +134,11 @@ class BookingController extends Controller
             $service = new Calendar($client);
 
             $startTime = Carbon::parse($request->start_time);
-            $endTime = $startTime->copy()->addMinutes(15); 
+            $endTime = $startTime->copy()->addMinutes(15);
 
             $event = new Event([
                 'summary' => 'Strategy Call: ' . $request->first_name . ' ' . $request->last_name,
-                'description' => "Lead Email: {$request->email}\nWebsite/Codebase State: " . ($request->website_url),
+                'description' => "Lead Email: {$request->email}\nWebsite/Codebase State: " . $request->website_url,
                 'start' => [
                     'dateTime' => $startTime->toRfc3339String(),
                     'timeZone' => config('app.timezone', 'Asia/Karachi'),
@@ -160,27 +162,29 @@ class BookingController extends Controller
             $createdEvent = $service->events->insert(config('services.google.calendar_id', 'primary'), $event, $optParams);
             $meetLink = $createdEvent->getHangoutLink();
 
-            // Save lead to DB
-            $lead = Lead::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'meeting_time' => $startTime,
-                'website_url' => $request->website_url, 
-                'codebase_state' => $request->codebase_state,
-                'google_event_id' => $createdEvent->getId(),
-            ]);
-
+            // Persist lead as a secondary step. If this fails, do not fail the booking itself.
             try {
-                // Send confirmation email to user
-                \Illuminate\Support\Facades\Mail::to($lead->email)
-                    ->send(new \App\Mail\BookingConfirmation($lead, $meetLink));
+                $lead = Lead::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'meeting_time' => $startTime,
+                    'website_url' => $request->website_url,
+                    'codebase_state' => $request->codebase_state,
+                    'google_event_id' => $createdEvent->getId(),
+                ]);
 
-                // Send notification email to admin
-                \Illuminate\Support\Facades\Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
-                    ->send(new \App\Mail\BookingNotification($lead, $meetLink));
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::error('Booking email error: ' . $e->getMessage());
+                try {
+                    \Illuminate\Support\Facades\Mail::to($lead->email)
+                        ->send(new \App\Mail\BookingConfirmation($lead, $meetLink));
+
+                    \Illuminate\Support\Facades\Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
+                        ->send(new \App\Mail\BookingNotification($lead, $meetLink));
+                } catch (\Throwable $e) {
+                    Log::error('Booking email error: ' . $e->getMessage());
+                }
+            } catch (QueryException $e) {
+                Log::error('Lead save failed after successful calendar booking: ' . $e->getMessage());
             }
 
             return response()->json([
@@ -190,12 +194,21 @@ class BookingController extends Controller
                 'event_id' => $createdEvent->getId(),
             ]);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Booking error: ' . $e->getMessage());
+            Log::error('Booking error: ' . $e->getMessage());
+
+            $publicMessage = 'An error occurred while booking your session. Please try again later or contact us directly.';
+            $httpStatus = 500;
+
+            if (str_contains($e->getMessage(), 'Google Calendar not authenticated')) {
+                $publicMessage = 'Scheduling is temporarily unavailable. Please contact us directly while we reconnect calendar access.';
+                $httpStatus = 503;
+            }
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'An error occurred while booking your session. Please try again later or contact us directly.',
+                'message' => $publicMessage,
                 'error' => config('app.debug') ? $e->getMessage() : 'Booking failed'
-            ], 500);
+            ], $httpStatus);
         }
     }
 }
