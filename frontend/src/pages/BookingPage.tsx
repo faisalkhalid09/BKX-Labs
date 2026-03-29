@@ -87,17 +87,35 @@ const BookingPage: React.FC = () => {
   }
 
   const availableDates = Object.keys(slotsData);
+  const selectedDateLabel = selectedDate
+    ? new Date(selectedDate).toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+      })
+    : 'Choose a date to begin';
 
   return (
     <div id="bkx-booking-portal" className="booking-container">
       <div className="booking-header">
+        <span className="booking-kicker">Limited weekly slots</span>
         <h1>Schedule a Strategy Session</h1>
         <p>Pick a time that works for you. All meetings include a Google Meet link sent to your email.</p>
+        <div className="booking-meta">
+          <div className="meta-item">
+            <span className="meta-label">Selected Date</span>
+            <strong>{selectedDateLabel}</strong>
+          </div>
+          <div className="meta-item">
+            <span className="meta-label">Session Length</span>
+            <strong>15 minutes</strong>
+          </div>
+        </div>
       </div>
 
       <div className="booking-layout">
         {/* Date Selection */}
-        <div className="date-selector">
+        <div className="date-selector selector-card">
           <h3>1. Choose a Date</h3>
           <div className="date-grid">
             {availableDates.map((date) => {
@@ -122,7 +140,7 @@ const BookingPage: React.FC = () => {
         </div>
 
         {/* Time Selection */}
-        <div className="time-selector">
+        <div className="time-selector selector-card">
           <h3>2. Select a Time Slot (15 mins)</h3>
           {selectedDate && slotsData[selectedDate] ? (
             <div className="time-grid">
