@@ -115,19 +115,30 @@ class AuditReportResource extends Resource
             \Filament\Schemas\Components\Section::make('The Rescue Roadmap')
                 ->description('The path to recovery.')
                 ->schema([
-                    Components\Grid::make(2)->schema([
-                        Components\TextInput::make('phase_1_duration')->label('Phase 1 Duration')->default('Days 1-14'),
-                        Components\Textarea::make('phase_1')->label('Phase 1 Strategy')->rows(3)->required(),
-                    ]),
-                    Components\Grid::make(2)->schema([
-                        Components\TextInput::make('phase_2_duration')->label('Phase 2 Duration')->default('Days 15-45'),
-                        Components\Textarea::make('phase_2')->label('Phase 2 Strategy')->rows(3)->required(),
-                    ]),
-                    Components\Grid::make(2)->schema([
-                        Components\TextInput::make('phase_3_duration')->label('Phase 3 Duration')->default('Days 45-60'),
-                        Components\Textarea::make('phase_3')->label('Phase 3 Strategy')->rows(3)->required(),
-                    ]),
-                ]),
+                    Components\TextInput::make('phase_1_duration')
+                        ->label('Phase 1 Duration')
+                        ->default('Days 1-14'),
+                    Components\Textarea::make('phase_1')
+                        ->label('Phase 1 Strategy')
+                        ->rows(3)
+                        ->required(),
+                        
+                    Components\TextInput::make('phase_2_duration')
+                        ->label('Phase 2 Duration')
+                        ->default('Days 15-45'),
+                    Components\Textarea::make('phase_2')
+                        ->label('Phase 2 Strategy')
+                        ->rows(3)
+                        ->required(),
+                        
+                    Components\TextInput::make('phase_3_duration')
+                        ->label('Phase 3 Duration')
+                        ->default('Days 45-60'),
+                    Components\Textarea::make('phase_3')
+                        ->label('Phase 3 Strategy')
+                        ->rows(3)
+                        ->required(),
+                ])->columns(2),
 
             \Filament\Schemas\Components\Section::make('Decision & Closing')
                 ->schema([
