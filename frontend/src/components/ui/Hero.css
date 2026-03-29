@@ -28,11 +28,14 @@
     -ms-user-select: none;
 }
 
-/* h1 global style handles the gradient text */
-/* We just need to ensure we don't accidentally override it */
+.hero-content h1 {
+    font-size: clamp(2.9rem, 6vw, 5.2rem);
+    line-height: 1.02;
+    margin-bottom: 1.2rem;
+}
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     line-height: 1.6;
     color: var(--text-gray);
     margin-bottom: 2.5rem;
@@ -42,15 +45,42 @@
     text-align: center;
 }
 
+.hero .btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.72rem 1.6rem;
+    border-radius: 50px;
+    border: 1.5px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+}
+
+.hero .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+}
+
 @media (max-width: 1024px) {
     .hero {
         padding: 8rem 0 6rem;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 5.5vw, 4.3rem);
     }
 }
 
 @media (max-width: 768px) {
     .hero {
         padding: 7rem 0 5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
     }
 
     .hero-subtitle {
