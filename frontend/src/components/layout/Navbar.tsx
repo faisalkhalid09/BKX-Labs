@@ -9,6 +9,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isContactMenuOpen, setIsContactMenuOpen] = useState(false);
     const contactMenuRef = useRef<HTMLLIElement | null>(null);
+    const closeTimerRef = useRef<number | null>(null);
     const location = useLocation();
     
     // Derive store URL from environment variable or API URL
@@ -18,7 +19,32 @@ const Navbar = () => {
     useEffect(() => {
         setIsOpen(false);
         setIsContactMenuOpen(false);
+
+        if (closeTimerRef.current) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
     }, [location]);
+
+    const clearCloseTimer = () => {
+        if (closeTimerRef.current) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+    };
+
+    const openContactMenu = () => {
+        clearCloseTimer();
+        setIsContactMenuOpen(true);
+    };
+
+    const scheduleCloseContactMenu = () => {
+        clearCloseTimer();
+        closeTimerRef.current = window.setTimeout(() => {
+            setIsContactMenuOpen(false);
+            closeTimerRef.current = null;
+        }, 260);
+    };
 
     // Close desktop contact dropdown when clicking elsewhere.
     useEffect(() => {
@@ -31,6 +57,14 @@ const Navbar = () => {
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (closeTimerRef.current) {
+                window.clearTimeout(closeTimerRef.current);
+            }
+        };
     }, []);
 
     // Handle scroll for glass effect with hysteresis to prevent shaking
@@ -80,15 +114,18 @@ const Navbar = () => {
                             <li
                                 ref={contactMenuRef}
                                 className="contact-dropdown"
-                                onMouseEnter={() => setIsContactMenuOpen(true)}
-                                onMouseLeave={() => setIsContactMenuOpen(false)}
+                                onMouseEnter={openContactMenu}
+                                onMouseLeave={scheduleCloseContactMenu}
                             >
                                 <button
                                     type="button"
                                     className="nav-cta nav-contact-trigger"
                                     aria-expanded={isContactMenuOpen}
                                     aria-haspopup="true"
-                                    onClick={() => setIsContactMenuOpen((prev) => !prev)}
+                                    onClick={() => {
+                                        clearCloseTimer();
+                                        setIsContactMenuOpen((prev) => !prev);
+                                    }}
                                 >
                                     Contact Us
                                 </button>
