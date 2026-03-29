@@ -11,25 +11,27 @@
     </style>
 </head>
 <body>
-    <div className="container">
-        <div className="header">
+    <div class="container">
+        <div class="header">
             <h2>Strategy Session Confirmed</h2>
             <p>Hi {{ $lead->first_name }}, your meeting with BKX Labs is all set!</p>
         </div>
         
-        <div className="details">
+        <div class="details">
             <p><strong>Date:</strong> {{ $lead->meeting_time->format('F j, Y') }}</p>
-            <p><strong>Time:</strong> {{ $lead->meeting_time->format('h:i A') }} (PKT)</p>
+            <p><strong>Time:</strong> {{ $lead->meeting_time->format('h:i A') }} ({{ config('app.timezone', 'Asia/Karachi') }})</p>
         </div>
 
         <p>You can join the meeting using the button below:</p>
         <div style="text-align: center;">
-            <a href="{{ $meetLink }}" className="button">Join Google Meet</a>
+            <a href="{{ $meetLink }}" class="button">Join Google Meet</a>
         </div>
+
+        <p><strong>Meet Link:</strong> {{ $meetLink }}</p>
 
         <p>A calendar invitation has also been sent to your email address. We look forward to discussing your project!</p>
         
-        <div className="footer">
+        <div class="footer">
             <p>&copy; {{ date('Y') }} BKX Labs. All rights reserved.</p>
         </div>
     </div>

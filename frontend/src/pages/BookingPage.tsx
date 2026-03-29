@@ -74,7 +74,7 @@ const BookingPage: React.FC = () => {
         }),
       });
 
-      let result: { status?: string; message?: string; error?: string } = {};
+      let result: { status?: string; message?: string; error?: string; meet_link?: string } = {};
       const responseType = response.headers.get('content-type') || '';
       if (responseType.includes('application/json')) {
         result = await response.json();
@@ -99,11 +99,13 @@ const BookingPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="booking-loader">
-        <div className="loader-card">
-          <div className="spinner"></div>
-          <p className="loader-title">Checking availability...</p>
-          <p className="loader-subtitle">Fetching open slots from Google Calendar</p>
+      <div id="bkx-booking-portal" className="booking-page">
+        <div className="booking-loader">
+          <div className="loader-card">
+            <div className="spinner"></div>
+            <p className="loader-title">Checking availability...</p>
+            <p className="loader-subtitle">Fetching open slots...</p>
+          </div>
         </div>
       </div>
     );

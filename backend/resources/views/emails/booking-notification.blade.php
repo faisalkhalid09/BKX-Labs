@@ -11,23 +11,24 @@
     </style>
 </head>
 <body>
-    <div className="container">
-        <div className="header">
+    <div class="container">
+        <div class="header">
             <h3>New Strategy Session Booked!</h3>
         </div>
         
-        <div className="details">
+        <div class="details">
             <p><strong>Lead Name:</strong> {{ $lead->first_name }} {{ $lead->last_name }}</p>
             <p><strong>Email:</strong> {{ $lead->email }}</p>
-            <p><strong>Meeting Time:</strong> {{ $lead->meeting_time->format('F j, Y \a\t h:i A') }} (PKT)</p>
+            <p><strong>Meeting Time:</strong> {{ $lead->meeting_time->format('F j, Y \a\t h:i A') }} ({{ config('app.timezone', 'Asia/Karachi') }})</p>
             <p><strong>Website/Codebase State:</strong></p>
             <p>{{ $lead->website_url ?? 'N/A' }}</p>
         </div>
 
         <p>A Google Calendar event has been created. You can find the direct Google Meet link here:</p>
-        <p><a href="{{ $meetLink }}" className="link">Join Strategy Session</a></p>
+        <p><a href="{{ $meetLink }}" class="link">Join Strategy Session</a></p>
+        <p><strong>Meet Link:</strong> {{ $meetLink }}</p>
         
-        <div className="footer">
+        <div class="footer">
             <p>&copy; {{ date('Y') }} BKX Labs Admin. All rights reserved.</p>
         </div>
     </div>
