@@ -36,9 +36,11 @@ return [
     ],
 
     'google' => [
-        'client_id'     => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect'      => env('GOOGLE_REDIRECT_URL'),
+        'client_id'        => env('GOOGLE_CLIENT_ID'),
+        'client_secret'    => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'         => env('GOOGLE_REDIRECT_URL'),
+        'webhook_token'    => env('GOOGLE_WEBHOOK_TOKEN'),
+        'calendar_id'      => env('GOOGLE_CALENDAR_ID'),
     ],
 
     'lemon-squeezy' => [

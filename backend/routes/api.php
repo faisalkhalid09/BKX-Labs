@@ -16,6 +16,11 @@ Route::get('/test', function () {
 Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track']);
 
 Route::post('/contact', [ContactController::class, 'submit']);
+Route::post('/webhooks/calendar', [App\Http\Controllers\GoogleCalendarWebhookController::class, 'handle']);
+
+// Google OAuth Authorization
+Route::get('/google/auth', [App\Http\Controllers\GoogleAuthController::class, 'redirectToGoogle']);
+Route::get('/google/callback', [App\Http\Controllers\GoogleAuthController::class, 'handleGoogleCallback']);
 // Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 
 Route::group(['prefix' => 'restricted'], function () {

@@ -2,64 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
-
-use Laravel\Socialite\Two\InvalidStateException;
+use App\Models\Setting;
+use Google\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GoogleAuthController extends Controller
 {
+    /**
+     * Redirect to Google's OAuth 2.0 consent screen.
+     */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        $client = $this->getGoogleClient();
+        
+        // Force approval prompt to ensure we receive a refresh token
+        $authUrl = $client->createAuthUrl();
+
+        return redirect()->away($authUrl);
     }
 
-    public function handleGoogleCallback(\Illuminate\Http\Request $request)
+    /**
+     * Handle the Google OAuth callback.
+     */
+    public function handleGoogleCallback(Request $request)
     {
-        try {
-            $googleUser = Socialite::driver('google')->user();
-
-            // Security check: Ensure Google email is verified
-            if (!isset($googleUser->user['email_verified']) || $googleUser->user['email_verified'] !== true) {
-                \Log::alert('Google Auth Attempt with unverified email: ' . $googleUser->email);
-                return redirect()->route('login')->withErrors(['email' => 'Your Google account email must be verified to sign in.']);
-            }
-            
-            // Find user by google_id OR email
-            $user = User::where('google_id', $googleUser->id)
-                ->orWhere('email', $googleUser->email)
-                ->first();
-
-            if ($user) {
-                // Update google_id if it's missing (e.g. user previously signed up with email)
-                if (!$user->google_id) {
-                    $user->update(['google_id' => $googleUser->id]);
-                }
-            } else {
-                // Create new user
-                $user = User::create([
-                    'name'      => $googleUser->name,
-                    'email'     => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                    'password'  => null, // Password is not required for Google users
-                ]);
-
-                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
-            }
-
-            Auth::login($user, true);
-            $request->session()->regenerate();
-            $user->update(['last_login_at' => now()]);
-
-            return redirect()->intended(route('store.index'))->with('success', 'Logged in successfully with Google!');
-
-        } catch (InvalidStateException $e) {
-            \Log::warning('Google Auth State Mismatch (Session Timeout): ' . $request->ip());
-            return redirect()->route('login')->withErrors(['email' => 'Login session expired. Please try again.']);
-        } catch (\Exception $e) {
-            \Log::error('Google Auth Critical Error: ' . $e->getMessage());
-            return redirect()->route('login')->withErrors(['email' => 'Google authentication failed. Please try again.']);
+        if ($request->has('error')) {
+            return response()->json(['error' => 'Authentication failed: ' . $request->get('error')], 400);
         }
+
+        if (!$request->has('code')) {
+            return response()->json(['error' => 'No authorization code provided'], 400);
+        }
+
+        try {
+            $client = $this->getGoogleClient();
+            $token = $client->fetchAccessTokenWithAuthCode($request->get('code'));
+
+            if (isset($token['error'])) {
+                throw new \Exception('Error fetching access token: ' . $token['error_description']);
+            }
+
+            // We MUST have a refresh token to perform background tasks
+            if (isset($token['refresh_token'])) {
+                Setting::set('google_calendar_refresh_token', $token['refresh_token']);
+                
+                return response()->json([
+                    'message' => 'Successfully authenticated with Google!',
+                    'refresh_token_stored' => true,
+                    'status' => 'success'
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Authenticated, but no refresh token received. Try revoking access and authenticating again.',
+                    'refresh_token_stored' => false,
+                    'status' => 'warning'
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Google Auth Callback Error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred during authentication.'], 500);
+        }
+    }
+
+    /**
+     * Initialize the Google API Client for OAuth.
+     */
+    private function getGoogleClient()
+    {
+        $client = new Client();
+        $client->setClientId(config('services.google.client_id'));
+        $client->setClientSecret(config('services.google.client_secret'));
+        $client->setRedirectUri(config('services.google.redirect'));
+        $client->setAccessType('offline');
+        $client->setPrompt('select_account consent');
+        $client->addScope(\Google\Service\Calendar::CALENDAR_READONLY);
+
+        return $client;
     }
 }
