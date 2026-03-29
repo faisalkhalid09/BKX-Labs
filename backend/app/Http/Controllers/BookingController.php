@@ -143,7 +143,7 @@ class BookingController extends Controller
 
             $event = new Event([
                 'summary' => 'Strategy Call: ' . $request->first_name . ' ' . $request->last_name,
-                'description' => "Lead Email: {$request->email}\nWebsite/Codebase State: " . $request->website_url,
+                'description' => "Lead Email: {$request->email}\nWebsite/Codebase State: " . $request->website_url . "\nCodebase Notes: " . ($request->codebase_state ?? ''),
                 'start' => [
                     'dateTime' => $startTime->toRfc3339String(),
                     'timeZone' => config('app.timezone', 'Asia/Karachi'),
@@ -177,6 +177,7 @@ class BookingController extends Controller
                     'website_url' => $request->website_url,
                     'codebase_state' => $request->codebase_state,
                     'google_event_id' => $createdEvent->getId(),
+                    'meet_link' => $meetLink,
                 ]);
 
                 try {

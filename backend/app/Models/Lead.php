@@ -21,7 +21,8 @@ class Lead extends Model
         'meeting_time',
         'website_url',
         'codebase_state',
-        'google_event_id'
+        'google_event_id',
+        'meet_link',
     ];
 
     /**

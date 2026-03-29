@@ -103,6 +103,8 @@ class GoogleCalendarWebhookController extends Controller
         $eventId = $event->id;
         $attendees = $event->getAttendees();
         $description = $event->description ?? '';
+        $summary = $event->summary ?? '';
+        $meetLink = $event->getHangoutLink();
         
         if (empty($attendees)) {
             return;
@@ -121,24 +123,54 @@ class GoogleCalendarWebhookController extends Controller
         }
 
         $email = $leadAttendee->email;
-        $fullName = $leadAttendee->displayName ?? 'Valued Lead';
-        
-        $nameParts = explode(' ', $fullName, 2);
-        $firstName = $nameParts[0];
-        $lastName = $nameParts[1] ?? '';
+
+        // Prefer attendee name, then summary name, and only then fallback placeholder.
+        $fullName = trim($leadAttendee->displayName ?? '');
+        if ($fullName === '' && str_starts_with($summary, 'Strategy Call:')) {
+            $fullName = trim(substr($summary, strlen('Strategy Call:')));
+        }
+        if ($fullName === '') {
+            $fullName = 'Valued Lead';
+        }
+
+        $nameParts = preg_split('/\s+/', $fullName, 2);
+        $firstName = $nameParts[0] ?? 'Valued';
+        $lastName = $nameParts[1] ?? 'Lead';
 
         $meetingTime = Carbon::parse($event->start->dateTime ?? $event->start->date);
-        $codebaseState = trim($description);
+        $websiteUrl = null;
+        $codebaseState = null;
 
-        Lead::updateOrCreate(
-            ['google_event_id' => $eventId],
-            [
-                'first_name' => $firstName,
-                'last_name' => $lastName,
-                'email' => $email,
-                'meeting_time' => $meetingTime,
-                'codebase_state' => $codebaseState,
-            ]
-        );
+        if (preg_match('/Website\/Codebase State:\s*(.*)/i', $description, $websiteMatch) === 1) {
+            $websiteUrl = trim($websiteMatch[1]);
+        }
+
+        if (preg_match('/Codebase Notes:\s*(.*)/i', $description, $codebaseMatch) === 1) {
+            $codebaseState = trim($codebaseMatch[1]);
+        }
+
+        $lead = Lead::firstOrNew(['google_event_id' => $eventId]);
+        $lead->email = $email;
+        $lead->meeting_time = $meetingTime;
+
+        // Do not overwrite existing real names with fallback values from attendee metadata.
+        if (blank($lead->first_name) || in_array(strtolower((string) $lead->first_name), ['valued'], true)) {
+            $lead->first_name = $firstName;
+        }
+        if (blank($lead->last_name) || in_array(strtolower((string) $lead->last_name), ['lead'], true)) {
+            $lead->last_name = $lastName;
+        }
+
+        if (!blank($websiteUrl) && blank($lead->website_url)) {
+            $lead->website_url = $websiteUrl;
+        }
+        if (!blank($codebaseState) && blank($lead->codebase_state)) {
+            $lead->codebase_state = $codebaseState;
+        }
+        if (!blank($meetLink)) {
+            $lead->meet_link = $meetLink;
+        }
+
+        $lead->save();
     }
 }

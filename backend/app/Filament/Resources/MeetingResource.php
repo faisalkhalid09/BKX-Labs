@@ -60,7 +60,18 @@ class MeetingResource extends Resource
                 ->schema([
                     \Filament\Forms\Components\Textarea::make('website_url')
                         ->label('Website URL or Codebase State')
+                        ->rows(4)
                         ->required()
+                        ->columnSpanFull(),
+                    \Filament\Forms\Components\Textarea::make('codebase_state')
+                        ->label('Additional Codebase Notes')
+                        ->rows(4)
+                        ->nullable()
+                        ->columnSpanFull(),
+                    \Filament\Forms\Components\TextInput::make('meet_link')
+                        ->label('Google Meet Link')
+                        ->url()
+                        ->nullable()
                         ->columnSpanFull(),
                 ]),
         ]);
@@ -81,6 +92,16 @@ class MeetingResource extends Resource
                 Tables\Columns\TextColumn::make('meeting_time')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('website_url')
+                    ->label('Website / Codebase')
+                    ->limit(40)
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('meet_link')
+                    ->label('Meet Link')
+                    ->url(fn (Lead $record): ?string => $record->meet_link)
+                    ->openUrlInNewTab()
+                    ->formatStateUsing(fn (?string $state): string => filled($state) ? 'Open Link' : 'Not Available')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
