@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
@@ -78,6 +79,14 @@ const Contact = () => {
                                     <h4>Email</h4>
                                     <a href="mailto:contact@bkxlabs.com">contact@bkxlabs.com</a>
                                 </div>
+                            </div>
+
+                            <div className="urgent-callout">
+                                <h4>Need Priority Engineering Support?</h4>
+                                <p>
+                                    If your project needs immediate technical intervention, book a strategy call and we will assess risk, blockers, and next steps quickly.
+                                </p>
+                                <Link to="/schedule" className="urgent-callout-btn">Schedule a Priority Call</Link>
                             </div>
                         </div>
 
