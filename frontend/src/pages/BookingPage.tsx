@@ -22,12 +22,20 @@ const BookingPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string>('');
   const [slotsError, setSlotsError] = useState<string>('');
+  const [verificationError, setVerificationError] = useState<string>('');
+  const [verificationMessage, setVerificationMessage] = useState<string>('');
+  const [verificationCode, setVerificationCode] = useState<string>('');
+  const [codeSending, setCodeSending] = useState(false);
+  const [codeVerifying, setCodeVerifying] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
   const [timezone, setTimezone] = useState<string>('');
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
     email: '',
     website_url: '',
+    codebase_state: '',
   });
 
   useEffect(() => {
@@ -60,7 +68,7 @@ const BookingPage: React.FC = () => {
 
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedSlot) return;
+    if (!selectedSlot || !emailVerified) return;
 
     setSubmitError('');
     setSubmitting(true);
@@ -68,24 +76,21 @@ const BookingPage: React.FC = () => {
       const response = await fetch('/api/booking/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           ...formData,
           start_time: selectedSlot.start,
         }),
       });
 
-      let result: { status?: string; message?: string; error?: string; meet_link?: string } = {};
+      let result: { status?: string; message?: string; error?: string; success_token?: string } = {};
       const responseType = response.headers.get('content-type') || '';
       if (responseType.includes('application/json')) {
         result = await response.json();
       }
 
-      if (response.ok && result.status === 'success') {
-        navigate('/appointment-success', {
-          state: {
-            meetLink: result.meet_link || '',
-          },
-        });
+      if (response.ok && result.status === 'success' && result.success_token) {
+        navigate(`/appointment-success?token=${encodeURIComponent(result.success_token)}`);
       } else {
         setSubmitError(result.message || 'Booking could not be completed right now. Please try again or contact us directly.');
       }
@@ -94,6 +99,76 @@ const BookingPage: React.FC = () => {
       setSubmitError('Network error while booking. Please check your connection and try again.');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const sendVerificationCode = async () => {
+    if (!formData.email) {
+      setVerificationError('Enter your email first.');
+      return;
+    }
+
+    setVerificationError('');
+    setVerificationMessage('');
+    setCodeSending(true);
+
+    try {
+      const response = await fetch('/api/booking/email/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      const result: { status?: string; message?: string } = await response.json();
+
+      if (!response.ok || result.status !== 'success') {
+        setVerificationError(result.message || 'Could not send code. Try again.');
+        return;
+      }
+
+      setCodeSent(true);
+      setVerificationMessage('Verification code sent. Please check your inbox.');
+    } catch {
+      setVerificationError('Network error while sending code. Please try again.');
+    } finally {
+      setCodeSending(false);
+    }
+  };
+
+  const verifyCode = async () => {
+    if (!verificationCode || verificationCode.length !== 6) {
+      setVerificationError('Enter the 6-digit code sent to your email.');
+      return;
+    }
+
+    setVerificationError('');
+    setVerificationMessage('');
+    setCodeVerifying(true);
+
+    try {
+      const response = await fetch('/api/booking/email/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: formData.email, code: verificationCode }),
+      });
+
+      const result: { status?: string; message?: string } = await response.json();
+
+      if (!response.ok || result.status !== 'success') {
+        setVerificationError(result.message || 'Invalid code. Please try again.');
+        return;
+      }
+
+      setEmailVerified(true);
+      setCodeSent(false);
+      setVerificationCode('');
+      setVerificationMessage('Email verified. You can proceed to booking.');
+    } catch {
+      setVerificationError('Network error while verifying code. Please try again.');
+    } finally {
+      setCodeVerifying(false);
     }
   };
 
@@ -242,8 +317,57 @@ const BookingPage: React.FC = () => {
                   placeholder="Email Address"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) => {
+                    const email = e.target.value;
+                    setFormData({ ...formData, email });
+                    setEmailVerified(false);
+                    setCodeSent(false);
+                    setVerificationCode('');
+                    setVerificationError('');
+                    setVerificationMessage('');
+                  }}
                 />
+
+                {!emailVerified ? (
+                  <div className="email-verify-card">
+                    <div className="email-verify-top">
+                      <p>Verify your email before booking.</p>
+                      <button
+                        type="button"
+                        className="inline-verify-btn"
+                        onClick={sendVerificationCode}
+                        disabled={codeSending}
+                      >
+                        {codeSending ? 'Sending...' : 'Send Code'}
+                      </button>
+                    </div>
+
+                    {codeSent ? (
+                      <div className="verify-code-row">
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          maxLength={6}
+                          placeholder="Enter 6-digit code"
+                          value={verificationCode}
+                          onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                        />
+                        <button
+                          type="button"
+                          className="inline-verify-btn"
+                          onClick={verifyCode}
+                          disabled={codeVerifying}
+                        >
+                          {codeVerifying ? 'Verifying...' : 'Verify'}
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : (
+                  <div className="email-verified-badge">Email verified. You can continue.</div>
+                )}
+
                 <textarea
                   placeholder="Website URL or briefly describe the current state of your codebase"
                   rows={4}
@@ -251,11 +375,20 @@ const BookingPage: React.FC = () => {
                   value={formData.website_url}
                   onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
                 ></textarea>
+                <textarea
+                  placeholder="Additional codebase notes (optional)"
+                  rows={3}
+                  value={formData.codebase_state}
+                  onChange={(e) => setFormData({ ...formData, codebase_state: e.target.value })}
+                ></textarea>
 
-                <button type="submit" className="confirm-btn" disabled={submitting}>
+                {verificationMessage ? <p className="verify-message">{verificationMessage}</p> : null}
+                {verificationError ? <p className="verify-error">{verificationError}</p> : null}
+
+                <button type="submit" className="confirm-btn" disabled={submitting || !emailVerified}>
                   {submitting ? 'Confirming...' : 'Confirm Strategy Session'}
                 </button>
-                <p className="form-note">You will receive a Google Calendar invite with a Meet link.</p>
+                <p className="form-note">You will receive a Google Calendar invite with a Meet link after successful verification.</p>
               </form>
             </section>
           </div>

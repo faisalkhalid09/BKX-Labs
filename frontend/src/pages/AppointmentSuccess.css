@@ -66,6 +66,10 @@
     line-height: 1.6;
 }
 
+.appointment-success-container .subtitle.error {
+    color: #991b1b;
+}
+
 .appointment-success-container .info-card {
     background: #f8fbff;
     border: 1px solid rgba(30, 58, 138, 0.14);

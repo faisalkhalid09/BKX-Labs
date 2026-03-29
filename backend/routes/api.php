@@ -24,7 +24,10 @@ Route::get('/google/callback', [App\Http\Controllers\GoogleAuthController::class
 
 // Custom Booking Routes
 Route::get('/booking/slots', [App\Http\Controllers\BookingController::class, 'getAvailableSlots']);
+Route::post('/booking/email/send-code', [App\Http\Controllers\BookingController::class, 'sendEmailVerificationCode']);
+Route::post('/booking/email/verify-code', [App\Http\Controllers\BookingController::class, 'verifyEmailCode']);
 Route::post('/booking/create', [App\Http\Controllers\BookingController::class, 'createBooking']);
+Route::get('/booking/success/{token}', [App\Http\Controllers\BookingController::class, 'getBookingSuccess']);
 // Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 
 Route::group(['prefix' => 'restricted'], function () {

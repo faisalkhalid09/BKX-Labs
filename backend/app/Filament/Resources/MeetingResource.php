@@ -54,6 +54,11 @@ class MeetingResource extends Resource
                     \Filament\Forms\Components\TextInput::make('google_event_id')
                         ->label('Google Event ID')
                         ->disabled(),
+                    \Filament\Forms\Components\TextInput::make('meet_link')
+                        ->label('Google Meet Link')
+                        ->url()
+                        ->nullable()
+                        ->columnSpanFull(),
                 ])->columns(2),
 
             \Filament\Schemas\Components\Section::make('Project & Codebase State')
@@ -66,11 +71,6 @@ class MeetingResource extends Resource
                     \Filament\Forms\Components\Textarea::make('codebase_state')
                         ->label('Additional Codebase Notes')
                         ->rows(4)
-                        ->nullable()
-                        ->columnSpanFull(),
-                    \Filament\Forms\Components\TextInput::make('meet_link')
-                        ->label('Google Meet Link')
-                        ->url()
                         ->nullable()
                         ->columnSpanFull(),
                 ]),

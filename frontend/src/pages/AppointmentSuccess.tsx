@@ -1,11 +1,84 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './AppointmentSuccess.css';
 
+type SuccessPayload = {
+  first_name?: string;
+  meeting_time?: string;
+  meet_link?: string;
+};
+
 const AppointmentSuccess: React.FC = () => {
-  const location = useLocation();
-  const meetLink = (location.state as { meetLink?: string } | null)?.meetLink;
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [payload, setPayload] = useState<SuccessPayload | null>(null);
+
+  const token = useMemo(() => searchParams.get('token') || '', [searchParams]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/schedule', { replace: true });
+      return;
+    }
+
+    const run = async () => {
+      try {
+        const response = await fetch(`/api/booking/success/${encodeURIComponent(token)}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Cache-Control': 'no-store',
+          },
+        });
+
+        const result: { status?: string; data?: SuccessPayload; message?: string } = await response.json();
+
+        if (!response.ok || result.status !== 'success' || !result.data) {
+          setError(result.message || 'Invalid or expired success session.');
+          return;
+        }
+
+        setPayload(result.data);
+      } catch {
+        setError('Unable to validate booking session. Please check your email for meeting details.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    run();
+  }, [navigate, token]);
+
+  if (loading) {
+    return (
+      <div className="appointment-success-container">
+        <div className="success-content">
+          <h1>Validating your booking...</h1>
+          <p className="subtitle">Please wait while we verify your secure session.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !payload) {
+    return (
+      <div className="appointment-success-container">
+        <div className="success-content">
+          <h1>Session Invalid</h1>
+          <p className="subtitle">{error || 'This success page can only be opened after a valid booking.'}</p>
+          <div className="action-buttons">
+            <Link to="/schedule" className="success-btn primary">Book a Session</Link>
+            <Link to="/" className="success-btn secondary">Back to Home</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const meetLink = payload.meet_link || '';
 
   return (
     <div className="appointment-success-container">
@@ -16,7 +89,9 @@ const AppointmentSuccess: React.FC = () => {
           </svg>
         </div>
         <h1>Booking Confirmed!</h1>
-        <p className="subtitle">We've received your appointment request. Our team is excited to discuss your project rescue goals.</p>
+        <p className="subtitle">
+          We've received your appointment request{payload.first_name ? `, ${payload.first_name}` : ''}. Our team is excited to discuss your project rescue goals.
+        </p>
         
         <div className="info-card">
           <h3>What happens next?</h3>

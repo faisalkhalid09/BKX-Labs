@@ -274,6 +274,72 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+#bkx-booking-portal .email-verify-card {
+  border: 1px dashed rgba(30, 58, 138, 0.3);
+  border-radius: 10px;
+  background: #f8fbff;
+  padding: 12px;
+}
+
+#bkx-booking-portal .email-verify-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#bkx-booking-portal .email-verify-top p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+}
+
+#bkx-booking-portal .inline-verify-btn {
+  border: none;
+  border-radius: 10px;
+  background: var(--primary-gradient);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+#bkx-booking-portal .inline-verify-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+#bkx-booking-portal .verify-code-row {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+#bkx-booking-portal .email-verified-badge {
+  border: 1px solid rgba(22, 163, 74, 0.35);
+  color: #14532d;
+  background: #ecfdf3;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#bkx-booking-portal .verify-message {
+  margin: 0;
+  color: #1e3a8a;
+  font-size: 0.88rem;
+}
+
+#bkx-booking-portal .verify-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.88rem;
+}
+
 #bkx-booking-portal .confirm-btn {
   border: none;
   border-radius: 12px;
@@ -405,6 +471,10 @@
   }
 
   #bkx-booking-portal .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  #bkx-booking-portal .verify-code-row {
     grid-template-columns: 1fr;
   }
 }

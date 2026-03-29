@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingEmailVerificationCode;
+use App\Models\BookingEmailVerification;
 use App\Models\Lead;
 use App\Models\Setting;
 use Carbon\Carbon;
@@ -13,11 +15,160 @@ use Google\Service\Calendar\FreeBusyRequestItem;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
+    public function sendEmailVerificationCode(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $now = now();
+
+        $verification = BookingEmailVerification::firstOrNew(['email' => $email]);
+        if ($verification->last_sent_at && $verification->last_sent_at->gt($now->copy()->subSeconds(45))) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please wait a few seconds before requesting another code.',
+            ], 429);
+        }
+
+        $code = (string) random_int(100000, 999999);
+
+        $verification->fill([
+            'code_hash' => Hash::make($code),
+            'code_expires_at' => $now->copy()->addMinutes(10),
+            'verified_at' => null,
+            'session_token_hash' => null,
+            'session_expires_at' => null,
+            'attempts' => 0,
+            'last_sent_at' => $now,
+        ]);
+        $verification->save();
+
+        Mail::to($email)->send(new BookingEmailVerificationCode($code));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Verification code sent to your email.',
+        ]);
+    }
+
+    public function verifyEmailCode(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255',
+            'code' => 'required|digits:6',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $code = trim($validated['code']);
+        $verification = BookingEmailVerification::where('email', $email)->first();
+
+        if (! $verification || ! $verification->code_hash || ! $verification->code_expires_at) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please request a verification code first.',
+            ], 422);
+        }
+
+        if ($verification->code_expires_at->isPast()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Verification code expired. Please request a new code.',
+            ], 422);
+        }
+
+        if ($verification->attempts >= 5) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Too many failed attempts. Request a new code.',
+            ], 429);
+        }
+
+        if (! Hash::check($code, $verification->code_hash)) {
+            $verification->increment('attempts');
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid verification code.',
+            ], 422);
+        }
+
+        $sessionToken = Str::random(64);
+        $verification->fill([
+            'verified_at' => now(),
+            'session_token_hash' => hash('sha256', $sessionToken),
+            'session_expires_at' => now()->addMinutes(30),
+            'code_hash' => null,
+            'code_expires_at' => null,
+            'attempts' => 0,
+        ]);
+        $verification->save();
+
+        $secureCookies = config('session.secure_cookie', app()->environment('production'));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Email verified successfully.',
+        ])->cookie(
+            'bkx_booking_email_session',
+            $sessionToken,
+            30,
+            '/',
+            null,
+            $secureCookies,
+            true,
+            false,
+            'Strict'
+        );
+    }
+
+    public function getBookingSuccess(Request $request, string $token)
+    {
+        $cookieToken = (string) $request->cookie('bkx_booking_access', '');
+        if ($cookieToken === '') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized success page access.',
+            ], 403);
+        }
+
+        $lead = Lead::where('success_access_token_hash', hash('sha256', $token))
+            ->where('success_access_expires_at', '>=', now())
+            ->first();
+
+        if (! $lead) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Success session expired or invalid.',
+            ], 404);
+        }
+
+        if (! hash_equals((string) $lead->success_cookie_hash, hash('sha256', $cookieToken))) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Access mismatch for this success session.',
+            ], 403);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'first_name' => $lead->first_name,
+                'meeting_time' => optional($lead->meeting_time)?->toIso8601String(),
+                'meet_link' => $lead->meet_link,
+            ],
+        ])->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->header('Pragma', 'no-cache');
+    }
+
     protected function getGoogleClient()
     {
         $client = new Client();
@@ -135,6 +286,30 @@ class BookingController extends Controller
                 'codebase_state' => 'nullable|string',
             ]);
 
+            $email = strtolower(trim($request->email));
+            $emailSessionToken = (string) $request->cookie('bkx_booking_email_session', '');
+
+            if ($emailSessionToken === '') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Please verify your email before booking.',
+                ], 403);
+            }
+
+            $verification = BookingEmailVerification::where('email', $email)->first();
+            $isVerified = $verification
+                && $verification->verified_at
+                && $verification->session_expires_at
+                && $verification->session_expires_at->isFuture()
+                && hash_equals((string) $verification->session_token_hash, hash('sha256', $emailSessionToken));
+
+            if (! $isVerified) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Email verification is required before booking.',
+                ], 403);
+            }
+
             $client = $this->getGoogleClient();
             $service = new Calendar($client);
 
@@ -166,39 +341,68 @@ class BookingController extends Controller
             $optParams = ['conferenceDataVersion' => 1];
             $createdEvent = $service->events->insert(config('services.google.calendar_id', 'primary'), $event, $optParams);
             $meetLink = $createdEvent->getHangoutLink();
+            $successToken = Str::random(64);
+            $successCookie = Str::random(64);
 
-            // Persist lead as a secondary step. If this fails, do not fail the booking itself.
             try {
                 $lead = Lead::create([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
-                    'email' => $request->email,
+                    'email' => $email,
                     'meeting_time' => $startTime,
                     'website_url' => $request->website_url,
                     'codebase_state' => $request->codebase_state,
                     'google_event_id' => $createdEvent->getId(),
                     'meet_link' => $meetLink,
+                    'success_access_token_hash' => hash('sha256', $successToken),
+                    'success_cookie_hash' => hash('sha256', $successCookie),
+                    'success_access_expires_at' => now()->addMinutes(45),
                 ]);
 
                 try {
-                    \Illuminate\Support\Facades\Mail::to($lead->email)
+                    Mail::to($lead->email)
                         ->send(new \App\Mail\BookingConfirmation($lead, $meetLink));
 
-                    \Illuminate\Support\Facades\Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
+                    Mail::to(config('mail.contact_recipient', 'contact@bkxlabs.com'))
                         ->send(new \App\Mail\BookingNotification($lead, $meetLink));
                 } catch (\Throwable $e) {
                     Log::error('Booking email error: ' . $e->getMessage());
                 }
             } catch (QueryException $e) {
                 Log::error('Lead save failed after successful calendar booking: ' . $e->getMessage());
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Booking created but confirmation storage failed. Please contact support with your email.',
+                ], 500);
             }
+
+            $verification->fill([
+                'session_token_hash' => null,
+                'session_expires_at' => null,
+            ]);
+            $verification->save();
+
+            $secureCookies = config('session.secure_cookie', app()->environment('production'));
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Meeting booked successfully! Please check your email.',
-                'meet_link' => $meetLink,
+                'success_token' => $successToken,
                 'event_id' => $createdEvent->getId(),
-            ]);
+            ])
+                ->cookie(
+                    'bkx_booking_access',
+                    $successCookie,
+                    45,
+                    '/',
+                    null,
+                    $secureCookies,
+                    true,
+                    false,
+                    'Strict'
+                )
+                ->withoutCookie('bkx_booking_email_session');
         } catch (\Exception $e) {
             Log::error('Booking error: ' . $e->getMessage());
 

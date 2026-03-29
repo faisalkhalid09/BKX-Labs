@@ -129,6 +129,20 @@ class GoogleCalendarWebhookController extends Controller
         if ($fullName === '' && str_starts_with($summary, 'Strategy Call:')) {
             $fullName = trim(substr($summary, strlen('Strategy Call:')));
         }
+        if (
+            $fullName === ''
+            || strtolower($fullName) === 'valued lead'
+            || strtolower($fullName) === 'guest'
+        ) {
+            $localPart = strtolower((string) strtok($email, '@'));
+            $tokens = preg_split('/[._\-]+/', $localPart);
+            $tokens = array_values(array_filter($tokens, static fn ($token) => $token !== ''));
+            if (!empty($tokens)) {
+                $first = ucfirst($tokens[0]);
+                $last = isset($tokens[1]) ? ucfirst($tokens[1]) : '';
+                $fullName = trim($first . ' ' . $last);
+            }
+        }
         if ($fullName === '') {
             $fullName = 'Valued Lead';
         }

@@ -23,6 +23,9 @@ class Lead extends Model
         'codebase_state',
         'google_event_id',
         'meet_link',
+        'success_access_token_hash',
+        'success_cookie_hash',
+        'success_access_expires_at',
     ];
 
     /**
@@ -32,5 +35,6 @@ class Lead extends Model
      */
     protected $casts = [
         'meeting_time' => 'datetime',
+        'success_access_expires_at' => 'datetime',
     ];
 }
