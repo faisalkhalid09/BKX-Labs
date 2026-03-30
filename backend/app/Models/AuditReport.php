@@ -63,45 +63,26 @@ class AuditReport extends Model
     }
 
     /**
-     * Generates a structural SVG gauge (using SVG Paths) for perfect DOMPDF compatibility.
+     * Generates a structural SVG gauge compatible with DOMPDF.
      */
     public function getScoreSvg(int $score): string
     {
         $color = self::getScoreColor($score);
         $radius = 42;
-        $cx = 50;
-        $cy = 50;
+        $circumference = 2 * M_PI * $radius;
+        $offset = $circumference - ($score / 100) * $circumference;
         
         if ($score >= 100) {
-            return "<svg width=\"140\" height=\"140\" viewBox=\"0 0 100 100\">
-                <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"12\" />
-                <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"$color\" stroke-width=\"12\" />
-                <text x=\"50\" y=\"57\" font-family=\"sans-serif\" font-size=\"24\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">100%</text>
-            </svg>";
+            $offset = 0;
         }
 
-        if ($score <= 0) {
-            return "<svg width=\"140\" height=\"140\" viewBox=\"0 0 100 100\">
-                <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"12\" />
-                <text x=\"50\" y=\"57\" font-family=\"sans-serif\" font-size=\"24\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">0%</text>
-            </svg>";
-        }
-
-        $angle = ($score / 100) * 360;
-        $startAngle = -pi() / 2;
-        $endAngle = $startAngle + deg2rad($angle);
-
-        $x1 = $cx + $radius * cos($startAngle);
-        $y1 = $cy + $radius * sin($startAngle);
-        $x2 = $cx + $radius * cos($endAngle);
-        $y2 = $cy + $radius * sin($endAngle);
-        
-        $largeArcFlag = $angle > 180 ? 1 : 0;
-
-        return "<svg width=\"140\" height=\"140\" viewBox=\"0 0 100 100\">
-            <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"12\" />
-            <path d=\"M $x1 $y1 A $radius $radius 0 $largeArcFlag 1 $x2 $y2\" fill=\"none\" stroke=\"$color\" stroke-width=\"12\" stroke-linecap=\"round\" />
-            <text x=\"50\" y=\"57\" font-family=\"sans-serif\" font-size=\"24\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">$score%</text>
+        return "
+        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"130\" height=\"130\" viewBox=\"0 0 100 100\">
+            <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"10\" />
+            <circle cx=\"50\" cy=\"50\" r=\"$radius\" fill=\"none\" stroke=\"$color\" stroke-width=\"10\"
+                stroke-dasharray=\"$circumference\" stroke-dashoffset=\"$offset\"
+                stroke-linecap=\"round\" transform=\"rotate(-90 50 50)\" />
+            <text x=\"50\" y=\"58\" font-family=\"sans-serif\" font-size=\"22\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">$score%</text>
         </svg>";
     }
 }

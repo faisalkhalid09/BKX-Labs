@@ -10,7 +10,8 @@
         body { font-family: 'Helvetica', 'Arial', sans-serif; background: #0a1120; color: #cbd5e1; margin: 0; padding: 0; font-size: 14px; }
         
         .page-break { page-break-after: always; }
-        .page-container { width: 100%; height: 297mm; position: relative; padding: 80px 60px; overflow: hidden; }
+        /* Removed width: 100% and height: 297mm to prevent dompdf overflow/blank pages */
+        .page-container { position: relative; padding: 60px 50px; }
 
         /* Typography */
         h1, h2, h3 { margin: 0; padding: 0; }
