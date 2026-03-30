@@ -63,33 +63,21 @@ class AuditReport extends Model
     }
 
     /**
-     * Generates an absolute vanilla SVG gauge with zero `transform` attributes to guarantee DOMPDF rendering.
+     * Generates a sleek, purely HTML/CSS resilient telemetry bar to completely bypass 
+     * DOMPDF's broken SVG rasterizer. This is 100% crash proof inside dompdf.
      */
     public function getScoreSvg(int $score): string
     {
         $color = self::getScoreColor($score);
-        $radius = 50;
-        $cx = 65;
-        $cy = 65;
         
-        $circumference = 2 * M_PI * $radius;
-        $offset = $circumference - ($score / 100) * $circumference;
-        
-        // Exact 2 decimal formatting
-        $circStr = number_format($circumference, 2, '.', '');
-        $offsetStr = number_format($offset, 2, '.', '');
-        
-        if ($score >= 100) {
-            $offsetStr = "0.00";
-        }
-
-        // We use explicit presentation attributes instead of `style="..."` and remove `<transform>` 
-        // to completely bypass DOMPDF's parser crashes. 
         return '
-        <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" viewBox="0 0 130 130">
-            <circle cx="' . $cx . '" cy="' . $cy . '" r="' . $radius . '" fill-opacity="0" stroke="#1e293b" stroke-width="12" />
-            <circle cx="' . $cx . '" cy="' . $cy . '" r="' . $radius . '" fill-opacity="0" stroke="' . $color . '" stroke-width="12" stroke-dasharray="' . $circStr . '" stroke-dashoffset="' . $offsetStr . '" stroke-linecap="round" />
-            <text x="' . $cx . '" y="73" font-family="sans-serif" font-size="24" fill="#ffffff" text-anchor="middle" font-weight="bold">' . $score . '%</text>
-        </svg>';
+        <div style="width: 100%; text-align: center; margin-bottom: 40px; margin-top: 15px;">
+            <div style="font-size: 50px; font-family: sans-serif; font-weight: bold; color: #ffffff; letter-spacing: -2px; margin-bottom: 25px;">
+                ' . $score . '<span style="font-size: 24px; color: #64748b; margin-left: 2px;">%</span>
+            </div>
+            <div style="width: 130px; height: 8px; background-color: #1e293b; margin: 0 auto; border-radius: 4px; overflow: hidden; text-align: left;">
+                <div style="width: ' . $score . '%; height: 8px; background-color: ' . $color . '; border-radius: 4px;"></div>
+            </div>
+        </div>';
     }
 }
