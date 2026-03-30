@@ -63,7 +63,7 @@ class AuditReport extends Model
     }
 
     /**
-     * Generates a precise SVG gauge ensuring DOMPDF/php-svg-lib renders primitive shapes explicitly.
+     * Generates an absolute vanilla SVG gauge with zero `transform` attributes to guarantee DOMPDF rendering.
      */
     public function getScoreSvg(int $score): string
     {
@@ -75,7 +75,7 @@ class AuditReport extends Model
         $circumference = 2 * M_PI * $radius;
         $offset = $circumference - ($score / 100) * $circumference;
         
-        // Format to exact 2 decimal strings to prevent php-svg-lib choking on long floats
+        // Exact 2 decimal formatting
         $circStr = number_format($circumference, 2, '.', '');
         $offsetStr = number_format($offset, 2, '.', '');
         
@@ -83,11 +83,13 @@ class AuditReport extends Model
             $offsetStr = "0.00";
         }
 
-        return "
-        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"130\" height=\"130\" viewBox=\"0 0 130 130\">
-            <circle cx=\"$cx\" cy=\"$cy\" r=\"$radius\" style=\"fill:none; stroke:#1e293b; stroke-width:12px;\" />
-            <circle cx=\"$cx\" cy=\"$cy\" r=\"$radius\" style=\"fill:none; stroke:$color; stroke-width:12px; stroke-dasharray:$circStr; stroke-dashoffset:$offsetStr; stroke-linecap:round;\" transform=\"rotate(-90 $cx $cy)\" />
-            <text x=\"$cx\" y=\"73\" font-family=\"sans-serif\" font-size=\"24\" fill=\"#ffffff\" text-anchor=\"middle\" font-weight=\"bold\">$score%</text>
-        </svg>";
+        // We use explicit presentation attributes instead of `style="..."` and remove `<transform>` 
+        // to completely bypass DOMPDF's parser crashes. 
+        return '
+        <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" viewBox="0 0 130 130">
+            <circle cx="' . $cx . '" cy="' . $cy . '" r="' . $radius . '" fill-opacity="0" stroke="#1e293b" stroke-width="12" />
+            <circle cx="' . $cx . '" cy="' . $cy . '" r="' . $radius . '" fill-opacity="0" stroke="' . $color . '" stroke-width="12" stroke-dasharray="' . $circStr . '" stroke-dashoffset="' . $offsetStr . '" stroke-linecap="round" />
+            <text x="' . $cx . '" y="73" font-family="sans-serif" font-size="24" fill="#ffffff" text-anchor="middle" font-weight="bold">' . $score . '%</text>
+        </svg>';
     }
 }
