@@ -54,18 +54,18 @@
         .border-blue { border-left: 8px solid #3b82f6; }
 
         /* Roadmap */
-        .timeline-table { width: 90%; margin-left: 5%; margin-top: 50px; border-collapse: collapse; }
-        .timeline-table td { padding-bottom: 60px; vertical-align: top; }
+        .timeline-table { width: 90%; margin-left: 5%; margin-top: 35px; border-collapse: collapse; }
+        .timeline-table td { padding-bottom: 35px; vertical-align: top; }
         
         .tl-marker { width: 40px; border-right: 2px solid #005066; text-align: right; }
-        .tl-dot { width: 20px; height: 20px; border-radius: 10px; background-color: #00e5ff; float: right; margin-right: -11px; margin-top: 6px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .tl-dot { width: 20px; height: 20px; border-radius: 10px; background-color: #00e5ff; float: right; margin-right: -11px; margin-top: 6px; }
         .tl-content { padding-left: 50px; }
         
-        .phase-dur { font-size: 13px; color: #00e5ff; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; margin-bottom: 12px; }
-        .phase-name { font-size: 28px; color: #ffffff; font-weight: bold; margin-bottom: 15px; }
-        .phase-desc { font-size: 16px; color: #cbd5e1; line-height: 1.8; }
+        .phase-dur { font-size: 12px; color: #00e5ff; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; margin-bottom: 8px; }
+        .phase-name { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 10px; }
+        .phase-desc { font-size: 15px; color: #cbd5e1; line-height: 1.6; }
 
-        .verdict-banner { background-color: #ef4444; color: #ffffff; padding: 35px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; margin-top: 60px; border-radius: 8px; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5); }
+        .verdict-banner { background-color: #ef4444; color: #ffffff; padding: 22px; text-align: center; font-size: 26px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; margin-top: 40px; border-radius: 6px; page-break-inside: avoid; }
     </style>
 </head>
 <body>
@@ -218,7 +218,7 @@
             if ($report->status_verdict === 'PROCEED WITH CAUTION') $btnColor = '#f97316'; // Orange
         @endphp
 
-        <div class="verdict-banner" style="background-color: {{ $btnColor }}; box-shadow: 0 10px 30px {{ $btnColor }}66;">
+        <div class="verdict-banner" style="background-color: {{ $btnColor }};">
             {{ $report->status_verdict }}
         </div>
         
