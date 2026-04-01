@@ -39,4 +39,18 @@ class WebsiteVisitor extends Model
 
         return "{$browser} on {$os}";
     }
+
+    /**
+     * Create a consistent, shortened alias like 'User 9F8A' from an IP address
+     * so behavior can be tracked visually without keeping raw IPs in mind.
+     */
+    public function getVisitorIdAttribute(): string
+    {
+        if (empty($this->ip_address)) {
+            return 'Unknown User';
+        }
+        
+        $hash = strtoupper(substr(md5($this->ip_address), 0, 4));
+        return "User {$hash}";
+    }
 }

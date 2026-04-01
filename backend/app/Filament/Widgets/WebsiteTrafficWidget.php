@@ -39,11 +39,12 @@ class WebsiteTrafficWidget extends BaseWidget
                         default     => 'gray',
                     }),
                     
-                Tables\Columns\TextColumn::make('ip_address')
-                    ->label('Visitor IP')
+                Tables\Columns\TextColumn::make('visitor_id')
+                    ->label('Visitor Identity')
+                    ->description(fn (WebsiteVisitor $record): string => $record->ip_address ?? 'Unknown IP')
                     ->copyable()
-                    ->searchable()
-                    ->icon('heroicon-o-computer-desktop'),
+                    ->searchable(['ip_address'])
+                    ->icon('heroicon-o-user'),
                     
                 Tables\Columns\TextColumn::make('device')
                     ->label('Hardware / OS')
