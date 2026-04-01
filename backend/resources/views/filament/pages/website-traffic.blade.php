@@ -4,6 +4,11 @@
             This page shows the traffic statistics for the main BKX Labs website (Home, Services, etc.), separate from the store traffic.
         </p>
         
-        {{-- Widgets are automatically injected from getHeaderWidgets --}}
+        <div class="mt-6">
+            <x-filament-widgets::widgets
+                :widgets="$this->getVisibleHeaderWidgets()"
+                :columns="$this->getHeaderWidgetsColumns()"
+            />
+        </div>
     </div>
 </x-filament-panels::page>

@@ -2,26 +2,32 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\WebsitePageView;
+use App\Models\WebsiteVisitor;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Database\Eloquent\Builder;
 
 class WebsiteTrafficWidget extends BaseWidget
 {
     protected static ?int $sort = 5;
-    protected static ?string $heading = 'Website Traffic — Last 7 Days';
+    protected static ?string $heading = 'Advanced Traffic Forensics';
+    protected int | string | array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
             ->query(
-                WebsitePageView::query()
-                    ->where('date', '>=', now()->subDays(6)->toDateString())
-                    ->orderByDesc('date')
+                WebsiteVisitor::query()->latest()
             )
             ->columns([
-                Tables\Columns\TextColumn::make('date')->date('D, M d Y')->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Visited At')
+                    ->dateTime('D, M d Y - h:i A')
+                    ->sortable()
+                    ->badge()
+                    ->color('info'),
+                    
                 Tables\Columns\TextColumn::make('page')
                     ->badge()
                     ->color(fn (string $state): string => match($state) {
@@ -32,8 +38,35 @@ class WebsiteTrafficWidget extends BaseWidget
                         'contact'   => 'danger',
                         default     => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('count')->label('Visits')->sortable(),
+                    
+                Tables\Columns\TextColumn::make('ip_address')
+                    ->label('Visitor IP')
+                    ->copyable()
+                    ->searchable()
+                    ->icon('heroicon-o-computer-desktop'),
+                    
+                Tables\Columns\TextColumn::make('device')
+                    ->label('Hardware / OS')
+                    ->searchable(['user_agent']),
             ])
-            ->paginated(false);
+            ->filters([
+                Tables\Filters\SelectFilter::make('timeline')
+                    ->label('Data Range')
+                    ->options([
+                        '7'   => 'Last 7 Days',
+                        '30'  => 'Last 30 Days',
+                        '90'  => 'Last 90 Days',
+                        '120' => 'Last 120 Days',
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if ($value = $data['value']) {
+                            $query->where('created_at', '>=', now()->subDays((int)$value));
+                        }
+                    })
+                    ->default('7'),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->paginated([10, 25, 50, 'all'])
+            ->striped();
     }
 }

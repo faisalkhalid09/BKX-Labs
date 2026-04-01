@@ -17,14 +17,13 @@ class WebsiteTrafficController extends Controller
         ]);
 
         try {
-            // Use dispatch to track after response for better performance
-            dispatch(function () use ($validated) {
-                try {
-                    WebsitePageView::track($validated['page'] ?? 'home');
-                } catch (\Throwable $e) {
-                    \Log::error('Failed to track website page view: ' . $e->getMessage());
-                }
-            })->afterResponse();
+            // Write direct to the new telemetry db (approx ~1ms latency) immediately 
+            // bypassing the unstable afterResponse queue hooks.
+            \App\Models\WebsiteVisitor::create([
+                'page' => $validated['page'] ?? 'home',
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
 
             return response()->json(['status' => 'success']);
         } catch (\Exception $e) {

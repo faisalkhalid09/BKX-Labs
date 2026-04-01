@@ -24,7 +24,7 @@ class SecurityHeaders
                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.lemonsqueezy.com https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
                "font-src 'self' https://fonts.gstatic.com data:; " .
-               "img-src 'self' data: https://lh3.googleusercontent.com https://app.lemonsqueezy.com; " .
+               "img-src 'self' data: https://lh3.googleusercontent.com https://app.lemonsqueezy.com https://ui-avatars.com; " .
                "frame-src https://app.lemonsqueezy.com https://accounts.google.com; " .
                "connect-src 'self' https://app.lemonsqueezy.com;";
         $response->headers->set('Content-Security-Policy', $csp);
