@@ -12,7 +12,7 @@ class WebsiteTraffic extends Page
         return 'heroicon-o-chart-bar';
     }
 
-    protected static string $view = 'filament.pages.website-traffic';
+    protected string $view = 'filament.pages.website-traffic';
 
     public static function getNavigationLabel(): string
     {
