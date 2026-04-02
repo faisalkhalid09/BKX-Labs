@@ -18,7 +18,7 @@ class WebsiteTrafficWidget extends BaseWidget
     {
         return $table
             ->query(
-                WebsiteVisitor::query()->latest()
+                WebsiteVisitor::query()->latest()->limit(500)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
