@@ -6,7 +6,7 @@
 
 @push('styles')
 <style>
-    @keyframes float {
+    @@keyframes float {
         0%, 100% { transform: translateY(0) rotate(0); }
         50% { transform: translateY(-20px) rotate(2deg); }
     }
@@ -59,7 +59,7 @@
 </section>
 
 <!-- Main Content Area -->
-<div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12" style="min-height:60vh;">
     @livewire('product-catalog')
 </div>
 @endsection

@@ -54,7 +54,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=block" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=optional"
+          rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=block" rel="stylesheet"/></noscript>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined {
@@ -157,7 +159,7 @@
                 @endauth
                 
                 @if(!($isLegalPage ?? false))
-                <div class="relative">
+                <div class="relative" style="min-width:40px;min-height:40px;">
                     @livewire('cart')
                 </div>
                 @endif
@@ -168,7 +170,9 @@
         <!-- Mobile Cart & Menu -->
         <div class="lg:hidden flex items-center gap-2">
             @if(!($isLegalPage ?? false))
-                @livewire('cart')
+                <div style="min-width:40px;min-height:40px;display:inline-flex;align-items:center;">
+                    @livewire('cart')
+                </div>
             @endif
             <button class="mobile-menu-btn w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" id="mobile-menu-toggle" aria-label="Toggle menu">
                 <span class="material-symbols-outlined text-[20px] leading-none text-slate-900 dark:text-slate-100">menu</span>
