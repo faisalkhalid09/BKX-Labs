@@ -76,7 +76,6 @@
                                 </div>
                             @endif
                         </a>
-
                         @unless($isOwned)
                             <!-- Quick Action Button -->
                             <button class="absolute bottom-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-primary p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-primary hover:text-white disabled:opacity-50" 
@@ -85,7 +84,7 @@
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined">add_shopping_cart</span>
                                 <span wire:loading wire:target="addToCart({{ $product->id }})" class="material-symbols-outlined animate-spin">refresh</span>
                             </button>
-                        @endif
+                        @endunless
                     </div>
 
                     <div class="catalog-product-body pt-3 sm:pt-4 pb-2 px-2 sm:px-3 flex flex-col {{ $product->is_promoted ? 'bg-white' : '' }}">
