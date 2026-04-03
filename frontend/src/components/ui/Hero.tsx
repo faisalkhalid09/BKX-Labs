@@ -37,15 +37,18 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         const resizeCanvas = () => {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
+            drawIdle(); // Redraw static grid on resize
         };
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Mouse tracking - store both client and canvas-relative positions
+        // Mouse tracking
         let mouseX = -1000;
         let mouseY = -1000;
         let lastClientX = -1000;
         let lastClientY = -1000;
+        let rafId: number | null = null;
+        let isAnimating = false;
 
         const updateMousePosition = () => {
             const rect = canvas.getBoundingClientRect();
@@ -57,6 +60,10 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             lastClientX = e.clientX;
             lastClientY = e.clientY;
             updateMousePosition();
+            if (!isAnimating) {
+                isAnimating = true;
+                rafId = requestAnimationFrame(animate);
+            }
         };
 
         const handleMouseLeave = () => {
@@ -64,9 +71,9 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             mouseY = -1000;
             lastClientX = -1000;
             lastClientY = -1000;
+            // Keep animating until all points settle back
         };
 
-        // Update mouse position on scroll
         const handleScroll = () => {
             if (lastClientX !== -1000 && lastClientY !== -1000) {
                 updateMousePosition();
@@ -81,17 +88,43 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         const gridSize = 50;
         const interactionRadius = 150;
         const maxDisplacement = 30;
-        const trailDuration = 3000; // Effect lasts exactly 1 second
+        const trailDuration = 3000;
 
-        // Store grid points with their state
         const gridPoints: Map<string, GridPoint> = new Map();
 
-        // Animation loop
+        // Draw a static idle grid (no animation, no rAF)
+        const drawIdle = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                for (let y = 0; y < canvas.height; y += gridSize) {
+                    const fadeStart = canvas.height * 0.6;
+                    let opacity = 0.12;
+                    if (y > fadeStart) {
+                        opacity *= 1 - (y - fadeStart) / (canvas.height - fadeStart);
+                    }
+                    ctx.strokeStyle = `rgba(30, 58, 138, ${opacity})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x, y + gridSize);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + gridSize, y);
+                    ctx.stroke();
+                }
+            }
+        };
+
+        // Draw the initial static grid immediately (no rAF needed)
+        drawIdle();
+
+        // Animation loop — only runs when there's active interaction
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const currentTime = Date.now();
+            let hasActiveAnimation = false;
 
-            // Draw grid with smooth ripple/wave effect
             for (let x = 0; x < canvas.width; x += gridSize) {
                 for (let y = 0; y < canvas.height; y += gridSize) {
                     const key = `${x},${y}`;
@@ -105,34 +138,26 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                         gridPoints.set(key, point);
                     }
 
-                    // Create smooth wave/ripple effect
                     if (distance < interactionRadius) {
                         const normalizedDistance = distance / interactionRadius;
-
-                        // Create ripple waves using sine function
-                        const waveFrequency = 3;
-                        const wave = Math.sin(normalizedDistance * Math.PI * waveFrequency);
-
-                        // Smooth falloff from center
+                        const wave = Math.sin(normalizedDistance * Math.PI * 3);
                         const falloff = Math.pow(1 - normalizedDistance, 2);
                         const strength = wave * falloff;
-
-                        // Calculate perpendicular displacement for flowing effect
                         const angle = Math.atan2(dy, dx);
                         point.offsetX = Math.cos(angle) * strength * maxDisplacement;
                         point.offsetY = Math.sin(angle) * strength * maxDisplacement;
-
                         point.opacity = 0.12 + Math.abs(strength) * 0.25;
                         point.lastInteraction = currentTime;
+                        hasActiveAnimation = true;
                     } else {
-                        // Apply trailing effect - fade back to original position
                         const timeSinceInteraction = currentTime - point.lastInteraction;
-                        if (timeSinceInteraction < trailDuration) {
+                        if (timeSinceInteraction < trailDuration && (Math.abs(point.offsetX) > 0.1 || Math.abs(point.offsetY) > 0.1)) {
                             const fadeProgress = timeSinceInteraction / trailDuration;
                             const easeOut = 1 - Math.pow(1 - fadeProgress, 3);
                             point.offsetX *= (1 - easeOut);
                             point.offsetY *= (1 - easeOut);
                             point.opacity = 0.12 + (point.opacity - 0.12) * (1 - easeOut);
+                            hasActiveAnimation = true;
                         } else {
                             point.offsetX = 0;
                             point.offsetY = 0;
@@ -140,24 +165,20 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                         }
                     }
 
-                    // Apply fade based on position (fade at bottom)
                     const fadeStart = canvas.height * 0.6;
                     let finalOpacity = point.opacity;
                     if (y > fadeStart) {
-                        const fadeProgress = (y - fadeStart) / (canvas.height - fadeStart);
-                        finalOpacity *= (1 - fadeProgress);
+                        finalOpacity *= 1 - (y - fadeStart) / (canvas.height - fadeStart);
                     }
 
                     ctx.strokeStyle = `rgba(30, 58, 138, ${finalOpacity})`;
                     ctx.lineWidth = 1;
 
-                    // Vertical line
                     ctx.beginPath();
                     ctx.moveTo(x + point.offsetX, y + point.offsetY);
                     ctx.lineTo(x + point.offsetX, y + gridSize + point.offsetY);
                     ctx.stroke();
 
-                    // Horizontal line
                     ctx.beginPath();
                     ctx.moveTo(x + point.offsetX, y + point.offsetY);
                     ctx.lineTo(x + gridSize + point.offsetX, y + point.offsetY);
@@ -165,18 +186,25 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
                 }
             }
 
-            requestAnimationFrame(animate);
+            if (hasActiveAnimation) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                // All settled — stop the loop and draw the clean static grid
+                isAnimating = false;
+                rafId = null;
+                drawIdle();
+            }
         };
-
-        animate();
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
             heroDiv.removeEventListener('mousemove', handleMouseMove);
             heroDiv.removeEventListener('mouseleave', handleMouseLeave);
             window.removeEventListener('scroll', handleScroll);
+            if (rafId !== null) cancelAnimationFrame(rafId);
         };
     }, []);
+
 
     return (
         <div className="hero" ref={heroRef}>

@@ -491,8 +491,11 @@ h3 {
 }
 
 .internal-nav-icon {
-    font-size: 2rem;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
 }
 
 .internal-nav-card h3 {
