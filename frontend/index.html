@@ -115,9 +115,27 @@
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 
-  <!-- Google AdSense — loaded after page content so it doesn't block LCP -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8538157876247266"
-    crossorigin="anonymous"></script>
+  <!-- Google AdSense — injected only when browser is idle, never during initial load -->
+  <script>
+    (function() {
+      var loadAds = function() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8538157876247266';
+        s.crossOrigin = 'anonymous';
+        document.head.appendChild(s);
+      };
+      // Load ads only when browser is idle (after page content is interactive)
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadAds, { timeout: 4000 });
+      } else {
+        // Fallback for Safari: wait 3s after load
+        window.addEventListener('load', function() {
+          setTimeout(loadAds, 3000);
+        });
+      }
+    })();
+  </script>
 </body>
 
 </html>
