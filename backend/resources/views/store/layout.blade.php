@@ -19,20 +19,20 @@
     <!-- JSON-LD: Software Application Store -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
         "name": "BKX Labs Store",
         "url": "{{ url('/store') }}",
         "description": "High-performance AI models, automation scripts, and technical templates for enterprise engineering teams.",
         "publisher": {
-            "@type": "Organization",
+            "@@type": "Organization",
             "name": "BKX Labs",
             "url": "https://bkxlabs.com"
         },
         "potentialAction": {
-            "@type": "SearchAction",
+            "@@type": "SearchAction",
             "target": {
-                "@type": "EntryPoint",
+                "@@type": "EntryPoint",
                 "urlTemplate": "{{ url('/store/search') }}?q={search_term_string}"
             },
             "query-input": "required name=search_term_string"
@@ -62,7 +62,7 @@
         }
         .mobile-menu-open { overflow: hidden; }
         .mobile-menu-active { display: flex; }
-        @media (min-width: 1024px) {
+        @@media (min-width: 1024px) {
             .mobile-menu-btn { display: none !important; }
             .mobile-menu { display: none !important; }
         }
