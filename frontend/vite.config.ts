@@ -4,10 +4,24 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+
+  // Strip console.log/debugger from production builds (esbuild is built-in, no extra package)
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
+
   build: {
-    // Split vendor chunks for better browser caching
+    // Use esbuild minifier (default in Vite 7, faster than terser, no extra install)
+    minify: 'esbuild',
+    // CSS code splitting
+    cssCodeSplit: true,
+    // Don't compute compressed sizes during build (speeds up build output)
+    reportCompressedSize: false,
+    // Raise chunk warning limit
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
+        // Split vendor libs into separate cached chunks
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-ui': ['lucide-react'],
@@ -15,20 +29,5 @@ export default defineConfig({
         },
       },
     },
-    // Minify with terser — strips console.log, comments, dead code
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info'],
-      },
-    },
-    // CSS code splitting
-    cssCodeSplit: true,
-    // Don't report compressed size (speeds up build)
-    reportCompressedSize: false,
-    // Raise chunk warning limit
-    chunkSizeWarningLimit: 600,
   },
 })
