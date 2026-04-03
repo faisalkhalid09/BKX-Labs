@@ -204,7 +204,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             <canvas ref={canvasRef} className="hero-canvas" />
             <Container>
                 <div className="hero-content">
-                    <h1 className="animate-fade-in" style={{ color: 'var(--primary)' }}>{title}</h1>
+                    <h1 style={{ color: 'var(--primary)' }}>{title}</h1>
                     <p className="hero-subtitle animate-fade-in delay-100">{subtitle}</p>
                     {ctaText && ctaLink && (
                         <div className="animate-fade-in delay-200">
