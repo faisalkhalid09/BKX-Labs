@@ -5,13 +5,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Preconnect first — must be before any external resource reference -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts — non-blocking (print trick: loads async, then applies) -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap"
+        media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap">
+  </noscript>
+
+  <!-- Preload critical assets -->
+  <link rel="preload" as="image" href="/brand-logo.png" fetchpriority="high" />
+
   <!-- Primary Meta Tags -->
   <title>BKX Labs - International Software Project Rescue Agency</title>
   <meta name="description" content="BKX Labs is the engineering team you call when your software is failing. We rescue stalled Laravel apps, audit enterprise React codebases, and fix technical debt nightmares. 25-person specialist team." />
   <meta name="author" content="BKX Labs - Faisal Khalid" />
   <meta name="robots" content="index, follow" />
   <meta name="language" content="English" />
-  <meta name="revisit-after" content="7 days" />
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://bkxlabs.com/" />
@@ -95,22 +109,15 @@
     }
   </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8538157876247266"
-    crossorigin="anonymous"></script>
-
-  <!-- Preconnect to improve performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Preload critical assets -->
-  <link rel="preload" as="image" href="/brand-logo.png" />
-
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Google AdSense — loaded after page content so it doesn't block LCP -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8538157876247266"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
