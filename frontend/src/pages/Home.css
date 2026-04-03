@@ -459,3 +459,73 @@ h3 {
         margin-bottom: 2rem;
     }
 }
+
+/* Internal Navigation Section — SEO Internal Linking */
+.internal-nav-section {
+    background: var(--secondary);
+}
+
+.internal-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.internal-nav-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.internal-nav-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+    border-color: var(--accent);
+}
+
+.internal-nav-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.internal-nav-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-align: left;
+    margin: 0;
+}
+
+.internal-nav-card p {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+.internal-nav-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+    .internal-nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .internal-nav-grid {
+        grid-template-columns: 1fr;
+    }
+}

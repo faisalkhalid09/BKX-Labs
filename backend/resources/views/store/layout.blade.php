@@ -3,7 +3,42 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>@yield('title', 'Digital Product Store') - BKX</title>
+    <title>@yield('title', 'Digital Product Store') - BKX Labs</title>
+    <meta name="description" content="@yield('description', 'High-performance AI models, automation scripts, and technical templates for international enterprise engineering teams. Built by BKX Labs.')"/>
+    <meta name="robots" content="@yield('robots', 'index, follow')"/>
+    <link rel="canonical" href="@yield('canonical', url()->current())"/>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="BKX Labs"/>
+    <meta property="og:title" content="@yield('title', 'Digital Product Store') - BKX Labs"/>
+    <meta property="og:description" content="@yield('description', 'High-performance AI models, automation scripts, and technical templates for international enterprise engineering teams.')"/>
+    <meta property="og:image" content="{{ asset('brand-logo.png') }}"/>
+    <meta property="og:url" content="{{ url()->current() }}"/>
+
+    <!-- JSON-LD: Software Application Store -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "BKX Labs Store",
+        "url": "{{ url('/store') }}",
+        "description": "High-performance AI models, automation scripts, and technical templates for enterprise engineering teams.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "BKX Labs",
+            "url": "https://bkxlabs.com"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "{{ url('/store/search') }}?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 
     @php
         $hasViteManifest = file_exists(public_path('build/manifest.json'));

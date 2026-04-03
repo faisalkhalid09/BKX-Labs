@@ -89,6 +89,42 @@ const Home = () => {
                 </Container>
             </Section>
 
+            {/* Internal Linking Navigation Block — signals importance of key pages to Google */}
+            <Section className="internal-nav-section">
+                <Container>
+                    <h2 className="text-center section-heading">Everything You Need to Know</h2>
+                    <p className="text-center section-subheading">
+                        Explore how we work, what we offer, and who we are — before you commit to a single conversation.
+                    </p>
+                    <div className="internal-nav-grid">
+                        <a href="/services" className="internal-nav-card" aria-label="View our software rescue services">
+                            <span className="internal-nav-icon">🛠</span>
+                            <h3>Our Services</h3>
+                            <p>Diagnostic audits, emergency triage, modernization retainers, and greenfield development — structured for your situation.</p>
+                            <span className="internal-nav-link">View Services →</span>
+                        </a>
+                        <a href="/process" className="internal-nav-card" aria-label="Learn about our rescue process">
+                            <span className="internal-nav-icon">🔬</span>
+                            <h3>The Rescue Protocol</h3>
+                            <p>Our 5-step, auditable process for taking over a failing project and bringing it to production with full transparency.</p>
+                            <span className="internal-nav-link">Explore Process →</span>
+                        </a>
+                        <a href="/about" className="internal-nav-card" aria-label="About BKX Labs team and mission">
+                            <span className="internal-nav-icon">👥</span>
+                            <h3>About Us</h3>
+                            <p>A 25-person team of specialists hand-picked for their ability to stabilize and rescue high-stakes software systems.</p>
+                            <span className="internal-nav-link">Meet the Team →</span>
+                        </a>
+                        <a href="/contact" className="internal-nav-card" aria-label="Contact BKX Labs to start your rescue">
+                            <span className="internal-nav-icon">📋</span>
+                            <h3>Start Your Rescue</h3>
+                            <p>Every engagement starts with a Technical Health Check. Tell us about your situation — no obligation, just clarity.</p>
+                            <span className="internal-nav-link">Get In Touch →</span>
+                        </a>
+                    </div>
+                </Container>
+            </Section>
+
             {/* The 3-Phase Rescue Funnel (Overhauled UI) */}
             <Section className="protocol-section">
                 <Container>

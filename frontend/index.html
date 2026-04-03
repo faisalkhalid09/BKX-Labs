@@ -7,10 +7,28 @@
 
   <!-- Primary Meta Tags -->
   <title>BKX Labs - International Software Project Rescue Agency</title>
+  <meta name="description" content="BKX Labs is the engineering team you call when your software is failing. We rescue stalled Laravel apps, audit enterprise React codebases, and fix technical debt nightmares. 25-person specialist team." />
   <meta name="author" content="BKX Labs - Faisal Khalid" />
   <meta name="robots" content="index, follow" />
   <meta name="language" content="English" />
   <meta name="revisit-after" content="7 days" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://bkxlabs.com/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bkxlabs.com/" />
+  <meta property="og:title" content="BKX Labs - International Software Project Rescue Agency" />
+  <meta property="og:description" content="BKX Labs is the engineering team you call when your software is failing. We rescue stalled Laravel apps, audit enterprise React codebases, and fix technical debt nightmares." />
+  <meta property="og:image" content="https://bkxlabs.com/brand-logo.png" />
+  <meta property="og:site_name" content="BKX Labs" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BKX Labs - International Software Project Rescue Agency" />
+  <meta name="twitter:description" content="BKX Labs rescues stalled software projects. Forensic codebase audits, emergency triage, and long-term modernization for enterprise teams." />
+  <meta name="twitter:image" content="https://bkxlabs.com/brand-logo.png" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -24,10 +42,14 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": "https://bkxlabs.com/#organization",
       "name": "BKX Labs",
       "url": "https://bkxlabs.com",
-      "logo": "https://bkxlabs.com/brand-logo.png",
-      "description": "Enterprise-grade software development company specializing in rescuing stalled projects and delivering production-ready solutions.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://bkxlabs.com/brand-logo.png"
+      },
+      "description": "Enterprise-grade software rescue agency specializing in taking over stalled projects, eliminating technical debt, and delivering production-ready solutions for international businesses.",
       "founder": {
         "@type": "Person",
         "name": "Faisal Khalid",
@@ -36,9 +58,14 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "email": "contact@bkxlabs.com",
-        "contactType": "Customer Service",
-        "areaServed": ["US", "GB", "AU", "EU"]
-      }
+        "contactType": "Customer Support",
+        "availableLanguage": "English",
+        "areaServed": ["US", "GB", "AU", "CA", "EU"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/bkxlabs",
+        "https://www.linkedin.com/in/faisal-khalid1622/"
+      ]
     }
   </script>
 
@@ -47,22 +74,24 @@
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
+      "@id": "https://bkxlabs.com/#service",
       "name": "BKX Labs",
       "image": "https://bkxlabs.com/brand-logo.png",
-      "description": "We specialize in enterprise-grade software development, web applications, mobile development, MVP creation, and rescuing stalled projects.",
+      "description": "International software project rescue agency. We take over failing Laravel apps, audit enterprise React codebases, eliminate technical debt, and deliver production-ready systems for global businesses.",
       "priceRange": "$$-$$$",
       "url": "https://bkxlabs.com",
-      "telephone": "",
       "email": "contact@bkxlabs.com",
-      "areaServed": ["US", "GB", "AU", "EU"],
-      "serviceType": [
-        "Web Application Development",
-        "Mobile App Development",
-        "MVP Development",
-        "UI/UX Design",
-        "Project Rescue Services",
-        "Software Consulting"
-      ]
+      "areaServed": ["US", "GB", "AU", "CA", "EU"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Software Rescue Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Diagnostic Codebase Audit" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Emergency Triage & Stabilization" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modernization Retainer" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Greenfield Development" } }
+        ]
+      }
     }
   </script>
 

@@ -1,5 +1,28 @@
 @extends('store.layout')
-@section('title', $tab === 'privacy' ? 'Privacy Policy' : ($tab === 'dmca' ? 'DMCA Policy' : 'Terms & Conditions'))
+
+@php
+    $tabTitle = match($tab) {
+        'privacy' => 'Privacy Policy',
+        'dmca'    => 'DMCA & Copyright Policy',
+        default   => 'Terms & Conditions',
+    };
+    $tabDesc = match($tab) {
+        'privacy' => 'Read the BKX Labs Digital Store privacy policy. Learn how we collect, use, and protect your personal data when you purchase or download our software products.',
+        'dmca'    => 'BKX Labs DMCA and copyright enforcement policy for our digital products store. Intellectual property rights and takedown procedures.',
+        default   => 'The master terms and conditions for purchasing and using digital products from the BKX Labs Store. License, delivery, refund, and usage restrictions.',
+    };
+    $canonicalUrl = match($tab) {
+        'privacy' => url('/store/terms?tab=privacy'),
+        'dmca'    => url('/store/terms?tab=dmca'),
+        default   => url('/store/terms'),
+    };
+@endphp
+
+@section('title', $tabTitle)
+@section('description', $tabDesc)
+@section('canonical', $canonicalUrl)
+{{-- Query-param duplicates should not be indexed; canonical handles the signal --}}
+@section('robots', 'noindex, follow')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
