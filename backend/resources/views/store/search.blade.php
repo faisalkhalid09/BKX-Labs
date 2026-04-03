@@ -1,6 +1,9 @@
 @extends('store.layout')
 
 @section('title', $query ? 'Search: ' . $query : 'Search Products')
+@section('description', $query ? 'Find tailored engineering assets and AI models for: ' . $query : 'Browse our catalog of professional-grade AI models, automation scripts, and technical templates.')
+@section('keywords', ($query ? $query . ', ' : '') . 'BKX Labs search, engineering assets, AI tools, developer resources, search store')
+@section('canonical', url('/store/search' . ($query ? '?q=' . urlencode($query) : '')))
 
 @push('styles')
 <style>

@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>@yield('title', 'Digital Product Store') - BKX Labs</title>
     <meta name="description" content="@yield('description', 'High-performance AI models, automation scripts, and technical templates for international enterprise engineering teams. Built by BKX Labs.')"/>
+    <meta name="keywords" content="@yield('keywords', 'software assets, AI models, automation scripts, technical templates, professional engineering tools, code repository, BKX Labs')"/>
     <meta name="robots" content="@yield('robots', 'index, follow')"/>
     <link rel="canonical" href="@yield('canonical', url()->current())"/>
 
@@ -54,9 +55,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=optional"
-          rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=block" rel="stylesheet"/></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=block" rel="stylesheet"/>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined {

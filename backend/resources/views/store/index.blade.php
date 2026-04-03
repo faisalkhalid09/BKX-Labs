@@ -2,6 +2,7 @@
 
 @section('title', 'Engineering Assets Store | AI & Automation Scripts')
 @section('description', 'High-performance AI models, automation scripts, and workflow templates from BKX Labs. Expert-grade digital assets to accelerate enterprise engineering teams and modernize your technical stack.')
+@section('keywords', 'AI models developers, automation scripts enterprise, Laravel templates repository, React dashboard templates, engineering workflow automation, specialized coding assets, BKX Labs store')
 @section('canonical', url('/store'))
 
 @push('styles')
