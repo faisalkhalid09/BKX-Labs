@@ -8,6 +8,16 @@
   <!-- Preconnect first — must be before any external resource reference -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  <!-- Google Analytics (GA4) — async, never blocks rendering -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R9R44GVLGG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R9R44GVLGG');
+  </script>
 
   <!-- Google Fonts — non-blocking (print trick: loads async, then applies) -->
   <link rel="stylesheet"
