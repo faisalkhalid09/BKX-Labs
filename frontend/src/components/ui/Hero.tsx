@@ -205,9 +205,9 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             <Container>
                 <div className="hero-content">
                     <h1 style={{ color: 'var(--primary)' }}>{title}</h1>
-                    <p className="hero-subtitle animate-fade-in delay-100">{subtitle}</p>
+                    <p className="hero-subtitle">{subtitle}</p>
                     {ctaText && ctaLink && (
-                        <div className="animate-fade-in delay-200">
+                        <div>
                             <Button variant="primary" href={ctaLink}>
                                 {ctaText}
                             </Button>
