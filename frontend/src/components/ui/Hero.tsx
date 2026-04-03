@@ -33,66 +33,14 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Set canvas size
-        const resizeCanvas = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            drawIdle(); // Redraw static grid on resize
-        };
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Mouse tracking
-        let mouseX = -1000;
-        let mouseY = -1000;
-        let lastClientX = -1000;
-        let lastClientY = -1000;
-        let rafId: number | null = null;
-        let isAnimating = false;
-
-        const updateMousePosition = () => {
-            const rect = canvas.getBoundingClientRect();
-            mouseX = lastClientX - rect.left;
-            mouseY = lastClientY - rect.top;
-        };
-
-        const handleMouseMove = (e: MouseEvent) => {
-            lastClientX = e.clientX;
-            lastClientY = e.clientY;
-            updateMousePosition();
-            if (!isAnimating) {
-                isAnimating = true;
-                rafId = requestAnimationFrame(animate);
-            }
-        };
-
-        const handleMouseLeave = () => {
-            mouseX = -1000;
-            mouseY = -1000;
-            lastClientX = -1000;
-            lastClientY = -1000;
-            // Keep animating until all points settle back
-        };
-
-        const handleScroll = () => {
-            if (lastClientX !== -1000 && lastClientY !== -1000) {
-                updateMousePosition();
-            }
-        };
-
-        heroDiv.addEventListener('mousemove', handleMouseMove);
-        heroDiv.addEventListener('mouseleave', handleMouseLeave);
-        window.addEventListener('scroll', handleScroll);
-
-        // Grid settings
+        // Grid settings — declared first so drawIdle can use them
         const gridSize = 50;
         const interactionRadius = 150;
         const maxDisplacement = 30;
         const trailDuration = 3000;
-
         const gridPoints: Map<string, GridPoint> = new Map();
 
-        // Draw a static idle grid (no animation, no rAF)
+        // Static idle grid — must be declared before resizeCanvas calls it
         const drawIdle = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let x = 0; x < canvas.width; x += gridSize) {
@@ -116,10 +64,30 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             }
         };
 
-        // Draw the initial static grid immediately (no rAF needed)
-        drawIdle();
+        // Set canvas size — safe to call drawIdle now since it's defined above
+        const resizeCanvas = () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            drawIdle();
+        };
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-        // Animation loop — only runs when there's active interaction
+        // Mouse tracking
+        let mouseX = -1000;
+        let mouseY = -1000;
+        let lastClientX = -1000;
+        let lastClientY = -1000;
+        let rafId: number | null = null;
+        let isAnimating = false;
+
+        const updateMousePosition = () => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = lastClientX - rect.left;
+            mouseY = lastClientY - rect.top;
+        };
+
+        // Animation loop — only runs on interaction
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const currentTime = Date.now();
@@ -173,12 +141,10 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
 
                     ctx.strokeStyle = `rgba(30, 58, 138, ${finalOpacity})`;
                     ctx.lineWidth = 1;
-
                     ctx.beginPath();
                     ctx.moveTo(x + point.offsetX, y + point.offsetY);
                     ctx.lineTo(x + point.offsetX, y + gridSize + point.offsetY);
                     ctx.stroke();
-
                     ctx.beginPath();
                     ctx.moveTo(x + point.offsetX, y + point.offsetY);
                     ctx.lineTo(x + gridSize + point.offsetX, y + point.offsetY);
@@ -189,12 +155,38 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             if (hasActiveAnimation) {
                 rafId = requestAnimationFrame(animate);
             } else {
-                // All settled — stop the loop and draw the clean static grid
                 isAnimating = false;
                 rafId = null;
                 drawIdle();
             }
         };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            lastClientX = e.clientX;
+            lastClientY = e.clientY;
+            updateMousePosition();
+            if (!isAnimating) {
+                isAnimating = true;
+                rafId = requestAnimationFrame(animate);
+            }
+        };
+
+        const handleMouseLeave = () => {
+            mouseX = -1000;
+            mouseY = -1000;
+            lastClientX = -1000;
+            lastClientY = -1000;
+        };
+
+        const handleScroll = () => {
+            if (lastClientX !== -1000 && lastClientY !== -1000) {
+                updateMousePosition();
+            }
+        };
+
+        heroDiv.addEventListener('mousemove', handleMouseMove);
+        heroDiv.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('scroll', handleScroll);
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
@@ -204,6 +196,7 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             if (rafId !== null) cancelAnimationFrame(rafId);
         };
     }, []);
+
 
 
     return (
