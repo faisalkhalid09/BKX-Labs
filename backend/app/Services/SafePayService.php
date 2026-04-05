@@ -18,7 +18,7 @@ class SafePayService
         $this->apiKey = config('services.safepay.api_key');
         $this->secretKey = config('services.safepay.secret_key');
         $this->webhookSecret = config('services.safepay.webhook_secret');
-        $this->mode = config('services.safepay.env', 'sandbox');
+        $this->mode = config('services.safepay.environment', 'sandbox');
         
         $this->baseUrl = ($this->mode === 'production') 
             ? 'https://api.getsafepay.com' 

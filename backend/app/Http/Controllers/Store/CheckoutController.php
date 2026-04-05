@@ -60,15 +60,13 @@ class CheckoutController extends Controller
         $product = Product::findOrFail($request->product_id);
         $orderRef = 'ORD-' . strtoupper(Str::random(10));
 
-        // Create a pending order record
+        // Create a pending order record using the actual orders schema.
         $order = Order::create([
-            'order_number'    => $orderRef,
-            'customer_name'   => $request->first_name . ' ' . $request->last_name,
-            'customer_email'  => $request->email,
-            'billing_address' => json_encode($request->only(['phone', 'address', 'city', 'postal_code', 'country'])),
-            'total_amount'    => $product->price,
-            'status'          => 'pending',
-            'product_id'      => $request->product_id,
+            'user_id'           => $request->user()->id,
+            'product_id'        => $request->product_id,
+            'status'            => 'pending',
+            'amount'            => $product->price,
+            'safepay_order_ref' => $orderRef,
         ]);
 
         try {

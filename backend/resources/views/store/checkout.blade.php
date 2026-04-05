@@ -85,47 +85,48 @@
         <div class="checkout-panel">
             <h2 style="margin-bottom: 2rem;">Billing Details</h2>
             
-            <form id="checkout-form">
-                <input type="hidden" id="product_id" value="{{ $product->id }}">
+            <form id="checkout-form" method="POST" action="{{ route('checkout.store') }}">
+                @csrf
+                <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
                 
                 <div class="form-row">
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" id="first_name" class="field-input" value="{{ auth()->user()->name ?? '' }}" required>
+                        <input type="text" id="first_name" name="first_name" class="field-input" value="{{ auth()->user()->name ?? '' }}" required>
                     </div>
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" id="last_name" class="field-input" required>
+                        <input type="text" id="last_name" name="last_name" class="field-input" required>
                     </div>
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Email Address</label>
-                    <input type="email" id="email" class="field-input" value="{{ auth()->user()->email ?? '' }}" required>
+                    <input type="email" id="email" name="email" class="field-input" value="{{ auth()->user()->email ?? '' }}" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Phone Number</label>
-                    <input type="text" id="phone" class="field-input" required>
+                    <input type="text" id="phone" name="phone" class="field-input" required>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Street Address</label>
-                    <input type="text" id="address" class="field-input" required>
+                    <input type="text" id="address" name="address" class="field-input" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" id="city" class="field-input" required>
+                        <input type="text" id="city" name="city" class="field-input" required>
                     </div>
                     <div class="form-group">
                         <label>Postal / ZIP Code</label>
-                        <input type="text" id="postal_code" class="field-input" required>
+                        <input type="text" id="postal_code" name="postal_code" class="field-input" required>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Country</label>
-                    <select id="country" class="field-input" required>
+                    <select id="country" name="country" class="field-input" required>
                         <option value="US">United States</option>
                         <option value="PK">Pakistan</option>
                         <option value="GB">United Kingdom</option>
@@ -134,10 +135,7 @@
                 </div>
             </form>
 
-            {{-- SafePay Button Container (Hidden - we trigger it via JS) --}}
-            <div id="safepay-button-container" style="display: none;"></div>
-            
-            <button type="button" id="custom-pay-button" class="pay-btn">
+            <button type="submit" id="custom-pay-button" class="pay-btn" form="checkout-form">
                 Pay ${{ number_format($total, 2) }} &amp; Complete Order
             </button>
         </div>
@@ -160,62 +158,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-    // Dynamically load SafePay script to bypass some CSP caching issues
-    (function() {
-        var script = document.createElement('script');
-        script.src = "https://sandbox.api.getsafepay.com/checkout/pay.js";
-        script.onload = function() {
-            console.log('SafePay SDK loaded successfully');
-        };
-        script.onerror = function() {
-            console.error('Failed to load SafePay SDK. This is usually due to a Content Security Policy (CSP) blocking it.');
-            alert('Security blocked the payment script. Please try refreshing or using Incognito mode.');
-        };
-        document.head.appendChild(script);
-    })();
-
-    document.getElementById('custom-pay-button').addEventListener('click', function() {
-        if (typeof safepay === 'undefined') {
-            alert('Payment system is still loading or was blocked by your browser security. Please refresh the page and try again.');
-            return;
-        }
-
-        const fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'postal_code', 'country'];
-        for (let f of fields) {
-            if (!document.getElementById(f).value) {
-                alert('Please fill in all billing details.');
-                document.getElementById(f).focus();
-                return;
-            }
-        }
-
-        const email = document.getElementById('email').value;
-        const total = {{ $total }};
-
-        safepay.setup({
-            environment: 'sandbox',
-            apiKey: '{{ config('services.safepay.api_key') }}',
-            v3: true
-        });
-
-        safepay.checkout({
-            amount: total,
-            currency: 'USD',
-            metadata: {
-                order_id: 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-                email: email,
-                first_name: document.getElementById('first_name').value,
-                last_name: document.getElementById('last_name').value
-            },
-            onSucceeded: function(data) {
-                window.location.href = "{{ route('checkout.success') }}?success=true&tracker=" + data.tracker;
-            },
-            onCancelled: function() {
-                console.log('Payment cancelled by user');
-            }
-        });
-    });
-</script>
-@endpush

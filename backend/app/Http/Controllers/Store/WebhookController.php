@@ -66,12 +66,12 @@ class WebhookController extends Controller
         $orderNumber = $metadata['order_id'] ?? null;
 
         Log::info('SafePay Payment Succeeded', [
-            'order_number' => $orderNumber,
+            'order_ref'    => $orderNumber,
             'tracker'      => $trackerToken
         ]);
 
         if ($orderNumber) {
-            $order = Order::where('order_number', $orderNumber)->first();
+            $order = Order::where('safepay_order_ref', $orderNumber)->first();
             
             if ($order && $order->status !== 'paid') {
                 $order->update([
@@ -80,7 +80,7 @@ class WebhookController extends Controller
                     'download_expires_at'    => now()->addHours(48),
                 ]);
                 
-                Log::info("Order #{$orderNumber} marked as PAID via SafePay Webhook.");
+                Log::info("Order ref {$orderNumber} marked as PAID via SafePay Webhook.");
             }
         }
     }
@@ -95,7 +95,7 @@ class WebhookController extends Controller
         $orderNumber = $metadata['order_id'] ?? null;
 
         if ($orderNumber) {
-            Order::where('order_number', $orderNumber)
+            Order::where('safepay_order_ref', $orderNumber)
                  ->where('status', 'pending')
                  ->update(['status' => 'failed']);
         }
