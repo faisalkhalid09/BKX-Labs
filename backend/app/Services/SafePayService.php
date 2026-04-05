@@ -2,58 +2,19 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\RequestException;
 
 class SafePayService
 {
-    protected string $apiKey;
-    protected string $secretKey;
-    protected string $baseUrl;
-    protected string $environment;
+    protected $apiKey;
+    protected $secretKey;
+    protected $webhookSecret;
+    protected $baseUrl;
+    protected $mode;
 
     public function __construct()
     {
-        $this->apiKey      = config('services.safepay.api_key');
-        $this->secretKey   = config('services.safepay.secret_key');
-        $this->environment = config('services.safepay.environment', 'sandbox');
-        $this->baseUrl     = $this->environment === 'production'
-            ? 'https://api.getsafepay.com'
-            : 'https://sandbox.api.getsafepay.com';
-    }
-
-    /**
-     * Create a payment tracker (session) on SafePay.
-     *
-     * @param  int|float  $amount     Amount in the smallest unit (e.g. cents for USD: $10 = 1000)
-     * @param  string     $currency   e.g. 'USD', 'PKR'
-     * @param  string     $orderId    Your internal order reference for metadata
-     * @return array      ['token' => 'track_xxx', ...]
-     * @throws \RuntimeException
-     */
-    public function createPaymentSession(int $amount, string $currency, string $orderId): array
-    {
-        $this->assertConfigured();
-
-        try {
-            $response = Http::withToken($this->secretKey)
-                ->timeout(10)
-                ->post("{$this->baseUrl}/order/payments/v3/", [
-                    'merchant_api_key' => $this->apiKey,
-                    'intent'           => 'CYBERSOURCE',
-                    'mode'             => 'payment',
-                    'entry_mode'       => 'raw',
-                    'currency'         => $currency,
-                    'amount'           => $amount,
-                    'metadata'         => [
-                        'order_id' => $orderId,
-                        'source'   => 'bkxlabs',
-                    ],
-                    'include_fees'     => false,
-                ]);
-
             $this->throwIfFailed($response, 'createPaymentSession');
 
             $data = $response->json('data.tracker');
