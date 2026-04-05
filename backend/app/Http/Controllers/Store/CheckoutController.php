@@ -90,7 +90,7 @@ class CheckoutController extends Controller
                 now()->addMinutes(30)
             );
 
-            $checkoutUrl = route('checkout.popup.gateway', ['token' => $popupToken]);
+            $checkoutUrl = url('/checkout/popup-gateway?token=' . urlencode($popupToken));
 
             return response()->json([
                 'checkout_url' => $checkoutUrl,
