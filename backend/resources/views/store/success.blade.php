@@ -154,3 +154,19 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    (function() {
+        if (window.opener && !window.opener.closed) {
+            window.opener.postMessage({
+                type: 'safepay:success',
+                redirect: window.location.href
+            }, window.location.origin);
+
+            // Close popup when success page is opened from checkout popup flow.
+            window.close();
+        }
+    })();
+</script>
+@endpush

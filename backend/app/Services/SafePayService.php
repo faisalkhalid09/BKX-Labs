@@ -38,7 +38,7 @@ class SafePayService
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
             'success_url'      => route('checkout.success', ['success' => 'true']),
-            'cancel_url'       => route('checkout.create'),
+            'cancel_url'       => route('checkout.popup.cancel'),
         ];
 
         $queryString = http_build_query($params);
