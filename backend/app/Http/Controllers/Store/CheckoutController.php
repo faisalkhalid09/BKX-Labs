@@ -20,16 +20,28 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Show the custom billing form (with the 100% distraction-free shell)
+     * Show the custom billing form
      */
     public function create(Request $request)
     {
-        $product = Product::findOrFail($request->product_id ?? 1); // fallback for testing
-        return view('store.checkout', compact('product'));
+        $product = Product::findOrFail($request->product_id ?? 1);
+        
+        // Prepare cart data for the view
+        $cart = [
+            [
+                'id'    => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+            ]
+        ];
+        
+        $total = $product->price;
+
+        return view('store.checkout', compact('product', 'cart', 'total'));
     }
 
     /**
-     * Handle the form submission and redirect to SafePay Checkout (Redirect Flow)
+     * Handle the form submission and redirect to SafePay Checkout
      */
     public function store(Request $request)
     {
@@ -41,7 +53,7 @@ class CheckoutController extends Controller
             'phone'      => 'required|string|max:20',
             'address'    => 'required|string|max:500',
             'city'       => 'required|string|max:100',
-            'postal'     => 'required|string|max:20',
+            'postal_code' => 'required|string|max:20',
             'country'    => 'required|string|max:2',
         ]);
 
@@ -53,7 +65,7 @@ class CheckoutController extends Controller
             'order_number'    => $orderRef,
             'customer_name'   => $request->first_name . ' ' . $request->last_name,
             'customer_email'  => $request->email,
-            'billing_address' => json_encode($request->only(['phone', 'address', 'city', 'postal', 'country'])),
+            'billing_address' => json_encode($request->only(['phone', 'address', 'city', 'postal_code', 'country'])),
             'total_amount'    => $product->price,
             'status'          => 'pending',
             'product_id'      => $request->product_id,
@@ -61,7 +73,6 @@ class CheckoutController extends Controller
 
         try {
             // Build the direct checkout redirect URL
-            // This bypasses the server-side 401 header issues
             $checkoutUrl = $this->safepay->createCheckoutUrl($product->price, $orderRef, 'USD');
 
             return redirect($checkoutUrl);
@@ -72,15 +83,13 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Landing page after user completes payment on SafePay
+     * Landing page after user completes payment
      */
     public function success(Request $request)
     {
         $tracker = $request->get('tracker');
         $success = $request->get('success');
 
-        // Note: In Redirect flow, we usually wait for the Webhook to confirm the order.
-        // We can show a 'Processing' state here.
         return view('store.success', [
             'tracker'         => $tracker,
             'paymentVerified' => ($success === 'true')
