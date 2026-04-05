@@ -161,12 +161,27 @@
 @endsection
 
 @push('scripts')
-{{-- Include SafePay SDK --}}
-<script src="https://sandbox.api.getsafepay.com/checkout/pay.js"></script>
-
 <script>
+    // Dynamically load SafePay script to bypass some CSP caching issues
+    (function() {
+        var script = document.createElement('script');
+        script.src = "https://sandbox.api.getsafepay.com/checkout/pay.js";
+        script.onload = function() {
+            console.log('SafePay SDK loaded successfully');
+        };
+        script.onerror = function() {
+            console.error('Failed to load SafePay SDK. This is usually due to a Content Security Policy (CSP) blocking it.');
+            alert('Security blocked the payment script. Please try refreshing or using Incognito mode.');
+        };
+        document.head.appendChild(script);
+    })();
+
     document.getElementById('custom-pay-button').addEventListener('click', function() {
-        // Simple client-side validation check
+        if (typeof safepay === 'undefined') {
+            alert('Payment system is still loading or was blocked by your browser security. Please refresh the page and try again.');
+            return;
+        }
+
         const fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'postal_code', 'country'];
         for (let f of fields) {
             if (!document.getElementById(f).value) {
@@ -179,14 +194,12 @@
         const email = document.getElementById('email').value;
         const total = {{ $total }};
 
-        // Initialize SafePay Checkout Overlay
         safepay.setup({
             environment: 'sandbox',
             apiKey: '{{ config('services.safepay.api_key') }}',
             v3: true
         });
 
-        // Open the payment overlay
         safepay.checkout({
             amount: total,
             currency: 'USD',
@@ -197,12 +210,9 @@
                 last_name: document.getElementById('last_name').value
             },
             onSucceeded: function(data) {
-                // Payment worked! Now we redirect with the tracker
-                // The WebhookController will handle the heavy lifting of marking the order paid
                 window.location.href = "{{ route('checkout.success') }}?success=true&tracker=" + data.tracker;
             },
             onCancelled: function() {
-                // User closed the modal
                 console.log('Payment cancelled by user');
             }
         });

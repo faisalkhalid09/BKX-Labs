@@ -19,7 +19,7 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         
         // Content Security Policy (CSP)
-        $csp = "default-src 'self'; " .
+        $csp = "default-src 'self' https://*.getsafepay.com; " .
                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.getsafepay.com https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
                "font-src 'self' https://fonts.gstatic.com data:; " .
