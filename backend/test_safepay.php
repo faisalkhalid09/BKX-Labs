@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-
 use Illuminate\Support\Facades\Http;
 
 $app = require_once __DIR__ . '/bootstrap/app.php';
@@ -12,30 +11,28 @@ $secretKey = env('SAFEPAY_SECRET_KEY');
 $webhookSecret = env('SAFEPAY_WEBHOOK_SECRET');
 $baseUrl = 'https://sandbox.api.getsafepay.com';
 
-echo "--- STARTING EXHAUSTIVE AUTH TEST ---\n\n";
+echo "--- ULTIMATE AUTH TEST (REFINED) ---\n\n";
 
-// Test 1: X-SFPY-MERCHANT-SECRET using Secret Key (eae...)
-echo "Test 1: X-SFPY-MERCHANT-SECRET (using Secret Key)\n";
-$response = Http::withHeaders(['X-SFPY-MERCHANT-SECRET' => $secretKey])->post("$baseUrl/client/passport/v1/token");
-echo "Status: " . $response->status() . "\nBody: " . $response->body() . "\n\n";
+$tests = [
+    "X-SFPY-MERCHANT-SECRET (with Secret Key)" => ['X-SFPY-MERCHANT-SECRET' => $secretKey],
+    "X-SFPY-MERCHANT-SECRET (with Webhook Secret)" => ['X-SFPY-MERCHANT-SECRET' => $webhookSecret],
+    "X-SFPY-API-KEY + X-SFPY-SECRET" => ['X-SFPY-API-KEY' => $apiKey, 'X-SFPY-SECRET' => $secretKey],
+    "X-SAFEPAY-SIGNATURE (with Webhook Secret)" => ['X-SAFEPAY-SIGNATURE' => $webhookSecret],
+    "X-SFPY-WEBHOOK-SECRET (with Webhook Secret)" => ['X-SFPY-WEBHOOK-SECRET' => $webhookSecret],
+    "X-SFPY-MERCHANT-WEBHOOK-SECRET" => ['X-SFPY-MERCHANT-WEBHOOK-SECRET' => $webhookSecret],
+];
 
-// Test 2: X-SFPY-MERCHANT-SECRET using Webhook Secret (6eb...)
-// This is because the error specifically said "merchant webhook secret not found"
-echo "Test 2: X-SFPY-MERCHANT-SECRET (using Webhook Secret)\n";
-$response = Http::withHeaders(['X-SFPY-MERCHANT-SECRET' => $webhookSecret])->post("$baseUrl/client/passport/v1/token");
-echo "Status: " . $response->status() . "\nBody: " . $response->body() . "\n\n";
+foreach ($tests as $name => $headers) {
+    echo "Testing $name... ";
+    $response = Http::withHeaders($headers)->post("$baseUrl/client/passport/v1/token");
+    
+    if ($response->successful()) {
+        echo "✅ SUCCESS!\n";
+        echo "Worked with headers: " . json_encode($headers) . "\n";
+        exit;
+    } else {
+        echo "❌ Status: " . $response->status() . " - " . $response->json('status.errors.1') . "\n";
+    }
+}
 
-// Test 3: Standard Bearer Token (what failed before)
-echo "Test 3: Authorization Bearer (using Secret Key)\n";
-$response = Http::withToken($secretKey)->post("$baseUrl/client/passport/v1/token");
-echo "Status: " . $response->status() . "\nBody: " . $response->body() . "\n\n";
-
-// Test 4: Both API Key and Merchant Secret headers
-echo "Test 4: X-SFPY-API-KEY + X-SFPY-MERCHANT-SECRET (Secret Key)\n";
-$response = Http::withHeaders([
-    'X-SFPY-API-KEY' => $apiKey,
-    'X-SFPY-MERCHANT-SECRET' => $secretKey
-])->post("$baseUrl/client/passport/v1/token");
-echo "Status: " . $response->status() . "\nBody: " . $response->body() . "\n\n";
-
-echo "--- TEST COMPLETE ---\n";
+echo "\n--- FAILED ALL ---";
