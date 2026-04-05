@@ -62,11 +62,11 @@
         <button id="close-popup-btn" class="btn" type="button" onclick="window.close()">Close Window</button>
     </div>
 
-    <script src="{{ $sdkScriptUrl }}"></script>
     <script>
         (function () {
             const successUrl = "{{ route('checkout.success', ['success' => 'true', 'order_ref' => $orderRef, 'state' => $stateToken]) }}";
             const cancelUrl = "{{ route('checkout.popup.cancel', ['order_ref' => $orderRef, 'state' => $stateToken]) }}";
+            const sdkCandidates = {!! json_encode($sdkCandidates ?? [$sdkScriptUrl]) !!};
             const statusEl = document.getElementById('popup-status');
             const closeBtn = document.getElementById('close-popup-btn');
             const openedAt = Date.now();
@@ -82,48 +82,79 @@
                 }
             }
 
-            if (typeof safepay === 'undefined') {
-                notifyParent({ type: 'safepay:cancelled' });
-                setStatus('SafePay SDK failed to load. Please close this window and try again.');
-                return;
-            }
+            function loadSdk(urls, index, done) {
+                if (index >= urls.length) {
+                    done(false, null);
+                    return;
+                }
 
-            try {
-                safepay.setup({
-                    environment: "{{ $mode }}",
-                    apiKey: "{{ $apiKey }}",
-                    v3: true
-                });
-
-                safepay.checkout({
-                    amount: {{ json_encode($amount) }},
-                    currency: "{{ $currency }}",
-                    metadata: {
-                        order_id: "{{ $orderRef }}"
-                    },
-                    onSucceeded: function(data) {
-                        const tracker = data && data.tracker ? encodeURIComponent(data.tracker) : '';
-                        const redirect = tracker ? (successUrl + '&tracker=' + tracker) : successUrl;
-                        notifyParent({ type: 'safepay:success', redirect: redirect });
-                        window.close();
-                        window.location.href = redirect;
-                    },
-                    onCancelled: function() {
-                        notifyParent({ type: 'safepay:cancelled' });
-
-                        if (Date.now() - openedAt < 2500) {
-                            setStatus('SafePay cancelled immediately during initialization. Please retry or verify SafePay dashboard settings.');
-                            return;
-                        }
-
-                        window.close();
+                const url = urls[index];
+                const script = document.createElement('script');
+                script.src = url;
+                script.async = false;
+                script.onload = function () {
+                    if (typeof safepay !== 'undefined') {
+                        done(true, url);
+                        return;
                     }
-                });
-            } catch (error) {
-                notifyParent({ type: 'safepay:cancelled' });
-                setStatus('Failed to initialize secure checkout. ' + (error && error.message ? error.message : ''));
-                window.location.href = cancelUrl;
+
+                    loadSdk(urls, index + 1, done);
+                };
+                script.onerror = function () {
+                    loadSdk(urls, index + 1, done);
+                };
+
+                document.head.appendChild(script);
             }
+
+            loadSdk(sdkCandidates, 0, function (loaded, sdkUrl) {
+                if (!loaded || typeof safepay === 'undefined') {
+                    notifyParent({ type: 'safepay:cancelled' });
+                    setStatus('SafePay SDK failed to load from available endpoints.');
+                    console.error('SafePay SDK load failed for candidates:', sdkCandidates);
+                    return;
+                }
+
+                console.log('SafePay SDK loaded from:', sdkUrl);
+
+                try {
+                    safepay.setup({
+                        environment: "{{ $mode }}",
+                        apiKey: "{{ $apiKey }}",
+                        v3: true
+                    });
+
+                    safepay.checkout({
+                        amount: {{ json_encode($amount) }},
+                        currency: "{{ $currency }}",
+                        metadata: {
+                            order_id: "{{ $orderRef }}"
+                        },
+                        onSucceeded: function(data) {
+                            const tracker = data && data.tracker ? encodeURIComponent(data.tracker) : '';
+                            const redirect = tracker ? (successUrl + '&tracker=' + tracker) : successUrl;
+                            notifyParent({ type: 'safepay:success', redirect: redirect });
+                            window.close();
+                            window.location.href = redirect;
+                        },
+                        onCancelled: function() {
+                            notifyParent({ type: 'safepay:cancelled' });
+
+                            if (Date.now() - openedAt < 2500) {
+                                setStatus('SafePay cancelled immediately during initialization. Please retry or verify SafePay dashboard settings.');
+                                return;
+                            }
+
+                            window.close();
+                        }
+                    });
+                } catch (error) {
+                    notifyParent({ type: 'safepay:cancelled' });
+                    setStatus('Failed to initialize secure checkout. ' + (error && error.message ? error.message : ''));
+                    console.error('SafePay checkout init error:', error);
+                    window.location.href = cancelUrl;
+                }
+            });
         })();
     </script>
 </body>

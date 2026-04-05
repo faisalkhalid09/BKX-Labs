@@ -127,16 +127,27 @@ class CheckoutController extends Controller
         $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
         $mode = in_array($configuredMode, ['production', 'prod', 'live'], true) ? 'production' : 'sandbox';
         $sdkHost = $mode === 'production' ? 'https://api.getsafepay.com' : 'https://sandbox.api.getsafepay.com';
+        $sdkCandidates = $mode === 'production'
+            ? [
+                'https://api.getsafepay.com/checkout/pay.js',
+                'https://sandbox.api.getsafepay.com/checkout/pay.js',
+            ]
+            : [
+                'https://sandbox.api.getsafepay.com/checkout/pay.js',
+                'https://api.getsafepay.com/checkout/pay.js',
+            ];
 
         Log::info('SafePay popup gateway render', [
             'user_id'   => $request->user()->id,
             'order_ref' => $context['order_ref'] ?? null,
             'mode'      => $mode,
             'sdk_host'  => $sdkHost,
+            'sdk_candidates' => $sdkCandidates,
         ]);
 
         return view('store.checkout_popup_gateway', [
             'sdkScriptUrl' => $sdkHost . '/checkout/pay.js',
+            'sdkCandidates'=> $sdkCandidates,
             'mode'         => $mode,
             'apiKey'       => (string) config('services.safepay.api_key'),
             'amount'       => $context['amount'],
