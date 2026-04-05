@@ -23,6 +23,7 @@ class WebhookController extends Controller
     public function handle(Request $request)
     {
         $payload = $request->all();
+        $rawPayload = $request->getContent();
         $signature = $request->header('X-SFPY-Signature');
         
         Log::info('SafePay Webhook Received', [
@@ -31,7 +32,7 @@ class WebhookController extends Controller
         ]);
 
         // 1. Verify HMAC Signature
-        if (!$this->safepay->verifySignature($payload, $signature)) {
+        if (!$this->safepay->verifySignature($rawPayload, $signature)) {
             Log::error('SafePay Webhook: Invalid signature', ['payload' => $payload]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }

@@ -37,7 +37,7 @@ class SafePayService
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
-            'success_url'      => route('checkout.success'),
+            'success_url'      => route('checkout.success', ['success' => 'true']),
             'cancel_url'       => route('checkout.create'),
         ];
 
@@ -49,16 +49,24 @@ class SafePayService
     /**
      * Verify the webhook signature from SafePay
      */
-    public function verifySignature($payload, $headerSignature)
+    public function verifySignature(string $rawPayload, string $headerSignature = null): bool
     {
-        $this->assertConfigured();
+        if (empty($this->webhookSecret)) {
+            throw new Exception('SafePay webhook secret is missing in config.');
+        }
         
         if (empty($headerSignature)) {
             return false;
         }
 
-        // SafePay signature verification: HMAC-SHA256 of the JSON payload
-        $computedSignature = hash_hmac('sha256', json_encode($payload), $this->webhookSecret);
+        // Support headers like "sha256=<hash>" or plain hash.
+        if (str_contains($headerSignature, '=')) {
+            [, $headerSignature] = explode('=', $headerSignature, 2);
+        }
+        $headerSignature = trim($headerSignature);
+
+        // SafePay signature verification: HMAC-SHA256 of the raw request body.
+        $computedSignature = hash_hmac('sha256', $rawPayload, $this->webhookSecret);
         
         return hash_equals($computedSignature, $headerSignature);
     }
