@@ -18,7 +18,10 @@ class SafePayService
         $this->apiKey = config('services.safepay.api_key');
         $this->secretKey = config('services.safepay.secret_key');
         $this->webhookSecret = config('services.safepay.webhook_secret');
-        $this->mode = config('services.safepay.environment', 'sandbox');
+        $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
+        $this->mode = in_array($configuredMode, ['production', 'prod', 'live'], true)
+            ? 'production'
+            : 'sandbox';
         
         $this->baseUrl = ($this->mode === 'production') 
             ? 'https://api.getsafepay.com' 
@@ -39,6 +42,7 @@ class SafePayService
         $params = [
             'merchant_api_key' => $this->apiKey,
             'environment'      => $this->mode,
+            'env'              => $this->mode,
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
@@ -52,6 +56,15 @@ class SafePayService
                 'state'    => $stateToken,
             ]),
         ];
+
+        Log::info('SafePay checkout redirect params', [
+            'mode'         => $this->mode,
+            'base_url'     => $this->baseUrl,
+            'has_api_key'  => !empty($this->apiKey),
+            'param_keys'   => array_keys($params),
+            'success_url'  => $params['success_url'],
+            'cancel_url'   => $params['cancel_url'],
+        ]);
 
         $queryString = http_build_query($params);
         
