@@ -76,12 +76,21 @@ class CheckoutController extends Controller
         $checkoutContext = $this->createPendingOrder($request, $validated, $product->price);
 
         try {
-            $checkoutUrl = $this->safepay->createCheckoutUrl(
-                $product->price,
-                $checkoutContext['order_ref'],
-                'USD',
-                $checkoutContext['state_token']
+            $popupToken = bin2hex(random_bytes(24));
+
+            Cache::put(
+                $this->popupContextCacheKey($popupToken),
+                [
+                    'user_id'    => $request->user()->id,
+                    'order_ref'  => $checkoutContext['order_ref'],
+                    'state_token'=> $checkoutContext['state_token'],
+                    'amount'     => (float) $product->price,
+                    'currency'   => 'USD',
+                ],
+                now()->addMinutes(30)
             );
+
+            $checkoutUrl = route('checkout.popup.gateway', ['token' => $popupToken]);
 
             return response()->json([
                 'checkout_url' => $checkoutUrl,
@@ -94,6 +103,33 @@ class CheckoutController extends Controller
                 'message' => 'Unable to create checkout session right now. Please try again.',
             ], 500);
         }
+    }
+
+    /**
+     * Render popup page that initializes SafePay checkout via SDK.
+     */
+    public function popupGateway(Request $request)
+    {
+        $token = (string) $request->query('token', '');
+        $context = Cache::get($this->popupContextCacheKey($token));
+
+        if (!$context || (int) ($context['user_id'] ?? 0) !== (int) $request->user()->id) {
+            abort(403, 'Invalid popup checkout session.');
+        }
+
+        $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
+        $mode = in_array($configuredMode, ['production', 'prod', 'live'], true) ? 'production' : 'sandbox';
+        $sdkHost = $mode === 'production' ? 'https://api.getsafepay.com' : 'https://sandbox.api.getsafepay.com';
+
+        return view('store.checkout_popup_gateway', [
+            'sdkScriptUrl' => $sdkHost . '/checkout/pay.js',
+            'mode'         => $mode,
+            'apiKey'       => (string) config('services.safepay.api_key'),
+            'amount'       => $context['amount'],
+            'currency'     => $context['currency'],
+            'orderRef'     => $context['order_ref'],
+            'stateToken'   => $context['state_token'],
+        ]);
     }
 
     /**
@@ -223,6 +259,11 @@ class CheckoutController extends Controller
     protected function idempotencyCacheKey(int $userId, string $idempotencyKey): string
     {
         return 'checkout_idem:' . $userId . ':' . hash('sha256', $idempotencyKey);
+    }
+
+    protected function popupContextCacheKey(string $popupToken): string
+    {
+        return 'checkout_popup_ctx:' . hash('sha256', $popupToken);
     }
 
     protected function validateCheckoutState(string $orderRef, string $stateToken): bool
