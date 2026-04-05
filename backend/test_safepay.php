@@ -11,39 +11,20 @@ $secretKey = env('SAFEPAY_SECRET_KEY');
 $webhookSecret = env('SAFEPAY_WEBHOOK_SECRET');
 $baseUrl = 'https://sandbox.api.getsafepay.com';
 
-echo "--- BRUTE FORCE HEADER TEST ---\n\n";
+echo "--- COMBO AUTH TEST ---\n\n";
 
-$variants = [
-    'X-SFPY-MERCHANT-WEBHOOK-SECRET',
-    'X-SFPY-WEBHOOK-SECRET',
-    'X-SFPY-MERCHANT-SECRET',  // Already tried, but testing again with Webhook Secret
-    'X-SFPY-SECRET-KEY',
-    'X-SFPY-API-SECRET',
-    'X-SAFEPAY-WEBHOOK-SECRET',
-    'X-SAFEPAY-MERCHANT-SECRET',
-    'Merchant-Webhook-Secret',
-    'x-merchant-webhook-secret',
-    'X-SFPY-SIGNATURE',
-];
+echo "Testing Combo (API Key + Secret Key)... ";
+$response = Http::withHeaders([
+    'X-SFPY-API-KEY' => $apiKey,
+    'X-SFPY-MERCHANT-SECRET' => $secretKey
+])->post("$baseUrl/client/passport/v1/token");
+echo $response->status() . " - " . $response->body() . "\n\n";
 
-$secrets = [
-    'Secret Key' => $secretKey,
-    'Webhook Secret' => $webhookSecret
-];
+echo "Testing Combo (API Key + Webhook Secret)... ";
+$response = Http::withHeaders([
+    'X-SFPY-API-KEY' => $apiKey,
+    'X-SFPY-MERCHANT-SECRET' => $webhookSecret
+])->post("$baseUrl/client/passport/v1/token");
+echo $response->status() . " - " . $response->body() . "\n\n";
 
-foreach ($variants as $header) {
-    foreach ($secrets as $name => $val) {
-        echo "Testing: $header ($name)... ";
-        $response = Http::withHeaders([$header => $val])
-            ->post("$baseUrl/client/passport/v1/token");
-        
-        if ($response->successful()) {
-            echo "✅ SUCCESS! Header: $header, Value: $name\n";
-            exit;
-        } else {
-            echo "❌ " . $response->status() . "\n";
-        }
-    }
-}
-
-echo "\n--- ALL FAILED ---";
+echo "--- END ---";
