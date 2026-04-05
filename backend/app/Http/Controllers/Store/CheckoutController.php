@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Services\SafePayService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -47,11 +48,16 @@ class CheckoutController extends Controller
     {
         $validated = $this->validateCheckoutInput($request);
         $product = Product::findOrFail($validated['product_id']);
-        $orderRef = $this->createPendingOrder($request, $validated, $product->price);
+        $checkoutContext = $this->createPendingOrder($request, $validated, $product->price);
 
         try {
             // Build the direct checkout redirect URL
-            $checkoutUrl = $this->safepay->createCheckoutUrl($product->price, $orderRef, 'USD');
+            $checkoutUrl = $this->safepay->createCheckoutUrl(
+                $product->price,
+                $checkoutContext['order_ref'],
+                'USD',
+                $checkoutContext['state_token']
+            );
 
             return redirect($checkoutUrl);
         } catch (\Exception $e) {
@@ -67,14 +73,19 @@ class CheckoutController extends Controller
     {
         $validated = $this->validateCheckoutInput($request);
         $product = Product::findOrFail($validated['product_id']);
-        $orderRef = $this->createPendingOrder($request, $validated, $product->price);
+        $checkoutContext = $this->createPendingOrder($request, $validated, $product->price);
 
         try {
-            $checkoutUrl = $this->safepay->createCheckoutUrl($product->price, $orderRef, 'USD');
+            $checkoutUrl = $this->safepay->createCheckoutUrl(
+                $product->price,
+                $checkoutContext['order_ref'],
+                'USD',
+                $checkoutContext['state_token']
+            );
 
             return response()->json([
                 'checkout_url' => $checkoutUrl,
-                'order_ref'    => $orderRef,
+                'order_ref'    => $checkoutContext['order_ref'],
             ]);
         } catch (\Exception $e) {
             Log::error('SafePay Popup Session Error: ' . $e->getMessage());
@@ -88,8 +99,15 @@ class CheckoutController extends Controller
     /**
      * Render a tiny relay page used when user cancels from popup flow.
      */
-    public function popupCancel()
+    public function popupCancel(Request $request)
     {
+        $orderRef = (string) $request->query('order_ref', '');
+        $state = (string) $request->query('state', '');
+
+        if (!$this->validateCheckoutState($orderRef, $state)) {
+            abort(403, 'Invalid checkout state.');
+        }
+
         return view('store.checkout_popup_cancel');
     }
 
@@ -98,12 +116,30 @@ class CheckoutController extends Controller
      */
     public function success(Request $request)
     {
+        $orderRef = (string) $request->query('order_ref', '');
+        $state = (string) $request->query('state', '');
         $tracker = $request->get('tracker');
-        $success = $request->get('success');
+        $order = Order::where('safepay_order_ref', $orderRef)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        if (!$order) {
+            abort(404);
+        }
+
+        $stateValid = $this->validateCheckoutState($orderRef, $state);
+        if (!$stateValid) {
+            Log::warning('SafePay return blocked due to invalid state token.', [
+                'order_ref' => $orderRef,
+                'user_id'   => $request->user()->id,
+            ]);
+
+            abort(403, 'Invalid checkout state.');
+        }
 
         return view('store.success', [
             'tracker'         => $tracker,
-            'paymentVerified' => ($success === 'true')
+            'paymentVerified' => ($order->status === 'paid')
         ]);
     }
 
@@ -122,9 +158,10 @@ class CheckoutController extends Controller
         ]);
     }
 
-    protected function createPendingOrder(Request $request, array $validated, $amount): string
+    protected function createPendingOrder(Request $request, array $validated, $amount): array
     {
         $orderRef = 'ORD-' . strtoupper(Str::random(10));
+        $stateToken = bin2hex(random_bytes(24));
 
         Order::create([
             'user_id'           => $request->user()->id,
@@ -134,6 +171,41 @@ class CheckoutController extends Controller
             'safepay_order_ref' => $orderRef,
         ]);
 
-        return $orderRef;
+        Cache::put(
+            $this->stateCacheKey($orderRef),
+            hash('sha256', $stateToken),
+            now()->addMinutes(45)
+        );
+
+        return [
+            'order_ref'   => $orderRef,
+            'state_token' => $stateToken,
+        ];
+    }
+
+    protected function stateCacheKey(string $orderRef): string
+    {
+        return 'checkout_state:' . $orderRef;
+    }
+
+    protected function validateCheckoutState(string $orderRef, string $stateToken): bool
+    {
+        if ($orderRef === '' || $stateToken === '') {
+            return false;
+        }
+
+        $storedHash = Cache::get($this->stateCacheKey($orderRef));
+        if (!$storedHash) {
+            return false;
+        }
+
+        $providedHash = hash('sha256', $stateToken);
+        $isValid = hash_equals($storedHash, $providedHash);
+
+        if ($isValid) {
+            Cache::forget($this->stateCacheKey($orderRef));
+        }
+
+        return $isValid;
     }
 }

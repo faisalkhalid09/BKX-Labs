@@ -28,17 +28,28 @@ class SafePayService
     /**
      * Build the direct checkout URL for the Express Checkout (Redirect Flow)
      */
-    public function createCheckoutUrl($amount, $orderRef, $currency = 'USD')
+    public function createCheckoutUrl($amount, $orderRef, $currency = 'USD', $stateToken = null)
     {
         $this->assertConfigured();
+
+        if (empty($stateToken)) {
+            throw new Exception('Checkout state token is missing.');
+        }
 
         $params = [
             'merchant_api_key' => $this->apiKey,
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
-            'success_url'      => route('checkout.success', ['success' => 'true']),
-            'cancel_url'       => route('checkout.popup.cancel'),
+            'success_url'      => route('checkout.success', [
+                'success'  => 'true',
+                'order_ref'=> $orderRef,
+                'state'    => $stateToken,
+            ]),
+            'cancel_url'       => route('checkout.popup.cancel', [
+                'order_ref'=> $orderRef,
+                'state'    => $stateToken,
+            ]),
         ];
 
         $queryString = http_build_query($params);

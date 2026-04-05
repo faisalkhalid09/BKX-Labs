@@ -299,10 +299,13 @@
 
             try {
                 const formData = new FormData(form);
+                const csrfTokenInput = form.querySelector('input[name="_token"]');
+                const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+                const csrfToken = csrfTokenInput ? csrfTokenInput.value : (csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '');
                 const response = await fetch("{{ route('checkout.popup.session') }}", {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-CSRF-TOKEN': csrfToken,
                         'Accept': 'application/json'
                     },
                     body: formData,

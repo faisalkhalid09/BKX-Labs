@@ -52,8 +52,8 @@ Route::prefix('store')->name('store.')->group(function () {
 // ──────────────────────────────────────
 Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function () {
     Route::get('/',         [CheckoutController::class, 'create'])->name('create');
-    Route::post('/',        [CheckoutController::class, 'store'])->name('store');
-    Route::post('/popup-session', [CheckoutController::class, 'popupSession'])->name('popup.session');
+    Route::post('/',        [CheckoutController::class, 'store'])->name('store')->middleware('throttle:6,1');
+    Route::post('/popup-session', [CheckoutController::class, 'popupSession'])->name('popup.session')->middleware('throttle:6,1');
     Route::get('/popup-cancel', [CheckoutController::class, 'popupCancel'])->name('popup.cancel');
     Route::get('/success',  [CheckoutController::class, 'success'])->name('success');
 });
