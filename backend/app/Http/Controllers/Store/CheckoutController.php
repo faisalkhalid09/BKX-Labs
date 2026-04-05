@@ -76,6 +76,13 @@ class CheckoutController extends Controller
         $checkoutContext = $this->createPendingOrder($request, $validated, $product->price);
 
         try {
+            $redirectUrl = $this->safepay->createCheckoutUrl(
+                $product->price,
+                $checkoutContext['order_ref'],
+                'USD',
+                $checkoutContext['state_token']
+            );
+
             $popupToken = bin2hex(random_bytes(24));
 
             Cache::put(
@@ -86,6 +93,7 @@ class CheckoutController extends Controller
                     'state_token'=> $checkoutContext['state_token'],
                     'amount'     => (float) $product->price,
                     'currency'   => 'USD',
+                    'redirect_url' => $redirectUrl,
                 ],
                 now()->addMinutes(30)
             );
@@ -124,34 +132,25 @@ class CheckoutController extends Controller
             abort(403, 'Invalid popup checkout session.');
         }
 
-        $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
-        $mode = in_array($configuredMode, ['production', 'prod', 'live'], true) ? 'production' : 'sandbox';
-        $sdkHost = $mode === 'production' ? 'https://api.getsafepay.com' : 'https://sandbox.api.getsafepay.com';
-        $sdkCandidates = $mode === 'production'
-            ? [
-                'https://api.getsafepay.com/checkout/pay.js',
-                'https://sandbox.api.getsafepay.com/checkout/pay.js',
-            ]
-            : [
-                'https://sandbox.api.getsafepay.com/checkout/pay.js',
-                'https://api.getsafepay.com/checkout/pay.js',
-            ];
+        $redirectUrl = (string) ($context['redirect_url'] ?? '');
+        if ($redirectUrl === '') {
+            // Fallback for old cache entries that predate redirect_url in popup context.
+            $redirectUrl = $this->safepay->createCheckoutUrl(
+                (float) ($context['amount'] ?? 0),
+                (string) ($context['order_ref'] ?? ''),
+                (string) ($context['currency'] ?? 'USD'),
+                (string) ($context['state_token'] ?? '')
+            );
+        }
 
         Log::info('SafePay popup gateway render', [
             'user_id'   => $request->user()->id,
             'order_ref' => $context['order_ref'] ?? null,
-            'mode'      => $mode,
-            'sdk_host'  => $sdkHost,
-            'sdk_candidates' => $sdkCandidates,
+            'has_redirect_url' => $redirectUrl !== '',
         ]);
 
         return view('store.checkout_popup_gateway', [
-            'sdkScriptUrl' => $sdkHost . '/checkout/pay.js',
-            'sdkCandidates'=> $sdkCandidates,
-            'mode'         => $mode,
-            'apiKey'       => (string) config('services.safepay.api_key'),
-            'amount'       => $context['amount'],
-            'currency'     => $context['currency'],
+            'redirectUrl'  => $redirectUrl,
             'orderRef'     => $context['order_ref'],
             'stateToken'   => $context['state_token'],
         ]);
