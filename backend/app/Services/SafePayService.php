@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class SafePayService
 {
+    protected $merchantKey;
     protected $apiKey;
     protected $secretKey;
     protected $webhookSecret;
@@ -15,6 +16,7 @@ class SafePayService
 
     public function __construct()
     {
+        $this->merchantKey = config('services.safepay.merchant_key');
         $this->apiKey = config('services.safepay.api_key');
         $this->secretKey = config('services.safepay.secret_key');
         $this->webhookSecret = config('services.safepay.webhook_secret');
@@ -39,10 +41,14 @@ class SafePayService
             throw new Exception('Checkout state token is missing.');
         }
 
+        $merchantKey = (string) ($this->merchantKey ?: $this->apiKey);
+
         $params = [
-            'merchant_api_key' => $this->apiKey,
+            'merchant_api_key' => $merchantKey,
             'environment'      => $this->mode,
             'env'              => $this->mode,
+            'source'           => 'checkout',
+            'order_id'         => $orderRef,
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
@@ -60,6 +66,7 @@ class SafePayService
         Log::info('SafePay checkout redirect params', [
             'mode'         => $this->mode,
             'base_url'     => $this->baseUrl,
+            'merchant_key_prefix' => substr($merchantKey, 0, 8),
             'has_api_key'  => !empty($this->apiKey),
             'param_keys'   => array_keys($params),
             'success_url'  => $params['success_url'],
@@ -98,8 +105,8 @@ class SafePayService
 
     protected function assertConfigured()
     {
-        if (empty($this->apiKey) || empty($this->secretKey)) {
-            throw new Exception("SafePay API or Secret key is missing in config.");
+        if ((empty($this->merchantKey) && empty($this->apiKey)) || empty($this->secretKey)) {
+            throw new Exception("SafePay merchant/api key or secret key is missing in config.");
         }
     }
 }

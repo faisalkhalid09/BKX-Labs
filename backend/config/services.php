@@ -44,6 +44,7 @@ return [
     ],
 
     'safepay' => [
+        'merchant_key'   => env('SAFEPAY_MERCHANT_KEY'),
         'api_key'        => env('SAFEPAY_API_KEY'),
         'secret_key'     => env('SAFEPAY_SECRET_KEY'),
         'webhook_secret' => env('SAFEPAY_WEBHOOK_SECRET'),
