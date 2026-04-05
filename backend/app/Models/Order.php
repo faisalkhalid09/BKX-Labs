@@ -12,8 +12,8 @@ class Order extends Model
         'product_id',
         'status',
         'amount',
-        'lemon_squeezy_id',
-        'lemon_squeezy_order_id',
+        'safepay_tracker_token',
+        'safepay_order_ref',
         'download_expires_at',
     ];
 

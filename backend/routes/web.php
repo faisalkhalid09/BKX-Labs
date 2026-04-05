@@ -53,17 +53,17 @@ Route::prefix('store')->name('store.')->group(function () {
 Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function () {
     Route::get('/',         [CheckoutController::class, 'create'])->name('create');
     Route::post('/',        [CheckoutController::class, 'store'])->name('store');
-    Route::get('/success',  fn() => view('store.success'))->name('success');
+    Route::get('/success',  [CheckoutController::class, 'success'])->name('success');
 });
 
 // Allow checkout page to be visited before auth (redirects inside controller)
 // Removed duplicate public route to ensure middleware handles redirection correctly.
 
 // ──────────────────────────────────────
-//  Lemon Squeezy Webhook (no CSRF / no auth)
+//  SafePay Webhook (no CSRF / no auth)
 // ──────────────────────────────────────
-Route::post('/webhook/lemon-squeezy', [WebhookController::class, 'handle'])
-    ->name('webhook.lemon_squeezy')
+Route::post('/webhook/safepay', [WebhookController::class, 'handle'])
+    ->name('webhook.safepay')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // ──────────────────────────────────────

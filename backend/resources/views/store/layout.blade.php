@@ -74,7 +74,7 @@
 <body class="bg-background text-on-background antialiased overflow-x-hidden">
 
 @php
-    $hideStoreHeader = request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('verify.otp');
+    $hideStoreHeader = request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('verify.otp') || request()->routeIs('checkout.create') || request()->routeIs('checkout.store');
 @endphp
 
 <!-- TopNavBar Shared Component -->

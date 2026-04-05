@@ -43,10 +43,11 @@ return [
         'calendar_id'      => env('GOOGLE_CALENDAR_ID'),
     ],
 
-    'lemon-squeezy' => [
-        'store_id'       => env('LEMON_SQUEEZY_STORE_ID'),
-        'api_key'        => env('LEMON_SQUEEZY_API_KEY'),
-        'signing_secret' => env('LEMON_SQUEEZY_SIGNING_SECRET'),
+    'safepay' => [
+        'api_key'        => env('SAFEPAY_API_KEY'),
+        'secret_key'     => env('SAFEPAY_SECRET_KEY'),
+        'webhook_secret' => env('SAFEPAY_WEBHOOK_SECRET'),
+        'environment'    => env('SAFEPAY_ENV', 'sandbox'),
     ],
 
 ];
