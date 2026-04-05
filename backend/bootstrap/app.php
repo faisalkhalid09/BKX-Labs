@@ -22,9 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\HandleCors::class);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
 
-        // CORS Configuration
+        // CSRF Configuration
         $middleware->validateCsrfTokens(except: [
             'api/*',
+            'verify-otp',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
