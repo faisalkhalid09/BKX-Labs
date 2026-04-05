@@ -11,28 +11,39 @@ $secretKey = env('SAFEPAY_SECRET_KEY');
 $webhookSecret = env('SAFEPAY_WEBHOOK_SECRET');
 $baseUrl = 'https://sandbox.api.getsafepay.com';
 
-echo "--- ULTIMATE AUTH TEST (REFINED) ---\n\n";
+echo "--- BRUTE FORCE HEADER TEST ---\n\n";
 
-$tests = [
-    "X-SFPY-MERCHANT-SECRET (with Secret Key)" => ['X-SFPY-MERCHANT-SECRET' => $secretKey],
-    "X-SFPY-MERCHANT-SECRET (with Webhook Secret)" => ['X-SFPY-MERCHANT-SECRET' => $webhookSecret],
-    "X-SFPY-API-KEY + X-SFPY-SECRET" => ['X-SFPY-API-KEY' => $apiKey, 'X-SFPY-SECRET' => $secretKey],
-    "X-SAFEPAY-SIGNATURE (with Webhook Secret)" => ['X-SAFEPAY-SIGNATURE' => $webhookSecret],
-    "X-SFPY-WEBHOOK-SECRET (with Webhook Secret)" => ['X-SFPY-WEBHOOK-SECRET' => $webhookSecret],
-    "X-SFPY-MERCHANT-WEBHOOK-SECRET" => ['X-SFPY-MERCHANT-WEBHOOK-SECRET' => $webhookSecret],
+$variants = [
+    'X-SFPY-MERCHANT-WEBHOOK-SECRET',
+    'X-SFPY-WEBHOOK-SECRET',
+    'X-SFPY-MERCHANT-SECRET',  // Already tried, but testing again with Webhook Secret
+    'X-SFPY-SECRET-KEY',
+    'X-SFPY-API-SECRET',
+    'X-SAFEPAY-WEBHOOK-SECRET',
+    'X-SAFEPAY-MERCHANT-SECRET',
+    'Merchant-Webhook-Secret',
+    'x-merchant-webhook-secret',
+    'X-SFPY-SIGNATURE',
 ];
 
-foreach ($tests as $name => $headers) {
-    echo "Testing $name... ";
-    $response = Http::withHeaders($headers)->post("$baseUrl/client/passport/v1/token");
-    
-    if ($response->successful()) {
-        echo "✅ SUCCESS!\n";
-        echo "Worked with headers: " . json_encode($headers) . "\n";
-        exit;
-    } else {
-        echo "❌ Status: " . $response->status() . " - " . $response->json('status.errors.1') . "\n";
+$secrets = [
+    'Secret Key' => $secretKey,
+    'Webhook Secret' => $webhookSecret
+];
+
+foreach ($variants as $header) {
+    foreach ($secrets as $name => $val) {
+        echo "Testing: $header ($name)... ";
+        $response = Http::withHeaders([$header => $val])
+            ->post("$baseUrl/client/passport/v1/token");
+        
+        if ($response->successful()) {
+            echo "✅ SUCCESS! Header: $header, Value: $name\n";
+            exit;
+        } else {
+            echo "❌ " . $response->status() . "\n";
+        }
     }
 }
 
-echo "\n--- FAILED ALL ---";
+echo "\n--- ALL FAILED ---";
