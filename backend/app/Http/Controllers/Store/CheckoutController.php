@@ -140,8 +140,11 @@ class CheckoutController extends Controller
         $orderRef = (string) $request->query('order_ref', '');
         $state = (string) $request->query('state', '');
 
-        if (!$this->validateCheckoutState($orderRef, $state)) {
-            abort(403, 'Invalid checkout state.');
+        if (!$this->validateCheckoutState($orderRef, $state, false)) {
+            Log::warning('SafePay cancel callback with invalid/expired state.', [
+                'order_ref' => $orderRef,
+                'user_id'   => $request->user()->id,
+            ]);
         }
 
         return view('store.checkout_popup_cancel');
@@ -266,7 +269,7 @@ class CheckoutController extends Controller
         return 'checkout_popup_ctx:' . hash('sha256', $popupToken);
     }
 
-    protected function validateCheckoutState(string $orderRef, string $stateToken): bool
+    protected function validateCheckoutState(string $orderRef, string $stateToken, bool $consume = true): bool
     {
         if ($orderRef === '' || $stateToken === '') {
             return false;
@@ -280,7 +283,7 @@ class CheckoutController extends Controller
         $providedHash = hash('sha256', $stateToken);
         $isValid = hash_equals($storedHash, $providedHash);
 
-        if ($isValid) {
+        if ($isValid && $consume) {
             Cache::forget($this->stateCacheKey($orderRef));
         }
 

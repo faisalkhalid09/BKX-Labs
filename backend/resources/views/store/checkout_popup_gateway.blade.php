@@ -84,7 +84,7 @@
                 onCancelled: function() {
                     notifyParent({ type: 'safepay:cancelled' });
                     window.close();
-                    window.location.href = cancelUrl;
+                    // Let SafePay handle cancel redirect when needed; this avoids duplicate callbacks.
                 }
             });
         })();
