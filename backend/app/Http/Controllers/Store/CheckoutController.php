@@ -138,7 +138,7 @@ class CheckoutController extends Controller
     public function popupCancel(Request $request)
     {
         $orderRef = (string) $request->query('order_ref', '');
-        $state = (string) $request->query('state', '');
+        $state = $this->extractStateToken($request);
 
         if (!$this->validateCheckoutState($orderRef, $state, false)) {
             Log::warning('SafePay cancel callback with invalid/expired state.', [
@@ -156,7 +156,7 @@ class CheckoutController extends Controller
     public function success(Request $request)
     {
         $orderRef = (string) $request->query('order_ref', '');
-        $state = (string) $request->query('state', '');
+        $state = $this->extractStateToken($request);
         $tracker = $request->get('tracker');
         $order = Order::where('safepay_order_ref', $orderRef)
             ->where('user_id', $request->user()->id)
@@ -288,5 +288,24 @@ class CheckoutController extends Controller
         }
 
         return $isValid;
+    }
+
+    protected function extractStateToken(Request $request): string
+    {
+        $state = (string) $request->query('state', '');
+        if ($state !== '') {
+            return $state;
+        }
+
+        // Some provider redirects may HTML-escape query delimiters and produce amp;state.
+        $escapedState = (string) $request->query('amp;state', '');
+        if ($escapedState !== '') {
+            return $escapedState;
+        }
+
+        $rawQuery = html_entity_decode((string) $request->server('QUERY_STRING', ''), ENT_QUOTES | ENT_HTML5);
+        parse_str($rawQuery, $params);
+
+        return (string) ($params['state'] ?? $params['amp;state'] ?? '');
     }
 }
