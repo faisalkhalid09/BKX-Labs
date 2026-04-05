@@ -147,6 +147,7 @@ class CheckoutController extends Controller
     {
         return $request->validate([
             'product_id'  => 'required|exists:products,id',
+            'idempotency_key' => 'nullable|string|min:16|max:128',
             'first_name'  => 'required|string|max:255',
             'last_name'   => 'required|string|max:255',
             'email'       => 'required|email|max:255',
@@ -160,16 +161,47 @@ class CheckoutController extends Controller
 
     protected function createPendingOrder(Request $request, array $validated, $amount): array
     {
-        $orderRef = 'ORD-' . strtoupper(Str::random(10));
+        $orderRef = null;
         $stateToken = bin2hex(random_bytes(24));
+        $userId = $request->user()->id;
+        $idempotencyKey = $validated['idempotency_key'] ?? null;
 
-        Order::create([
-            'user_id'           => $request->user()->id,
-            'product_id'        => $validated['product_id'],
-            'status'            => 'pending',
-            'amount'            => $amount,
-            'safepay_order_ref' => $orderRef,
-        ]);
+        if (!empty($idempotencyKey)) {
+            $cachedOrderRef = Cache::get($this->idempotencyCacheKey($userId, $idempotencyKey));
+
+            if (!empty($cachedOrderRef)) {
+                $existing = Order::query()
+                    ->where('user_id', $userId)
+                    ->where('product_id', $validated['product_id'])
+                    ->where('safepay_order_ref', $cachedOrderRef)
+                    ->where('status', 'pending')
+                    ->first();
+
+                if ($existing) {
+                    $orderRef = $existing->safepay_order_ref;
+                }
+            }
+        }
+
+        if ($orderRef === null) {
+            $orderRef = 'ORD-' . strtoupper(Str::random(10));
+
+            Order::create([
+                'user_id'           => $userId,
+                'product_id'        => $validated['product_id'],
+                'status'            => 'pending',
+                'amount'            => $amount,
+                'safepay_order_ref' => $orderRef,
+            ]);
+
+            if (!empty($idempotencyKey)) {
+                Cache::put(
+                    $this->idempotencyCacheKey($userId, $idempotencyKey),
+                    $orderRef,
+                    now()->addMinutes(20)
+                );
+            }
+        }
 
         Cache::put(
             $this->stateCacheKey($orderRef),
@@ -186,6 +218,11 @@ class CheckoutController extends Controller
     protected function stateCacheKey(string $orderRef): string
     {
         return 'checkout_state:' . $orderRef;
+    }
+
+    protected function idempotencyCacheKey(int $userId, string $idempotencyKey): string
+    {
+        return 'checkout_idem:' . $userId . ':' . hash('sha256', $idempotencyKey);
     }
 
     protected function validateCheckoutState(string $orderRef, string $stateToken): bool

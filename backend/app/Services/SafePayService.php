@@ -38,6 +38,7 @@ class SafePayService
 
         $params = [
             'merchant_api_key' => $this->apiKey,
+            'environment'      => $this->mode,
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),

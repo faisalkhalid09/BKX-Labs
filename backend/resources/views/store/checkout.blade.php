@@ -139,6 +139,7 @@
             <form id="checkout-form" method="POST" action="{{ route('checkout.store') }}">
                 @csrf
                 <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
+                <input type="hidden" id="idempotency_key" name="idempotency_key" value="">
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -228,6 +229,15 @@
         const popupName = 'safepay-checkout-popup';
         let paymentPopup = null;
         let popupWatch = null;
+
+        const idempotencyInput = document.getElementById('idempotency_key');
+        if (idempotencyInput && !idempotencyInput.value) {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                idempotencyInput.value = window.crypto.randomUUID();
+            } else {
+                idempotencyInput.value = 'idem-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+            }
+        }
 
         function setLoading(isLoading) {
             payButton.disabled = isLoading;
