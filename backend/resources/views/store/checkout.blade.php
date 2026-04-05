@@ -166,8 +166,18 @@
 
 <script>
     document.getElementById('custom-pay-button').addEventListener('click', function() {
+        // Simple client-side validation check
+        const fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'postal_code', 'country'];
+        for (let f of fields) {
+            if (!document.getElementById(f).value) {
+                alert('Please fill in all billing details.');
+                document.getElementById(f).focus();
+                return;
+            }
+        }
+
         const email = document.getElementById('email').value;
-        if(!email) { alert('Please enter your email first.'); return; }
+        const total = {{ $total }};
 
         // Initialize SafePay Checkout Overlay
         safepay.setup({
@@ -178,17 +188,22 @@
 
         // Open the payment overlay
         safepay.checkout({
-            amount: {{ $total }},
+            amount: total,
             currency: 'USD',
             metadata: {
-                order_id: 'ORD-' + Math.random().toString(36).substr(2, 9),
-                email: email
+                order_id: 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                email: email,
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value
             },
             onSucceeded: function(data) {
+                // Payment worked! Now we redirect with the tracker
+                // The WebhookController will handle the heavy lifting of marking the order paid
                 window.location.href = "{{ route('checkout.success') }}?success=true&tracker=" + data.tracker;
             },
             onCancelled: function() {
-                alert('Payment cancelled.');
+                // User closed the modal
+                console.log('Payment cancelled by user');
             }
         });
     });

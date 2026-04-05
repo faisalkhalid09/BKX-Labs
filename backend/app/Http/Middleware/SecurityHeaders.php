@@ -19,14 +19,13 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         
         // Content Security Policy (CSP)
-        // Added Lemon Squeezy domains
         $csp = "default-src 'self'; " .
-               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.lemonsqueezy.com https://accounts.google.com; " .
+               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sandbox.api.getsafepay.com https://api.getsafepay.com https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
                "font-src 'self' https://fonts.gstatic.com data:; " .
-               "img-src 'self' data: https://lh3.googleusercontent.com https://app.lemonsqueezy.com https://ui-avatars.com; " .
-               "frame-src https://app.lemonsqueezy.com https://accounts.google.com; " .
-               "connect-src 'self' https://app.lemonsqueezy.com;";
+               "img-src 'self' data: https://lh3.googleusercontent.com https://sandbox.api.getsafepay.com https://api.getsafepay.com https://ui-avatars.com; " .
+               "frame-src https://sandbox.api.getsafepay.com https://api.getsafepay.com https://accounts.google.com; " .
+               "connect-src 'self' https://sandbox.api.getsafepay.com https://api.getsafepay.com;";
         $response->headers->set('Content-Security-Policy', $csp);
 
         // Permissions Policy
