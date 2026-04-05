@@ -19,13 +19,15 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
         
         // Content Security Policy (CSP)
-        $csp = "default-src 'self' https://*.getsafepay.com; " .
-               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.getsafepay.com https://accounts.google.com; " .
+         $safepayHosts = "https://*.getsafepay.com https://api.getsafepay.com https://sandbox.api.getsafepay.com";
+
+         $csp = "default-src 'self' {$safepayHosts}; " .
+             "script-src 'self' 'unsafe-inline' 'unsafe-eval' {$safepayHosts} https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
                "font-src 'self' https://fonts.gstatic.com data:; " .
-               "img-src 'self' data: https://lh3.googleusercontent.com https://*.getsafepay.com https://ui-avatars.com; " .
-               "frame-src https://*.getsafepay.com https://accounts.google.com; " .
-               "connect-src 'self' https://*.getsafepay.com;";
+             "img-src 'self' data: https://lh3.googleusercontent.com {$safepayHosts} https://ui-avatars.com; " .
+             "frame-src {$safepayHosts} https://accounts.google.com; " .
+             "connect-src 'self' {$safepayHosts};";
         $response->headers->set('Content-Security-Policy', $csp);
 
         // Permissions Policy
