@@ -35,6 +35,22 @@
             to { transform: rotate(360deg); }
         }
         .muted { color: #94a3b8; font-size: 0.9rem; }
+        .status {
+            margin-top: 10px;
+            color: #fca5a5;
+            font-size: 0.88rem;
+            min-height: 1.2em;
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +58,8 @@
         <div class="spinner" aria-hidden="true"></div>
         <h2 style="margin:0 0 8px 0; font-size:1.1rem;">Opening Secure Checkout</h2>
         <p class="muted">Please wait while we initialize payment.</p>
+        <p id="popup-status" class="status"></p>
+        <button id="close-popup-btn" class="btn" type="button" onclick="window.close()">Close Window</button>
     </div>
 
     <script src="{{ $sdkScriptUrl }}"></script>
@@ -49,6 +67,14 @@
         (function () {
             const successUrl = "{{ route('checkout.success', ['success' => 'true', 'order_ref' => $orderRef, 'state' => $stateToken]) }}";
             const cancelUrl = "{{ route('checkout.popup.cancel', ['order_ref' => $orderRef, 'state' => $stateToken]) }}";
+            const statusEl = document.getElementById('popup-status');
+            const closeBtn = document.getElementById('close-popup-btn');
+            const openedAt = Date.now();
+
+            function setStatus(message) {
+                if (statusEl) statusEl.textContent = message;
+                if (closeBtn) closeBtn.style.display = 'inline-block';
+            }
 
             function notifyParent(payload) {
                 if (window.opener && !window.opener.closed) {
@@ -58,35 +84,46 @@
 
             if (typeof safepay === 'undefined') {
                 notifyParent({ type: 'safepay:cancelled' });
-                window.location.href = cancelUrl;
+                setStatus('SafePay SDK failed to load. Please close this window and try again.');
                 return;
             }
 
-            safepay.setup({
-                environment: "{{ $mode }}",
-                apiKey: "{{ $apiKey }}",
-                v3: true
-            });
+            try {
+                safepay.setup({
+                    environment: "{{ $mode }}",
+                    apiKey: "{{ $apiKey }}",
+                    v3: true
+                });
 
-            safepay.checkout({
-                amount: {{ json_encode($amount) }},
-                currency: "{{ $currency }}",
-                metadata: {
-                    order_id: "{{ $orderRef }}"
-                },
-                onSucceeded: function(data) {
-                    const tracker = data && data.tracker ? encodeURIComponent(data.tracker) : '';
-                    const redirect = tracker ? (successUrl + '&tracker=' + tracker) : successUrl;
-                    notifyParent({ type: 'safepay:success', redirect: redirect });
-                    window.close();
-                    window.location.href = redirect;
-                },
-                onCancelled: function() {
-                    notifyParent({ type: 'safepay:cancelled' });
-                    window.close();
-                    // Let SafePay handle cancel redirect when needed; this avoids duplicate callbacks.
-                }
-            });
+                safepay.checkout({
+                    amount: {{ json_encode($amount) }},
+                    currency: "{{ $currency }}",
+                    metadata: {
+                        order_id: "{{ $orderRef }}"
+                    },
+                    onSucceeded: function(data) {
+                        const tracker = data && data.tracker ? encodeURIComponent(data.tracker) : '';
+                        const redirect = tracker ? (successUrl + '&tracker=' + tracker) : successUrl;
+                        notifyParent({ type: 'safepay:success', redirect: redirect });
+                        window.close();
+                        window.location.href = redirect;
+                    },
+                    onCancelled: function() {
+                        notifyParent({ type: 'safepay:cancelled' });
+
+                        if (Date.now() - openedAt < 2500) {
+                            setStatus('SafePay cancelled immediately during initialization. Please retry or verify SafePay dashboard settings.');
+                            return;
+                        }
+
+                        window.close();
+                    }
+                });
+            } catch (error) {
+                notifyParent({ type: 'safepay:cancelled' });
+                setStatus('Failed to initialize secure checkout. ' + (error && error.message ? error.message : ''));
+                window.location.href = cancelUrl;
+            }
         })();
     </script>
 </body>

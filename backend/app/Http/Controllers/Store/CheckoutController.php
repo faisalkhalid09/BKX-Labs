@@ -92,6 +92,13 @@ class CheckoutController extends Controller
 
             $checkoutUrl = url('/checkout/popup-gateway?token=' . urlencode($popupToken));
 
+            Log::info('SafePay popup session created', [
+                'user_id'    => $request->user()->id,
+                'order_ref'  => $checkoutContext['order_ref'],
+                'popup_token_prefix' => substr($popupToken, 0, 10),
+                'mode'       => config('services.safepay.environment', 'sandbox'),
+            ]);
+
             return response()->json([
                 'checkout_url' => $checkoutUrl,
                 'order_ref'    => $checkoutContext['order_ref'],
@@ -120,6 +127,13 @@ class CheckoutController extends Controller
         $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
         $mode = in_array($configuredMode, ['production', 'prod', 'live'], true) ? 'production' : 'sandbox';
         $sdkHost = $mode === 'production' ? 'https://api.getsafepay.com' : 'https://sandbox.api.getsafepay.com';
+
+        Log::info('SafePay popup gateway render', [
+            'user_id'   => $request->user()->id,
+            'order_ref' => $context['order_ref'] ?? null,
+            'mode'      => $mode,
+            'sdk_host'  => $sdkHost,
+        ]);
 
         return view('store.checkout_popup_gateway', [
             'sdkScriptUrl' => $sdkHost . '/checkout/pay.js',
