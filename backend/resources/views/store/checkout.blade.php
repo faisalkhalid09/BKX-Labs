@@ -76,44 +76,6 @@
     border: none;
     margin-top: 1.5rem;
 }
-.checkout-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-.checkout-overlay.show {
-    display: flex;
-}
-.overlay-card {
-    background: #fff;
-    border-radius: 1rem;
-    border: 1px solid #e2e8f0;
-    width: min(92vw, 420px);
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-.loader-spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid #e2e8f0;
-    border-top-color: #6366f1;
-    border-radius: 50%;
-    margin: 0 auto 0.875rem;
-    animation: spin 0.9s linear infinite;
-}
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-.overlay-note {
-    color: #64748b;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
 .checkout-message {
     margin-top: 1rem;
     padding: 0.75rem 0.9rem;
@@ -190,6 +152,9 @@
             <button type="submit" id="custom-pay-button" class="pay-btn" form="checkout-form">
                 Pay ${{ number_format($total, 2) }} &amp; Complete Order
             </button>
+            @if (session('error'))
+                <div class="checkout-message error" style="display:block;">{{ session('error') }}</div>
+            @endif
             <div id="checkout-message" class="checkout-message"></div>
         </div>
 
@@ -209,14 +174,6 @@
         </div>
     </div>
 </div>
-
-<div id="checkout-overlay" class="checkout-overlay" aria-hidden="true">
-    <div class="overlay-card">
-        <div class="loader-spinner" aria-hidden="true"></div>
-        <h3 style="margin:0 0 0.5rem 0;">Waiting For Payment</h3>
-        <p class="overlay-note">Please complete payment in the popup window. Keep this page open.</p>
-    </div>
-</div>
 @endsection
 
 @push('scripts')
@@ -224,11 +181,7 @@
     (function() {
         const form = document.getElementById('checkout-form');
         const payButton = document.getElementById('custom-pay-button');
-        const overlay = document.getElementById('checkout-overlay');
         const messageBox = document.getElementById('checkout-message');
-        const popupName = 'safepay-checkout-popup';
-        let paymentPopup = null;
-        let popupWatch = null;
 
         const idempotencyInput = document.getElementById('idempotency_key');
         if (idempotencyInput && !idempotencyInput.value) {
@@ -241,98 +194,15 @@
 
         function setLoading(isLoading) {
             payButton.disabled = isLoading;
-            overlay.classList.toggle('show', isLoading);
-            overlay.setAttribute('aria-hidden', isLoading ? 'false' : 'true');
+            payButton.textContent = isLoading
+                ? 'Redirecting To SafePay...'
+                : 'Pay ${{ number_format($total, 2) }} & Complete Order';
         }
 
-        function showError(message) {
-            messageBox.textContent = message;
-            messageBox.className = 'checkout-message error';
-        }
-
-        function clearError() {
+        form.addEventListener('submit', function() {
             messageBox.textContent = '';
             messageBox.className = 'checkout-message';
-        }
-
-        function openPaymentPopup(url) {
-            const width = 520;
-            const height = 760;
-            const left = Math.max(0, (window.screen.width - width) / 2);
-            const top = Math.max(0, (window.screen.height - height) / 2);
-            const features = `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`;
-
-            paymentPopup = window.open(url, popupName, features);
-            if (!paymentPopup) {
-                throw new Error('Popup blocked by browser. Please allow popups and try again.');
-            }
-
-            popupWatch = window.setInterval(function() {
-                if (paymentPopup && paymentPopup.closed) {
-                    window.clearInterval(popupWatch);
-                    popupWatch = null;
-                    setLoading(false);
-                    showError('Payment window was closed. You can try checkout again.');
-                }
-            }, 500);
-        }
-
-        window.addEventListener('message', function(event) {
-            if (event.origin !== window.location.origin) {
-                return;
-            }
-
-            const data = event.data || {};
-            if (data.type === 'safepay:success') {
-                if (popupWatch) {
-                    window.clearInterval(popupWatch);
-                    popupWatch = null;
-                }
-                setLoading(false);
-                window.location.href = data.redirect || "{{ route('checkout.success', ['success' => 'true']) }}";
-            }
-
-            if (data.type === 'safepay:cancelled') {
-                if (popupWatch) {
-                    window.clearInterval(popupWatch);
-                    popupWatch = null;
-                }
-                setLoading(false);
-                showError('Payment was cancelled. Please complete checkout to purchase your item.');
-            }
-        });
-
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            clearError();
             setLoading(true);
-
-            try {
-                const formData = new FormData(form);
-                const csrfTokenInput = form.querySelector('input[name="_token"]');
-                const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-                const csrfToken = csrfTokenInput ? csrfTokenInput.value : (csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '');
-                const response = await fetch("{{ route('checkout.popup.session') }}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: formData,
-                    credentials: 'same-origin'
-                });
-
-                const payload = await response.json().catch(function() { return {}; });
-
-                if (!response.ok || !payload.checkout_url) {
-                    throw new Error(payload.message || 'Unable to start payment. Please try again.');
-                }
-
-                openPaymentPopup(payload.checkout_url);
-            } catch (error) {
-                setLoading(false);
-                showError(error.message || 'Checkout failed. Please try again.');
-            }
         });
     })();
 </script>

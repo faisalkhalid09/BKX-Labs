@@ -189,14 +189,29 @@ class CheckoutController extends Controller
         $orderRef = (string) $request->query('order_ref', '');
         $state = $this->extractStateToken($request);
 
-        if (!$this->validateCheckoutState($orderRef, $state, false)) {
+        $stateValid = $this->validateCheckoutState($orderRef, $state, false);
+        if (!$stateValid) {
             Log::warning('SafePay cancel callback with invalid/expired state.', [
                 'order_ref' => $orderRef,
                 'user_id'   => $request->user()->id,
             ]);
         }
 
-        return view('store.checkout_popup_cancel');
+        $order = Order::query()
+            ->where('safepay_order_ref', $orderRef)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        $checkoutUrl = $order
+            ? route('checkout.create', ['product_id' => $order->product_id])
+            : route('checkout.create');
+
+        return redirect($checkoutUrl)->with(
+            'error',
+            $stateValid
+                ? 'Payment was cancelled. No charge was made.'
+                : 'Payment was cancelled and the checkout session has expired. Please try again.'
+        );
     }
 
     /**
