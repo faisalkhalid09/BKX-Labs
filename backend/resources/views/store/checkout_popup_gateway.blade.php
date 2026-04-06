@@ -115,8 +115,15 @@
             }
 
             try {
-                if (typeof safepay === 'undefined' || !buttonContainer || !apiKey || !amount || !currency) {
-                    fallbackRedirect('component_preconditions_missing');
+                const missing = [];
+                if (typeof safepay === 'undefined') missing.push('safepay_global');
+                if (!buttonContainer) missing.push('button_container');
+                if (!apiKey) missing.push('api_key');
+                if (!amount || Number(amount) <= 0) missing.push('amount');
+                if (!currency) missing.push('currency');
+
+                if (missing.length > 0) {
+                    fallbackRedirect('component_preconditions_missing:' + missing.join(','));
                     return;
                 }
 
