@@ -16,6 +16,7 @@ class SafePayService
     protected $mode;
     protected $caBundle;
     protected $disableSslVerify;
+    protected $checkoutBaseUrl;
 
     public function __construct()
     {
@@ -33,6 +34,11 @@ class SafePayService
         $this->baseUrl = ($this->mode === 'production') 
             ? 'https://api.getsafepay.com' 
             : 'https://sandbox.api.getsafepay.com';
+
+        // Hosted checkout URL base for redirect flow.
+        $this->checkoutBaseUrl = ($this->mode === 'production')
+            ? 'https://getsafepay.com'
+            : 'https://sandbox.api.getsafepay.com';
     }
 
     /**
@@ -46,7 +52,7 @@ class SafePayService
             throw new Exception('Checkout state token is missing.');
         }
 
-        $merchantKey = (string) ($this->merchantKey ?: $this->apiKey);
+        $merchantKey = $this->resolveMerchantApiKey();
         $successUrl = route('checkout.success', [
             'success'  => 'true',
             'order_ref'=> $orderRef,
@@ -57,23 +63,30 @@ class SafePayService
             'state'    => $stateToken,
         ]);
 
-        $beacon = $this->createPassportToken((float) $amount, (string) $currency, (string) $orderRef, $successUrl, $cancelUrl);
+        $amountMinor = $this->toMinorAmount((float) $amount);
+        $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
+        $passportToken = $this->createPassportToken();
 
         $params = [
             'env'              => $this->mode,
-            'source'           => 'checkout',
+            'source'           => 'hosted',
             'order_id'         => $orderRef,
-            'beacon'           => $beacon,
-            'success_url'      => $successUrl,
+            'tracker'          => $tracker,
+            'tbt'              => $passportToken,
+            'redirect_url'     => $successUrl,
             'cancel_url'       => $cancelUrl,
+            'success_url'      => $successUrl,
         ];
 
         Log::info('SafePay checkout redirect params', [
             'mode'         => $this->mode,
             'base_url'     => $this->baseUrl,
+            'checkout_base_url' => $this->checkoutBaseUrl,
             'merchant_key_prefix' => substr($merchantKey, 0, 8),
             'has_api_key'  => !empty($this->apiKey),
-            'beacon_prefix' => substr((string) $beacon, 0, 8),
+            'tracker_prefix' => substr((string) $tracker, 0, 10),
+            'tbt_prefix'   => substr((string) $passportToken, 0, 8),
+            'amount_minor' => $amountMinor,
             'param_keys'   => array_keys($params),
             'success_url'  => $params['success_url'],
             'cancel_url'   => $params['cancel_url'],
@@ -81,7 +94,7 @@ class SafePayService
 
         $queryString = http_build_query($params);
         
-        return "{$this->baseUrl}/checkout/pay?{$queryString}";
+        return "{$this->checkoutBaseUrl}/checkout/pay?{$queryString}";
     }
 
     /**
@@ -111,16 +124,18 @@ class SafePayService
 
     protected function assertConfigured()
     {
-        if ((empty($this->merchantKey) && empty($this->apiKey)) || empty($this->secretKey)) {
-            throw new Exception("SafePay merchant/api key or secret key is missing in config.");
+        if (empty($this->resolveMerchantApiKey()) || empty($this->secretKey)) {
+            throw new Exception("SafePay merchant API key or secret key is missing in config.");
         }
     }
 
-    protected function createPassportToken(float $amount, string $currency, string $orderRef, string $successUrl, string $cancelUrl): string
+    protected function createPassportToken(): string
     {
+        $merchantApiKey = $this->resolveMerchantApiKey();
+
         $request = Http::acceptJson()
             ->withHeaders([
-                'X-SFPY-API-KEY' => (string) $this->apiKey,
+                'X-SFPY-API-KEY' => $merchantApiKey,
                 'X-SFPY-MERCHANT-SECRET' => (string) $this->secretKey,
                 'Content-Type' => 'application/json',
             ]);
@@ -132,36 +147,113 @@ class SafePayService
             $request = $request->withOptions(['verify' => false]);
         }
 
-        $payload = [
-            'source' => 'checkout',
-            'order_id' => $orderRef,
-            'payment' => [
-                'amount' => $amount,
-                'currency' => strtoupper($currency),
-            ],
-            'success_url' => $successUrl,
-            'cancel_url' => $cancelUrl,
-            'metadata' => [
-                'order_id' => $orderRef,
-            ],
-        ];
+        $response = $request->withBody('{}', 'application/json')->post("{$this->baseUrl}/client/passport/v1/token");
 
-        $response = $request->post("{$this->baseUrl}/client/passport/v1/token", $payload);
-
-        $token = (string) ($response->json('data') ?? '');
+        $token = $this->firstNonEmptyString($response->json(), [
+            'data.token',
+            'data',
+            'token',
+        ]);
         if ($token !== '') {
             return $token;
         }
 
         Log::error('SafePay passport token generation failed.', [
             'mode' => $this->mode,
-            'order_ref' => $orderRef,
-            'amount' => $amount,
-            'currency' => $currency,
+            'merchant_key_prefix' => substr($merchantApiKey, 0, 8),
             'status' => $response->status(),
             'body' => $response->body(),
         ]);
 
         throw new Exception('Unable to create SafePay passport token for checkout.');
+    }
+
+    protected function createPaymentSession(int $amountMinor, string $currency, string $orderRef): string
+    {
+        $merchantApiKey = $this->resolveMerchantApiKey();
+
+        $request = Http::acceptJson()
+            ->withHeaders([
+                'X-SFPY-API-KEY' => $merchantApiKey,
+                'X-SFPY-MERCHANT-SECRET' => (string) $this->secretKey,
+                'Content-Type' => 'application/json',
+            ]);
+
+        if (!empty($this->caBundle)) {
+            $request = $request->withOptions(['verify' => (string) $this->caBundle]);
+        } elseif ($this->disableSslVerify) {
+            $request = $request->withOptions(['verify' => false]);
+        }
+
+        $payload = [
+            'merchant_api_key' => $merchantApiKey,
+            'intent' => 'CYBERSOURCE',
+            'mode' => 'payment',
+            'currency' => strtoupper($currency),
+            'amount' => $amountMinor,
+            'metadata' => [
+                'order_id' => $orderRef,
+                'source' => 'checkout',
+            ],
+        ];
+
+        $response = $request->post("{$this->baseUrl}/order/payments/v3/", $payload);
+
+        $tracker = $this->firstNonEmptyString($response->json(), [
+            'data.tracker.token',
+            'data.tracker',
+            'data.token',
+            'tracker.token',
+            'tracker',
+            'token',
+        ]);
+
+        if ($tracker !== '') {
+            return $tracker;
+        }
+
+        Log::error('SafePay payment session creation failed.', [
+            'mode' => $this->mode,
+            'order_ref' => $orderRef,
+            'amount_minor' => $amountMinor,
+            'currency' => strtoupper($currency),
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+
+        throw new Exception('Unable to create SafePay payment tracker for checkout.');
+    }
+
+    protected function resolveMerchantApiKey(): string
+    {
+        $candidates = array_values(array_filter([
+            (string) $this->merchantKey,
+            (string) $this->apiKey,
+        ]));
+
+        foreach ($candidates as $candidate) {
+            if (str_starts_with($candidate, 'sec_')) {
+                return $candidate;
+            }
+        }
+
+        return $candidates[0] ?? '';
+    }
+
+    protected function toMinorAmount(float $amount): int
+    {
+        return (int) round($amount * 100);
+    }
+
+    protected function firstNonEmptyString(array $data, array $paths): string
+    {
+        foreach ($paths as $path) {
+            $value = data_get($data, $path);
+            if (is_string($value) && trim($value) !== '') {
+                return trim($value);
+            }
+        }
+
+        return '';
     }
 }
