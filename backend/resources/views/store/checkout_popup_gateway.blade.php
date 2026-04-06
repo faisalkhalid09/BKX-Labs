@@ -78,6 +78,7 @@
             const statusEl = document.getElementById('popup-status');
             const closeBtn = document.getElementById('close-popup-btn');
             const buttonContainer = document.getElementById('safepay-button-container');
+            const debugMode = true;
 
             function setStatus(message) {
                 if (statusEl) statusEl.textContent = message;
@@ -92,6 +93,12 @@
 
             function fallbackRedirect(reason) {
                 console.warn('SafePay button flow fallback:', reason);
+
+                if (debugMode) {
+                    notifyParent({ type: 'safepay:cancelled', reason: reason });
+                    setStatus('Component flow failed: ' + reason + '. Check popup console/network.');
+                    return;
+                }
 
                 if (!redirectUrl) {
                     notifyParent({ type: 'safepay:cancelled' });
