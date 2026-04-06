@@ -19,7 +19,7 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
         
         // Content Security Policy (CSP)
-         $safepayHosts = "https://*.getsafepay.com https://api.getsafepay.com https://sandbox.api.getsafepay.com";
+         $safepayHosts = "https://*.getsafepay.com https://api.getsafepay.com https://sandbox.api.getsafepay.com https://getsafepay.pk https://*.getsafepay.pk";
 
          $csp = "default-src 'self' {$safepayHosts}; " .
              "script-src 'self' 'unsafe-inline' 'unsafe-eval' {$safepayHosts} https://accounts.google.com; " .
