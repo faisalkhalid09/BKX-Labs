@@ -189,8 +189,9 @@ class CheckoutController extends Controller
         $orderRef = (string) $request->query('order_ref', '');
         $state = $this->extractStateToken($request);
 
-        $stateValid = $this->validateCheckoutState($orderRef, $state, false);
-        if (!$stateValid) {
+        $stateWasProvided = ($state !== '');
+        $stateValid = !$stateWasProvided || $this->validateCheckoutState($orderRef, $state, false);
+        if ($stateWasProvided && !$stateValid) {
             Log::warning('SafePay cancel callback with invalid/expired state.', [
                 'order_ref' => $orderRef,
                 'user_id'   => $request->user()->id,
