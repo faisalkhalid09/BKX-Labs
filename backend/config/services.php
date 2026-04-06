@@ -49,7 +49,7 @@ return [
         'secret_key'     => env('SAFEPAY_SECRET_KEY'),
         'webhook_secret' => env('SAFEPAY_WEBHOOK_SECRET'),
         'environment'    => env('SAFEPAY_ENV', 'sandbox'),
-        'checkout_source' => env('SAFEPAY_CHECKOUT_SOURCE', 'checkout'),
+        'checkout_source' => env('SAFEPAY_CHECKOUT_SOURCE', 'hosted'),
         'include_order_id' => env('SAFEPAY_INCLUDE_ORDER_ID', false),
         'ca_bundle'      => env('SAFEPAY_CA_BUNDLE'),
         'disable_ssl_verify' => env('SAFEPAY_DISABLE_SSL_VERIFY', false),

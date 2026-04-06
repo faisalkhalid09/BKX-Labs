@@ -66,29 +66,20 @@ class SafePayService
         $amountMinor = $this->toMinorAmount((float) $amount);
         $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
         $passportToken = $this->createPassportToken($tracker, (string) $orderRef);
-        $checkoutSource = strtolower((string) config('services.safepay.checkout_source', 'checkout'));
-        if (!in_array($checkoutSource, ['checkout', 'hosted'], true)) {
-            $checkoutSource = 'checkout';
-        }
+        // Force the documented hosted flow shape to avoid tenant-level mode mismatch.
+        $checkoutSource = 'hosted';
 
         $params = [
             'env'              => $this->mode,
             'source'           => $checkoutSource,
             'tracker'          => $tracker,
             'tbt'              => $passportToken,
+            'redirect_url'     => $successUrl,
             'cancel_url'       => $cancelUrl,
         ];
 
-        if ($checkoutSource === 'checkout') {
-            // Checkout mode expects success_url and typically order_id.
-            $params['success_url'] = $successUrl;
+        if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
             $params['order_id'] = $orderRef;
-        } else {
-            // Hosted mode expects redirect_url.
-            $params['redirect_url'] = $successUrl;
-            if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
-                $params['order_id'] = $orderRef;
-            }
         }
 
         Log::info('SafePay checkout redirect params', [
@@ -165,7 +156,7 @@ class SafePayService
 
         $payload = [
             'tracker' => $tracker,
-            'source' => strtolower((string) config('services.safepay.checkout_source', 'checkout')),
+            'source' => 'hosted',
             'order_id' => $orderRef,
         ];
 
