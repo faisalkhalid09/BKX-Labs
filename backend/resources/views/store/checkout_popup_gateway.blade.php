@@ -22,18 +22,6 @@
             background: rgba(15, 23, 42, 0.75);
             text-align: center;
         }
-        .spinner {
-            width: 42px;
-            height: 42px;
-            border: 4px solid rgba(148, 163, 184, 0.3);
-            border-top-color: #38bdf8;
-            border-radius: 50%;
-            margin: 0 auto 12px;
-            animation: spin 0.9s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
         .muted { color: #94a3b8; font-size: 0.9rem; }
         .status {
             margin-top: 10px;
@@ -55,7 +43,6 @@
 </head>
 <body>
     <div class="card">
-        <div class="spinner" aria-hidden="true"></div>
         <h2 style="margin:0 0 8px 0; font-size:1.1rem;">Opening Secure Checkout</h2>
         <p class="muted">Please wait while we initialize payment.</p>
         <p id="popup-status" class="status"></p>
