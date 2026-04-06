@@ -53,6 +53,7 @@ class SafePayService
             'merchant_api_key' => $merchantKey,
             'environment'      => $this->mode,
             'env'              => $this->mode,
+            'xcomponent'       => '1',
             'source'           => 'checkout',
             'order_id'         => $orderRef,
             'beacon'           => $beacon,
