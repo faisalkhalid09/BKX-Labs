@@ -65,7 +65,7 @@ class SafePayService
 
         $amountMinor = $this->toMinorAmount((float) $amount);
         $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
-        $passportToken = $this->createPassportToken();
+        $passportToken = $this->createPassportToken($tracker, (string) $orderRef);
         $checkoutSource = strtolower((string) config('services.safepay.checkout_source', 'checkout'));
         if (!in_array($checkoutSource, ['checkout', 'hosted'], true)) {
             $checkoutSource = 'checkout';
@@ -137,7 +137,7 @@ class SafePayService
         }
     }
 
-    protected function createPassportToken(): string
+    protected function createPassportToken(string $tracker, string $orderRef): string
     {
         $merchantApiKey = $this->resolveMerchantApiKey();
 
@@ -155,7 +155,13 @@ class SafePayService
             $request = $request->withOptions(['verify' => false]);
         }
 
-        $response = $request->withBody('{}', 'application/json')->post("{$this->baseUrl}/client/passport/v1/token");
+        $payload = [
+            'tracker' => $tracker,
+            'source' => strtolower((string) config('services.safepay.checkout_source', 'checkout')),
+            'order_id' => $orderRef,
+        ];
+
+        $response = $request->post("{$this->baseUrl}/client/passport/v1/token", $payload);
 
         $token = $this->firstNonEmptyString($response->json(), [
             'data.token',
@@ -166,11 +172,32 @@ class SafePayService
             return $token;
         }
 
+        // Fallback to legacy body accepted by some tenants.
+        $fallbackResponse = $request->withBody('{}', 'application/json')->post("{$this->baseUrl}/client/passport/v1/token");
+        $fallbackToken = $this->firstNonEmptyString($fallbackResponse->json(), [
+            'data.token',
+            'data',
+            'token',
+        ]);
+        if ($fallbackToken !== '') {
+            Log::warning('SafePay passport token created via legacy fallback payload.', [
+                'mode' => $this->mode,
+                'order_ref' => $orderRef,
+                'tracker_prefix' => substr($tracker, 0, 10),
+            ]);
+
+            return $fallbackToken;
+        }
+
         Log::error('SafePay passport token generation failed.', [
             'mode' => $this->mode,
+            'order_ref' => $orderRef,
+            'tracker_prefix' => substr($tracker, 0, 10),
             'merchant_key_prefix' => substr($merchantApiKey, 0, 8),
             'status' => $response->status(),
             'body' => $response->body(),
+            'fallback_status' => $fallbackResponse->status(),
+            'fallback_body' => $fallbackResponse->body(),
         ]);
 
         throw new Exception('Unable to create SafePay passport token for checkout.');
