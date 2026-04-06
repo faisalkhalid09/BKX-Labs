@@ -63,7 +63,7 @@
         <button id="close-popup-btn" class="btn" type="button" onclick="window.close()">Close Window</button>
     </div>
 
-    <script src="https://unpkg.com/@sfpy/checkout-components@1.0.1/dist/sfpy-checkout.js"></script>
+    <script src="{{ asset('sfpy-checkout.js') }}"></script>
 
     <script>
         (function () {
