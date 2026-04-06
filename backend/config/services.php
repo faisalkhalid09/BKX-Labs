@@ -49,6 +49,8 @@ return [
         'secret_key'     => env('SAFEPAY_SECRET_KEY'),
         'webhook_secret' => env('SAFEPAY_WEBHOOK_SECRET'),
         'environment'    => env('SAFEPAY_ENV', 'sandbox'),
+        'ca_bundle'      => env('SAFEPAY_CA_BUNDLE'),
+        'disable_ssl_verify' => env('SAFEPAY_DISABLE_SSL_VERIFY', false),
     ],
 
 ];

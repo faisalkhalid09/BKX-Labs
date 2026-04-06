@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class SafePayService
@@ -13,6 +14,8 @@ class SafePayService
     protected $webhookSecret;
     protected $baseUrl;
     protected $mode;
+    protected $caBundle;
+    protected $disableSslVerify;
 
     public function __construct()
     {
@@ -20,6 +23,8 @@ class SafePayService
         $this->apiKey = config('services.safepay.api_key');
         $this->secretKey = config('services.safepay.secret_key');
         $this->webhookSecret = config('services.safepay.webhook_secret');
+        $this->caBundle = config('services.safepay.ca_bundle');
+        $this->disableSslVerify = filter_var(config('services.safepay.disable_ssl_verify', false), FILTER_VALIDATE_BOOL);
         $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
         $this->mode = in_array($configuredMode, ['production', 'prod', 'live'], true)
             ? 'production'
@@ -42,6 +47,7 @@ class SafePayService
         }
 
         $merchantKey = (string) ($this->merchantKey ?: $this->apiKey);
+        $beacon = $this->createPassportToken();
 
         $params = [
             'merchant_api_key' => $merchantKey,
@@ -49,6 +55,7 @@ class SafePayService
             'env'              => $this->mode,
             'source'           => 'checkout',
             'order_id'         => $orderRef,
+            'beacon'           => $beacon,
             'amount'           => $amount,
             'currency'         => $currency,
             'metadata'         => json_encode(['order_id' => $orderRef]),
@@ -68,6 +75,7 @@ class SafePayService
             'base_url'     => $this->baseUrl,
             'merchant_key_prefix' => substr($merchantKey, 0, 8),
             'has_api_key'  => !empty($this->apiKey),
+            'beacon_prefix' => substr((string) $beacon, 0, 8),
             'param_keys'   => array_keys($params),
             'success_url'  => $params['success_url'],
             'cancel_url'   => $params['cancel_url'],
@@ -108,5 +116,37 @@ class SafePayService
         if ((empty($this->merchantKey) && empty($this->apiKey)) || empty($this->secretKey)) {
             throw new Exception("SafePay merchant/api key or secret key is missing in config.");
         }
+    }
+
+    protected function createPassportToken(): string
+    {
+        $request = Http::acceptJson()
+            ->withHeaders([
+                'X-SFPY-API-KEY' => (string) $this->apiKey,
+                'X-SFPY-MERCHANT-SECRET' => (string) $this->secretKey,
+                'Content-Type' => 'application/json',
+            ]);
+
+        if (!empty($this->caBundle)) {
+            $request = $request->withOptions(['verify' => (string) $this->caBundle]);
+        } elseif ($this->disableSslVerify) {
+            // For diagnostics only; keep disabled in production.
+            $request = $request->withOptions(['verify' => false]);
+        }
+
+        $response = $request->post("{$this->baseUrl}/client/passport/v1/token", []);
+
+        $token = (string) ($response->json('data') ?? '');
+        if ($token !== '') {
+            return $token;
+        }
+
+        Log::error('SafePay passport token generation failed.', [
+            'mode' => $this->mode,
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+
+        throw new Exception('Unable to create SafePay passport token for checkout.');
     }
 }
