@@ -61,7 +61,6 @@ class SafePayService
 
         $params = [
             'env'              => $this->mode,
-            'xcomponent'       => '1',
             'source'           => 'checkout',
             'order_id'         => $orderRef,
             'beacon'           => $beacon,

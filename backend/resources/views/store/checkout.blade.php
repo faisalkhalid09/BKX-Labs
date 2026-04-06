@@ -202,6 +202,15 @@
         form.addEventListener('submit', function() {
             messageBox.textContent = '';
             messageBox.className = 'checkout-message';
+
+            if (idempotencyInput) {
+                if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                    idempotencyInput.value = window.crypto.randomUUID();
+                } else {
+                    idempotencyInput.value = 'idem-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+                }
+            }
+
             setLoading(true);
         });
     })();
