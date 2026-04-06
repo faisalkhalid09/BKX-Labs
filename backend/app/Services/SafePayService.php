@@ -47,28 +47,26 @@ class SafePayService
         }
 
         $merchantKey = (string) ($this->merchantKey ?: $this->apiKey);
-        $beacon = $this->createPassportToken((float) $amount, (string) $currency, (string) $orderRef);
+        $successUrl = route('checkout.success', [
+            'success'  => 'true',
+            'order_ref'=> $orderRef,
+            'state'    => $stateToken,
+        ]);
+        $cancelUrl = route('checkout.popup.cancel', [
+            'order_ref'=> $orderRef,
+            'state'    => $stateToken,
+        ]);
+
+        $beacon = $this->createPassportToken((float) $amount, (string) $currency, (string) $orderRef, $successUrl, $cancelUrl);
 
         $params = [
-            'merchant_api_key' => $merchantKey,
-            'environment'      => $this->mode,
             'env'              => $this->mode,
             'xcomponent'       => '1',
             'source'           => 'checkout',
             'order_id'         => $orderRef,
             'beacon'           => $beacon,
-            'amount'           => $amount,
-            'currency'         => $currency,
-            'metadata'         => json_encode(['order_id' => $orderRef]),
-            'success_url'      => route('checkout.success', [
-                'success'  => 'true',
-                'order_ref'=> $orderRef,
-                'state'    => $stateToken,
-            ]),
-            'cancel_url'       => route('checkout.popup.cancel', [
-                'order_ref'=> $orderRef,
-                'state'    => $stateToken,
-            ]),
+            'success_url'      => $successUrl,
+            'cancel_url'       => $cancelUrl,
         ];
 
         Log::info('SafePay checkout redirect params', [
@@ -119,7 +117,7 @@ class SafePayService
         }
     }
 
-    protected function createPassportToken(float $amount, string $currency, string $orderRef): string
+    protected function createPassportToken(float $amount, string $currency, string $orderRef, string $successUrl, string $cancelUrl): string
     {
         $request = Http::acceptJson()
             ->withHeaders([
@@ -142,6 +140,8 @@ class SafePayService
                 'amount' => $amount,
                 'currency' => strtoupper($currency),
             ],
+            'success_url' => $successUrl,
+            'cancel_url' => $cancelUrl,
             'metadata' => [
                 'order_id' => $orderRef,
             ],
