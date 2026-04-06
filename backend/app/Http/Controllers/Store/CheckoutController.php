@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Services\SafePayService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -160,6 +161,23 @@ class CheckoutController extends Controller
             'currency'     => (string) ($context['currency'] ?? 'USD'),
             'orderRef'     => $context['order_ref'],
             'stateToken'   => $context['state_token'],
+        ]);
+    }
+
+    /**
+     * Serve the SafePay checkout component script from backend origin.
+     */
+    public function safepayScript(): Response
+    {
+        $scriptPath = base_path('sfpy-checkout.js');
+
+        if (!is_file($scriptPath)) {
+            abort(404, 'SafePay script not found.');
+        }
+
+        return response()->file($scriptPath, [
+            'Content-Type' => 'application/javascript; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=86400',
         ]);
     }
 

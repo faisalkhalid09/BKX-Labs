@@ -63,7 +63,7 @@
         <button id="close-popup-btn" class="btn" type="button" onclick="window.close()">Close Window</button>
     </div>
 
-    <script src="{{ asset('sfpy-checkout.js') }}"></script>
+    <script src="{{ route('checkout.sfpy.script') }}"></script>
 
     <script>
         (function () {

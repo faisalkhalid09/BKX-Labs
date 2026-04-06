@@ -54,6 +54,7 @@ Route::prefix('checkout')->name('checkout.')->middleware('auth')->group(function
     Route::get('/',         [CheckoutController::class, 'create'])->name('create');
     Route::post('/',        [CheckoutController::class, 'store'])->name('store')->middleware('throttle:6,1');
     Route::post('/popup-session', [CheckoutController::class, 'popupSession'])->name('popup.session')->middleware('throttle:6,1');
+    Route::get('/sfpy-checkout.js', [CheckoutController::class, 'safepayScript'])->name('sfpy.script');
     Route::get('/popup-gateway', [CheckoutController::class, 'popupGateway'])->name('popup.gateway');
     Route::get('/popup-cancel', [CheckoutController::class, 'popupCancel'])->name('popup.cancel');
     Route::get('/success',  [CheckoutController::class, 'success'])->name('success');
