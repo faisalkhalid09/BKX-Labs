@@ -75,7 +75,6 @@ class SafePayService
             'tbt'              => $passportToken,
             'redirect_url'     => $successUrl,
             'cancel_url'       => $cancelUrl,
-            'success_url'      => $successUrl,
         ];
 
         Log::info('SafePay checkout redirect params', [
@@ -88,7 +87,7 @@ class SafePayService
             'tbt_prefix'   => substr((string) $passportToken, 0, 8),
             'amount_minor' => $amountMinor,
             'param_keys'   => array_keys($params),
-            'success_url'  => $params['success_url'],
+            'redirect_url' => $params['redirect_url'],
             'cancel_url'   => $params['cancel_url'],
         ]);
 
