@@ -76,12 +76,19 @@ class SafePayService
             'source'           => $checkoutSource,
             'tracker'          => $tracker,
             'tbt'              => $passportToken,
-            'redirect_url'     => $successUrl,
             'cancel_url'       => $cancelUrl,
         ];
 
-        if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
+        if ($checkoutSource === 'checkout') {
+            // Checkout mode expects success_url and typically order_id.
+            $params['success_url'] = $successUrl;
             $params['order_id'] = $orderRef;
+        } else {
+            // Hosted mode expects redirect_url.
+            $params['redirect_url'] = $successUrl;
+            if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
+                $params['order_id'] = $orderRef;
+            }
         }
 
         Log::info('SafePay checkout redirect params', [
@@ -96,7 +103,8 @@ class SafePayService
             'source'       => $checkoutSource,
             'include_order_id' => array_key_exists('order_id', $params),
             'param_keys'   => array_keys($params),
-            'redirect_url' => $params['redirect_url'],
+            'redirect_url' => $params['redirect_url'] ?? null,
+            'success_url'  => $params['success_url'] ?? null,
             'cancel_url'   => $params['cancel_url'],
         ]);
 
