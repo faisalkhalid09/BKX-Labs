@@ -5,6 +5,7 @@ namespace App\Services;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SafePayService
 {
@@ -64,44 +65,54 @@ class SafePayService
         ]);
 
         $amountMinor = $this->toMinorAmount((float) $amount);
-        $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
-        $passportToken = $this->createPassportToken($tracker, (string) $orderRef);
-        // Force the documented hosted flow shape to avoid tenant-level mode mismatch.
-        $checkoutSource = 'hosted';
 
-        $params = [
-            'env'              => $this->mode,
-            'source'           => $checkoutSource,
-            'tracker'          => $tracker,
-            'tbt'              => $passportToken,
-            'redirect_url'     => $successUrl,
-            'cancel_url'       => $cancelUrl,
+        // Try variants in order and return the first one that doesn't render the invalid-session page.
+        $candidates = [
+            ['source' => 'hosted', 'include_order_id' => false],
+            ['source' => 'hosted', 'include_order_id' => true],
+            ['source' => 'checkout', 'include_order_id' => true],
         ];
 
-        if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
-            $params['order_id'] = $orderRef;
+        $lastUrl = null;
+        foreach ($candidates as $candidate) {
+            $source = $candidate['source'];
+            $includeOrderId = (bool) $candidate['include_order_id'];
+
+            $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
+            $passportToken = $this->createPassportToken($tracker, (string) $orderRef, $source);
+            $params = $this->buildCheckoutParams($source, $includeOrderId, $orderRef, $tracker, $passportToken, $successUrl, $cancelUrl);
+
+            $queryString = http_build_query($params);
+            $url = "{$this->checkoutBaseUrl}/checkout/pay?{$queryString}";
+            $lastUrl = $url;
+
+            $isValid = $this->looksLikeValidCheckoutPage($url);
+
+            Log::info('SafePay checkout redirect params', [
+                'mode'         => $this->mode,
+                'base_url'     => $this->baseUrl,
+                'checkout_base_url' => $this->checkoutBaseUrl,
+                'merchant_key_prefix' => substr($merchantKey, 0, 8),
+                'has_api_key'  => !empty($this->apiKey),
+                'tracker_prefix' => substr((string) $tracker, 0, 10),
+                'tbt_prefix'   => substr((string) $passportToken, 0, 8),
+                'amount_minor' => $amountMinor,
+                'source'       => $source,
+                'include_order_id' => $includeOrderId,
+                'param_keys'   => array_keys($params),
+                'redirect_url' => $params['redirect_url'] ?? null,
+                'success_url'  => $params['success_url'] ?? null,
+                'cancel_url'   => $params['cancel_url'],
+                'preflight_valid' => $isValid,
+            ]);
+
+            if ($isValid) {
+                return $url;
+            }
         }
 
-        Log::info('SafePay checkout redirect params', [
-            'mode'         => $this->mode,
-            'base_url'     => $this->baseUrl,
-            'checkout_base_url' => $this->checkoutBaseUrl,
-            'merchant_key_prefix' => substr($merchantKey, 0, 8),
-            'has_api_key'  => !empty($this->apiKey),
-            'tracker_prefix' => substr((string) $tracker, 0, 10),
-            'tbt_prefix'   => substr((string) $passportToken, 0, 8),
-            'amount_minor' => $amountMinor,
-            'source'       => $checkoutSource,
-            'include_order_id' => array_key_exists('order_id', $params),
-            'param_keys'   => array_keys($params),
-            'redirect_url' => $params['redirect_url'] ?? null,
-            'success_url'  => $params['success_url'] ?? null,
-            'cancel_url'   => $params['cancel_url'],
-        ]);
-
-        $queryString = http_build_query($params);
-        
-        return "{$this->checkoutBaseUrl}/checkout/pay?{$queryString}";
+        // Fallback to the last generated URL if Safepay preflight checks are inconclusive.
+        return (string) $lastUrl;
     }
 
     /**
@@ -136,7 +147,7 @@ class SafePayService
         }
     }
 
-    protected function createPassportToken(string $tracker, string $orderRef): string
+    protected function createPassportToken(string $tracker, string $orderRef, string $source = 'hosted'): string
     {
         $merchantApiKey = $this->resolveMerchantApiKey();
 
@@ -156,7 +167,7 @@ class SafePayService
 
         $payload = [
             'tracker' => $tracker,
-            'source' => 'hosted',
+            'source' => $source,
             'order_id' => $orderRef,
         ];
 
@@ -289,5 +300,72 @@ class SafePayService
         }
 
         return '';
+    }
+
+    protected function buildCheckoutParams(
+        string $source,
+        bool $includeOrderId,
+        string $orderRef,
+        string $tracker,
+        string $passportToken,
+        string $successUrl,
+        string $cancelUrl
+    ): array {
+        $params = [
+            'env' => $this->mode,
+            'source' => $source,
+            'tracker' => $tracker,
+            'tbt' => $passportToken,
+            'cancel_url' => $cancelUrl,
+        ];
+
+        if ($source === 'checkout') {
+            $params['success_url'] = $successUrl;
+            $params['order_id'] = $orderRef;
+        } else {
+            $params['redirect_url'] = $successUrl;
+            if ($includeOrderId) {
+                $params['order_id'] = $orderRef;
+            }
+        }
+
+        return $params;
+    }
+
+    protected function looksLikeValidCheckoutPage(string $url): bool
+    {
+        $request = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0',
+        ])->withOptions([
+            'http_errors' => false,
+            'allow_redirects' => true,
+        ]);
+
+        if (!empty($this->caBundle)) {
+            $request = $request->withOptions(['verify' => (string) $this->caBundle]);
+        } elseif ($this->disableSslVerify) {
+            $request = $request->withOptions(['verify' => false]);
+        }
+
+        try {
+            $response = $request->get($url);
+            $body = Str::lower((string) $response->body());
+
+            if (str_contains($body, 'your session does not validate for either a payment or subscription')) {
+                return false;
+            }
+
+            if (str_contains($body, 'tracker is in an invalid state')) {
+                return false;
+            }
+
+            return $response->successful();
+        } catch (\Throwable $e) {
+            Log::warning('SafePay checkout preflight failed; allowing redirect fallback.', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return true;
+        }
     }
 }
