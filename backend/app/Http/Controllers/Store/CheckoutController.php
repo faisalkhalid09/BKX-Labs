@@ -149,8 +149,15 @@ class CheckoutController extends Controller
             'has_redirect_url' => $redirectUrl !== '',
         ]);
 
+        $configuredMode = strtolower(trim((string) config('services.safepay.environment', 'sandbox')));
+        $mode = in_array($configuredMode, ['production', 'prod', 'live'], true) ? 'production' : 'sandbox';
+
         return view('store.checkout_popup_gateway', [
             'redirectUrl'  => $redirectUrl,
+            'mode'         => $mode,
+            'apiKey'       => (string) config('services.safepay.api_key'),
+            'amount'       => (float) ($context['amount'] ?? 0),
+            'currency'     => (string) ($context['currency'] ?? 'USD'),
             'orderRef'     => $context['order_ref'],
             'stateToken'   => $context['state_token'],
         ]);
