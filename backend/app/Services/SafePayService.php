@@ -47,7 +47,7 @@ class SafePayService
         }
 
         $merchantKey = (string) ($this->merchantKey ?: $this->apiKey);
-        $beacon = $this->createPassportToken();
+        $beacon = $this->createPassportToken((float) $amount, (string) $currency, (string) $orderRef);
 
         $params = [
             'merchant_api_key' => $merchantKey,
@@ -119,7 +119,7 @@ class SafePayService
         }
     }
 
-    protected function createPassportToken(): string
+    protected function createPassportToken(float $amount, string $currency, string $orderRef): string
     {
         $request = Http::acceptJson()
             ->withHeaders([
@@ -135,7 +135,19 @@ class SafePayService
             $request = $request->withOptions(['verify' => false]);
         }
 
-        $response = $request->post("{$this->baseUrl}/client/passport/v1/token", []);
+        $payload = [
+            'source' => 'checkout',
+            'order_id' => $orderRef,
+            'payment' => [
+                'amount' => $amount,
+                'currency' => strtoupper($currency),
+            ],
+            'metadata' => [
+                'order_id' => $orderRef,
+            ],
+        ];
+
+        $response = $request->post("{$this->baseUrl}/client/passport/v1/token", $payload);
 
         $token = (string) ($response->json('data') ?? '');
         if ($token !== '') {
@@ -144,6 +156,9 @@ class SafePayService
 
         Log::error('SafePay passport token generation failed.', [
             'mode' => $this->mode,
+            'order_ref' => $orderRef,
+            'amount' => $amount,
+            'currency' => $currency,
             'status' => $response->status(),
             'body' => $response->body(),
         ]);
