@@ -66,16 +66,23 @@ class SafePayService
         $amountMinor = $this->toMinorAmount((float) $amount);
         $tracker = $this->createPaymentSession($amountMinor, (string) $currency, (string) $orderRef);
         $passportToken = $this->createPassportToken();
+        $checkoutSource = strtolower((string) config('services.safepay.checkout_source', 'checkout'));
+        if (!in_array($checkoutSource, ['checkout', 'hosted'], true)) {
+            $checkoutSource = 'checkout';
+        }
 
         $params = [
             'env'              => $this->mode,
-            'source'           => 'hosted',
-            'order_id'         => $orderRef,
+            'source'           => $checkoutSource,
             'tracker'          => $tracker,
             'tbt'              => $passportToken,
             'redirect_url'     => $successUrl,
             'cancel_url'       => $cancelUrl,
         ];
+
+        if (filter_var(config('services.safepay.include_order_id', false), FILTER_VALIDATE_BOOL)) {
+            $params['order_id'] = $orderRef;
+        }
 
         Log::info('SafePay checkout redirect params', [
             'mode'         => $this->mode,
@@ -86,6 +93,8 @@ class SafePayService
             'tracker_prefix' => substr((string) $tracker, 0, 10),
             'tbt_prefix'   => substr((string) $passportToken, 0, 8),
             'amount_minor' => $amountMinor,
+            'source'       => $checkoutSource,
+            'include_order_id' => array_key_exists('order_id', $params),
             'param_keys'   => array_keys($params),
             'redirect_url' => $params['redirect_url'],
             'cancel_url'   => $params['cancel_url'],
