@@ -7,10 +7,10 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Services\SafePayService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
