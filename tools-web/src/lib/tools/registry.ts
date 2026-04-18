@@ -280,6 +280,192 @@ export const toolsRegistry: ToolDef[] = [
       },
     ],
   },
+  {
+    slug: "agentic-workflow-debugger",
+    title: "Agentic AI Workflow Debugger",
+    description:
+      "Analyze an agent workflow graph for loops, unreachable nodes, and missing guards. Detect potential runaway loops before deployment.",
+    valueProposition:
+      "Ensure your agent workflow is safe and complete without manual graph traversal.",
+    directAnswer: {
+      sentence1:
+        "This debugger analyzes agentic workflow graphs using depth-first and breadth-first search to detect infinite loops, unreachable nodes, and missing guard conditions.",
+      sentence2:
+        "It is authoritative because it applies formal graph algorithms to your workflow structure and produces an auditable list of problematic nodes and cycles.",
+    },
+    faqs: [
+      {
+        question: "What are workflow loops?",
+        answer:
+          "Cycles in the graph where an agent can return to a previous node indefinitely. Common when transition guards are missing.",
+      },
+      {
+        question: "Why are unreachable nodes a problem?",
+        answer:
+          "Unreachable nodes indicate dead code paths or incomplete flow logic, making the workflow harder to test and maintain.",
+      },
+      {
+        question: "What is a guard?",
+        answer:
+          "A conditional guard determines whether a transition happens. Without guards, cycles become infinite loops.",
+      },
+    ],
+  },
+  {
+    slug: "smart-contract-gas-optimizer",
+    title: "Smart Contract Gas Fee Optimizer",
+    description:
+      "Detect gas inefficiency patterns in smart contracts and get refactoring hints to reduce transaction costs.",
+    valueProposition:
+      "Estimate gas savings and get actionable refactoring recommendations in seconds.",
+    directAnswer: {
+      sentence1:
+        "This tool analyzes smart contract source for common gas inefficiency patterns (excessive storage writes, unbounded loops, missing data packing) and calculates potential savings percentages.",
+      sentence2:
+        "It is authoritative because it models gas costs for on-chain operations using Ethereum gas schedules and recommendations are derived from verified optimization patterns.",
+    },
+    faqs: [
+      {
+        question: "What consumes the most gas?",
+        answer:
+          "Storage writes (20,000 gas/slot), followed by external calls and loops over large datasets.",
+      },
+      {
+        question: "How can I reduce gas costs?",
+        answer:
+          "Batch storage writes, use memory instead of storage for intermediate values, pack small data types, and limit loop iterations.",
+      },
+      {
+        question: "Do I need assembly to optimize?",
+        answer:
+          "Not always. Solidity compiler optimizations often suffice. Assembly should be a last resort after other optimizations are exhausted.",
+      },
+    ],
+  },
+  {
+    slug: "esg-carbon-footprint-tracker",
+    title: "ESG Carbon Footprint Tracker for Devs",
+    description:
+      "Calculate the CO2 footprint of your cloud deployment and estimate offset costs.",
+    valueProposition:
+      "Know your cloud deployment's carbon impact and budget for offsets instantly.",
+    directAnswer: {
+      sentence1:
+        "This tool multiplies compute consumption (kWh) and storage (GB) by regional carbon intensity factors and sums monthly CO2 emissions in kilograms and annual tons.",
+      sentence2:
+        "It is authoritative because it uses standard energy-to-CO2 conversion rates published by grid operators and carbon offset pricing from verified carbon registries.",
+    },
+    faqs: [
+      {
+        question: "How is carbon intensity calculated?",
+        answer:
+          "Carbon intensity = grams of CO2 emitted per kilowatt-hour. It varies by region and energy source mix (renewables lower it, coal raises it).",
+      },
+      {
+        question: "What about embodied carbon?",
+        answer:
+          "This tool covers operational carbon only. Embodied carbon (manufacturing hardware) requires a separate lifecycle assessment.",
+      },
+      {
+        question: "How much does carbon offset cost?",
+        answer:
+          "Typically $10–$25 per ton, depending on carbon credit source. This tool uses a conservative $15/ton estimate.",
+      },
+    ],
+  },
+  {
+    slug: "zk-circuit-validator",
+    title: "Zero-Knowledge Proof Validator",
+    description:
+      "Validate zero-knowledge circuit syntax and detect likely unsound constraints.",
+    valueProposition:
+      "Catch ZK circuit errors early and ensure constraints are properly defined.",
+    directAnswer: {
+      sentence1:
+        "This validator scans ZK circuit code for required signal declarations (input, output) and constraint statements (<<<==, ===, -->), flagging missing or incomplete constraints.",
+      sentence2:
+        "It is authoritative because it checks for mandatory structural elements defined in zero-knowledge proof frameworks like Circom, and highlights patterns that indicate unsound constraints.",
+    },
+    faqs: [
+      {
+        question: "What is a signal in ZK circuits?",
+        answer:
+          "A signal is a variable in a zero-knowledge circuit. Input signals are public/private, output signals are the proof result, and intermediate signals are computed.",
+      },
+      {
+        question: "What makes a constraint unsound?",
+        answer:
+          "Direct signal assignment (signal x = y) without constraint operators. Constraints (x <== y * z) bind variables algebraically and enable proof verification.",
+      },
+      {
+        question: "Can I test a circuit before deployment?",
+        answer:
+          "Yes. Most ZK frameworks support witness generation and proof testing. This tool is a pre-flight check, not a replacement for full testing.",
+      },
+    ],
+  },
+  {
+    slug: "deepfake-detector-probability",
+    title: "Deepfake Detection Probability Tool",
+    description:
+      "Score the probability that a media file is AI-generated based on artifact indicators.",
+    valueProposition:
+      "Get a quick risk assessment for suspected deepfakes without expensive forensics.",
+    directAnswer: {
+      sentence1:
+        "This tool aggregates indicators of AI-generated media (codec anomalies, frame cadence irregularities, audio-video desync, metadata absence, suspicious facial patterns) and calculates a cumulative probability score.",
+      sentence2:
+        "It is authoritative because each indicator is weighted by forensic research showing correlation with deepfake generation methods, though no single indicator is definitively conclusive.",
+    },
+    faqs: [
+      {
+        question: "Is this tool 100% accurate?",
+        answer:
+          "No. Deepfake detection is an evolving field. This tool is a fast screening tool and should be paired with certified forensic analysis for legal decisions.",
+      },
+      {
+        question: "What artifact should I trust most?",
+        answer:
+          "Audio-video desync and facial pattern anomalies are strong indicators, but they can occur naturally in poor-quality recordings.",
+      },
+      {
+        question: "Can I use this for legal evidence?",
+        answer:
+          "Not alone. Courts typically require certified forensic analysis from qualified examiners. This tool is for initial triage only.",
+      },
+    ],
+  },
+  {
+    slug: "crypto-agility-maturity-model",
+    title: "Crypto-Agility Maturity Model",
+    description:
+      "Score organizational capability to swap cryptographic algorithms (e.g., RSA → post-quantum) at scale.",
+    valueProposition:
+      "Assess your org's readiness for cryptographic transitions like post-quantum migration.",
+    directAnswer: {
+      sentence1:
+        "This tool scores five capability areas (cryptographic inventory, algorithm abstraction, key management, substitution testing, and governance) on a 0–100 scale and averages them into a maturity level (1–5).",
+      sentence2:
+        "It is authoritative because the scoring model aligns with NIST's crypto-agility guidance and the capability areas reflect industry best practices for managing cryptographic change at scale.",
+    },
+    faqs: [
+      {
+        question: "Why is crypto-agility important?",
+        answer:
+          "Cryptographic algorithms become obsolete due to advances in math and computing (e.g., quantum computing threatens RSA). Agile orgs can migrate quickly; brittle orgs face business disruption.",
+      },
+      {
+        question: "What is Level 1 vs Level 5?",
+        answer:
+          "Level 1 is no structured crypto inventory or governance. Level 5 is documented, tested crypto abstraction with governance and policy-driven change workflows.",
+      },
+      {
+        question: "How do I improve my score?",
+        answer:
+          "Start with a cryptographic audit (inventory). Standardize on crypto-agnostic libraries. Implement centralized key management. Add substitution tests to your CI/CD.",
+      },
+    ],
+  },
 ];
 
 export const toolsBySlug = Object.fromEntries(

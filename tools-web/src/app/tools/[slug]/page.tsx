@@ -9,6 +9,12 @@ import { AiPromptPrivacyAuditor } from "@/components/tools/ai-prompt-privacy-aud
 import { AdmtProportionalityScorer } from "@/components/tools/admt-proportionality-scorer";
 import { NistFips203Planner } from "@/components/tools/nist-fips-203-planner";
 import { DirectCoolingROITool } from "@/components/tools/direct-cooling-roi";
+import { AgentWorkflowDebugger } from "@/components/tools/agent-workflow-debugger";
+import { GasOptimizer } from "@/components/tools/smart-contract-gas-optimizer";
+import { CarbonFootprintTracker } from "@/components/tools/esg-carbon-footprint";
+import { ZkCircuitValidator } from "@/components/tools/zk-proof-validator";
+import { DeepfakeDetector } from "@/components/tools/deepfake-detector";
+import { CryptoAgilityMaturitModel } from "@/components/tools/crypto-agility-maturity";
 import { toolsBySlug } from "@/lib/tools/registry";
 
 type ToolPageProps = {
@@ -120,6 +126,12 @@ export default async function ToolPage({ params }: ToolPageProps) {
           {slug === "admt-proportionality-scorer" && <AdmtProportionalityScorer />}
           {slug === "nist-fips-203-migration-timeline-planner" && <NistFips203Planner />}
           {slug === "direct-to-chip-liquid-cooling-roi" && <DirectCoolingROITool />}
+          {slug === "agentic-workflow-debugger" && <AgentWorkflowDebugger />}
+          {slug === "smart-contract-gas-optimizer" && <GasOptimizer />}
+          {slug === "esg-carbon-footprint-tracker" && <CarbonFootprintTracker />}
+          {slug === "zk-circuit-validator" && <ZkCircuitValidator />}
+          {slug === "deepfake-detector-probability" && <DeepfakeDetector />}
+          {slug === "crypto-agility-maturity-model" && <CryptoAgilityMaturitModel />}
 
           <section className="faq-area" aria-label="Commonly Asked Questions">
             <h3 className="text-lg font-semibold">Commonly Asked Questions</h3>
