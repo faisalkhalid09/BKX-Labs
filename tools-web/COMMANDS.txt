@@ -1,32 +1,66 @@
 # ════════════════════════════════════════════════════════
-# BKX Labs — Deploy Next.js with basePath Config Fix
+# BKX Labs — Fix Double /tools/tools Redirect
 # Copy and paste these commands one at a time on your VPS
 # ════════════════════════════════════════════════════════
 
 # ──────────────────────────────────────────────────────────
-# STEP 1: NAVIGATE AND REBUILD
+# STEP 1: NAVIGATE AND REBUILD (WITHOUT basePath)
 # ──────────────────────────────────────────────────────────
 
 cd /var/www/BKX-Labs/tools-web
 
-# Build Next.js for production (this applies the basePath: '/tools' config)
+# Build Next.js for production (basePath removed from config)
 npm run build
 
 # ──────────────────────────────────────────────────────────
 # STEP 2: RESTART PM2 PROCESS
 # ──────────────────────────────────────────────────────────
 
-# Delete the old PM2 process
-pm2 delete tools-web
+# Restart with new build
+pm2 restart tools-web
 
-# Start fresh with new build
-pm2 start npm --name "tools-web" -- start
+# Wait for ready message in logs (~30 seconds)
+pm2 logs tools-web
 
-# Save PM2 config
-pm2 save
+# (Press Ctrl+C to exit logs)
 
 # ──────────────────────────────────────────────────────────
-# STEP 3: VERIFY SERVICES ARE RUNNING
+# STEP 3: UPDATE NGINX CONFIG (FIX THE REWRITE RULE)
+# ──────────────────────────────────────────────────────────
+
+# Open nginx config
+sudo nano /etc/nginx/sites-enabled/bkx-labs
+
+# FIND THIS SECTION (around line 140):
+#     # Next.js App Proxy
+#     location /tools {
+#         proxy_pass http://localhost:3000;
+#         proxy_http_version 1.1;
+
+# AND REPLACE IT WITH THIS:
+#     # Next.js App Proxy
+#     location /tools/ {
+#         rewrite ^/tools/(.*)$ /$1 break;
+#         proxy_pass http://localhost:3000;
+#         proxy_http_version 1.1;
+
+# SAVE THE FILE (Ctrl+X, Y, Enter)
+
+# ──────────────────────────────────────────────────────────
+# STEP 4: TEST AND RELOAD NGINX
+# ──────────────────────────────────────────────────────────
+
+# Test nginx syntax
+sudo nginx -t
+
+# Reload nginx
+sudo systemctl reload nginx
+
+# Check nginx status
+sudo systemctl status nginx
+
+# ──────────────────────────────────────────────────────────
+# STEP 5: VERIFY EVERYTHING IS RUNNING
 # ──────────────────────────────────────────────────────────
 
 # Check if Node is running
@@ -39,41 +73,19 @@ sudo netstat -tlnp | grep 3000
 pm2 list
 
 # ──────────────────────────────────────────────────────────
-# STEP 4: VERIFY NGINX IS READY
+# STEP 6: TEST IN BROWSER
 # ──────────────────────────────────────────────────────────
 
-# Test nginx configuration
-sudo nginx -t
-
-# Reload nginx
-sudo systemctl reload nginx
-
-# Check nginx status
-sudo systemctl status nginx
-
-# ──────────────────────────────────────────────────────────
-# STEP 5: MONITOR LOGS (Wait ~30 seconds for "Ready" message)
-# ──────────────────────────────────────────────────────────
-
-# View PM2 logs (watch for "✓ Ready in XXXms" message)
-pm2 logs tools-web
-
-# (Press Ctrl+C to exit logs when done)
-
-# ──────────────────────────────────────────────────────────
-# STEP 6: TEST THE ENDPOINT
-# ──────────────────────────────────────────────────────────
-
-# Test via domain (should now show CSS properly)
-curl https://bkxlabs.com/tools
-
-# Or visit in browser:
+# Visit in browser (NO redirect, should stay at /tools):
 # https://bkxlabs.com/tools
+
+# Test with curl:
+curl https://bkxlabs.com/tools
 
 # ════════════════════════════════════════════════════════
 # EXPECTED RESULTS:
-# ✅ PM2 shows "online" status
-# ✅ Port 3000 is listening
-# ✅ Logs show "✓ Ready in XXXms"
-# ✅ https://bkxlabs.com/tools loads CSS properly
+# ✅ NO redirect from /tools to /tools/tools
+# ✅ Page loads with CSS and styling
+# ✅ Console shows 0 errors
+# ✅ All assets load from /tools/... paths
 # ════════════════════════════════════════════════════════
