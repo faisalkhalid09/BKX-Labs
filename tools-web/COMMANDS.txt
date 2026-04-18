@@ -1,51 +1,79 @@
 # ════════════════════════════════════════════════════════
-# BKX Labs — Manual Commands for Deployment Fix
+# BKX Labs — Deploy Next.js with basePath Config Fix
 # Copy and paste these commands one at a time on your VPS
 # ════════════════════════════════════════════════════════
 
-# Step 1: Navigate to tools-web directory
+# ──────────────────────────────────────────────────────────
+# STEP 1: NAVIGATE AND REBUILD
+# ──────────────────────────────────────────────────────────
+
 cd /var/www/BKX-Labs/tools-web
 
-# Step 2: Build Next.js for production
+# Build Next.js for production (this applies the basePath: '/tools' config)
 npm run build
 
-# Step 3: Stop current PM2 process
-pm2 stop tools-web
+# ──────────────────────────────────────────────────────────
+# STEP 2: RESTART PM2 PROCESS
+# ──────────────────────────────────────────────────────────
 
-# Step 4: Delete the process
+# Delete the old PM2 process
 pm2 delete tools-web
 
-# Step 5: Start fresh with PM2
+# Start fresh with new build
 pm2 start npm --name "tools-web" -- start
 
-# Step 6: Save PM2 config
+# Save PM2 config
 pm2 save
 
-# Step 7: Test nginx configuration
-sudo nginx -t
+# ──────────────────────────────────────────────────────────
+# STEP 3: VERIFY SERVICES ARE RUNNING
+# ──────────────────────────────────────────────────────────
 
-# Step 8: Reload nginx
-sudo systemctl reload nginx
-
-# Step 9: Check if Node is running
+# Check if Node is running
 ps aux | grep node
 
-# Step 10: Check if port 3000 is listening
+# Check if port 3000 is listening
 sudo netstat -tlnp | grep 3000
 
-# Step 11: Check nginx status
-sudo systemctl status nginx
-
-# Step 12: View PM2 process list
+# Check PM2 process list
 pm2 list
 
-# Step 13: View PM2 logs (press Q to exit)
+# ──────────────────────────────────────────────────────────
+# STEP 4: VERIFY NGINX IS READY
+# ──────────────────────────────────────────────────────────
+
+# Test nginx configuration
+sudo nginx -t
+
+# Reload nginx
+sudo systemctl reload nginx
+
+# Check nginx status
+sudo systemctl status nginx
+
+# ──────────────────────────────────────────────────────────
+# STEP 5: MONITOR LOGS (Wait ~30 seconds for "Ready" message)
+# ──────────────────────────────────────────────────────────
+
+# View PM2 logs (watch for "✓ Ready in XXXms" message)
 pm2 logs tools-web
 
-# Step 14: Test the endpoint
+# (Press Ctrl+C to exit logs when done)
+
+# ──────────────────────────────────────────────────────────
+# STEP 6: TEST THE ENDPOINT
+# ──────────────────────────────────────────────────────────
+
+# Test via domain (should now show CSS properly)
 curl https://bkxlabs.com/tools
 
+# Or visit in browser:
+# https://bkxlabs.com/tools
+
 # ════════════════════════════════════════════════════════
-# If everything shows ✅ - you're done!
-# If not, check the logs above for errors
+# EXPECTED RESULTS:
+# ✅ PM2 shows "online" status
+# ✅ Port 3000 is listening
+# ✅ Logs show "✓ Ready in XXXms"
+# ✅ https://bkxlabs.com/tools loads CSS properly
 # ════════════════════════════════════════════════════════
