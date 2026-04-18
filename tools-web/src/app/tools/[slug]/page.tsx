@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EuAiActClassifier } from "@/components/tools/eu-ai-act-classifier";
+import { PostQuantumCBOMGenerator } from "@/components/tools/pq-cbom-generator";
+import { SaaSSoc2Calculator } from "@/components/tools/soc2-calculator";
+import { CloudGpuCostComparison } from "@/components/tools/cloud-gpu-cost-comparison";
 import { toolsBySlug } from "@/lib/tools/registry";
 
 type ToolPageProps = {
@@ -103,7 +106,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
             </p>
           </div>
 
-          <EuAiActClassifier />
+          {slug === "eu-ai-act-risk-level-classifier" && <EuAiActClassifier />}
+          {slug === "post-quantum-cbom-generator" && <PostQuantumCBOMGenerator />}
+          {slug === "saas-soc2-readiness-calculator" && <SaaSSoc2Calculator />}
+          {slug === "cloud-gpu-cost-comparison" && <CloudGpuCostComparison />}
 
           <section className="faq-area" aria-label="Commonly Asked Questions">
             <h3 className="text-lg font-semibold">Commonly Asked Questions</h3>
