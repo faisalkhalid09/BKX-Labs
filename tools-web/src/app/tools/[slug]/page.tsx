@@ -4,6 +4,11 @@ import { EuAiActClassifier } from "@/components/tools/eu-ai-act-classifier";
 import { PostQuantumCBOMGenerator } from "@/components/tools/pq-cbom-generator";
 import { SaaSSoc2Calculator } from "@/components/tools/soc2-calculator";
 import { CloudGpuCostComparison } from "@/components/tools/cloud-gpu-cost-comparison";
+import { NvidiaBlackwellEstimator } from "@/components/tools/nvidia-blackwell-estimator";
+import { AiPromptPrivacyAuditor } from "@/components/tools/ai-prompt-privacy-auditor";
+import { AdmtProportionalityScorer } from "@/components/tools/admt-proportionality-scorer";
+import { NistFips203Planner } from "@/components/tools/nist-fips-203-planner";
+import { DirectCoolingROITool } from "@/components/tools/direct-cooling-roi";
 import { toolsBySlug } from "@/lib/tools/registry";
 
 type ToolPageProps = {
@@ -110,6 +115,11 @@ export default async function ToolPage({ params }: ToolPageProps) {
           {slug === "post-quantum-cbom-generator" && <PostQuantumCBOMGenerator />}
           {slug === "saas-soc2-readiness-calculator" && <SaaSSoc2Calculator />}
           {slug === "cloud-gpu-cost-comparison" && <CloudGpuCostComparison />}
+          {slug === "nvidia-blackwell-pue-estimator" && <NvidiaBlackwellEstimator />}
+          {slug === "ai-prompt-privacy-auditor" && <AiPromptPrivacyAuditor />}
+          {slug === "admt-proportionality-scorer" && <AdmtProportionalityScorer />}
+          {slug === "nist-fips-203-migration-timeline-planner" && <NistFips203Planner />}
+          {slug === "direct-to-chip-liquid-cooling-roi" && <DirectCoolingROITool />}
 
           <section className="faq-area" aria-label="Commonly Asked Questions">
             <h3 className="text-lg font-semibold">Commonly Asked Questions</h3>
