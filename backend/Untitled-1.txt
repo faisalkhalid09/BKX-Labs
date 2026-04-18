@@ -1,0 +1,584 @@
+[.css-g2aphl{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;background-color:var(--blue-4);border-radius:4px;height:24px;width:24px;}.css-11lzso7{color:var(--sfpy-theme-text-default);font-weight:500;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;font-size:1.125rem;line-height:1.5555556;letter-spacing:-0.014rem;}Docs](https://safepay-docs.netlify.app/)
+[Blog](https://www.getsafepay.pk/blog)
+[API Reference](https://apidocs.getsafepay.com/)
+[Follow Us on GitHub](https://github.com/getsafepay)
+[Home](https://safepay-docs.netlify.app/)
+[Payments](https://safepay-docs.netlify.app/payments/overview)
+[No-code](https://safepay-docs.netlify.app/no-code/overview)
+[Developers](https://safepay-docs.netlify.app/developers/overview)
+[Contribute](https://safepay-docs.netlify.app/documentation/introduction)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Overview](https://safepay-docs.netlify.app/payments/overview)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Integration checklist](https://safepay-docs.netlify.app/payments/integration-checklist)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Introduction](https://safepay-docs.netlify.app/build-your-integration/overview)
+[.css-9qw3c6{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;background-color:var(--sfpy-theme-text-link);}Express Checkout](https://safepay-docs.netlify.app/build-your-integration/express-checkout)
+Advanced checkout
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Go-live checklist](https://safepay-docs.netlify.app/payments/go-live-checklist)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Capture](https://safepay-docs.netlify.app/modify-payments/capture)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Refund](https://safepay-docs.netlify.app/modify-payments/refund)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Reversal](https://safepay-docs.netlify.app/modify-payments/reversal)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Void](https://safepay-docs.netlify.app/modify-payments/void)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Tracker](https://safepay-docs.netlify.app/concepts/tracker)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Tracker states](https://safepay-docs.netlify.app/concepts/tracker-states)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Fetch Tracker](https://safepay-docs.netlify.app/concepts/fetch-tracker)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Money](https://safepay-docs.netlify.app/concepts/money)
+
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Payment intents](https://safepay-docs.netlify.app/concepts/payment-intents)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Payment modes](https://safepay-docs.netlify.app/concepts/payment-modes)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Payment entry modes](https://safepay-docs.netlify.app/concepts/payment-entry-modes)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Payment actions](https://safepay-docs.netlify.app/concepts/payment-actions)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Shoppers](https://safepay-docs.netlify.app/concepts/shoppers)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Chargebacks](https://safepay-docs.netlify.app/concepts/chargebacks)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}3D Secure](https://safepay-docs.netlify.app/concepts/three-d-secure)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Google Pay](https://safepay-docs.netlify.app/concepts/payment-methods/google-pay)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Tokenization](https://safepay-docs.netlify.app/concepts/tokenization/introduction)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Implementation](https://safepay-docs.netlify.app/concepts/tokenization/implementation)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Manage tokens](https://safepay-docs.netlify.app/concepts/tokenization/manage-tokens)
+[.css-206fcy{height:6px;width:6px;min-height:6px;min-width:6px;border-radius:100%;margin:8px 6px;-webkit-align-self:self-start;-ms-flex-item-align:self-start;align-self:self-start;}Subscriptions Introduction](https://safepay-docs.netlify.app/developers/subscriptions/introduction)
+[Safepay Home Page](https://getsafepay.pk)
+[Live Dashboard](https://getsafepay.com/dashboard/login)
+[Test Dashboard](https://sandbox.api.getsafepay.com/dashboard/login)
+
+# Express Checkout integration guide
+
+Start accepting payments on your website or app.
+
+## [How it works](https://safepay-docs.netlify.app/build-your-integration/express-checkout#how-it-works)
+
+[How it works](https://safepay-docs.netlify.app/build-your-integration/express-checkout#how-it-works)
+When the shopper goes to checkout on your website, you redirect them to a Hosted Checkout page. After they make the payment, the shopper gets redirected to your page, and you show the shopper the outcome of the payment session.
+1. When the shopper goes to your checkout and clicks on the "Payment" button, make a request to create a .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[payment tracker](https://safepay-docs.netlify.app/concepts/tracker).
+2. After you have created the tracker, make a request to create an authentication token.
+3. Use one of our SDKs to create the Checkout URL or follow the steps below to create the URL manually.
+4. Return the URL to your client website or redirect the shopper to it.
+5. After the shopper pays and are redirected back to your store, poll an endpoint on your server until you receive confirmation from Safepay through a webhook that the payment has been completed.
+[payment tracker](https://safepay-docs.netlify.app/concepts/tracker)
+
+## [Before you begin](https://safepay-docs.netlify.app/build-your-integration/express-checkout#before-you-begin)
+[Before you begin](https://safepay-docs.netlify.app/build-your-integration/express-checkout#before-you-begin)
+Before you begin to integrate, make sure you have followed the .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Get started with Safepay](https://safepay-docs.netlify.app/get-started/overview) guide to:
+- Get an overview of the steps needed to accept live payments.
+- .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Create](https://safepay-docs.netlify.app/setup-safepay/create-account/overview) your test account.
+[Create](https://safepay-docs.netlify.app/setup-safepay/create-account/overview)
+After you have created your test account:
+- .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Get your API keys](https://safepay-docs.netlify.app/developers/safepay/api-keys).
+- [Set up webhooks to know the payment outcome](https://safepay-docs.netlify.app/developers/webhooks/overview).
+[Get your API keys](https://safepay-docs.netlify.app/developers/safepay/api-keys)
+[Set up webhooks to know the payment outcome](https://safepay-docs.netlify.app/developers/webhooks/overview)
+
+## [Integration steps](https://safepay-docs.netlify.app/build-your-integration/express-checkout#integration-steps)
+[Integration steps](https://safepay-docs.netlify.app/build-your-integration/express-checkout#integration-steps)
+1. Install an API library on your server
+2. Create a payment tracker and authentication token from your server.
+3. Generate the Checkout URL
+4. Redirect the shopper to the Checkout URL.
+5. Handle redirects
+6. Show the payment status to your shopper
+7. Handle webhooks
+8. Update your order management system
+9. Test your integration and go live.
+1
+
+## [Install an API library](https://safepay-docs.netlify.app/build-your-integration/express-checkout#install-an-api-library)
+
+[Install an API library](https://safepay-docs.netlify.app/build-your-integration/express-checkout#install-an-api-library)
+We provide two official server-side API libraries for Node and PHP that allow you to interact with the Safepay API easily. Our API libraries will save you time, because they:
+- Use an API version that is up to date.
+- Provide a simple interface to interact with the Safepay API.
+- Handle common errors and exceptions.
+- Send the request to Safepay using their built-in HTTP client, so you do not have to create your own.
+
+#### [Requirements](https://safepay-docs.netlify.app/build-your-integration/express-checkout#requirements)
+[Requirements](https://safepay-docs.netlify.app/build-your-integration/express-checkout#requirements)
+- Node.js version 18 or later.
+
+#### [Installation](https://safepay-docs.netlify.app/build-your-integration/express-checkout#installation)
+[Installation](https://safepay-docs.netlify.app/build-your-integration/express-checkout#installation)
+You can use .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+Copy
+
+```
+# Install the API library
+```
+
+
+```
+npm install --save @sfpy/node-core
+```
+
+
+```
+# Update the API library
+```
+
+
+```
+npm update @sfpy/node-core
+```
+
+1a
+
+## [Optional - Prefill customer details](https://safepay-docs.netlify.app/build-your-integration/express-checkout#optional---prefill-customer-details)
+
+[Optional - Prefill customer details](https://safepay-docs.netlify.app/build-your-integration/express-checkout#optional---prefill-customer-details)
+If you want the shopper to fill their own information, you can skip this step and proceed to .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Create a Payment Session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-a-payment-session).
+Instead, if you are capturing the customer information on your own form already prior to checkout, you can pass the information to pre-fill on the checkout page.
+First, create a customer using the information you have captured:
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}const safepay = require('@sfpy/node-core')({ api_key: 'YOUR_SERVER_API_KEY', authType: 'jwt', host: 'https://dev.api.getsafepay.com' }); (async () => { try { const response = await safepay.user.customers.create({ payload: { first_name: "Hassan", last_name: "Zaidi", email: "hzaidi@getsafepay.com", phone_number: "+923331234567", country: "PK", is_guest: true } }); console.log(response); } catch (error) { console.error(error); } })();
+```
+
+
+```
+const safepay = require('@sfpy/node-core')({ api_key: 'YOUR_SERVER_API_KEY', authType: 'jwt', host: 'https://dev.api.getsafepay.com' }); (async () => { try { const response = await safepay.user.customers.create({ payload: { first_name: "Hassan", last_name: "Zaidi", email: "hzaidi@getsafepay.com", phone_number: "+923331234567", country: "PK", is_guest: true } }); console.log(response); } catch (error) { console.error(error); } })();
+```
+
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}{ "data": { "token": "cus_e927d58d-3796-4f36-a209-384906d712ea", "merchant_api_key": "sec_edeade52-46aa-483b-b87d-009d3ce41554", "email": "hzaidi@getsafepay.com", "first_name": "Hassan", "last_name": "Zaidi", "phone_number": "+923331234567", "country": "PK", "is_guest": true, "is_deleted": false, "created_at": { "seconds": 1697986036, "nanos": 25310172 }, "updated_at": { "seconds": 1697986036, "nanos": 25310589 } }, "status": { "errors": [], "message": "success" } }
+```
+
+
+```
+{ "data": { "token": "cus_e927d58d-3796-4f36-a209-384906d712ea", "merchant_api_key": "sec_edeade52-46aa-483b-b87d-009d3ce41554", "email": "hzaidi@getsafepay.com", "first_name": "Hassan", "last_name": "Zaidi", "phone_number": "+923331234567", "country": "PK", "is_guest": true, "is_deleted": false, "created_at": { "seconds": 1697986036, "nanos": 25310172 }, "updated_at": { "seconds": 1697986036, "nanos": 25310589 } }, "status": { "errors": [], "message": "success" } }
+```
+
+## [Optional - Prefill customer details](https://safepay-docs.netlify.app/build-your-integration/express-checkout#optional---prefill-customer-details)
+Note down the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}"token": "cus_e927d58d-3796-4f36-a209-384906d712ea". This will be passed in .css-124rej3{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:600;}Step 4.
+
+```
+"token": "cus_e927d58d-3796-4f36-a209-384906d712ea"
+```
+
+2
+
+## [Create a payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-a-payment-session)
+[Create a payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-a-payment-session)
+When the shopper goes to checkout, for example by selecting a Checkout button, make a POST .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[.css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}/order/payments/v3/](https://apidocs.getsafepay.com/#647f1146-d656-4868-a695-34ad8fcabeb2) request from your server, including:
+
+```
+/order/payments/v3/
+```
+
+
+```
+merchant_api_key
+```
+
+
+```
+user
+```
+
+
+```
+intent
+```
+
+
+```
+CYBERSOURCE
+```
+
+
+```
+MPGS
+```
+
+
+```
+mode
+```
+
+[modes](https://safepay-docs.netlify.app/concepts/payment-modes)
+
+```
+entry_mode
+```
+
+[entry modes](https://safepay-docs.netlify.app/concepts/payment-entry-modes)
+
+```
+currency
+```
+
+[supported currencies](https://safepay-docs.netlify.app/concepts/currencies)
+
+```
+amount
+```
+
+
+```
+currency
+```
+
+
+```
+USD
+```
+
+
+```
+amount
+```
+
+
+```
+10000
+```
+
+
+```
+metadata
+```
+
+
+```
+include_fees
+```
+
+For example:
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.payments.session.setup({ "merchant_api_key": "SAFEPAY_API_KEY", "user": "cust_a7cc6fc1-088d-4f35-9dac-2bab2cb234a1", "intent": "CYBERSOURCE", "mode": "payment", "entry_mode": "raw", "currency": "USD", "amount": 10000, "metadata": { "order_id": "1234567890" }, "include_fees": false }) } catch (err) { console.log(error); }
+```
+
+
+```
+const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.payments.session.setup({ "merchant_api_key": "SAFEPAY_API_KEY", "user": "cust_a7cc6fc1-088d-4f35-9dac-2bab2cb234a1", "intent": "CYBERSOURCE", "mode": "payment", "entry_mode": "raw", "currency": "USD", "amount": 10000, "metadata": { "order_id": "1234567890" }, "include_fees": false }) } catch (err) { console.log(error); }
+```
+
+## [Create a payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-a-payment-session)
+
+The .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[.css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}/order/payments/v3/](https://apidocs.getsafepay.com/#647f1146-d656-4868-a695-34ad8fcabeb2) response will give you the payment session you have just created. The response will have the token for the tracker object which is the payment session. This will be required when generating the Checkout URL.
+
+```
+/order/payments/v3/
+```
+
+
+```
+token
+```
+
+
+```
+tracker
+```
+
+For example:
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}{ "data": { "tracker": { "token": "track_4f7d7e2d-ee05-44e3-81b7-6f6f2cca9727", "client": "sec_a8e0a889-b987-4b7e-9757-a6bf28e4d4e2", "environment": "sandbox", "state": "TRACKER_STARTED", "intent": "CYBERSOURCE", "mode": "payment", "entry_mode": "raw", "next_actions": { "CYBERSOURCE": { "kind": "PAYER_AUTH_SETUP" } }, "purchase_totals": { "quote_amount": { "currency": "USD", "amount": 10000 }, "base_amount": { "currency": "PKR", "amount": 27800 }, "conversion_rate": { "base_currency": "PKR", "quote_currency": "USD", "rate": 278 } } }, "capabilities": { "CYBERSOURCE": true } }, "status": { "errors": [], "message": "success" } }
+```
+
+
+```
+{ "data": { "tracker": { "token": "track_4f7d7e2d-ee05-44e3-81b7-6f6f2cca9727", "client": "sec_a8e0a889-b987-4b7e-9757-a6bf28e4d4e2", "environment": "sandbox", "state": "TRACKER_STARTED", "intent": "CYBERSOURCE", "mode": "payment", "entry_mode": "raw", "next_actions": { "CYBERSOURCE": { "kind": "PAYER_AUTH_SETUP" } }, "purchase_totals": { "quote_amount": { "currency": "USD", "amount": 10000 }, "base_amount": { "currency": "PKR", "amount": 27800 }, "conversion_rate": { "base_currency": "PKR", "quote_currency": "USD", "rate": 278 } } }, "capabilities": { "CYBERSOURCE": true } }, "status": { "errors": [], "message": "success" } }
+```
+
+3
+
+## [Create an authentication token](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-an-authentication-token)
+
+[Create an authentication token](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-an-authentication-token)
+After creating the payment session, make a POST request to .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[.css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}/client/passport/v1/token](https://apidocs.getsafepay.com/#d5b420ca-32bf-437a-be9c-ca66ada21110) to generate a short lived authentication token.
+
+```
+/client/passport/v1/token
+```
+
+For example:
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.auth.passport.create() } catch (err) { console.log(error); }
+```
+
+
+```
+const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.auth.passport.create() } catch (err) { console.log(error); }
+```
+
+The .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[.css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}/client/passport/v1/token](https://apidocs.getsafepay.com/#d5b420ca-32bf-437a-be9c-ca66ada21110) response will give you the authentication token you will need to generate the Checkout URL.
+
+```
+/client/passport/v1/token
+```
+
+For example:
+Copy
+
+## [Create an authentication token](https://safepay-docs.netlify.app/build-your-integration/express-checkout#create-an-authentication-token)
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}{ "data": "xnTyRgITVcHlyeKT2cf59_e836PouieQ6xPpuQiwFXD8M6HoJ283EP_zta2SKkm6B_IFNGEBmg==" }
+```
+
+
+```
+{ "data": "xnTyRgITVcHlyeKT2cf59_e836PouieQ6xPpuQiwFXD8M6HoJ283EP_zta2SKkm6B_IFNGEBmg==" }
+```
+
+4
+
+## [Generate the Checkout URL](https://safepay-docs.netlify.app/build-your-integration/express-checkout#generate-the-checkout-url)
+[Generate the Checkout URL](https://safepay-docs.netlify.app/build-your-integration/express-checkout#generate-the-checkout-url)
+Now that the payment session and authentication token have been generated, your server will have to generate the URL for the Checkout page in order for you to redirect your shopper to complete their payment.
+You can use our SDKs to generate the URL for you. For example:
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const checkoutURL = safepay.checkouts.payment.create({ // this the tracker.token from the payment session response tracker: "[TRACKER_TOKEN]", // the authentication token tbt: "[AUTHENTICATION_TOKEN]", // either production or sandbox environment: "sandbox", // attach a source, available options are: hosted, popup, mobile, woocommerce, and shopify source: "hosted", // OPTIONAL attach the customer.token from the create customer response to prefill the payment form user_id: "[CUSTOMER_TOKEN]", // the success URL to redirect your customer to after payment complete redirect_url: "https://mywebsite.com/order/success", // the cancel URL to redirect your customer to after the customer cancels the checkout session cancel_url: "https://mywebsite.com/order/cancel" }) } catch (err) { console.log(error); }
+```
+
+
+```
+const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const checkoutURL = safepay.checkouts.payment.create({ // this the tracker.token from the payment session response tracker: "[TRACKER_TOKEN]", // the authentication token tbt: "[AUTHENTICATION_TOKEN]", // either production or sandbox environment: "sandbox", // attach a source, available options are: hosted, popup, mobile, woocommerce, and shopify source: "hosted", // OPTIONAL attach the customer.token from the create customer response to prefill the payment form user_id: "[CUSTOMER_TOKEN]", // the success URL to redirect your customer to after payment complete redirect_url: "https://mywebsite.com/order/success", // the cancel URL to redirect your customer to after the customer cancels the checkout session cancel_url: "https://mywebsite.com/order/cancel" }) } catch (err) { console.log(error); }
+```
+
+Redirect the shopper to the URL (url) generated above. The shopper pays on the Hosted Checkout page.
+5
+
+## [Get the outcome](https://safepay-docs.netlify.app/build-your-integration/express-checkout#get-the-outcome)
+[Get the outcome](https://safepay-docs.netlify.app/build-your-integration/express-checkout#get-the-outcome)
+
+### [1. Show the result of the payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#1-show-the-result-of-the-payment-session)
+
+[1. Show the result of the payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#1-show-the-result-of-the-payment-session)
+1. 
+.css-kyp6yt{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);}.css-kyp6yt strong{word-break:break-word;}After the shopper makes the payment, they are redirected back to your website.
+
+2. 
+Get the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}tracker that is appended to the return URL from the Hosted Checkout page. Use it to get the outcome of the payment session.
+.css-tspr2n{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:500;font-size:0.9375rem;line-height:1.6;letter-spacing:-0.009rem;}Your redirect URL after a successful payment.css-1hejbxr{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;}Copy.css-1f8n3wn{white-space:pre;overflow:auto;-webkit-overflow-scrolling:touch;line-height:120%;border-radius:4px;padding:16px;border:1px solid var(--sfpy-theme-border-secondary);padding:16px;margin:16px 0;background-color:var(--sfpy-theme-background-subtle);}table .css-1f8n3wn:last-child{margin-bottom:0;}.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}https://your-company.com/order/complete?tracker=track_4f7d7e2d-ee05-44e3-81b7-6f6f2cca9727
+
+
+3. 
+Make a GET .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[/reporter/api/v1/payments/{tracker}](https://apidocs.getsafepay.com/#68957253-f58e-4165-adea-ecb0fc30b328) request including the tracker token. For example:
+
+After the shopper makes the payment, they are redirected back to your website.
+Get the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}tracker that is appended to the return URL from the Hosted Checkout page. Use it to get the outcome of the payment session.
+
+```
+tracker
+```
+
+Copy
+
+### [1. Show the result of the payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#1-show-the-result-of-the-payment-session)
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}https://your-company.com/order/complete?tracker=track_4f7d7e2d-ee05-44e3-81b7-6f6f2cca9727
+```
+
+
+```
+https://your-company.com/order/complete?tracker=track_4f7d7e2d-ee05-44e3-81b7-6f6f2cca9727
+```
+
+Make a GET .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[/reporter/api/v1/payments/{tracker}](https://apidocs.getsafepay.com/#68957253-f58e-4165-adea-ecb0fc30b328) request including the tracker token. For example:
+
+```
+GET
+```
+
+
+```
+/reporter/api/v1/payments/{tracker}
+```
+
+Copy
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.reporter.payments.fetch(trackerToken) } catch (err) { console.log(error); }
+```
+
+
+```
+const safepay = require('@sfpy/node-core')('SAFEPAY_SECRET_KEY', { authType: 'secret', host: 'https://sandbox.api.getsafepay.com' // for live payments use https://api.getsafepay.com }); try { const response = safepay.reporter.payments.fetch(trackerToken) } catch (err) { console.log(error); }
+```
+
+The response includes the current status of the payment. Search for the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}tracker.state property. If it shows TRACKER_ENDED, the payment has been successfully completed. For example:
+
+```
+tracker.state
+```
+
+
+```
+TRACKER_ENDED
+```
+
+Copy
+
+### [1. Show the result of the payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout#1-show-the-result-of-the-payment-session)
+
+```
+.css-qvybvz{font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-default);white-space:inherit;padding:0;margin:0;}.css-qvybvz .code-annotation{-webkit-transition:200ms ease all;transition:200ms ease all;transition-property:text-shadow,opacity;text-shadow:var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px,var(--yellow-7) 0 0 10px;}.css-qvybvz .code-annotation.with-tooltip:hover{cursor:pointer;-webkit-animation:none;animation:none;opacity:0.8;}.css-qvybvz .code-hidden{display:none;}.css-qvybvz .code-placeholder{opacity:0.5;}{ "data": { "tracker": { "token": "track_1a46dc70-91f9-4892-8e25-0bb5205b69c7", "client": "sec_edeade52-46aa-483b-b87d-009d3ce41554", "environment": "sandbox", "state": "TRACKER_ENDED", "intent": "CYBERSOURCE", "mode": "payment", "next_actions": { "CYBERSOURCE": { "kind": "NOOP", "request_id": "req_9ea53be5-828f-4730-b187-9d3d350ab72a" } }, "purchase_totals": { "quote_amount": { "currency": "PKR", "amount": 600000 }, "base_amount": { "currency": "PKR", "amount": 600000 }, "conversion_rate": { "base_currency": "PKR", "quote_currency": "PKR", "rate": 1 } } }, "action": { "token": "req_9ea53be5-828f-4730-b187-9d3d350ab72a", "payment_method": { "token": "card_353d4bd9-1d72-4f4d-a358-b277833795a4", "expiration_month": "12", "expiration_year": "2023", "card_type_code": "001", "card_type": "Visa", "bin_number": "445653", "last_four": "1096" } } }, "status": { "errors": [], "message": "success" } }
+```
+
+
+```
+{ "data": { "tracker": { "token": "track_1a46dc70-91f9-4892-8e25-0bb5205b69c7", "client": "sec_edeade52-46aa-483b-b87d-009d3ce41554", "environment": "sandbox", "state": "TRACKER_ENDED", "intent": "CYBERSOURCE", "mode": "payment", "next_actions": { "CYBERSOURCE": { "kind": "NOOP", "request_id": "req_9ea53be5-828f-4730-b187-9d3d350ab72a" } }, "purchase_totals": { "quote_amount": { "currency": "PKR", "amount": 600000 }, "base_amount": { "currency": "PKR", "amount": 600000 }, "conversion_rate": { "base_currency": "PKR", "quote_currency": "PKR", "rate": 1 } } }, "action": { "token": "req_9ea53be5-828f-4730-b187-9d3d350ab72a", "payment_method": { "token": "card_353d4bd9-1d72-4f4d-a358-b277833795a4", "expiration_month": "12", "expiration_year": "2023", "card_type_code": "001", "card_type": "Visa", "bin_number": "445653", "last_four": "1096" } } }, "status": { "errors": [], "message": "success" } }
+```
+
+Inspect the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}status property on the tracker to ensure that it is currently set to TRACKER_ENDED. This state indicates that the payment has been successfully processed. You can refer to what different states the tracker can be in by visiting the .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Tracker states](https://safepay-docs.netlify.app/concepts/tracker-states) guide.
+
+```
+status
+```
+
+
+```
+tracker
+```
+
+
+```
+TRACKER_ENDED
+```
+
+
+```
+tracker
+```
+
+### [2. Update your order management system](https://safepay-docs.netlify.app/build-your-integration/express-checkout#2-update-your-order-management-system)
+
+[2. Update your order management system](https://safepay-docs.netlify.app/build-your-integration/express-checkout#2-update-your-order-management-system)
+You get the outcome of each payment asynchronously, in a .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[.css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}payment.succeeded](https://safepay-docs.netlify.app/developers/webhooks/webhook-types) webhook. Use the tracker from the webhook to match it to the tracker you generated in the payment session step. For a successful payment, the event contains success: true.
+
+```
+payment.succeeded
+```
+
+
+```
+tracker
+```
+
+
+```
+tracker
+```
+
+
+```
+success: true
+```
+
+Refer to .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Webhooks](https://safepay-docs.netlify.app/developers/webhooks/overview) for more information on how to get set up to receive events from Safepay.
+For reference on what the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}payment.succeeded event contains, see the .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Webhook structure and types](https://safepay-docs.netlify.app/developers/webhooks/webhook-types#payment-events) guide.
+
+```
+payment.succeeded
+```
+
+## [Mobile](https://safepay-docs.netlify.app/build-your-integration/express-checkout#mobile)
+[Mobile](https://safepay-docs.netlify.app/build-your-integration/express-checkout#mobile)
+For mobile, you may render the checkout session in a WebView. Note that when generating the checkout URL using the backend SDKs, you will need to set the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}source as .css-124rej3{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:600;}mobile.
+
+```
+source
+```
+
+To mimic redirection, you can observe changes to the checkout URL and close the Webview on success or cancellation. The paths to observe are as follows:
+
+```
+/external/complete
+```
+
+[https://sandbox.api.getsafepay.com/embedded/external/complete?environment=sandbox&](https://sandbox.api.getsafepay.com/embedded/external/complete?environment=sandbox&)
+
+```
+/external/error
+```
+
+[https://sandbox.api.getsafepay.com/embedded/external/error?environment=sandbox&](https://sandbox.api.getsafepay.com/embedded/external/error?environment=sandbox&)
+
+## [Payment errors and retries](https://safepay-docs.netlify.app/build-your-integration/express-checkout#payment-errors-and-retries)
+[Payment errors and retries](https://safepay-docs.netlify.app/build-your-integration/express-checkout#payment-errors-and-retries)
+If the payment encounters an error, the shopper can retry the payment on the Hosted Checkout page. You receive a webhook for each payment attempt. So, you can receive more than one webhook with the same .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}tracker.
+
+```
+tracker
+```
+
+For reference on what the .css-17773jm{font-weight:400;font-size:0.8125rem;line-height:130%;letter-spacing:-0.003rem;display:inline-block;background-color:var(--sfpy-theme-background-subtle);border:1px solid var(--sfpy-theme-border-default);border-radius:6px;padding:2px 4px;border-color:var(--sfpy-theme-border-secondary);border-radius:4px;word-break:unset;}payment.failed event contains, see the .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Webhook structure and types](https://safepay-docs.netlify.app/developers/webhooks/webhook-types#payment-events) guide.
+
+```
+payment.failed
+```
+
+## [Expiration](https://safepay-docs.netlify.app/build-your-integration/express-checkout#expiration)
+[Expiration](https://safepay-docs.netlify.app/build-your-integration/express-checkout#expiration)
+The Hosted Checkout page expires after the authentication token expires. A single authentication token lasts for 1 hour. In case the authentication token expires, we prompt the shopper to return back to your store and restart the checkout process.
+
+## [Test and go live](https://safepay-docs.netlify.app/build-your-integration/express-checkout#test-and-go-live)
+
+[Test and go live](https://safepay-docs.netlify.app/build-your-integration/express-checkout#test-and-go-live)
+Before going live, use our list of .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[test cards](https://safepay-docs.netlify.app/developers/safepay/test-cards) to test your integration. We recommend testing each payment method that you intend to offer to your shoppers. The test cards we have provided allow you test the following important scenarios:
+- Frictionless authentication (both successful and unsuccessful)
+- Step Up authentication (both successful and unsuccessful)
+- Time outs
+You can check the test payments in your Dashboard, under the .css-124rej3{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:600;}Payments > Payments 2.0 tab.
+When you are ready to go live, you need to:
+1. .css-1c81rgr{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;color:var(--sfpy-theme-text-link);font-weight:400;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;-webkit-transition:200ms;transition:200ms;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}.css-1c81rgr:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}.css-1c81rgr:visited{color:var(--sfpy-theme-text-link);}.css-1c81rgr:hover{-webkit-text-decoration:underline;text-decoration:underline;}.css-1c81rgr:hover code{-webkit-text-decoration:inherit;text-decoration:inherit;}.css-1c81rgr span,.css-1c81rgr code,.css-1c81rgr strong,.css-1c81rgr em,.css-1c81rgr b,.css-1c81rgr i{color:var(--sfpy-theme-text-link);}[Apply for a live account](https://getsafepay.com/dashboard/signup).
+2. Submit a request to add payment methods on your live account.
+3. Switch from test to our live endpoints.
+[Apply for a live account](https://getsafepay.com/dashboard/signup)
+[.css-56t1q0{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-secondary);}Previous (Get started).css-1rpw1wv{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:500;}.css-1rpw1wv strong{word-break:break-word;}Introduction](https://safepay-docs.netlify.app/build-your-integration/overview)
+Previous (Get started)
+Introduction
+[.css-56t1q0{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.8125rem;line-height:1.6153846;letter-spacing:-0.003rem;color:var(--sfpy-theme-text-secondary);}Next (Get started - Advanced checkout).css-1rpw1wv{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:500;}.css-1rpw1wv strong{word-break:break-word;}Introduction](https://safepay-docs.netlify.app/build-your-integration/advanced-checkout/introduction)
+Next (Get started - Advanced checkout)
+Introduction
+Was this doc helpful?
+- .css-1maw07k{cursor:pointer;-webkit-text-decoration:none;text-decoration:none;}.css-1maw07k:hover{-webkit-transition:100ms;transition:100ms;opacity:0.8;}[.css-1s9wmpz{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;color:var(--sfpy-theme-text-secondary);}Share your feedback](https://safepay-docs.netlify.app/build-your-integration/express-checkout)
+
+## [Test and go live](https://safepay-docs.netlify.app/build-your-integration/express-checkout#test-and-go-live)
+
+- [Edit this page](https://github.com/getsafepay/safepay-docs/edit/main/pages/build-your-integration/express-checkout.mdx)
+[.css-1s9wmpz{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;color:var(--sfpy-theme-text-secondary);}Share your feedback](https://safepay-docs.netlify.app/build-your-integration/express-checkout)
+Share your feedback
+[Edit this page](https://github.com/getsafepay/safepay-docs/edit/main/pages/build-your-integration/express-checkout.mdx)
+Edit this page
+On this page
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}How it works](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#how-it-works)
+How it works
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Before you begin](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#before-you-begin)
+Before you begin
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Integration steps](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#integration-steps)
+Integration steps
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Install an API library](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#install-an-api-library)
+Install an API library
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Optional - Prefill customer details](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#optional---prefill-customer-details)
+Optional - Prefill customer details
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Create a payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#create-a-payment-session)
+Create a payment session
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Create an authentication token](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#create-an-authentication-token)
+Create an authentication token
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Generate the Checkout URL](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#generate-the-checkout-url)
+Generate the Checkout URL
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Get the outcome](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#get-the-outcome)
+Get the outcome
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}1. Show the result of the payment session](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#1-show-the-result-of-the-payment-session)
+1. Show the result of the payment session
+
+## [Test and go live](https://safepay-docs.netlify.app/build-your-integration/express-checkout#test-and-go-live)
+
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}2. Update your order management system](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#2-update-your-order-management-system)
+2. Update your order management system
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Mobile](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#mobile)
+Mobile
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Payment errors and retries](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#payment-errors-and-retries)
+Payment errors and retries
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Expiration](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#expiration)
+Expiration
+[.css-zuh2h4{font-weight:400;font-size:1rem;line-height:1.625;letter-spacing:-0.011rem;color:var(--sfpy-theme-text-default);font-weight:400;font-size:0.875rem;line-height:1.5714286;letter-spacing:-0.006rem;}Test and go live](https://safepay-docs.netlify.app/build-your-integration/express-checkout/#test-and-go-live)
+Test and go live
