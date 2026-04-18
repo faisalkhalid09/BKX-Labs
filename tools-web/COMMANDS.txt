@@ -1,0 +1,51 @@
+# ════════════════════════════════════════════════════════
+# BKX Labs — Manual Commands for Deployment Fix
+# Copy and paste these commands one at a time on your VPS
+# ════════════════════════════════════════════════════════
+
+# Step 1: Navigate to tools-web directory
+cd /var/www/BKX-Labs/tools-web
+
+# Step 2: Build Next.js for production
+npm run build
+
+# Step 3: Stop current PM2 process
+pm2 stop tools-web
+
+# Step 4: Delete the process
+pm2 delete tools-web
+
+# Step 5: Start fresh with PM2
+pm2 start npm --name "tools-web" -- start
+
+# Step 6: Save PM2 config
+pm2 save
+
+# Step 7: Test nginx configuration
+sudo nginx -t
+
+# Step 8: Reload nginx
+sudo systemctl reload nginx
+
+# Step 9: Check if Node is running
+ps aux | grep node
+
+# Step 10: Check if port 3000 is listening
+sudo netstat -tlnp | grep 3000
+
+# Step 11: Check nginx status
+sudo systemctl status nginx
+
+# Step 12: View PM2 process list
+pm2 list
+
+# Step 13: View PM2 logs (press Q to exit)
+pm2 logs tools-web
+
+# Step 14: Test the endpoint
+curl https://bkxlabs.com/tools
+
+# ════════════════════════════════════════════════════════
+# If everything shows ✅ - you're done!
+# If not, check the logs above for errors
+# ════════════════════════════════════════════════════════
