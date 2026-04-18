@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #f8f8f6;
+  --ink: #161a1d;
+  --muted-ink: #4f565c;
+  --line: #d4d9de;
+  --card: #ffffff;
+  --accent: #105da8;
+  --ad-bg: #eef2f6;
+  --anchor-height: 84px;
+  --sidebar-ad-width: 180px;
+  --sidebar-ad-height: 600px;
+  --mid-ad-height: 280px;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, #edf3fb 0%, rgba(237, 243, 251, 0) 52%),
+    linear-gradient(180deg, #fbfbf9 0%, #f3f5f7 100%);
+  color: var(--ink);
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.site-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding-bottom: calc(var(--anchor-height) + 12px);
+}
+
+.site-header,
+.site-footer {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 18px 20px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-mark {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.header-note {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted-ink);
+}
+
+.content-wrap {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 14px 20px 24px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  color: var(--muted-ink);
+  font-size: 0.88rem;
+}
+
+.tool-shell {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.tool-main {
+  min-width: 0;
+}
+
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(14, 23, 34, 0.04);
+}
+
+.aeo-direct-answer {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f6f9fc;
+  padding: 12px 14px;
+}
+
+.aeo-direct-answer h2 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-ink);
+}
+
+.aeo-direct-answer p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.ad-sidebar {
+  display: none;
+}
+
+.ad-slot {
+  width: 100%;
+  border: 1px dashed #b2bfcb;
+  border-radius: 12px;
+  background: var(--ad-bg);
+  color: #435568;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ad-slot.sidebar {
+  width: var(--sidebar-ad-width);
+  height: var(--sidebar-ad-height);
+}
+
+.ad-slot.mid {
+  min-height: var(--mid-ad-height);
+  margin-top: 14px;
+}
+
+.anchor-ad-slot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--anchor-height);
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(248, 248, 246, 0.95);
+  backdrop-filter: blur(2px);
+  border-top: 1px solid var(--line);
+  z-index: 40;
+}
+
+.ad-slot-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  height: 100%;
+  border: 1px dashed #b2bfcb;
+  border-radius: 10px;
+  background: var(--ad-bg);
+  color: #435568;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+}
+
+.faq-area {
+  margin-top: 14px;
+  background: #fbfcfd;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.faq-area h3 {
+  margin: 0 0 8px;
+}
+
+.faq-area dt {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.faq-area dd {
+  margin: 2px 0 0;
+  color: var(--muted-ink);
+}
+
+.offerwall-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 27, 34, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  padding: 16px;
+}
+
+.offerwall-card {
+  width: min(520px, 100%);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.offerwall-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.field-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tool-result {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #f9fbfd;
+}
+
+@media (min-width: 1200px) {
+  .tool-shell {
+    grid-template-columns: var(--sidebar-ad-width) minmax(0, 1fr) var(--sidebar-ad-width);
+  }
+
+  .ad-sidebar {
+    display: block;
+    position: sticky;
+    top: 96px;
+  }
+}
