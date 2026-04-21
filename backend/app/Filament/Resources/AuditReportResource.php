@@ -38,7 +38,7 @@ class AuditReportResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            \Filament\Schemas\Components\Section::make('Project Metadata')
+            Components\Section::make('Project Metadata')
                 ->description('The clinical data for the project.')
                 ->schema([
                     Components\TextInput::make('client_name')
@@ -60,7 +60,7 @@ class AuditReportResource extends Resource
                         ->columnSpanFull(),
                 ])->columns(2),
 
-            \Filament\Schemas\Components\Section::make('The "Vital Signs" (Scores 1-100)')
+            Components\Section::make('The "Vital Signs" (Scores 1-100)')
                 ->description('Health scores that drive the radial gauges.')
                 ->schema([
                     Components\TextInput::make('security_score')
@@ -86,7 +86,7 @@ class AuditReportResource extends Resource
                         ->suffix('%'),
                 ])->columns(3),
 
-            \Filament\Schemas\Components\Section::make('Forensic Findings')
+            Components\Section::make('Forensic Findings')
                 ->description('Detailed analysis of the codebase.')
                 ->schema([
                     Components\RichEditor::make('critical_vulnerabilities')
@@ -103,7 +103,7 @@ class AuditReportResource extends Resource
                         ->columnSpanFull(),
                 ]),
 
-            \Filament\Schemas\Components\Section::make('Technical Metrics (Page 4 Graphs)')
+            Components\Section::make('Technical Metrics (Page 4 Graphs)')
                 ->description('Data points for Current vs Optimized state.')
                 ->schema([
                     Components\TextInput::make('current_cpu')->label('Current CPU Usage (%)')->numeric()->default(80),
@@ -112,7 +112,7 @@ class AuditReportResource extends Resource
                     Components\TextInput::make('optimized_memory')->label('Target Memory Usage (%)')->numeric()->default(30),
                 ])->columns(2),
 
-            \Filament\Schemas\Components\Section::make('The Rescue Roadmap')
+            Components\Section::make('The Rescue Roadmap')
                 ->description('The path to recovery.')
                 ->schema([
                     Components\TextInput::make('phase_1_duration')
@@ -140,7 +140,7 @@ class AuditReportResource extends Resource
                         ->required(),
                 ])->columns(2),
 
-            \Filament\Schemas\Components\Section::make('Decision & Closing')
+            Components\Section::make('Decision & Closing')
                 ->schema([
                     Components\Select::make('status_verdict')
                         ->options([
