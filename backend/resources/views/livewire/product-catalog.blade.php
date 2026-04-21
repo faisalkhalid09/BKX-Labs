@@ -123,9 +123,8 @@
             {{ $products->links() }}
         </div>
     @endif
-</div>
 
-<style>
+    <style>
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     
@@ -226,4 +225,5 @@
         0% { background-position: 0% 50%; }
         100% { background-position: 200% 50%; }
     }
-</style>
+    </style>
+</div>
