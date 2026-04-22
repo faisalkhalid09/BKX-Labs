@@ -46,7 +46,7 @@ export function generateToolMetadata(slug: string) {
     name: tool.title,
     description: tool.description,
     url: toolUrl,
-    applicationCategory: 'DeveloperApplication',
+    applicationCategory: slug === 'eu-ai-act-risk-level-classifier' ? 'BusinessApplication' : 'DeveloperApplication',
     operatingSystem: 'Web',
     creator: {
       '@type': 'Organization',

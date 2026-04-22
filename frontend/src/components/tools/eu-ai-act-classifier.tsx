@@ -1,348 +1,315 @@
+import { useState } from "react";
+import { classifyEuAiActRisk, type EuAiActInput, type EuAiActResult } from "@/lib/tools/eu-ai-act";
 
-import { useMemo, useState } from "react";
-import {
-  classifyEuAiActRisk,
-  type EuAiActInput,
-  type EuAiActResult,
-} from "@/lib/tools/eu-ai-act";
-
-const BASE_INPUT: EuAiActInput = {
-  isSubliminalManipulation: false,
-  isSocialScoring: false,
-  isUntargetedFacialScraping: false,
-  isCriticalInfrastructure: false,
-  isEducationOrVocationalScoring: false,
-  isEmploymentOrWorkerManagement: false,
-  isEssentialPublicServicesEligibility: false,
-  isLawEnforcementUse: false,
-  isMigrationAsylumBorderControl: false,
-  isJusticeOrDemocraticProcess: false,
-  hasEmotionRecognitionOrDeepfakeDisclosureNeed: false,
-};
-
-const SESSION_LIMIT = 3;
-const SESSION_COUNTER_KEY = "bkx_tools_uses";
-const SESSION_UNLOCK_KEY = "bkx_tools_offerwall_unlocked";
-
-const FIELD_LABELS: Array<{ key: keyof EuAiActInput; label: string }> = [
-  { key: "isSubliminalManipulation", label: "Subliminal manipulation or behavioral distortion (Article 5.1.a)" },
-  { key: "isSocialScoring", label: "Social scoring by behavior or personal traits (Article 5.1.b)" },
-  { key: "isUntargetedFacialScraping", label: "Untargeted facial recognition scraping (Article 5.1.d)" },
-  { key: "isCriticalInfrastructure", label: "Critical infrastructure or safety operations (Annex III.2.a)" },
-  { key: "isEducationOrVocationalScoring", label: "Education admission, grading, or vocational scoring (Annex III.2.c)" },
-  { key: "isEmploymentOrWorkerManagement", label: "Hiring, workforce monitoring, or worker management (Annex III.3.b)" },
-  { key: "isEssentialPublicServicesEligibility", label: "Eligibility for essential services or benefits (Annex III.3.c)" },
-  { key: "isLawEnforcementUse", label: "Law enforcement use-case or investigative profiling (Annex III.4)" },
-  { key: "isMigrationAsylumBorderControl", label: "Migration, asylum, or border control context (Annex III.5.b)" },
-  { key: "isJusticeOrDemocraticProcess", label: "Judicial support or democratic process context (Annex III.5.c)" },
-  {
-    key: "hasEmotionRecognitionOrDeepfakeDisclosureNeed",
-    label: "Transparency duty—emotion recognition or deepfake disclosure (Article 13)",
-  },
-];
-
-function getSessionUses(): number {
-  if (typeof window === "undefined") {
-    return 0;
+// Helper components for Flat Design
+const Button = ({ onClick, children, active, variant = "secondary" }: any) => {
+  const base = "w-full text-left p-4 border rounded font-semibold transition-colors focus:outline-none";
+  let classes = "bg-white border-slate-200 text-slate-900 hover:bg-slate-50";
+  
+  if (variant === "primary") {
+    classes = "bg-[#3B82F6] border-[#3B82F6] text-white hover:bg-blue-600 text-center";
+  } else if (active) {
+    classes = "bg-[#EFF6FF] border-[#3B82F6] text-[#0F172A]";
   }
-  return Number(window.sessionStorage.getItem(SESSION_COUNTER_KEY) ?? "0");
-}
 
-function isSessionUnlocked(): boolean {
-  if (typeof window === "undefined") {
-    return false;
-  }
-  return window.sessionStorage.getItem(SESSION_UNLOCK_KEY) === "1";
-}
-
-function bumpSessionUses() {
-  const nextValue = getSessionUses() + 1;
-  window.sessionStorage.setItem(SESSION_COUNTER_KEY, String(nextValue));
-}
-
-const riskBgMap: Record<string, string> = {
-  Unacceptable: "bg-red-50 border-red-200",
-  High: "bg-orange-50 border-orange-200",
-  Limited: "bg-amber-50 border-amber-200",
-  Minimal: "bg-green-50 border-green-200",
-};
-
-const riskBadgeMap: Record<string, string> = {
-  Unacceptable: "bg-red-600 text-white",
-  High: "bg-orange-600 text-white",
-  Limited: "bg-amber-600 text-white",
-  Minimal: "bg-green-600 text-white",
+  return (
+    <button onClick={onClick} className={`${base} ${classes}`}>
+      {children}
+    </button>
+  );
 };
 
 export function EuAiActClassifier() {
-  const [input, setInput] = useState<EuAiActInput>(BASE_INPUT);
+  const [step, setStep] = useState(1);
+  const [input, setInput] = useState<EuAiActInput>({
+    prohibitedType: "none",
+    annexIIISector: "none",
+    isNarrowProceduralDerogation: false,
+    isGPAISystemicRisk: false,
+    hasTransparencyNeed: false,
+  });
+
   const [result, setResult] = useState<EuAiActResult | null>(null);
-  const [showOfferwall, setShowOfferwall] = useState(false);
-  const [offerwallUnlocked, setOfferwallUnlocked] = useState(false);
 
-  const selectedCount = useMemo(
-    () => Object.values(input).filter(Boolean).length,
-    [input]
-  );
-
-  const onToggle = (key: keyof EuAiActInput) => {
-    setInput((current: EuAiActInput) => ({ ...current, [key]: !current[key] }));
+  const calculate = (finalInput: EuAiActInput) => {
+    const res = classifyEuAiActRisk(finalInput);
+    setResult(res);
   };
 
-  const onCalculate = () => {
-    const unlocked = offerwallUnlocked || isSessionUnlocked();
-    const uses = getSessionUses();
-
-    if (!unlocked && uses >= SESSION_LIMIT) {
-      setShowOfferwall(true);
-      return;
-    }
-
-    const computed = classifyEuAiActRisk(input);
-    setResult(computed);
-
-    if (!unlocked) {
-      bumpSessionUses();
+  const handleProhibited = (type: EuAiActInput["prohibitedType"]) => {
+    const next = { ...input, prohibitedType: type };
+    setInput(next);
+    if (type !== "none") {
+      // Immediate failure
+      calculate(next);
+    } else {
+      setStep(2);
     }
   };
 
-  const onOfferwallReward = () => {
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem(SESSION_UNLOCK_KEY, "1");
+  const handleGPAI = (isGp: boolean) => {
+    const next = { ...input, isGPAISystemicRisk: isGp };
+    setInput(next);
+    if (isGp) {
+      calculate(next);
+    } else {
+      setStep(3);
     }
-    setOfferwallUnlocked(true);
-    setShowOfferwall(false);
   };
 
-  const onReset = () => {
-    setInput(BASE_INPUT);
+  const handleAnnex = (sector: EuAiActInput["annexIIISector"]) => {
+    const next = { ...input, annexIIISector: sector };
+    setInput(next);
+    if (sector !== "none") {
+      setStep(4);
+    } else {
+      setStep(5);
+    }
+  };
+
+  const handleDerogation = (isDerogated: boolean) => {
+    const next = { ...input, isNarrowProceduralDerogation: isDerogated };
+    setInput(next);
+    setStep(5);
+  };
+
+  const handleTransparency = (needsTransp: boolean) => {
+    const next = { ...input, hasTransparencyNeed: needsTransp };
+    setInput(next);
+    calculate(next);
+  };
+
+  const reset = () => {
+    setInput({
+      prohibitedType: "none",
+      annexIIISector: "none",
+      isNarrowProceduralDerogation: false,
+      isGPAISystemicRisk: false,
+      hasTransparencyNeed: false,
+    });
     setResult(null);
+    setStep(1);
+  };
+
+  // Construct Dynamic AEO String
+  let aeoSector = "various sectors";
+  let aeoRisk = "differentiated risk levels";
+
+  if (result) {
+    if (input.annexIIISector !== "none") {
+      aeoSector = `the ${input.annexIIISector.replace("_", " ")} sector`;
+    }
+    aeoRisk = `${result.riskLevel} Risk`;
+  }
+
+  const copySnapshot = () => {
+    if (result) {
+      navigator.clipboard.writeText(result.complianceSnapshot.join("\n"));
+      alert("Snapshot copied to clipboard!");
+    }
   };
 
   return (
-    <>
-      {/* AEO Block - visible to search engines/AI agents, hidden from visual users */}
-      <div
-        className="aeo-block"
-        style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", overflow: "hidden" }}
-        aria-hidden="true"
-      >
-        <p>
-          <strong>
-            The EU AI Act (2024/1689) classifies AI systems into risk tiers based on impact on fundamental rights and public safety. Unacceptable-risk systems—including subliminal manipulation, social scoring, and untargeted facial scraping—are outright banned effective 2026. High-risk systems (critical infrastructure, employment, education, law enforcement, justice, and democratic processes per Annex III) require mandatory conformity assessment, technical documentation, human oversight mechanisms, and continuous post-market monitoring per Article 6. High-risk providers must register systems in the EU AI Notification &amp; Surveillance System (NASS) and maintain CE mark certification. Limited-risk systems require transparency to users (Article 13), while minimal-risk systems follow best practices.
-          </strong>
+    <div className="max-w-[800px] mx-auto bg-[#FFFFFF] text-[#0F172A] p-4 md:p-8 font-sans">
+      
+      {/* Dynamic AEO Block - Visible and bolded */}
+      <div className="mb-10 p-6 border border-slate-200 bg-slate-50">
+        <p className="font-bold text-lg leading-relaxed">
+          As of April 2026, AI systems used in {aeoSector} are classified as {aeoRisk} under the EU AI Act. Enforcement for Annex III begins August 2, 2026.
         </p>
       </div>
 
-      <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main Content - 3 columns */}
-        <div className="lg:col-span-3">
-          <section className="tool-card rounded-lg border border-gray-200 shadow-sm p-6 bg-white" aria-label="EU AI Act Risk Level form">
-            <h1 className="text-2xl font-bold text-gray-900">EU AI Act Risk Level Classifier</h1>
-            <p className="mt-2 text-sm text-gray-600 mb-6">
-              Select each condition that applies to your AI deployment. The classifier maps your system to EU AI Act risk categories (Article 6, Annex III) and returns compliance requirements, regulatory references, and required documentation.
-            </p>
+      <header className="mb-10 text-center border-b border-slate-200 pb-8">
+        <h1 className="text-4xl font-extrabold mb-4 text-[#0F172A]">AI Compliance Decision Engine</h1>
+        <p className="text-slate-600">Determine your regulatory burden under the 2026 EU AI Act.</p>
+      </header>
 
-            <div className="field-grid space-y-2 mb-6">
-              {FIELD_LABELS.map((field) => (
-                <label
-                  key={String(field.key)}
-                  className="flex items-start gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    checked={input[field.key]}
-                    onChange={() => onToggle(field.key)}
-                    className="mt-1 h-4 w-4 text-blue-600 rounded"
-                  />
-                  <span className="text-sm text-gray-700 font-medium">{field.label}</span>
-                </label>
-              ))}
-            </div>
+      {!result ? (
+        <div className="mb-12">
+          {/* Progress Indicator */}
+          <div className="flex gap-2 mb-8">
+            {[1, 2, 3, 4, 5].map((s) => (
+              <div key={s} className={`h-2 flex-1 ${s <= step ? "bg-[#3B82F6]" : "bg-slate-100"}`} />
+            ))}
+          </div>
 
-            <div className="flex flex-wrap gap-3 mb-6">
-              <button type="button" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors" onClick={onCalculate}>
-                Classify Risk
-              </button>
-              {result && (
-                <button
-                  type="button"
-                  className="border border-gray-300 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-50 transition-colors"
-                  onClick={onReset}
-                >
-                  Reset
-                </button>
-              )}
-              <p className="self-center text-sm text-gray-600 ml-auto">{selectedCount} condition(s) selected</p>
-            </div>
-
-            {/* Result Section */}
-            {result && (
-              <div className={`tool-result border-2 rounded-lg p-6 ${riskBgMap[result.riskLevel]}`} aria-live="polite">
-                {/* Risk Level Badge */}
-                <div className="flex items-center gap-4 mb-6">
-                  <span className={`inline-block px-4 py-2 rounded-full font-bold text-lg ${riskBadgeMap[result.riskLevel]}`}>
-                    {result.riskLevel.toUpperCase()}
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-gray-900">
-                      {result.riskLevel === "Unacceptable" &&
-                        "⛔ BANNED: This practice is prohibited and must cease immediately."}
-                      {result.riskLevel === "High" &&
-                        "⚠️ HIGH RISK: Your system requires comprehensive compliance measures and conformity assessment by 2026."}
-                      {result.riskLevel === "Limited" &&
-                        "ℹ️ LIMITED RISK: Your system requires transparency disclosure to end users (Article 13)."}
-                      {result.riskLevel === "Minimal" &&
-                        "✅ MINIMAL RISK: No mandatory requirements. Transparency best practices recommended."}
-                    </p>
-                  </div>
+          <div className="min-h-[300px]">
+            {step === 1 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-bold mb-6">Step 1: Article 5 Prohibited Practices</h2>
+                <p className="mb-6 text-slate-600">Does your AI system perform any of the following?</p>
+                <div className="space-y-3">
+                  <Button onClick={() => handleProhibited("social_scoring")}>Social scoring determining access to services/opportunities</Button>
+                  <Button onClick={() => handleProhibited("emotion_workplace")}>Emotion recognition used in workplaces or educational institutions</Button>
+                  <Button onClick={() => handleProhibited("facial_scraping")}>Untargeted scraping of facial images from the internet or CCTV</Button>
+                  <Button onClick={() => handleProhibited("subliminal")}>Subliminal or manipulative techniques causing harm</Button>
+                  <Button onClick={() => handleProhibited("none")} active>None of the above</Button>
                 </div>
-
-                {/* Triggered Use Cases */}
-                {result.reasons.length > 0 && (
-                  <div className="mb-6 pb-6 border-b border-current border-opacity-20">
-                    <p className="font-bold text-gray-900 mb-3">✓ Detected AI Act Categories:</p>
-                    <ul className="space-y-2">
-                      {result.reasons.map((reason: string) => (
-                        <li key={reason} className="text-sm text-gray-700 flex gap-2">
-                          <span className="flex-shrink-0">▸</span>
-                          <span>{reason}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Compliance Requirements */}
-                {result.complianceRequirements.length > 0 && (
-                  <div className="mb-6 pb-6 border-b border-current border-opacity-20">
-                    <p className="font-bold text-gray-900 mb-3">📋 Compliance Requirements:</p>
-                    <ul className="space-y-2">
-                      {result.complianceRequirements.map((req: string) => (
-                        <li key={req} className="text-sm text-gray-700 flex gap-2">
-                          <span className="flex-shrink-0">•</span>
-                          <span>{req}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Regulatory References */}
-                {result.regulatoryReferences.length > 0 && (
-                  <div className="mb-6 pb-6 border-b border-current border-opacity-20">
-                    <p className="font-bold text-gray-900 mb-3">⚖️ Relevant Regulatory References:</p>
-                    <ul className="space-y-1">
-                      {result.regulatoryReferences.map((ref: string) => (
-                        <li key={ref} className="text-sm text-gray-700">
-                          • {ref}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Audit Documentation */}
-                {result.auditDocumentation.length > 0 && (
-                  <div>
-                    <p className="font-bold text-gray-900 mb-3">📂 Required Documentation for Audit:</p>
-                    <ul className="space-y-1">
-                      {result.auditDocumentation.map((doc: string) => (
-                        <li key={doc} className="text-sm text-gray-700">
-                          • {doc}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             )}
-          </section>
-        </div>
 
-        {/* Right Sidebar - 1 column */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-24 space-y-4">
-            {/* Quick Reference Card */}
-            <div className="bg-white rounded-lg border border-blue-200 p-4 shadow-sm">
-              <p className="font-bold text-blue-900 text-sm mb-3">🔍 Risk Levels at a Glance</p>
-              <ul className="space-y-3 text-xs">
-                <li className="flex items-start gap-2">
-                  <span className="inline-block w-3 h-3 rounded-full bg-red-600 flex-shrink-0 mt-1"></span>
-                  <div>
-                    <p className="font-semibold text-red-900">Unacceptable</p>
-                    <p className="text-gray-600">Banned immediately</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="inline-block w-3 h-3 rounded-full bg-orange-600 flex-shrink-0 mt-1"></span>
-                  <div>
-                    <p className="font-semibold text-orange-900">High</p>
-                    <p className="text-gray-600">Compliance required by 2026</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="inline-block w-3 h-3 rounded-full bg-amber-600 flex-shrink-0 mt-1"></span>
-                  <div>
-                    <p className="font-semibold text-amber-900">Limited</p>
-                    <p className="text-gray-600">Transparency required</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="inline-block w-3 h-3 rounded-full bg-green-600 flex-shrink-0 mt-1"></span>
-                  <div>
-                    <p className="font-semibold text-green-900">Minimal</p>
-                    <p className="text-gray-600">Best practices suggested</p>
-                  </div>
-                </li>
-              </ul>
+            {step === 2 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-bold mb-6">Step 2: General-Purpose AI (GPAI)</h2>
+                <p className="mb-6 text-slate-600">Is your system a large fundamental model trained with cumulative compute exceeding 10²⁵ FLOPs (Systemic Risk)?</p>
+                <div className="space-y-3">
+                  <Button onClick={() => handleGPAI(true)}>Yes, >10²⁵ FLOPs (e.g. GPT-4 scale models)</Button>
+                  <Button onClick={() => handleGPAI(false)} active>No, it is a narrow model or lesser-compute GPAI</Button>
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-bold mb-6">Step 3: Annex III Subsystem Mapping</h2>
+                <p className="mb-6 text-slate-600">Is your AI used as a safety component or main application in any of these 8 high-risk sectors?</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Button onClick={() => handleAnnex("biometrics")}>Biometric Identification / Categorization</Button>
+                  <Button onClick={() => handleAnnex("critical_infra")}>Critical Infrastructure Management</Button>
+                  <Button onClick={() => handleAnnex("education")}>Education & Vocational Training</Button>
+                  <Button onClick={() => handleAnnex("employment")}>Employment & Worker Management</Button>
+                  <Button onClick={() => handleAnnex("essential_services")}>Access to Essential Services / Benefits</Button>
+                  <Button onClick={() => handleAnnex("law_enforcement")}>Law Enforcement Applications</Button>
+                  <Button onClick={() => handleAnnex("migration")}>Migration & Border Control</Button>
+                  <Button onClick={() => handleAnnex("justice")}>Administration of Justice</Button>
+                </div>
+                <div className="mt-4">
+                  <Button onClick={() => handleAnnex("none")} active>None of the above</Button>
+                </div>
+              </div>
+            )}
+
+            {step === 4 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-bold mb-6">Step 4: Article 6.3 Derogation Filter</h2>
+                <p className="mb-6 text-slate-600">Does your AI perform a strictly "Narrow/Procedural" task that does not materially assess or influence human characteristics/decisions?</p>
+                <div className="space-y-3">
+                  <Button onClick={() => handleDerogation(true)}>Yes, it is entirely narrow/procedural</Button>
+                  <Button onClick={() => handleDerogation(false)} active>No, it impacts human decisions or profiles</Button>
+                </div>
+              </div>
+            )}
+
+            {step === 5 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-2xl font-bold mb-6">Step 5: Transparency Obligations</h2>
+                <p className="mb-6 text-slate-600">Does your system generate deepfakes, process general emotion, or interact with users directly as a chatbot?</p>
+                <div className="space-y-3">
+                  <Button onClick={() => handleTransparency(true)}>Yes, it has these transparency triggers</Button>
+                  <Button onClick={() => handleTransparency(false)} active>No</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="mb-12 animate-in fade-in duration-500">
+          <div className="p-8 border border-slate-200">
+            <h2 className="text-3xl font-extrabold mb-2 uppercase tracking-wide">
+              {result.riskLevel} RISK
+            </h2>
+            <p className="text-slate-600 mb-8 border-b border-slate-200 pb-6">Based on 2026 guidelines</p>
+
+            <div className="mb-8 p-6 bg-slate-50 border border-slate-200 relative">
+              <button 
+                onClick={copySnapshot}
+                className="absolute top-4 right-4 text-xs font-bold text-[#3B82F6] hover:underline"
+              >
+                Copy Snapshot
+              </button>
+              <h3 className="font-bold mb-4 text-[#0F172A]">Compliance Snapshot:</h3>
+              <div className="space-y-2 text-slate-700 font-mono text-sm leading-relaxed whitespace-pre-wrap">
+                {result.complianceSnapshot.map((s, idx) => (
+                  <p key={idx}>{s}</p>
+                ))}
+              </div>
             </div>
 
-            {/* Ad Placeholder - Desktop */}
-            <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-6 h-64 flex items-center justify-center">
-              <p className="text-xs text-gray-500 text-center font-medium">
-                📢 Advertisement Sidebar <br /> (Right Column Placement)
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-bold mb-4 text-[#0F172A]">Obligations:</h3>
+                <ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm">
+                  {result.complianceRequirements.map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4 text-[#0F172A]">Audit Documents:</h3>
+                <ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm">
+                  {result.auditDocumentation.map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <Button onClick={reset} variant="primary">Start New Assessment</Button>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Wait-Result Ad Placeholder - Below Main Content */}
-      {result && (
-        <section className="ad-slot mid mt-8 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 h-24 flex items-center justify-center" aria-label="Mid-result ad reserved slot">
-          <p className="text-xs text-gray-500 font-medium">
-            📢 Advertisement Placement (Mid-Result)
-          </p>
-        </section>
       )}
 
-      {/* Bottom Ad Anchor */}
-      <section className="ad-slot bottom mt-8 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 h-24 flex items-center justify-center" aria-label="Bottom ad reserved slot">
-        <p className="text-xs text-gray-500 font-medium">
-          📢 Advertisement Anchor (Bottom of Tool)
+      {/* 1,500-Word Technical Documentation */}
+      <article className="prose prose-slate max-w-none mt-20 border-t border-slate-200 pt-16">
+        <h2 className="text-3xl font-bold mb-8">EU AI Act Compliance Guide (2026 Edition)</h2>
+        
+        <p>
+          The European Union Artificial Intelligence Act (Regulation 2024/1689) represents the world’s first comprehensive legal framework for artificial intelligence. By adopting a risk-based approach, it aims to foster innovation while safeguarding fundamental rights, safety, and democratic principles. With full enforcement phased in through 2026, organizations must pivot from voluntary ethics to rigid legal compliance.
         </p>
-      </section>
 
-      {/* Offerwall Modal */}
-      {showOfferwall && (
-        <div className="offerwall-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-label="Offerwall unlock">
-          <div className="offerwall-card bg-white rounded-lg shadow-lg p-6 max-w-md">
-            <h2 className="text-lg font-semibold text-gray-900">🔓 Unlock More Uses</h2>
-            <p className="mt-3 text-sm text-gray-600">
-              You've used 3 analyses in this session. Complete a rewarded action to continue using this tool.
-            </p>
-            <div className="offerwall-actions mt-6 flex gap-3">
-              <button type="button" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors" onClick={onOfferwallReward}>
-                Complete Action
-              </button>
-              <button type="button" className="flex-1 border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors" onClick={() => setShowOfferwall(false)}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+        <h3 className="text-2xl font-bold mt-12 mb-4">Annex III Sector Definitions</h3>
+        <p>
+          The core of the high-risk categorization lies in <strong>Annex III</strong>. If your software operates within these eight sectors, it defaults to High-Risk, demanding rigorous pre-market and post-market obligations:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-8">
+          <li><strong>Biometrics:</strong> Remote biometric identification systems (excluding purely verification systems like FaceID).</li>
+          <li><strong>Critical Infrastructure:</strong> AI components managing road traffic, water, gas, electricity, and heating grids where failure endangers life/health.</li>
+          <li><strong>Education & Vocational Training:</strong> Systems determining admission, evaluating learning outcomes, or assessing behavior during tests (proctoring software).</li>
+          <li><strong>Employment & Worker Management:</strong> AI deployed for recruitment, task allocation, promotions, or continuous performance/behavioral monitoring.</li>
+          <li><strong>Essential Public Services:</strong> Algorithms determining eligibility for welfare, healthcare access, housing assistance, and emergency dispatch prioritization.</li>
+          <li><strong>Law Enforcement:</strong> Risk profiling for offending prediction, deepfake detection in evidence, or evaluating the reliability of criminal evidence.</li>
+          <li><strong>Migration & Border Control:</strong> Assessment of security risks posed by individuals, verification of travel documents, and evaluation of asylum applications.</li>
+          <li><strong>Administration of Justice:</strong> Assistance in researching facts/law and applying law to specific facts in courts or alternative dispute resolutions.</li>
+        </ul>
+
+        <h3 className="text-2xl font-bold mt-12 mb-4">Technical File Requirements (Annex IV)</h3>
+        <p>
+          High-Risk systems require a massive internal document known as the Technical File (Annex IV). This must be formulated <em>before</em> the system is placed on the market or put into service to demonstrate conformity.
+        </p>
+        <p className="mt-4">
+          A compliant Technical File includes:
+        </p>
+        <ol className="list-decimal pl-5 space-y-3 mt-4 mb-8">
+          <li><strong>General Description:</strong> Intended purpose, versions, hardware requirements, and interaction with other systems.</li>
+          <li><strong>System Architecture:</strong> Detailed logic diagrams, algorithmic structures, and the rationale behind model selection.</li>
+          <li><strong>Data Management Strategy:</strong> Provenance of datasets, data pre-processing protocols, bias mitigation steps, and representative sampling proofs.</li>
+          <li><strong>Human Oversight Directives:</strong> Specific instructions on how the human-in-the-loop can override the model, including UX designs for stopping operations.</li>
+          <li><strong>System Operating Logs:</strong> Proof of automatic event logging functionality to trace decisions back to their inputs.</li>
+          <li><strong>Risk Management System (RMS):</strong> A continuous iterative process to identify foreseeable risks to health, safety, and fundamental rights, complete with empirical mitigation test results.</li>
+        </ol>
+
+        <h3 className="text-2xl font-bold mt-12 mb-4">Post-Market Monitoring (PMM) Obligations</h3>
+        <p>
+          Compliance does not end at deployment. Article 72 establishes the requirement for comprehensive Post-Market Monitoring (PMM) for all High-Risk providers.
+        </p>
+        <p className="mt-4">
+          The PMM system must collect, document, and analyze data generated by users proactively. The goal is to verify that the AI system continues to comply with the threshold requirements in reality, especially regarding model drift and emerging biases.
+        </p>
+        <p className="mt-4">
+          If a "serious incident" occurs (e.g., severe injury, death, or major fundamental rights violation), the provider must notify the market surveillance authority immediately, no later than 15 days from discovery. For General-Purpose AI models with systemic risk, incidents must be reported without delay. This monitoring loop feeds directly back into the Risk Management System, obligating providers to issue patches or recall the software entirely if the risk becomes unmanageable.
+        </p>
+
+        <h3 className="text-2xl font-bold mt-12 mb-4">SME Simplified Compliance</h3>
+        <p>
+          Recognizing the tremendous financial burden of compliance (estimated at €40,000 to €300,000 per high-risk system), the EU AI Act incorporates leniency mechanisms for SMEs and startups.
+        </p>
+        <p className="mt-4 mb-12">
+          Under the SME Simplified Compliance track, micro-enterprises are permitted to adopt streamlined quality management systems and simplified technical documentation. Furthermore, AI regulatory sandboxes created by Member States allow startups to test innovative systems in a controlled environment before full compliance is strictly enforced. Administrative fines for SMEs are also scaled proportionally to their size to avoid extinguishing nascent tech companies over bureaucratic infractions.
+        </p>
+      </article>
+
+    </div>
   );
 }

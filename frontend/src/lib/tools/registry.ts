@@ -16,30 +16,33 @@ export const toolsRegistry: ToolDef[] = [
     },
     faqs: [
       {
-        question: "What changed in the EU AI Act 2.0 (2024/1689) vs. earlier drafts?",
-        answer:
-          "The 2024 consolidated text (Regulation 2024/1689) brings binding enforcement effective August 2025 (limited rules), with full High-Risk/Prohibited implementation by August 2026. Key changes: Annex III expanded to clarify biometric systems, social media recommendation algorithms, and real-time identification in gov spaces; Article 6 conformity assessment now distinguishes notified-body vs. in-house technical file pathways; NASS registration made mandatory; transition periods for pre-existing High-Risk systems; and Article 49 exemptions for law enforcement national security.",
+        question: "What are the prohibited AI practices under Article 5 of the EU AI Act?",
+        answer: "Article 5 bans AI systems posing an unacceptable risk starting February 2, 2025 (with full enforcement by 2026). This includes subliminal manipulation, biometric categorization using sensitive traits, social scoring, untargeted scraping of facial images, emotion recognition in the workplace/education, and predictive policing based solely on profiling."
       },
       {
-        question: "Do all AI systems need EU AI Act compliance assessment?",
-        answer:
-          "No. Only systems that: (1) carry Unacceptable or High risk per Annex III, or (2) have transparency triggers (emotion recognition, deepfakes). General-purpose LLMs and minimal-risk systems benefit from transparency but have no binding compliance burden. However, if your system serves an EU user, data subject, or entity, compliance is required regardless of where your company is based.",
+        question: "When does enforcement for Annex III High-Risk systems begin?",
+        answer: "The enforcement for Annex III high-risk AI systems (such as those used in employment, education, critical infrastructure, and law enforcement) begins on August 2, 2026. Providers must have their risk management systems and technical documentation fully compliant by this date."
       },
       {
-        question: "What's the penalty for deploying a prohibited practice after 2026?",
-        answer:
-          "Administrative fines up to €20 million or 4% of annual global turnover (whichever is higher) for Unacceptable-risk violations (Article 5). High-Risk non-compliance carries fines up to €15 million or 3% of global turnover. Progressive enforcement: EU AI Office began monitoring July 2024, with escalating penalties from 2026 onward.",
+        question: "What is an Article 6.3 derogation?",
+        answer: "Under Article 6.3, an AI system designated under Annex III can be exempted from high-risk classification if it performs a narrow, procedural task (like simple quality control) and does not materially influence the decision-making process involving human rights or safety. The provider must document this justification."
       },
       {
-        question: "How long does EU AI Act compliance typically take?",
-        answer:
-          "For High-Risk systems: 6–18 months (assessment, risk management plan, technical documentation, human-in-the-loop design, testing, NASS registration, CE mark). Smaller organizations or simpler use cases: 3–6 months. Limited-risk transparency: 1–3 months (disclosure templates, privacy notices). This classifier gives estimated effort per requirement.",
+        question: "How does the EU AI Act classify General-Purpose AI (GPAI)?",
+        answer: "GPAI models are analyzed separately from specific high-risk use cases. If a GPAI model was trained using cumulative compute power exceeding 10^25 FLOPs, it is classified as presenting systemic risk and is subject to stringent model evaluation, adversarial testing, and cybersecurity requirements."
       },
       {
-        question: "Can I use this classifier's output as legal evidence in an audit or enforcement action?",
-        answer:
-          "This tool is a fast screening framework, not a legal opinion. Your output is an internal engineering artifact. For regulatory evidence, pair this assessment with documented legal review, a formal privacy impact assessment (DPIA), ISO 42001 AI governance documentation, and compliance records signed by your Data Protection Officer or Legal team. If audited, provide this tool's output plus your remediation steps as supporting material.",
+        question: "Do SMEs get simplified compliance regarding technical documentation?",
+        answer: "Yes, micro-enterprises and specific SMEs may benefit from simplified technical documentation requirements and lower fines for infringements to prevent stifling innovation, though they must still adhere to core fundamental rights protections."
       },
+      {
+        question: "What are the penalties for deploying a prohibited practice or failing a High-Risk audit?",
+        answer: "Fines for prohibited practices (Article 5) can reach €35 million or 7% of absolute global annual turnover (whichever is higher). Non-compliance with High-Risk requirements can result in fines up to €15 million or 3% of global turnover."
+      },
+      {
+        question: "What is the EU AI Notification & Surveillance System (NASS)?",
+        answer: "NASS is the centralized database where providers of high-risk AI systems must register their models before placing them on the EU market. Registration involves submitting public technical summaries and conformity declarations."
+      }
     ],
   },
   {
