@@ -11,6 +11,8 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import PdfViewer from './pages/PdfViewer';
 import RezgoDemo from './pages/RezgoDemo';
+import ToolsIndex from './pages/ToolsIndex';
+import ToolDetail from './pages/ToolDetail';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
@@ -42,6 +44,8 @@ function App() {
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
+          <Route path="/tools" element={<ToolsIndex />} />
+          <Route path="/tools/:slug" element={<ToolDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
