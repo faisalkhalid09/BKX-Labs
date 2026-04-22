@@ -46,7 +46,7 @@ export function generateToolMetadata(slug: string) {
     name: tool.title,
     description: tool.description,
     url: toolUrl,
-    applicationCategory: slug === 'eu-ai-act-risk-level-classifier'
+    applicationCategory: slug === 'eu-ai-act-risk-level-classifier' || slug === 'saas-soc2-readiness-calculator'
       ? 'BusinessApplication'
       : slug === 'post-quantum-cbom-generator'
         ? 'SecurityApplication'

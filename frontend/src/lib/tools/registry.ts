@@ -104,20 +104,45 @@ export const toolsRegistry: ToolDef[] = [
     },
     faqs: [
       {
-        question: "What is SOC 2 compliance?",
-        answer:
-          "SOC 2 is a Trust Services Criteria audit standard (Type I or II) demonstrating that a SaaS company maintains secure systems with documented controls.",
+        question: "How much does SOC 2 Type II certification cost in 2026?",
+        answer: "Total SOC 2 Type II costs in 2026 range from $30,000 to $150,000 depending on scope. A mid-market SaaS company typically spends: $10,000–$40,000 on the CPA audit firm, $5,000–$20,000 on a readiness advisor, and $15,000–$60,000 on automation tooling (Drata, Vanta, Secureframe) for continuous evidence collection. Manual evidence programs cost 2–3x more than automated ones due to engineering overhead. This calculator's 'Automation Multiplier' score directly reflects your likely audit cost bracket."
       },
       {
-        question: "How long does SOC 2 certification take?",
-        answer:
-          "Typically 6–12 months from control implementation to audit completion, depending on control maturity and gaps.",
+        question: "What is the difference between SOC 2 Type I and SOC 2 Type II?",
+        answer: "SOC 2 Type I is a point-in-time assessment validating that your controls are suitably designed as of a single date. SOC 2 Type II covers a minimum observation period (typically 6–12 months), validating that controls are not only designed correctly but are operating effectively and continuously. As of 2026, enterprise buyers nearly universally require Type II reports, and the AICPA has issued guidance pushing towards Continuous Monitoring as the gold standard for Type II."
       },
       {
-        question: "Do I need all 6 controls to be SOC 2 compliant?",
-        answer:
-          "No; you implement controls based on your chosen trust categories. Most SaaS firms implement Security + Availability; others add Privacy or Confidentiality.",
+        question: "Can I bridge from ISO 27001 to SOC 2 without a full re-audit?",
+        answer: "Yes. ISO 27001 and SOC 2 share approximately 70% of control overlap, particularly across access management, incident response, and cryptographic controls. A bridge assessment typically maps existing ISO 27001 controls to SOC 2 Trust Services Criteria (TSC), identifying only the delta gaps (usually vendor risk CC9.2 and availability-specific controls). Most CPA firms offer combined ISO 27001 / SOC 2 audits at a 30–40% cost reduction versus two separate engagements."
       },
+      {
+        question: "What is Continuous Monitoring in SOC 2, and why does it matter in 2026?",
+        answer: "Continuous Monitoring means cryptographic evidence of control effectiveness is collected automatically and continuously — every day, not just during defined audit windows. In 2026, the AICPA's Attestation Standards Board (ASB) has signaled that auditors must now sample evidence from throughout the full observation period, not from a cherry-picked two-week window. Companies relying on manual screenshots taken in bulk before the audit frequently receive 'Qualified' (failed) opinions because auditors sample periods outside the evidence window."
+      },
+      {
+        question: "What are the most common reasons for SOC 2 audit failures in 2026?",
+        answer: "The top three reasons for 'Qualified' SOC 2 opinions in 2026 are: (1) CC9.2 Vendor Risk Management failures — no documented third-party security reviews for critical vendors; (2) CC6.1 Access Deprovisioning failures — terminated employee accounts not removed within SLA windows, discovered through HR-to-IT reconciliation testing; and (3) CC7.2 Monitoring gaps — SIEM alert logs showing detection latency exceeding defined thresholds. This calculator weights CC9.2 and CC6.1 at 25% of the total score because they account for the majority of audit exceptions."
+      },
+      {
+        question: "Which SOC 2 Trust Services Criteria (TSC) are mandatory?",
+        answer: "Only the Security (Common Criteria, CC series, CC1-CC9) is mandatory for any SOC 2 report. Availability, Confidentiality, Processing Integrity, and Privacy are optional add-on criteria selected based on your customer contractual commitments and the nature of the data processed. Most B2B SaaS companies include Security + Availability. Healthcare and financial technology companies typically add Confidentiality and Privacy. Adding optional categories increases audit scope and cost but signals a stronger compliance posture to enterprise buyers."
+      },
+      {
+        question: "What is CC9.2, and why is it the #1 audit failure point?",
+        answer: "CC9.2 (Vendor Risk Management) requires that the organization assess the security posture of all vendors who process or could impact the security of the entity's data. The 2026 AICPA interpretation extends this to 'fourth-party risk' — the security posture of your vendors' vendors. Auditors commonly find failures because companies perform one-time SOC 2 review of vendor reports but fail to monitor for expiry, new service additions, or subprocessor changes. The control requires an annual review cycle with documented evidence of completion."
+      },
+      {
+        question: "How long does it take to achieve SOC 2 Type II from scratch?",
+        answer: "The fastest documented track from zero to SOC 2 Type II report issuance is approximately 9 months: 3 months of control implementation and gap remediation, followed by 6 months of the minimum observation period. Companies with immature controls often require 12–18 months. Automated compliance platforms (Vanta, Drata) can compress the readiness phase to 6–8 weeks for cloud-native startups with infrastructure-as-code, because evidence is collected directly from cloud provider APIs rather than manual screenshots."
+      },
+      {
+        question: "What is the 'Automation Multiplier' in this SOC 2 readiness score?",
+        answer: "The Automation Multiplier reflects the observation that controls evidenced by automated, API-driven integrations are independently verifiable by auditors in real time, creating significantly stronger evidence than manually collected screenshots. In scoring terms, an automated control contributes 1.5x its base weight to your readiness score. A manual control carries a 'High Audit Overhead' warning — not because it fails the audit, but because manual evidence collection is a continuous engineering drain and is more likely to produce evidence gaps during an extended audit observation period."
+      },
+      {
+        question: "Does my startup need SOC 2 if we have fewer than 50 employees?",
+        answer: "SOC 2 is not legally mandated for any company size, but it is increasingly required by enterprise buyers as a procurement prerequisite. Approximately 78% of Fortune 500 procurement teams require a SOC 2 Type II report before signing SaaS contracts. For startups, the inflection point for the ROI of SOC 2 is typically when a single enterprise deal exceeds $50,000 ARR, as that deal value justifies the audit cost. Cloud-native startups using IaC and managed services can achieve SOC 2 readiness in under 90 days using automated compliance platforms."
+      }
     ],
   },
   {
