@@ -134,10 +134,6 @@ export function SaaSSoc2Calculator() {
       <h1 className="text-3xl font-extrabold text-slate-900 mb-2">SOC 2 Readiness Calculator</h1>
       <p className="text-slate-500 text-sm mb-10">2026 Continuous Monitoring Model · Automation Multiplier Scoring · CC9.2 &amp; CC6.1 Weighted</p>
 
-      {/* Fixed-height Ad Slot Top Banner (0 CLS) */}
-      <div className="w-full h-[90px] border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-xs mb-10 shrink-0">
-        [Ad — Top Banner 728×90]
-      </div>
 
       <div className={`transition-all ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
         {/* Live Gauge + Optional Categories */}
@@ -371,10 +367,7 @@ export function SaaSSoc2Calculator() {
           </div>
         )}
 
-        {/* Mid-result fixed-height ad slot (0 CLS) */}
-        <div className="w-full h-[250px] border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-400 text-xs mb-10 shrink-0">
-          [Ad — Mid Content 300×250]
-        </div>
+
       </div>
 
       {/* Offerwall */}
