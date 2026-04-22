@@ -7,6 +7,7 @@ use App\Models\AuditReport;
 use Filament\Forms\Components;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -38,7 +39,7 @@ class AuditReportResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Components\Section::make('Project Metadata')
+            Section::make('Project Metadata')
                 ->description('The clinical data for the project.')
                 ->schema([
                     Components\TextInput::make('client_name')
@@ -60,7 +61,7 @@ class AuditReportResource extends Resource
                         ->columnSpanFull(),
                 ])->columns(2),
 
-            Components\Section::make('The "Vital Signs" (Scores 1-100)')
+            Section::make('The "Vital Signs" (Scores 1-100)')
                 ->description('Health scores that drive the radial gauges.')
                 ->schema([
                     Components\TextInput::make('security_score')
@@ -86,7 +87,7 @@ class AuditReportResource extends Resource
                         ->suffix('%'),
                 ])->columns(3),
 
-            Components\Section::make('Forensic Findings')
+            Section::make('Forensic Findings')
                 ->description('Detailed analysis of the codebase.')
                 ->schema([
                     Components\RichEditor::make('critical_vulnerabilities')
@@ -103,7 +104,7 @@ class AuditReportResource extends Resource
                         ->columnSpanFull(),
                 ]),
 
-            Components\Section::make('Technical Metrics (Page 4 Graphs)')
+            Section::make('Technical Metrics (Page 4 Graphs)')
                 ->description('Data points for Current vs Optimized state.')
                 ->schema([
                     Components\TextInput::make('current_cpu')->label('Current CPU Usage (%)')->numeric()->default(80),
@@ -112,7 +113,7 @@ class AuditReportResource extends Resource
                     Components\TextInput::make('optimized_memory')->label('Target Memory Usage (%)')->numeric()->default(30),
                 ])->columns(2),
 
-            Components\Section::make('The Rescue Roadmap')
+            Section::make('The Rescue Roadmap')
                 ->description('The path to recovery.')
                 ->schema([
                     Components\TextInput::make('phase_1_duration')
@@ -140,7 +141,7 @@ class AuditReportResource extends Resource
                         ->required(),
                 ])->columns(2),
 
-            Components\Section::make('Decision & Closing')
+            Section::make('Decision & Closing')
                 ->schema([
                     Components\Select::make('status_verdict')
                         ->options([
