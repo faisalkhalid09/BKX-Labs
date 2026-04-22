@@ -85,14 +85,14 @@ export function NistFips203Planner() {
             <p className="mt-1 text-lg font-semibold">{result.totalDurationMonths} months</p>
 
             <div className="mt-3 space-y-3">
-              {result.phases.map((phase, idx) => (
+              {result.phases.map((phase: any, idx: number) => (
                 <div key={idx} className="rounded-lg bg-[#fbfcfd] border border-[#d4d9de] p-3">
                   <p className="font-semibold text-sm">
                     Phase {idx + 1}: {phase.phase}
                   </p>
                   <p className="text-xs text-[#4f565c] mt-1">Duration: {phase.durationMonths} months</p>
                   <ul className="mt-2 list-disc pl-4 text-xs text-[#4f565c]">
-                    {phase.keyActivities.map((activity) => (
+                    {phase.keyActivities.map((activity: any) => (
                       <li key={activity}>{activity}</li>
                     ))}
                   </ul>

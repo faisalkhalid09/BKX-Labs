@@ -32,12 +32,12 @@ export function ZkCircuitValidator() {
         {result && (
           <div className={`tool-result mt-3 ${result.isValid ? "border-green-300" : "border-red-300"}`}>
             <p className="text-lg font-semibold">{result.isValid ? "✓ Valid" : "✗ Errors"}</p>
-            {result.errors.map((e) => (
+            {result.errors.map((e: any) => (
               <p key={e} className="mt-1 text-sm text-red-600">
                 • {e}
               </p>
             ))}
-            {result.warnings.map((w) => (
+             {result.warnings.map((w: any) => (
               <p key={w} className="mt-1 text-sm text-yellow-600">
                 ⚠ {w}
               </p>

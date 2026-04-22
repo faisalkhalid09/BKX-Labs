@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { debugAgentWorkflow, type WorkflowNode } from "@/lib/tools/agent-workflow-debugger";
+import { debugAgentWorkflow } from "@/lib/tools/agent-workflow-debugger";
 
 export function AgentWorkflowDebugger() {
   const [jsonInput, setJsonInput] = useState(
@@ -57,7 +57,7 @@ export function AgentWorkflowDebugger() {
             {result.loopDetections.cycleFound && (
               <div className="mt-2">
                 <p className="font-semibold">Loops: {result.loopDetections.loops.length}</p>
-                {result.loopDetections.loops.map((loop, i) => (
+                {result.loopDetections.loops.map((loop: any, i: number) => (
                   <p key={i} className="text-sm text-[#4f565c]">
                     {loop.join(" → ")}
                   </p>
@@ -67,7 +67,7 @@ export function AgentWorkflowDebugger() {
             {result.unreachableNodes.length > 0 && (
               <p className="mt-2 text-sm text-red-600">Unreachable: {result.unreachableNodes.join(", ")}</p>
             )}
-            {result.recommendations.map((rec) => (
+            {result.recommendations.map((rec: string) => (
               <p key={rec} className="mt-1 text-sm">
                 • {rec}
               </p>

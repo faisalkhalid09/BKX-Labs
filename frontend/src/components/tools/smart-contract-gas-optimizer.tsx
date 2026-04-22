@@ -57,7 +57,7 @@ export function GasOptimizer() {
               Current: {result.currentGasEstimate} → {result.optimizedGasEstimate}
             </p>
             <ul className="mt-2 list-disc pl-5 text-sm text-[#4f565c]">
-              {result.recommendations.map((rec) => (
+              {result.recommendations.map((rec: string) => (
                 <li key={rec}>{rec}</li>
               ))}
             </ul>

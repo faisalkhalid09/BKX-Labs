@@ -58,7 +58,7 @@ export function CryptoAgilityMaturitModel() {
           <div className="tool-result mt-3" aria-live="polite">
             <p className="text-lg font-semibold">Level {result.overallMaturityLevel} / 5</p>
             <p className="mt-2 text-sm">Score: {result.overallScore}%</p>
-            {result.recommendations.map((rec) => (
+            {result.recommendations.map((rec: string) => (
               <p key={rec} className="mt-1 text-sm">
                 • {rec}
               </p>

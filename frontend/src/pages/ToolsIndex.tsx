@@ -11,7 +11,7 @@ export default function ToolsIndex() {
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          {toolsRegistry.map((tool) => (
+          {toolsRegistry.map((tool: any) => (
             <article
               key={tool.slug}
               className="rounded-xl border border-[#d4d9de] bg-white p-4 transition-shadow hover:shadow-lg"

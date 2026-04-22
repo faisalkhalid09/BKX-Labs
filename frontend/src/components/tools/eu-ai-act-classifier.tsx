@@ -72,7 +72,7 @@ export function EuAiActClassifier() {
   );
 
   const onToggle = (key: keyof EuAiActInput) => {
-    setInput((current) => ({ ...current, [key]: !current[key] }));
+    setInput((current: EuAiActInput) => ({ ...current, [key]: !current[key] }));
   };
 
   const onCalculate = () => {
@@ -116,7 +116,7 @@ export function EuAiActClassifier() {
         <div className="field-grid">
           {FIELD_LABELS.map((field) => (
             <label
-              key={field.key}
+              key={String(field.key)}
               className="flex items-start gap-3 rounded-lg border border-[#d4d9de] bg-white px-3 py-2"
             >
               <input
@@ -145,7 +145,7 @@ export function EuAiActClassifier() {
             <p className="text-xs uppercase tracking-[0.08em] text-[#4f565c]">Risk Result</p>
             <p className="mt-1 text-lg font-semibold">{result.riskLevel}</p>
             <ul className="mt-2 list-disc pl-5 text-sm text-[#4f565c]">
-              {result.reasons.map((reason) => (
+              {result.reasons.map((reason: string) => (
                 <li key={reason}>{reason}</li>
               ))}
             </ul>

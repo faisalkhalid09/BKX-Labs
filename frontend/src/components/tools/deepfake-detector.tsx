@@ -54,7 +54,7 @@ export function DeepfakeDetector() {
           <div className="tool-result mt-3" aria-live="polite">
             <p className="text-lg font-semibold">{result.probabilityPercent}% AI-Generated</p>
             <p className="mt-2 text-sm capitalize font-semibold">Confidence: {result.confidence}</p>
-            {result.indicators.map((ind) => (
+            {result.indicators.map((ind: any) => (
               <p key={ind} className="mt-1 text-sm">
                 •{ind}
               </p>

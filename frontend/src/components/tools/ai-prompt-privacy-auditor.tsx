@@ -66,7 +66,7 @@ export function AiPromptPrivacyAuditor() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Detected Signals:</h3>
                 <ul className="mt-1 space-y-2">
-                  {result.detectedSignals.map((signal) => (
+                  {result.detectedSignals.map((signal: any) => (
                     <li key={signal.type} className="text-sm">
                       <p className="font-medium capitalize">{signal.type} (Confidence: {Math.round(signal.confidence * 100)}%)</p>
                       <p className="text-xs text-[#4f565c]">Examples: {signal.examples.join(", ")}</p>
@@ -80,7 +80,7 @@ export function AiPromptPrivacyAuditor() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Recommendations:</h3>
                 <ul className="mt-1 list-disc pl-5 text-sm text-[#4f565c]">
-                  {result.recommendations.map((rec) => (
+                  {result.recommendations.map((rec: string) => (
                     <li key={rec}>{rec}</li>
                   ))}
                 </ul>

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { analyzePostQuantumCBOM, type PqcReadinessInput } from "@/lib/tools/pq-cbom";
+import { analyzePostQuantumCBOM } from "@/lib/tools/pq-cbom";
 
 type Dependency = { name: string; version: string; algorithm?: string };
 
@@ -153,7 +153,7 @@ export function PostQuantumCBOMGenerator() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Not Yet PQC-Ready:</h3>
                 <ul className="mt-1 list-disc pl-5 text-sm text-[#4f565c]">
-                  {result.notYetReady.map((item) => (
+                  {result.notYetReady.map((item: string) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
@@ -163,7 +163,7 @@ export function PostQuantumCBOMGenerator() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Recommendations:</h3>
                 <ul className="mt-1 list-disc pl-5 text-sm text-[#4f565c]">
-                  {result.recommendations.map((rec) => (
+                  {result.recommendations.map((rec: string) => (
                     <li key={rec}>{rec}</li>
                   ))}
                 </ul>

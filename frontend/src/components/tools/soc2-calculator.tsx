@@ -120,7 +120,7 @@ export function SaaSSoc2Calculator() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Priority Gaps:</h3>
                 <ul className="mt-1 list-disc pl-5 text-sm text-[#4f565c]">
-                  {result.priorityGaps.map((gap) => (
+                  {result.priorityGaps.map((gap: string) => (
                     <li key={gap}>{gap}</li>
                   ))}
                 </ul>
@@ -131,9 +131,9 @@ export function SaaSSoc2Calculator() {
             <div className="mt-2 space-y-2">
               {Object.entries(result.byCategory).map(([cat, data]) => (
                 <div key={cat} className="text-sm">
-                  <p className="capitalize font-medium">{cat}: {data.percentage}%</p>
-                  {data.gaps.length > 0 && (
-                    <p className="text-xs text-[#4f565c] ml-2">Gaps: {data.gaps.join(", ")}</p>
+                  <p className="capitalize font-medium">{cat}: {(data as { percentage: number; gaps: string[] }).percentage}%</p>
+                  {(data as { percentage: number; gaps: string[] }).gaps.length > 0 && (
+                    <p className="text-xs text-[#4f565c] ml-2">Gaps: {(data as { percentage: number; gaps: string[] }).gaps.join(", ")}</p>
                   )}
                 </div>
               ))}

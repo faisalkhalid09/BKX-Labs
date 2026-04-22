@@ -105,7 +105,7 @@ export function CloudGpuCostComparison() {
 
             <h3 className="mt-3 font-semibold text-sm">All Providers:</h3>
             <div className="mt-2 space-y-2">
-              {result.results.map((r) => (
+              {result.results.map((r: any) => (
                 <div
                   key={r.provider}
                   className={`text-sm rounded p-2 ${

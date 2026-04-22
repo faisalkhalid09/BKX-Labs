@@ -153,7 +153,7 @@ export function AdmtProportionalityScorer() {
               <>
                 <h3 className="mt-3 font-semibold text-sm">Recommendations:</h3>
                 <ul className="mt-1 list-disc pl-5 text-sm text-[#4f565c]">
-                  {result.recommendations.map((rec) => (
+                  {result.recommendations.map((rec: string) => (
                     <li key={rec}>{rec}</li>
                   ))}
                 </ul>
