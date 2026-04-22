@@ -25,7 +25,7 @@ import { generateToolMetadata } from '@/lib/seo/tools-metadata';
 const componentMap: Record<string, React.ComponentType<any>> = {
   'eu-ai-act-risk-level-classifier': EuAiActClassifier,
   'post-quantum-cbom-generator': PostQuantumCBOMGenerator,
-  'saas-soc-2-readiness-calculator': SaaSSoc2Calculator,
+  'saas-soc2-readiness-calculator': SaaSSoc2Calculator,
   'cloud-gpu-cost-comparison-tool': CloudGpuCostComparison,
   'nvidia-blackwell-pue-estimator': NvidiaBlackwellEstimator,
   'ai-prompt-privacy-auditor': AiPromptPrivacyAuditor,
