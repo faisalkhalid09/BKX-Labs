@@ -124,20 +124,22 @@ export default function ToolDetail() {
         </script>
       </Helmet>
       
-      <main className="min-h-screen bg-[#f8f8f6] p-6 md:p-8">
-        <div className="mx-auto max-w-5xl">
-          {/* Back button */}
-          <button
-            onClick={() => navigate('/tools')}
-            className="mb-6 text-[#105da8] hover:text-[#0d4a87] font-semibold"
-          >
-            ← Back to Tools
-          </button>
+      <main className="tool-detail-container">
+        {/* Back button */}
+        <a
+          href="/tools"
+          className="tool-detail-back"
+        >
+          ← Back to All Tools
+        </a>
 
           {/* Tool page container */}
-          <div className="rounded-lg border border-[#d4d9de] bg-white p-6 md:p-8">
-            <h1 className="text-3xl font-semibold text-[#161a1d]">{tool.title}</h1>
+          <div className="tool-detail-header">
+            <h1>{tool.title}</h1>
+            <p className="tool-detail-description">{tool.description}</p>
+          </div>
 
+          <div className="tool-card">
             {/* Direct Answer Block */}
             {tool.directAnswer && (
               <DirectAnswerBlock directAnswer={tool.directAnswer} />
@@ -156,7 +158,6 @@ export default function ToolDetail() {
               </div>
             )}
           </div>
-        </div>
       </main>
     </>
   );

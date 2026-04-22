@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import { ToolsLayoutWrapper } from './components/layout/ToolsLayout';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Process from './pages/Process';
@@ -22,10 +23,25 @@ import BookingPage from './pages/BookingPage';
 
 function App() {
   const location = useLocation();
+  const isToolsPage = location.pathname.startsWith('/tools');
 
   useEffect(() => {
     trackPageView(location.pathname);
   }, [location]);
+
+  if (isToolsPage) {
+    return (
+      <>
+        <ScrollToTop />
+        <ToolsLayoutWrapper>
+          <Routes>
+            <Route path="/tools" element={<ToolsIndex />} />
+            <Route path="/tools/:slug" element={<ToolDetail />} />
+          </Routes>
+        </ToolsLayoutWrapper>
+      </>
+    );
+  }
 
   return (
     <>
@@ -44,8 +60,6 @@ function App() {
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
-          <Route path="/tools" element={<ToolsIndex />} />
-          <Route path="/tools/:slug" element={<ToolDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
