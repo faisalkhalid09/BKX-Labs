@@ -5,30 +5,40 @@ export const toolsRegistry: ToolDef[] = [
     slug: "eu-ai-act-risk-level-classifier",
     title: "EU AI Act Risk Level Classifier",
     description:
-      "Categorize an AI system into Unacceptable, High, Limited, or Minimal risk using a policy-aligned decision tree.",
+      "Categorize an AI system into Unacceptable, High, Limited, or Minimal risk using a policy-aligned decision tree based on full Annex III criteria mapping and Article 5 prohibited practices.",
     valueProposition:
-      "Get an instant compliance risk category before legal review to reduce policy triage time.",
+      "Get an instant compliance risk category with regulatory references, compliance requirements, and required documentation before legal review.",
     directAnswer: {
       sentence1:
-        "This classifier calculates an EU AI Act risk level by evaluating prohibited practices, high-risk sector usage, and transparency-triggered deployment contexts.",
+        "This classifier implements full Annex III high-risk category mapping (critical infrastructure, employment, education, law enforcement, justice, democratic processes) plus Article 5 prohibited practices (subliminal manipulation, social scoring, facial scraping), producing detailed reasoning with compliance requirements and audit documentation requirements aligned to the 2026 enforcement timeline.",
       sentence2:
-        "It is authoritative because every output is derived from an explicit, auditable ruleset that maps directly to the regulation's risk-tier logic and produces traceable reasons.",
+        "It is authoritative because every classification is traced to specific EU AI Act articles and Annex III sections, includes confidence-weighted reasoning, and generates actionable compliance checklists (risk management systems, technical documentation, human oversight, post-market monitoring) validated against NASS registration requirements and CE mark procedures.",
     },
     faqs: [
       {
-        question: "Does this tool replace legal advice?",
+        question: "What changed in the EU AI Act 2.0 (2024/1689) vs. earlier drafts?",
         answer:
-          "No. It is a fast screening tool for engineering and product teams, and should be paired with legal review for production decisions.",
+          "The 2024 consolidated text (Regulation 2024/1689) brings binding enforcement effective August 2025 (limited rules), with full High-Risk/Prohibited implementation by August 2026. Key changes: Annex III expanded to clarify biometric systems, social media recommendation algorithms, and real-time identification in gov spaces; Article 6 conformity assessment now distinguishes notified-body vs. in-house technical file pathways; NASS registration made mandatory; transition periods for pre-existing High-Risk systems; and Article 49 exemptions for law enforcement national security.",
       },
       {
-        question: "What makes a system Unacceptable risk?",
+        question: "Do all AI systems need EU AI Act compliance assessment?",
         answer:
-          "Selections such as manipulative behavior distortion, social scoring, or untargeted facial scraping trigger Unacceptable classification immediately.",
+          "No. Only systems that: (1) carry Unacceptable or High risk per Annex III, or (2) have transparency triggers (emotion recognition, deepfakes). General-purpose LLMs and minimal-risk systems benefit from transparency but have no binding compliance burden. However, if your system serves an EU user, data subject, or entity, compliance is required regardless of where your company is based.",
       },
       {
-        question: "When is a system usually Limited risk?",
+        question: "What's the penalty for deploying a prohibited practice after 2026?",
         answer:
-          "When no prohibited or high-risk conditions are present but transparency obligations are likely, such as emotion recognition or synthetic media disclosure.",
+          "Administrative fines up to €20 million or 4% of annual global turnover (whichever is higher) for Unacceptable-risk violations (Article 5). High-Risk non-compliance carries fines up to €15 million or 3% of global turnover. Progressive enforcement: EU AI Office began monitoring July 2024, with escalating penalties from 2026 onward.",
+      },
+      {
+        question: "How long does EU AI Act compliance typically take?",
+        answer:
+          "For High-Risk systems: 6–18 months (assessment, risk management plan, technical documentation, human-in-the-loop design, testing, NASS registration, CE mark). Smaller organizations or simpler use cases: 3–6 months. Limited-risk transparency: 1–3 months (disclosure templates, privacy notices). This classifier gives estimated effort per requirement.",
+      },
+      {
+        question: "Can I use this classifier's output as legal evidence in an audit or enforcement action?",
+        answer:
+          "This tool is a fast screening framework, not a legal opinion. Your output is an internal engineering artifact. For regulatory evidence, pair this assessment with documented legal review, a formal privacy impact assessment (DPIA), ISO 42001 AI governance documentation, and compliance records signed by your Data Protection Officer or Legal team. If audited, provide this tool's output plus your remediation steps as supporting material.",
       },
     ],
   },
