@@ -102,7 +102,7 @@ Preparing your organization for EU AI Act compliance requires comprehensive docu
 
 **Documentation Template:**
 For each system, create a one-page risk summary:
-```
+\`\`\`
 System Name: [Title]
 Risk Level: [Unacceptable/High/Limited/Minimal]
 Triggering Criteria:
@@ -111,7 +111,7 @@ Triggering Criteria:
 Responsible Team: [Owner]
 Compliance Status: [Not Started/In Progress/Completed]
 Audit Date: [YYYY-MM-DD]
-```
+\`\`\`
 
 #### Phase 2: Technical Documentation (Weeks 5–12)
 **For High-Risk Systems:**
