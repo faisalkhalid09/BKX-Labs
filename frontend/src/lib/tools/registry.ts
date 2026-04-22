@@ -60,20 +60,33 @@ export const toolsRegistry: ToolDef[] = [
     },
     faqs: [
       {
-        question: "What is post-quantum cryptography?",
-        answer:
-          "PQC refers to cryptographic algorithms believed resistant to attacks by both classical and quantum computers, standardized by NIST in 2022 (e.g., Kyber, Dilithium).",
+        question: "What is a Cryptographic Bill of Materials (CBOM)?",
+        answer: "A CBOM is a machine-readable inventory of all cryptographic assets within a software system — including algorithms, key sizes, protocols, and libraries. Modeled on the Software Bill of Materials (SBOM) standard, a CBOM enables security teams to identify quantum-vulnerable components, enforce compliance with NIST standards, and automate post-quantum migration tracking within CI/CD pipelines."
       },
       {
-        question: "What happens if I don't migrate before quantum computers exist?",
-        answer:
-          "Encrypted data captured today could be decrypted retroactively (harvest-now, decrypt-later attacks), making PQC migration critical for long-lived secrets.",
+        question: "Why is RSA-4096 not quantum-safe but AES-256 is?",
+        answer: "RSA security relies on the computational difficulty of factoring large numbers — a task that Shor's Algorithm running on a Cryptographically Relevant Quantum Computer (CRQC) can solve in polynomial time, making RSA-4096 entirely breakable. AES-256 is a symmetric cipher; its vulnerability is to Grover's Algorithm, which provides only a quadratic speedup, effectively halving the security level from 256 to roughly 128 bits — still computationally infeasible to brute-force. NIST's CNSA 2.0 suite mandates AES-256 as quantum-safe for symmetric encryption."
       },
       {
-        question: "When should I start migrating?",
-        answer:
-          "NIST recommends organizations begin assessing and prioritizing critical systems now, with full migration by 2030.",
+        question: "What are the NIST FIPS 203, 204, and 205 standards?",
+        answer: "These are the first finalized NIST Post-Quantum Cryptography standards (August 2024). FIPS 203 (ML-KEM, derived from CRYSTALS-Kyber) standardizes Key Encapsulation Mechanisms to replace RSA and ECDH key exchange. FIPS 204 (ML-DSA, derived from CRYSTALS-Dilithium) standardizes lattice-based digital signatures to replace RSA and ECDSA. FIPS 205 (SLH-DSA, derived from SPHINCS+) is a stateless hash-based signature scheme providing a conservative backup option based on different mathematical assumptions."
       },
+      {
+        question: "What is 'Harvest Now, Decrypt Later' (HNDL) and why is it urgent?",
+        answer: "HNDL is a cyberattack strategy where adversaries capture and store encrypted network traffic today, intending to decrypt it once a CRQC becomes available. Sensitive data with long confidentiality requirements — classified intelligence, medical records, financial contracts — is already at risk from data captured right now. The urgency of generating a CBOM is that it identifies which current encrypted channels are vulnerable, allowing organizations to prioritize migration of the highest-value data flows before Q-Day."
+      },
+      {
+        question: "How does NIS2 Article 21 mandate post-quantum cryptography?",
+        answer: "NIS2 (Directive 2022/0383) Article 21 requires 'essential' and 'important' entities to implement 'state-of-the-art' cybersecurity risk management measures, including cryptography and encryption policies. The European Union Agency for Cybersecurity (ENISA) has issued guidelines clarifying that 'state-of-the-art' for 2025-2026 progressively includes post-quantum transitioning plans. Operators of essential services who fail to implement PQC roadmaps risk administrative fines of up to €10 million or 2% of global annual turnover."
+      },
+      {
+        question: "What is CycloneDX and why use it for CBOM exports?",
+        answer: "CycloneDX is an OWASP-maintained open standard for Software and Cryptographic Bill of Materials. Version 1.6 natively supports 'cryptoProperties' components, providing a machine-readable schema for documenting algorithm names, key sizes, padding modes, and protocols. Exporting a CycloneDX v1.6 CBOM enables automated vulnerability scanning tools (e.g., Dependency-Track, cdxgen) to continuously monitor for newly flagged quantum-vulnerable components within your CI/CD pipeline automatically."
+      },
+      {
+        question: "When is Q-Day expected to arrive?",
+        answer: "Q-Day — the day a CRQC can cryptanalytically break RSA-2048 in hours — has no hard consensus date. The most cited estimate from NIST, NSA, and CISA guidance is the 2030–2040 window. However, NSA's Commercial National Security Algorithm (CNSA) Suite 2.0 mandates PQC-ready systems for high-priority National Security Systems by 2030, with full classical algorithm deprecation by 2033. Given HNDL attacks are already occurring, the migration window is effectively now."
+      }
     ],
   },
   {

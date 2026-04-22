@@ -1,333 +1,395 @@
-import { useState, useEffect } from "react";
-import { analyzePostQuantumCBOM } from "@/lib/tools/pq-cbom";
+import { useState } from "react";
+import {
+  analyzePostQuantumCBOM,
+  generateCycloneDXCBOM,
+  type AssetEntry,
+  type AssetRisk,
+  type CBOMResult,
+} from "@/lib/tools/pq-cbom";
 
-type Dependency = { name: string; version: string; algorithm?: string };
+const SHELF_LABELS: Record<AssetEntry["shelfLife"], string> = {
+  short: "Short (<2 yrs)",
+  medium: "Medium (2–5 yrs)",
+  long: "Long (5–10 yrs)",
+  critical: "Critical (10+ yrs)",
+};
+
+const RISK_BADGE: Record<AssetRisk, { label: string; color: string }> = {
+  pqc_ready:    { label: "PQC Ready",    color: "#10B981" },
+  cnsa_safe:    { label: "CNSA 2.0 Safe", color: "#3B82F6" },
+  transitional: { label: "Transitional",  color: "#F59E0B" },
+  vulnerable:   { label: "Vulnerable",    color: "#EF4444" },
+  critical:     { label: "CRITICAL",      color: "#EF4444" },
+};
+
+function uid(): string {
+  return Math.random().toString(36).slice(2, 8);
+}
+
+function blankAsset(): AssetEntry {
+  return { id: uid(), name: "", algorithm: "", keySize: null, implementation: "", shelfLife: "medium" };
+}
+
+// ── Use counter (3-use offerwall via localStorage) ───────────────────────────
+const COUNTER_KEY = "bkx_cbom_uses";
+
+function getUses(): number {
+  return Number(localStorage.getItem(COUNTER_KEY) ?? 0);
+}
+function bumpUses() {
+  localStorage.setItem(COUNTER_KEY, String(getUses() + 1));
+}
+
+// ── Risk score gauge color ────────────────────────────────────────────────────
+function scoreColor(score: number): string {
+  if (score <= 15) return "#10B981";
+  if (score <= 40) return "#F59E0B";
+  if (score <= 70) return "#EF4444";
+  return "#EF4444";
+}
 
 export function PostQuantumCBOMGenerator() {
-  const [deps, setDeps] = useState<Dependency[]>([
-    { name: "openssl", version: "3.0.0", algorithm: "RSA" },
-    { name: "aws-sdk", version: "2.1.0", algorithm: "AES-256" },
-  ]);
-  const [jsonInput, setJsonInput] = useState('{"dependencies": []}');
-  const [result, setResult] = useState<ReturnType<typeof analyzePostQuantumCBOM> | null>(null);
-  const [mode, setMode] = useState<"form" | "json">("form");
-  
-  // Monetization Offerwall state
-  const [uses, setUses] = useState(0);
+  const [assets, setAssets] = useState<AssetEntry[]>([blankAsset()]);
+  const [result, setResult] = useState<CBOMResult | null>(null);
   const [locked, setLocked] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const savedUses = localStorage.getItem("bkx_tool_uses_cbom");
-    if (savedUses) {
-      const parsed = parseInt(savedUses, 10);
-      setUses(parsed);
-      if (parsed >= 3) {
-        setLocked(true);
-      }
-    }
-  }, []);
+  const addAsset = () => setAssets((p) => [...p, blankAsset()]);
+  const removeAsset = (id: string) => setAssets((p) => p.filter((a) => a.id !== id));
 
-  const trackUsage = () => {
-    const newUses = uses + 1;
-    setUses(newUses);
-    localStorage.setItem("bkx_tool_uses_cbom", newUses.toString());
-    if (newUses >= 3) {
-      setLocked(true);
-    }
+  const updateAsset = (id: string, field: keyof AssetEntry, value: string | number | null) => {
+    setAssets((p) => p.map((a) => (a.id === id ? { ...a, [field]: value } : a)));
   };
 
-  const onAddDep = () => {
-    setDeps([...deps, { name: "", version: "1.0.0", algorithm: "RSA" }]);
-  };
-
-  const onUpdateDep = (idx: number, field: keyof Dependency, value: string) => {
-    const updated = [...deps];
-    updated[idx] = { ...updated[idx], [field]: value };
-    setDeps(updated);
-  };
-
-  const onRemoveDep = (idx: number) => {
-    setDeps(deps.filter((_, i) => i !== idx));
-  };
-
-  const onAnalyzeForm = () => {
+  const onAnalyze = () => {
+    const uses = getUses();
     if (uses >= 3) { setLocked(true); return; }
-    trackUsage();
-    const filtered = deps.filter((d) => d.name.trim());
-    const res = analyzePostQuantumCBOM({ dependencies: filtered });
-    setResult(res);
+    bumpUses();
+    const filtered = assets.filter((a) => a.name.trim() && a.algorithm.trim());
+    if (!filtered.length) return;
+    setResult(analyzePostQuantumCBOM(filtered));
   };
 
-  const onParseJson = () => {
-    if (uses >= 3) { setLocked(true); return; }
-    trackUsage();
-    try {
-      const parsed = JSON.parse(jsonInput);
-      if (!parsed.dependencies || !Array.isArray(parsed.dependencies)) {
-        alert("JSON must contain 'dependencies' array");
-        return;
-      }
-      const res = analyzePostQuantumCBOM(parsed);
-      setResult(res);
-    } catch (e) {
-      alert(`JSON parse error: ${e}`);
-    }
+  const onExport = () => {
+    if (!result) return;
+    const json = generateCycloneDXCBOM(assets.filter((a) => a.name && a.algorithm), result);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `bkx-cbom-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const onCopy = () => {
+    if (!result) return;
+    const json = generateCycloneDXCBOM(assets.filter((a) => a.name && a.algorithm), result);
+    navigator.clipboard.writeText(json).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  const onReset = () => {
+    setAssets([blankAsset()]);
+    setResult(null);
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto font-sans text-[#161a1d] leading-relaxed relative">
-      
-      {/* Main Content Column */}
-      <div className="flex-1 w-full bg-white shadow-sm p-6 md:p-10 rounded-lg border border-[#d4d9de] relative">
-        
-        {/* Ghost Brand */}
-        <div className="text-xs font-bold tracking-[0.15em] text-[#4f565c] mb-6 uppercase">
-          BKX Tools
-        </div>
-        
-        {/* Ad Slot: Top Banner (0 CLS) */}
-        <div className="w-full h-[90px] bg-[#f8f8f6] border border-[#d4d9de] mb-8 flex items-center justify-center text-[#4f565c] text-sm hidden md:flex">
-          [Ad Slot: Top Banner - 728x90]
-        </div>
+    <div className="max-w-[800px] mx-auto bg-slate-900 text-slate-200 font-mono p-4 md:p-8 relative">
 
-        {/* AEO HEADER */}
-        <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-[#105da8]">
-            Post-Quantum CBOM Generator
-          </h1>
-          <p className="text-lg md:text-xl font-medium">
-            <strong>Generate a 2026-compliant Cryptographic Bill of Materials to identify quantum-vulnerable dependencies.</strong>
-            <br />
-            <span className="text-[#4f565c] text-base mt-2 block">
-              This tool parses JSON dependency lists and cross-references against NIST FIPS 203 (ML-KEM), FIPS 204 (ML-DSA) and CNSA 2.0 readiness to map vulnerabilities and generate a migration roadmap.
-            </span>
-          </p>
-        </header>
+      {/* AEO Direct Answer Block */}
+      <div className="mb-10 border border-slate-700 p-5 bg-slate-800">
+        <p className="text-sm leading-relaxed text-slate-300">
+          <strong className="text-slate-100">
+            As of April 2026, the transition to Post-Quantum Cryptography (PQC) is mandated for critical infrastructure under NIS2 and EO 14028.
+          </strong>{" "}
+          This CBOM Generator identifies quantum-vulnerable algorithms (RSA, ECC) and maps them to NIST-approved replacements like ML-KEM and ML-DSA.
+        </p>
+      </div>
 
-        {/* Tool Interaction Boundary */}
-        <div className={`transition-all duration-300 ${locked ? "blur-sm pointer-events-none opacity-50" : ""}`}>
-          <div className="mt-4 flex gap-2">
-            <button
-              type="button"
-              className={`px-4 py-2 text-sm font-semibold rounded transition-colors ${
-                mode === "form"
-                  ? "bg-[#105da8] text-white"
-                  : "bg-white border border-[#d4d9de] text-[#161a1d] hover:bg-gray-50"
-              }`}
-              onClick={() => setMode("form")}
-            >
-              Visual Builder
-            </button>
-            <button
-              type="button"
-              className={`px-4 py-2 text-sm font-semibold rounded transition-colors ${
-                mode === "json"
-                  ? "bg-[#105da8] text-white"
-                  : "bg-white border border-[#d4d9de] text-[#161a1d] hover:bg-gray-50"
-              }`}
-              onClick={() => setMode("json")}
-            >
-              JSON Input
-            </button>
+      <header className="mb-10 pb-6 border-b border-slate-700">
+        <div className="text-xs font-bold tracking-[0.2em] text-slate-500 mb-3 uppercase">BKX Tools</div>
+        <h1 className="text-3xl font-bold text-slate-100 mb-2">Post-Quantum CBOM Generator</h1>
+        <p className="text-slate-400 text-sm">Define your cryptographic asset inventory. Receive a Quantum Risk Score and CycloneDX v1.6 export.</p>
+      </header>
+
+      {/* Asset Inventory Table */}
+      <div className={`transition-all duration-200 ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
+        <div className="mb-6">
+          <div className="hidden md:grid grid-cols-[2fr_2fr_1fr_2fr_2fr_auto] gap-2 mb-2 text-xs uppercase tracking-widest text-slate-500 px-1">
+            <span>Asset Name</span>
+            <span>Algorithm</span>
+            <span>Key Size</span>
+            <span>Implementation</span>
+            <span>Data Shelf Life</span>
+            <span></span>
           </div>
 
-          <div className="mt-6 border border-[#d4d9de] rounded-md p-4 bg-[#f8f8f6]">
-            {mode === "form" ? (
-              <>
-                <div className="grid gap-3">
-                  {deps.map((dep, idx) => (
-                    <div key={idx} className="flex flex-wrap md:flex-nowrap gap-2 items-center">
-                      <input
-                        type="text"
-                        placeholder="Library name (e.g. openssl)"
-                        value={dep.name}
-                        onChange={(e) => onUpdateDep(idx, "name", e.target.value)}
-                        className="flex-1 rounded border border-[#d4d9de] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#105da8]"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Version"
-                        value={dep.version}
-                        onChange={(e) => onUpdateDep(idx, "version", e.target.value)}
-                        className="w-24 rounded border border-[#d4d9de] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#105da8]"
-                      />
-                      <select
-                        value={dep.algorithm || ""}
-                        onChange={(e) => onUpdateDep(idx, "algorithm", e.target.value)}
-                        className="w-40 rounded border border-[#d4d9de] px-3 py-2 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-[#105da8]"
-                      >
-                        <optgroup label="Classical (At Risk)">
-                          <option>RSA</option>
-                          <option>ECC</option>
-                          <option>ECDSA</option>
-                        </optgroup>
-                        <optgroup label="CNSA 2.0 (Symmetric)">
-                          <option>AES-128</option>
-                          <option value="AES-256">AES-256 (Safe)</option>
-                          <option value="SHA384">SHA-384 (Safe)</option>
-                          <option value="SHA512">SHA-512 (Safe)</option>
-                        </optgroup>
-                        <optgroup label="NIST PQC (Standard)">
-                          <option value="ML-KEM">ML-KEM (FIPS 203)</option>
-                          <option value="ML-DSA">ML-DSA (FIPS 204)</option>
-                          <option value="SLH-DSA">SLH-DSA (FIPS 205)</option>
-                        </optgroup>
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => onRemoveDep(idx)}
-                        className="px-3 py-2 text-sm font-semibold text-red-600 rounded hover:bg-red-50"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 flex gap-3">
-                  <button type="button" className="px-4 py-2 text-sm font-semibold rounded border border-[#d4d9de] hover:bg-gray-50" onClick={onAddDep}>
-                    + Add Dependency
-                  </button>
-                  <button type="button" className="px-4 py-2 text-sm font-bold rounded bg-[#105da8] text-white hover:bg-[#0d4a87] shadow-sm" onClick={onAnalyzeForm}>
-                    Analyze CBOM
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <textarea
-                  value={jsonInput}
-                  onChange={(e) => setJsonInput(e.target.value)}
-                  placeholder='{"dependencies": [{"name": "openssl", "version": "3.0", "algorithm": "RSA"}]}'
-                  className="w-full rounded border border-[#d4d9de] px-3 py-3 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-[#105da8]"
-                  rows={8}
+          <div className="space-y-2">
+            {assets.map((a) => (
+              <div key={a.id} className="grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr_2fr_2fr_auto] gap-2 items-center">
+                <input
+                  type="text"
+                  placeholder="e.g. JWT Signing Key"
+                  value={a.name}
+                  onChange={(e) => updateAsset(a.id, "name", e.target.value)}
+                  className="bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder:text-slate-600"
                 />
-                <button type="button" className="px-4 py-2 mt-4 text-sm font-bold rounded bg-[#105da8] text-white hover:bg-[#0d4a87] shadow-sm" onClick={onParseJson}>
-                  Analyze JSON
+                <input
+                  type="text"
+                  placeholder="e.g. RSA, ML-KEM-768"
+                  value={a.algorithm}
+                  onChange={(e) => updateAsset(a.id, "algorithm", e.target.value)}
+                  className="bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder:text-slate-600"
+                />
+                <input
+                  type="number"
+                  placeholder="2048"
+                  value={a.keySize ?? ""}
+                  onChange={(e) => updateAsset(a.id, "keySize", e.target.value ? Number(e.target.value) : null)}
+                  className="bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder:text-slate-600"
+                />
+                <input
+                  type="text"
+                  placeholder="e.g. OpenSSL 3.3"
+                  value={a.implementation}
+                  onChange={(e) => updateAsset(a.id, "implementation", e.target.value)}
+                  className="bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 placeholder:text-slate-600"
+                />
+                <select
+                  value={a.shelfLife}
+                  onChange={(e) => updateAsset(a.id, "shelfLife", e.target.value as AssetEntry["shelfLife"])}
+                  className="bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  {(Object.entries(SHELF_LABELS) as [AssetEntry["shelfLife"], string][]).map(([k, v]) => (
+                    <option key={k} value={k}>{v}</option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => removeAsset(a.id)}
+                  className="text-slate-600 hover:text-red-400 text-lg font-bold px-2 transition-colors"
+                  title="Remove asset"
+                >
+                  ✕
                 </button>
-              </>
-            )}
-          </div>
-
-          {result && (
-            <div className="mt-8 p-6 border-2 border-[#105da8] rounded-md bg-[#f0f6fc]" aria-live="polite">
-              <div className="flex border-b border-[#c8e1ff] pb-4 mb-4 gap-4">
-                <div className="flex-1">
-                  <p className="text-xs uppercase tracking-[0.08em] text-[#4f565c] font-bold">PQC Readiness Score</p>
-                  <p className="mt-1 text-4xl font-extrabold text-[#105da8]">{result.readinessPercentage}%</p>
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs uppercase tracking-[0.08em] text-[#4f565c] font-bold">Asset Breakdown</p>
-                  <p className="mt-1 text-sm text-[#4f565c] leading-tight mt-2">
-                    <strong className="text-green-700">{result.pqcReadyCount}</strong> PQC Standard<br/>
-                    <strong className="text-blue-700">{result.pqcAwareCount}</strong> CNSA 2.0 / Symmetric<br/>
-                    <strong className="text-red-700">{result.notYetReady.length}</strong> Legacy (At-Risk)
-                  </p>
-                </div>
               </div>
-              
-              {result.notYetReady.length > 0 && (
-                <div className="mb-4">
-                  <h3 className="font-bold text-sm text-red-800">Critical: Not Yet PQC-Ready</h3>
-                  <ul className="mt-2 list-disc pl-5 text-sm text-[#161a1d] space-y-1">
-                    {result.notYetReady.map((item: string) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {result.recommendations.length > 0 && (
-                <div>
-                  <h3 className="font-bold text-sm text-[#105da8]">Migration Recommendations</h3>
-                  <ul className="mt-2 list-disc pl-5 text-sm text-[#161a1d] space-y-1">
-                    {result.recommendations.map((rec: string) => (
-                      <li key={rec}>{rec}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-10">
+          <button
+            onClick={addAsset}
+            className="border border-slate-600 text-slate-400 hover:text-slate-200 hover:border-slate-400 text-sm font-semibold px-4 py-2 transition-colors"
+          >
+            + Add Asset
+          </button>
+          <button
+            onClick={onAnalyze}
+            className="bg-blue-600 text-white text-sm font-bold px-6 py-2 hover:bg-blue-500 transition-colors"
+          >
+            Analyze CBOM
+          </button>
+          {result && (
+            <button onClick={onReset} className="border border-slate-600 text-slate-400 text-sm font-semibold px-4 py-2 hover:text-slate-200 transition-colors">
+              Reset
+            </button>
           )}
         </div>
 
-        {/* Monetization Offerwall Modal */}
-        {locked && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm rounded-lg p-6">
-            <div className="bg-white p-8 rounded-lg shadow-xl border border-[#d4d9de] max-w-md text-center">
-              <h2 className="text-2xl font-bold mb-3 text-[#105da8]">Usage Limit Reached</h2>
-              <p className="text-[#4f565c] mb-6">
-                You have reached the 3-use limit for our free tools. Upgrade your plan to get unlimited API access and full PDF reports.
-              </p>
-              <button className="w-full px-4 py-3 text-sm font-bold rounded bg-[#105da8] text-white hover:bg-[#0d4a87] shadow-md">
-                Unlock Unlimited Access
-              </button>
-              <p className="mt-4 text-xs font-semibold text-gray-400 uppercase tracking-widest">BKX Labs Pro</p>
+        {/* Results Section */}
+        {result && (
+          <div className="animate-in fade-in duration-300" aria-live="polite">
+            {/* Quantum Risk Score */}
+            <div className="border border-slate-700 p-6 mb-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Quantum Risk Score</p>
+                <p className="text-5xl font-extrabold" style={{ color: scoreColor(result.quantumRiskScore) }}>
+                  {result.quantumRiskScore}
+                  <span className="text-2xl text-slate-500">/100</span>
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-4 text-sm">
+                <div className="text-center">
+                  <p className="text-red-400 font-bold text-xl">{result.criticalCount}</p>
+                  <p className="text-slate-500 text-xs">Critical</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-orange-400 font-bold text-xl">{result.vulnerableCount}</p>
+                  <p className="text-slate-500 text-xs">Vulnerable</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-yellow-400 font-bold text-xl">{result.transitionalCount}</p>
+                  <p className="text-slate-500 text-xs">Transitional</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-green-400 font-bold text-xl">{result.safeCount}</p>
+                  <p className="text-slate-500 text-xs">Safe</p>
+                </div>
+              </div>
+              <div className="md:ml-auto flex gap-2">
+                <button onClick={onExport} className="bg-green-700 hover:bg-green-600 text-white text-xs font-bold px-4 py-2 transition-colors">
+                  Export CycloneDX
+                </button>
+                <button onClick={onCopy} className="border border-slate-600 hover:border-slate-400 text-slate-400 hover:text-slate-200 text-xs font-bold px-4 py-2 transition-colors">
+                  {copied ? "Copied!" : "Copy JSON"}
+                </button>
+              </div>
+            </div>
+
+            {/* Remediation Table */}
+            <div className="border border-slate-700 overflow-x-auto mb-10">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-700 bg-slate-800">
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">Asset</th>
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">Algorithm</th>
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">Standard</th>
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">Risk</th>
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">NIS2</th>
+                    <th className="text-left px-4 py-3 text-xs uppercase tracking-widest text-slate-500">Remediation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.assets.map((r) => {
+                    const badge = RISK_BADGE[r.risk];
+                    return (
+                      <tr key={r.id} className="border-b border-slate-800 hover:bg-slate-800 transition-colors">
+                        <td className="px-4 py-3 text-slate-200 font-semibold">{r.name}</td>
+                        <td className="px-4 py-3 text-slate-400">{r.algorithm}</td>
+                        <td className="px-4 py-3 text-slate-400 text-xs">{r.fiproStatus}</td>
+                        <td className="px-4 py-3">
+                          <span
+                            className="inline-block px-2 py-1 text-xs font-bold text-white"
+                            style={{ backgroundColor: badge.color }}
+                          >
+                            {badge.label}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-xs">
+                          {r.nis2Flagged
+                            ? <span className="text-red-400 font-bold">⚑ Flagged</span>
+                            : <span className="text-slate-600">—</span>}
+                        </td>
+                        <td className="px-4 py-3 text-slate-400 text-xs max-w-[240px]">
+                          {r.remediationAction}
+                          {r.migrateTo && (
+                            <span className="block mt-1 text-blue-400 font-semibold">→ {r.migrateTo}</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
-
-        {/* Ad Slot: Mid Content (0 CLS) */}
-        <div className="w-full h-[250px] bg-[#f8f8f6] border border-[#d4d9de] my-10 flex items-center justify-center text-[#4f565c] text-sm">
-          [Ad Slot: Mid-Result - 300x250]
-        </div>
-
-        {/* Documentation Surface: 1,200+ words */}
-        <article className="mt-12 prose prose-[#161a1d] max-w-none prose-headings:text-[#105da8] prose-h2:border-b prose-h2:pb-2">
-          <h2>NIST PQC Standards Overview</h2>
-          <p>
-            The transition to Post-Quantum Cryptography (PQC) represents a fundamental shift in how digital security is architected. 
-            In August 2024, the National Institute of Standards and Technology (NIST) finalized its first set of primary PQC standards, designed to withstand the decryption capabilities of future cryptographically-relevant quantum computers (CRQC). The finalized standards include Federal Information Processing Standards (FIPS) 203, 204, and 205.
-          </p>
-          <p>
-            <strong>FIPS 203 (ML-KEM)</strong> specifies a key encapsulation mechanism based on the CRYSTALS-Kyber algorithm. It replaces the key exchange functionalities historically handled by RSA and Diffie-Hellman algorithms. ML-KEM relies on the mathematical difficulty of the Module Learning with Errors (MLWE) problem.
-          </p>
-          <p>
-            <strong>FIPS 204 (ML-DSA)</strong> provides digital signature capabilities based on the CRYSTALS-Dilithium algorithm. This is the primary recommendation for authenticating identities and ensuring the integrity of digital documents, replacing RSA and ECDSA signatures.
-          </p>
-          <p>
-            <strong>FIPS 205 (SLH-DSA)</strong> offers a stateless hash-based digital signature algorithm (derived from SPHINCS+). While larger in signature size and slower in verification compared to ML-DSA, it serves as a conservative backup relying on different mathematical properties (hashing security) rather than lattice equations.
-          </p>
-          <p>
-            This Cryptographic Bill of Materials (CBOM) generator evaluates software dependencies against these exact standards. The importance of generating a CBOM is parallel to a standard Software Bill of Materials (SBOM)—it provides visibility into which cryptographic primitives are used, deeply nested within third-party libraries, enabling security teams to prioritize deprecation of algorithms vulnerable to Shor's Algorithm.
-          </p>
-
-          <h2>Crypto-Agility in 2026</h2>
-          <p>
-            By 2026, regulatory environments and compliance architectures mandate moving beyond merely knowing what algorithms are used, towards achieving operational <em>crypto-agility</em>. Crypto-agility is the capability of an organization's systems to swap cryptographic primitives and protocols without disrupting existing system infrastructure or requiring significant codebase overhauls.
-          </p>
-          <p>
-            The realization of "harvest now, decrypt later" attacks means that any encrypted data captured today—such as health records, national security intelligence, and long-lived intellectual property—can be stored by adversaries until a CRQC is built. The mandate for crypto-agility is twofold: first, the capability to seamlessly update algorithms, and second, the capacity to operate in hybrid states. 
-          </p>
-          <p>
-            Operating in a hybrid state implies that during the migration phase (estimated to span well beyond 2030 for complex infrastructures), systems must support both classical algorithms (for backwards compatibility with legacy clients) and modern FIPS 203/204 algorithms. Your CBOM output highlights dependencies that currently restrict this agility, specifically flagging non-upgradable implementations of RSA, ECC, and DSA.
-          </p>
-
-          <h2>Mapping Classical to Post-Quantum Algorithms</h2>
-          <p>
-            The migration path requires specific mapping of deprecated cryptographic components to their quantum-resistant counterparts. The Commercial National Security Algorithm (CNSA) Suite 2.0 released by the NSA outlines definitive transition guidelines for National Security Systems, which are heavily adopted by the private sector standardizations.
-          </p>
-          <p>
-            <strong>Symmetric Cryptography & Hashing:</strong> Unlike asymmetric public-key cryptography, symmetric cryptography and hash functions are not fundamentally broken by Shor's algorithm, although they are weakened by Grover's algorithm. 
-            CNSA 2.0 mandates the use of AES-256 for symmetric encryption (upgrading from AES-128) and SHA-384 or SHA-512 for hashing (upgrading from SHA-256). The provided CBOM analyzer natively recognizes these as "CNSA 2.0 / Symmetric Safe" implementations.
-          </p>
-          <p>
-            <strong>Key Establishment:</strong> Classical mechanisms like RSA key transport, Finite Field Diffie-Hellman (FFDH), and Elliptic Curve Diffie-Hellman (ECDH) must be transitioned to ML-KEM. Depending on the library mapped in the CBOM, organizations may use hybrid key encapsulation mechanisms (binding an ML-KEM key with an ECDH key) as recommended by NIST SP 800-227.
-          </p>
-          <p>
-            <strong>Digital Signatures:</strong> RSA and Elliptic Curve Digital Signature Algorithm (ECDSA) must be migrated to ML-DSA or SLH-DSA. For stateful signature scenarios like firmware updates, LMS (Leighton-Micali Signature) and XMSS (eXtended Merkle Signature Scheme) are also supported mappings within the CBOM evaluation model.
-          </p>
-          <p>
-            Establishing an automated mechanism for tracking these transitions within your CI/CD pipelines ensures that no newly introduced code or third-party dependency injects vulnerable cryptography back into a secured environment. Generating a CBOM regularly is the cornerstone of passing the rigorous post-quantum architecture audits expected by 2026.
-          </p>
-        </article>
       </div>
 
-      {/* Right Sidebar Column */}
-      <aside className="hidden lg:block w-[300px] shrink-0">
-        <div className="w-[300px] h-[600px] sticky top-8 bg-[#f8f8f6] border border-[#d4d9de] flex items-center justify-center text-[#4f565c] text-sm">
-          [Ad Slot: Right Sidebar - 300x600]
+      {/* Offerwall */}
+      {locked && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
+          <div className="border border-slate-600 bg-slate-800 p-8 max-w-md w-full mx-4">
+            <h2 className="text-xl font-bold text-slate-100 mb-3">Usage Limit Reached</h2>
+            <p className="text-slate-400 text-sm mb-6">
+              You have used 3 free analyses. Upgrade to BKX Labs Pro for unlimited CBOM generation, bulk imports, and team PDF reports.
+            </p>
+            <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 text-sm transition-colors">
+              Unlock Unlimited Access
+            </button>
+          </div>
         </div>
-      </aside>
+      )}
 
+      {/* 1,500-word Documentation */}
+      <article className="mt-20 border-t border-slate-700 pt-12 text-slate-400 font-sans text-sm leading-relaxed space-y-6">
+        <h2 className="text-2xl font-bold text-slate-100">PQC Migration Guide (2026 Edition)</h2>
+
+        <p>
+          The National Security Agency (NSA), NIST, and CISA have issued an unprecedented convergence of
+          guidance mandating the migration away from classical public-key cryptography. The reason is singular and
+          civilization-scale in consequence: the imminent arrival of the Cryptographically Relevant Quantum Computer (CRQC).
+        </p>
+
+        <h3 className="text-xl font-bold text-slate-200 mt-8">The 'Quantum Apocalypse' — Q-Day Timeline</h3>
+        <p>
+          Q-Day is the informal designation for the date a CRQC becomes operationally available to a well-resourced
+          adversary. Unlike classical hardware advances, which improve cryptanalytic speed incrementally, a CRQC
+          running Shor's Algorithm instantaneously reduces the factoring problem that underpins RSA — and the
+          discrete logarithm problem underlying ECC — from a computationally intractable problem to one solvable in
+          polynomial time.
+        </p>
+        <p>
+          The most credible technical estimates, corroborated by IBM Quantum's 2023 roadmap, Google's Willow chip
+          advances, and classified intelligence assessments referenced in NSA's CNSA 2.0 transition guidance,
+          place Q-Day within the 2030–2040 window. However, NSA's mandates treat 2030 as a hard deadline for
+          National Security Systems, implying classified intelligence may indicate a tighter margin. For security
+          architects, this means the safe planning window is now, not 2028.
+        </p>
+
+        <h3 className="text-xl font-bold text-slate-200 mt-8">Why AES-256 is Quantum-Resistant but RSA-4096 is Not</h3>
+        <p>
+          The distinction is fundamental and rests on the nature of the cryptographic problem each algorithm relies on.
+          RSA's security is rooted in integer factorization. Given a public key consisting of a large semiprime n = p × q,
+          the security assumption is that recovering p and q is computationally infeasible classically. Shor's Algorithm
+          efficiently finds the prime factors of n on a quantum computer, completely invalidating this assumption regardless
+          of key size. An RSA-4096 key offers zero additional quantum resistance compared to RSA-2048 — both are equally
+          broken by a sufficiently powerful CRQC.
+        </p>
+        <p>
+          AES-256 is a symmetric block cipher. Its only quantum threat comes from Grover's Algorithm, which provides
+          a quadratic speedup for unstructured search problems. Against AES-256, Grover's Algorithm effectively
+          reduces the security level from 256 bits to roughly 128 bits of equivalent classical security — still
+          computationally infeasible to brute-force for any known or foreseeable adversary. NIST's CNSA 2.0 formally
+          endorses AES-256 and SHA-384/512 as sufficient against quantum threats, requiring no algorithm replacement —
+          only verification that you are already using 256-bit keys, not 128-bit.
+        </p>
+
+        <h3 className="text-xl font-bold text-slate-200 mt-8">Implementing 'Hybrid' Key Exchanges</h3>
+        <p>
+          Pure ML-KEM adoption faces practical barriers during the 2024–2030 transition period. Legacy clients that
+          do not support FIPS 203 cannot perform the ML-KEM handshake, creating a compatibility cliff for
+          internet-facing services. The recommended bridge is a <em>Hybrid Key Exchange</em> — simultaneously
+          running both a classical and a PQC key encapsulation mechanism and deriving the session key from the
+          concatenation of both secrets using a KDF (Key Derivation Function).
+        </p>
+        <p>
+          Concretely, the TLS 1.3 protocol is being extended by IETF draft RFC "Hybrid key exchange in TLS 1.3"
+          (mlkem-draft) to support X25519MLKEM768 — an encapsulation method combining X25519 ECDH with ML-KEM-768.
+          Google Chrome has already shipped this hybrid by default since 2024.
+          For internal microservice communication and VPN tunnels, organizations can implement hybrid
+          key exchange using a combination of X25519 (for classical compatibility) and ML-KEM-768 within
+          OpenSSL 3.3, which ships with experimental PQC support via the OQS (Open Quantum Safe) provider.
+          The resulting session key is formed as: <code>KDF(ECDH_shared_secret || ML_KEM_shared_secret)</code>,
+          meaning a CRQC breaking the classical layer still cannot compromise the session without also breaking
+          the lattice-based ML-KEM component.
+        </p>
+
+        <h3 className="text-xl font-bold text-slate-200 mt-8">How to Use a CBOM in a Modern CI/CD Pipeline</h3>
+        <p>
+          An inventory generated today becomes stale the moment a developer imports a new library or rotates a key.
+          The sustainable solution is to embed CBOM generation natively into the CI/CD pipeline, making
+          cryptographic compliance a non-blocking verification gate rather than a one-time audit.
+        </p>
+        <p>
+          The following pipeline architecture achieves this using CycloneDX v1.6 outputs from this generator:
+        </p>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li><strong>Generation:</strong> On each merge to <code>main</code>, a CI step runs the CBOM Generator (or its API equivalent) and outputs a <code>bom.json</code> file in CycloneDX v1.6 format.</li>
+          <li><strong>Scanning:</strong> The <code>bom.json</code> is submitted to Dependency-Track or cdxgen-server, which matches every cryptographic component against its vulnerability database. Any newly flagged algorithm triggers a pipeline failure.</li>
+          <li><strong>Policy Enforcement:</strong> A custom policy rule in Dependency-Track blocks deployments if any component is flagged as <code>nis2Flagged: true</code> or <code>riskScore &gt; 70</code>.</li>
+          <li><strong>Attestation:</strong> The validated <code>bom.json</code> is GPG-signed and uploaded to your software attestation store (e.g., AWS Signer or Sigstore), providing an audit trail for NIS2 Article 21 compliance documentation.</li>
+          <li><strong>Drift Detection:</strong> A weekly scheduled job compares the current <code>bom.json</code> against the pinned baseline from the last audit, alerting on any new classical algorithm introductions by third-party library updates.</li>
+        </ol>
+        <p>
+          This pipeline converts CBOM from a one-time artifact into a living compliance instrument — the standard
+          demanded by CISA's Secure by Design program and the implicit intent of NIS2 Article 21's "appropriate
+          and proportionate technical measures" requirement.
+        </p>
+      </article>
     </div>
   );
 }
