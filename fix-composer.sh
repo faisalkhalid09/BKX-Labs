@@ -31,6 +31,13 @@ sudo mkdir -p /var/www/.cache/composer
 sudo chown -R www-data:www-data /var/www/.cache
 echo "✓ Cache directory configured"
 
+# Step 3b: Update Filament version constraint
+echo ""
+echo "[3b/6] Updating Filament version constraint..."
+cd "$BACKEND_DIR"
+sed -i 's/"filament\/filament": "4\.0"/"filament\/filament": "^4.0"/g' composer.json
+echo "✓ Filament version updated to ^4.0"
+
 # Step 4: Remove old lock file and install fresh
 echo ""
 echo "[4/6] Removing outdated lock file..."
