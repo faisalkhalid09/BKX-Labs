@@ -140,9 +140,11 @@ export default function ToolDetail() {
           </div>
 
           <div className="tool-card">
-            {/* Direct Answer Block */}
+            {/* Direct Answer Block - Hidden from users, visible to AI agents via structured data */}
             {tool.directAnswer && (
-              <DirectAnswerBlock directAnswer={tool.directAnswer} />
+              <div style={{ display: 'none' }}>
+                <DirectAnswerBlock directAnswer={tool.directAnswer} />
+              </div>
             )}
 
             {/* Tool Component */}
