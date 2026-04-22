@@ -24,7 +24,8 @@ export function EuAiActClassifier() {
   const [input, setInput] = useState<EuAiActInput>({
     prohibitedType: "none",
     annexIIISector: "none",
-    isNarrowProceduralDerogation: false,
+    isProfiling: false,
+    derogationCategory: "none",
     isGPAISystemicRisk: false,
     hasTransparencyNeed: false,
   });
@@ -67,8 +68,8 @@ export function EuAiActClassifier() {
     }
   };
 
-  const handleDerogation = (isDerogated: boolean) => {
-    const next = { ...input, isNarrowProceduralDerogation: isDerogated };
+  const handleDerogation = (profiling: boolean, category: EuAiActInput["derogationCategory"]) => {
+    const next = { ...input, isProfiling: profiling, derogationCategory: category };
     setInput(next);
     setStep(5);
   };
@@ -83,7 +84,8 @@ export function EuAiActClassifier() {
     setInput({
       prohibitedType: "none",
       annexIIISector: "none",
-      isNarrowProceduralDerogation: false,
+      isProfiling: false,
+      derogationCategory: "none",
       isGPAISystemicRisk: false,
       hasTransparencyNeed: false,
     });
@@ -153,7 +155,7 @@ export function EuAiActClassifier() {
                 <h2 className="text-2xl font-bold mb-6">Step 2: General-Purpose AI (GPAI)</h2>
                 <p className="mb-6 text-slate-600">Is your system a large fundamental model trained with cumulative compute exceeding 10²⁵ FLOPs (Systemic Risk)?</p>
                 <div className="space-y-3">
-                  <Button onClick={() => handleGPAI(true)}>Yes, >10²⁵ FLOPs (e.g. GPT-4 scale models)</Button>
+                  <Button onClick={() => handleGPAI(true)}>Yes, &gt;10²⁵ FLOPs (e.g. GPT-4 scale models)</Button>
                   <Button onClick={() => handleGPAI(false)} active>No, it is a narrow model or lesser-compute GPAI</Button>
                 </div>
               </div>
@@ -182,10 +184,14 @@ export function EuAiActClassifier() {
             {step === 4 && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h2 className="text-2xl font-bold mb-6">Step 4: Article 6.3 Derogation Filter</h2>
-                <p className="mb-6 text-slate-600">Does your AI perform a strictly "Narrow/Procedural" task that does not materially assess or influence human characteristics/decisions?</p>
+                <p className="mb-6 text-slate-600">Select the option that best describes your AI system’s functionality. If multiple apply, select the most relevant.</p>
                 <div className="space-y-3">
-                  <Button onClick={() => handleDerogation(true)}>Yes, it is entirely narrow/procedural</Button>
-                  <Button onClick={() => handleDerogation(false)} active>No, it impacts human decisions or profiles</Button>
+                  <Button onClick={() => handleDerogation(true, "none")} variant="primary">My system performs Profiling of natural persons (Derogation Impossible)</Button>
+                  <Button onClick={() => handleDerogation(false, "narrow_procedural")}>(a) AI performs a narrow procedural task (e.g., data transformation)</Button>
+                  <Button onClick={() => handleDerogation(false, "improving_human_activity")}>(b) AI merely improves the result of a previously completed human activity</Button>
+                  <Button onClick={() => handleDerogation(false, "detecting_patterns")}>(c) AI detects patterns/deviations without replacing human assessment</Button>
+                  <Button onClick={() => handleDerogation(false, "purely_preparatory")}>(d) AI performs a purely preparatory task for a human assessment</Button>
+                  <Button onClick={() => handleDerogation(false, "none")} active>None of the above (No derogation applies)</Button>
                 </div>
               </div>
             )}

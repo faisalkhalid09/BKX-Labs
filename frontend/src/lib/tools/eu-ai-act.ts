@@ -3,7 +3,8 @@ import type { RiskLevel } from "@/lib/tools/types";
 export type EuAiActInput = {
   prohibitedType: "social_scoring" | "emotion_workplace" | "facial_scraping" | "subliminal" | "none";
   annexIIISector: "biometrics" | "critical_infra" | "education" | "employment" | "essential_services" | "law_enforcement" | "migration" | "justice" | "none";
-  isNarrowProceduralDerogation: boolean; // Article 6.3
+  isProfiling: boolean; // Precludes Article 6.3
+  derogationCategory: "none" | "narrow_procedural" | "improving_human_activity" | "detecting_patterns" | "purely_preparatory"; // Article 6.3 exceptions
   isGPAISystemicRisk: boolean; // >10^25 FLOPs
   hasTransparencyNeed: boolean; // General emotion AI or deepfakes
 };
@@ -73,18 +74,25 @@ export function classifyEuAiActRisk(input: EuAiActInput): EuAiActResult {
 
   // ===== STEP 3: ANNEX III HIGH-RISK SYSTEMS =====
   if (input.annexIIISector !== "none") {
-    if (input.isNarrowProceduralDerogation) {
-      // Article 6.3 Derogation allows bypassing High-Risk requirements if task is narrow/procedural
-      reasons.push(`System applied in ${input.annexIIISector} sector, but exempted via Article 6.3 Derogation.`);
-      complianceSnapshot.push("[DEROGATION] System downgraded from High-Risk under Article 6.3.");
-      complianceSnapshot.push("The AI performs a narrow, procedural task that does not materially assess human characteristics.");
+    if (!input.isProfiling && input.derogationCategory !== "none") {
+      // Article 6.3 Derogation allows bypassing High-Risk requirements
+      let derogationText = "";
+      if (input.derogationCategory === "narrow_procedural") derogationText = "Narrow procedural task";
+      else if (input.derogationCategory === "improving_human_activity") derogationText = "Improving result of a previously completed human activity";
+      else if (input.derogationCategory === "detecting_patterns") derogationText = "Detecting patterns/deviations without replacing human assessment";
+      else if (input.derogationCategory === "purely_preparatory") derogationText = "Purely preparatory task";
+
+      reasons.push(`System applied in ${input.annexIIISector} sector, but exempted via Article 6.3 Derogation (${derogationText}).`);
+      complianceSnapshot.push(`[MINIMAL RISK] System downgraded from Annex III High-Risk under Article 6.3.`);
+      complianceSnapshot.push("Provider must document this assessment before market entry per Article 6(4).");
       complianceRequirements.push("Document the justification for the Article 6.3 derogation before placing on the market.");
       complianceRequirements.push("Register the derogation in the EU NASS database.");
       regulatoryReferences.push("Article 6.3 - Classification rules for high-risk AI systems");
-      auditDocumentation.push("Documented assessment proving the AI system does not pose a significant risk");
+      regulatoryReferences.push("Article 6.4 - Documentation requirements for derogations");
+      auditDocumentation.push("Documented assessment proving the AI system meets derogation criteria per Article 6(4)");
       
       return {
-        riskLevel: "Limited", // Downgraded risk profile, but requires transparency/registration
+        riskLevel: "Minimal", 
         reasons,
         complianceSnapshot,
         complianceRequirements,
@@ -92,8 +100,11 @@ export function classifyEuAiActRisk(input: EuAiActInput): EuAiActResult {
         auditDocumentation,
       };
     } else {
-      reasons.push(`Annex III High-Risk Designation: ${input.annexIIISector}`);
+      reasons.push(`Annex III High-Risk Designation: ${input.annexIIISector}${input.isProfiling ? " (Profiling Detected - Derogation Impossible)" : ""}`);
       complianceSnapshot.push(`[HIGH RISK] Sector: ${input.annexIIISector}. Strict compliance mandated by August 2026.`);
+      if (input.isProfiling) {
+        complianceSnapshot.push("CRITICAL: The system performs Profiling of natural persons. Article 6.3 derogation is legally impossible.");
+      }
       complianceSnapshot.push("Requires full Quality Management System (QMS), continuous post-market monitoring, and human-in-the-loop oversight.");
       
       complianceRequirements.push("Establish and implement a continuous Risk Management System (Article 9).");
