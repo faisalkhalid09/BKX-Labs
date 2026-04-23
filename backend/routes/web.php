@@ -7,6 +7,7 @@ use App\Http\Controllers\Store\WebhookController;
 use App\Http\Controllers\Store\DownloadController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Store\LegalController;
+use App\Http\Controllers\ToolController;
 use App\Livewire\Store\SearchPage;
 
 // Welcome (existing)
@@ -44,6 +45,18 @@ Route::prefix('store')->name('store.')->group(function () {
     Route::post('/{product:slug}/cart', [StoreController::class, 'addToCart'])->name('add_to_cart');
     Route::post('/{product:slug}/cart-only', [StoreController::class, 'addToCartOnly'])->name('add_to_cart_only');
     Route::get('/{slug}',   [StoreController::class, 'show'])->name('show')->middleware(\App\Http\Middleware\StoreResponseCache::class);
+});
+
+
+// ──────────────────────────────────────
+//  Tools Routes (with SEO metadata injection)
+// ──────────────────────────────────────
+// These routes serve tool pages with server-side rendered metadata for
+// Google, Bing, and AI crawler visibility. The tool slugs match the
+// frontend React Router paths to avoid duplication.
+Route::prefix('tools')->name('tools.')->group(function () {
+    Route::get('/', [ToolController::class, 'index'])->name('index');
+    Route::get('/{slug}', [ToolController::class, 'show'])->name('show');
 });
 
 
