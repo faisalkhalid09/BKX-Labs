@@ -660,20 +660,26 @@
     gap: 0.75rem;
   }
 
+  .tools-header-logo {
+    width: 70px;
+    height: 40px;
+  }
+
   .tools-logo-circle {
-    width: 58px;
-    height: 58px;
+    width: 70px;
+    height: 70px;
+    top: -10px;
     border-width: 1px;
-    transform: translateY(16px);
+    transform: none; /* using top instead of translate */
   }
 
   .tools-logo-circle:hover {
-    transform: translateY(16px) scale(1.05);
+    transform: scale(1.05);
   }
 
   .tools-favicon-img {
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
   }
 
   /* Grid — full width on small phones */
