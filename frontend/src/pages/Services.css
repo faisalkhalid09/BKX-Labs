@@ -218,3 +218,87 @@
         font-size: 1.5rem;
     }
 }
+
+/* ─────────────────────────────────────────────
+   Pricing FAQ Section (FAQPage schema target)
+───────────────────────────────────────────── */
+.pricing-faq-section {
+    background: var(--secondary);
+}
+
+.pricing-faq-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 3rem auto;
+}
+
+.pricing-faq-icon {
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.pricing-faq-header h2 {
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+}
+
+.pricing-faq-header p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-gray);
+    margin: 0;
+}
+
+.pricing-faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: box-shadow 0.22s ease;
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-item h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--accent);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.faq-item p {
+    font-size: 0.93rem;
+    line-height: 1.8;
+    color: var(--text-gray);
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .pricing-faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-item {
+        padding: 1.5rem;
+    }
+}
