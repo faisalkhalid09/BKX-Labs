@@ -26,7 +26,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   'eu-ai-act-risk-level-classifier': EuAiActClassifier,
   'post-quantum-cbom-generator': PostQuantumCBOMGenerator,
   'saas-soc2-readiness-calculator': SaaSSoc2Calculator,
-  'cloud-gpu-cost-comparison-tool': CloudGpuCostComparison,
+  'cloud-gpu-cost-comparison': CloudGpuCostComparison,
   'nvidia-blackwell-pue-estimator': NvidiaBlackwellEstimator,
   'ai-prompt-privacy-auditor': AiPromptPrivacyAuditor,
   'admt-proportionality-scorer': AdmtProportionalityScorer,
