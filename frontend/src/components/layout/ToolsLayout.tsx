@@ -1,9 +1,39 @@
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './ToolsLayout.css';
 
 export function ToolsHeader() {
+  const [isHidden, setIsHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Don't trigger if jumping/bouncing (iOS) or at the very top
+      if (currentScrollY < 0) return;
+      if (currentScrollY < 50) {
+        setIsHidden(false);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Hide if scrolling down, show if scrolling up (even a little)
+      if (currentScrollY > lastScrollY.current) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="tools-header">
+    <header className={`tools-header ${isHidden ? 'hidden' : ''}`}>
       <div className="tools-header-content">
         <div className="tools-logo">
           <Link to="/tools" className="tools-logo-link">
