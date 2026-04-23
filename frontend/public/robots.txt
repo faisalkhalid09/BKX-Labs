@@ -1,10 +1,26 @@
-# BKX Labs - Robots.txt
+# robots.txt — BKX Labs (bkxlabs.com)
+# Updated: 2026-04-23
+
 User-agent: *
 Allow: /
 
-# Disallow restricted portal and admin areas
-Disallow: /restricted-portal/
+# Block admin and restricted backend routes
+Disallow: /admin
 Disallow: /admin/
+Disallow: /restricted/
+Disallow: /restricted-portal/
+Disallow: /api/
+Disallow: /_internal/
 
-# Sitemap location
+# Block Laravel/Filament framework paths
+Disallow: /filament/
+Disallow: /horizon/
+Disallow: /telescope/
+Disallow: /sanctum/
+
+# Block duplicate content from query strings
+Disallow: /*?*utm_source=
+Disallow: /*?*ref=
+
+# Sitemap
 Sitemap: https://bkxlabs.com/sitemap.xml
