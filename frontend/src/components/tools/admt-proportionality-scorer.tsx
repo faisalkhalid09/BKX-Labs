@@ -1,7 +1,4 @@
-
 import { useState, useMemo } from 'react';
-import { AlertTriangle, CheckCircle, Eye, Shield, Zap } from 'lucide-react';
-import ToolToAgencyCTA from './ToolToAgencyCTA';
 
 const FACTOR_WEIGHTS = {
   necessity: 0.2,
@@ -44,35 +41,30 @@ export function AdmtProportionalityScorer() {
         score: necessity,
         weight: FACTOR_WEIGHTS.necessity,
         normalized: normalizedNecessity,
-        description: 'Is monitoring necessary for legitimate business purposes?',
       },
       {
         name: 'Worker Transparency',
         score: transparency,
         weight: FACTOR_WEIGHTS.transparency,
         normalized: normalizedTransparency,
-        description: 'Are workers fully informed about monitoring scope and data use?',
       },
       {
         name: 'Intrusiveness',
         score: intrusiveness,
         weight: FACTOR_WEIGHTS.intrusiveness,
         normalized: normalizedIntrusiveness,
-        description: 'How invasive is the monitoring (0=least, 10=most)?',
       },
       {
         name: 'Data Safeguards',
         score: safeguards,
         weight: FACTOR_WEIGHTS.safeguards,
         normalized: normalizedSafeguards,
-        description: 'Are strong controls in place to protect collected data?',
       },
       {
         name: 'Worker Impact',
         score: workerImpact,
         weight: FACTOR_WEIGHTS.workerImpact,
         normalized: normalizedWorkerImpact,
-        description: 'How significantly does monitoring affect worker privacy/autonomy?',
       },
     ];
 
@@ -89,19 +81,19 @@ export function AdmtProportionalityScorer() {
     const recommendations: string[] = [];
 
     if (necessity < 4) {
-      recommendations.push('✓ Strengthen business case: Document specific, legitimate reasons for monitoring');
+      recommendations.push('Strengthen business case: Document specific, legitimate reasons for monitoring.');
     }
     if (transparency < 4) {
-      recommendations.push('✓ Increase transparency: Provide workers with detailed written disclosure of monitoring scope, frequency, and data retention');
+      recommendations.push('Increase transparency: Provide workers with detailed written disclosure of monitoring scope, frequency, and data retention.');
     }
     if (intrusiveness > 7) {
-      recommendations.push('✗ Consider less invasive alternatives: Evaluate whether monitoring scope can be reduced');
+      recommendations.push('Consider less invasive alternatives: Evaluate whether monitoring scope can be reduced.');
     }
     if (safeguards < 4) {
-      recommendations.push('✗ Strengthen safeguards: Implement encryption, access controls, and regular audits');
+      recommendations.push('Strengthen safeguards: Implement encryption, access controls, and regular audits.');
     }
     if (workerImpact > 7) {
-      recommendations.push('✗ High impact on workers: Consult legal counsel and consider worker input before deployment');
+      recommendations.push('High impact on workers: Consult legal counsel and consider worker input before deployment.');
     }
 
     return {
@@ -117,22 +109,6 @@ export function AdmtProportionalityScorer() {
     };
   }, [necessity, transparency, intrusiveness, safeguards, workerImpact]);
 
-  const riskColor =
-    result.riskBand === 'low'
-      ? 'bg-green-50 border-green-300'
-      : result.riskBand === 'medium'
-        ? 'bg-yellow-50 border-yellow-300'
-        : result.riskBand === 'high'
-          ? 'bg-orange-50 border-orange-300'
-          : 'bg-red-50 border-red-300';
-
-  const riskIcon =
-    result.riskBand === 'low' || result.riskBand === 'medium' ? (
-      <CheckCircle size={24} className="text-green-600" />
-    ) : (
-      <AlertTriangle size={24} className="text-red-600" />
-    );
-
   const handleReset = () => {
     setNecessity(5);
     setTransparency(5);
@@ -141,237 +117,151 @@ export function AdmtProportionalityScorer() {
     setWorkerImpact(5);
   };
 
+  const riskColor =
+    result.riskBand === 'low' ? '#10b981' :
+    result.riskBand === 'medium' ? '#d97706' :
+    result.riskBand === 'high' ? '#d97706' :
+    '#dc2626';
+
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8">
-      {/* Top Banner Ad Slot */}
-      <div className="mb-8 bg-slate-100 border border-slate-300 rounded-md flex items-center justify-center h-24">
-        <div className="text-slate-500 text-sm">728×90 Ad Slot</div>
-      </div>
+    <div className="tu-wrap">
+      <span className="tu-tag">BKX Compliance Tools</span>
+      <h1 className="tu-title">ADMT Proportionality Scorer</h1>
+      <p className="tu-subtitle">
+        Assess workplace monitoring and AI decision-making against GDPR Article 35 and ADMT Directive proportionality rules.
+      </p>
+      <hr className="tu-divider" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Input Section */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-slate-900">Assessment Factors</h2>
-
-            {/* Business Necessity */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Eye size={18} className="text-slate-600" />
-                <label className="font-semibold text-slate-900">Business Necessity (0-10)</label>
-              </div>
-              <p className="text-xs text-slate-600 mb-2">Is monitoring necessary for legitimate operational, safety, or compliance purposes?</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  value={necessity}
-                  onChange={(e) => setNecessity(Number(e.target.value))}
-                  min="0"
-                  max="10"
-                  className="flex-1"
-                />
-                <span className="font-semibold text-slate-900 min-w-[3rem]">{necessity}/10</span>
-              </div>
-            </div>
-
-            {/* Worker Transparency */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Eye size={18} className="text-slate-600" />
-                <label className="font-semibold text-slate-900">Worker Transparency (0-10)</label>
-              </div>
-              <p className="text-xs text-slate-600 mb-2">Are workers fully informed about monitoring scope, methods, and data usage?</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  value={transparency}
-                  onChange={(e) => setTransparency(Number(e.target.value))}
-                  min="0"
-                  max="10"
-                  className="flex-1"
-                />
-                <span className="font-semibold text-slate-900 min-w-[3rem]">{transparency}/10</span>
-              </div>
-            </div>
-
-            {/* Intrusiveness */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Shield size={18} className="text-slate-600" />
-                <label className="font-semibold text-slate-900">Intrusiveness (0-10)</label>
-              </div>
-              <p className="text-xs text-slate-600 mb-2">How intrusive is the monitoring? (0=minimal, 10=maximum privacy impact)</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  value={intrusiveness}
-                  onChange={(e) => setIntrusiveness(Number(e.target.value))}
-                  min="0"
-                  max="10"
-                  className="flex-1"
-                />
-                <span className="font-semibold text-slate-900 min-w-[3rem]">{intrusiveness}/10</span>
-              </div>
-            </div>
-
-            {/* Data Safeguards */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Shield size={18} className="text-slate-600" />
-                <label className="font-semibold text-slate-900">Data Safeguards (0-10)</label>
-              </div>
-              <p className="text-xs text-slate-600 mb-2">How strong are technical and organizational safeguards protecting collected data?</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  value={safeguards}
-                  onChange={(e) => setSafeguards(Number(e.target.value))}
-                  min="0"
-                  max="10"
-                  className="flex-1"
-                />
-                <span className="font-semibold text-slate-900 min-w-[3rem]">{safeguards}/10</span>
-              </div>
-            </div>
-
-            {/* Worker Impact */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Zap size={18} className="text-slate-600" />
-                <label className="font-semibold text-slate-900">Worker Impact (0-10)</label>
-              </div>
-              <p className="text-xs text-slate-600 mb-2">How significantly does monitoring affect worker autonomy, privacy, or wellbeing? (0=minimal, 10=severe)</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  value={workerImpact}
-                  onChange={(e) => setWorkerImpact(Number(e.target.value))}
-                  min="0"
-                  max="10"
-                  className="flex-1"
-                />
-                <span className="font-semibold text-slate-900 min-w-[3rem]">{workerImpact}/10</span>
-              </div>
-            </div>
-
-            <button
-              onClick={handleReset}
-              className="px-4 py-2 border border-slate-300 text-slate-900 rounded-md hover:bg-slate-50 transition-colors"
-            >
-              Reset All
-            </button>
-          </div>
-
-          {/* Results Section */}
-          <div className={`p-6 border rounded-md ${riskColor}`}>
-            <div className="flex items-center gap-3 mb-4">
-              {riskIcon}
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">Proportionality Score: {result.overallScore}/100</h3>
-                <p className="text-sm text-slate-600">
-                  Risk Band:{' '}
-                  <span
-                    className={`font-semibold ${
-                      result.riskBand === 'low'
-                        ? 'text-green-600'
-                        : result.riskBand === 'medium'
-                          ? 'text-yellow-600'
-                          : result.riskBand === 'high'
-                            ? 'text-orange-600'
-                            : 'text-red-600'
-                    }`}
-                  >
-                    {result.riskBand.toUpperCase()}
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            {/* Factor Breakdown */}
-            <div className="space-y-3">
-              <h4 className="font-semibold text-slate-900">Factor Contributions</h4>
-              {result.factors.map((factor) => (
-                <div key={factor.name} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-700">{factor.name}</span>
-                    <span className="font-semibold text-slate-900">{factor.contribution}%</span>
-                  </div>
-                  <div className="w-full bg-slate-200 rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full bg-slate-900 transition-all"
-                      style={{ width: `${factor.contribution}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Legal Interpretation */}
-            <div className="mt-4 p-3 bg-white bg-opacity-60 rounded border border-slate-300">
-              <p className="text-sm text-slate-700">
-                <strong>Interpretation:</strong>{' '}
-                {result.riskBand === 'low' &&
-                  'Monitoring appears proportional under GDPR and ADMT. Document the assessment for compliance audits.'}
-                {result.riskBand === 'medium' &&
-                  'Monitoring is moderately proportional. Strengthen transparency and safeguards. Consult legal counsel.'}
-                {result.riskBand === 'high' &&
-                  'Proportionality is questionable. Consider reducing scope, increasing transparency, or consulting labor lawyers.'}
-                {result.riskBand === 'critical' &&
-                  'Proportionality is highly suspect. Immediate legal review and stakeholder consultation recommended.'}
-              </p>
-            </div>
-          </div>
-
-          {/* Recommendations */}
-          {result.recommendations.length > 0 && (
-            <div className="bg-blue-50 border border-blue-300 rounded-md p-4 space-y-3">
-              <h4 className="font-semibold text-slate-900">Recommendations</h4>
-              <ul className="space-y-2">
-                {result.recommendations.map((rec, idx) => (
-                  <li key={idx} className="text-sm text-slate-700">
-                    {rec}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Right Sidebar Ad + Legal Notes */}
-        <div className="lg:col-span-1 space-y-6">
-          {/* Right Sidebar Ad Slot */}
-          <div className="bg-slate-100 border border-slate-300 rounded-md flex flex-col items-center justify-center h-96">
-            <div className="text-slate-500 text-sm text-center">300×600 Ad Slot</div>
-          </div>
-
-          {/* Legal Reference */}
-          <div className="p-4 bg-slate-50 border border-slate-300 rounded-md space-y-4">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1.25rem' }}>
+        <div className="tu-slider-row">
+          <div className="tu-slider-header">
             <div>
-              <h4 className="font-semibold text-slate-900 mb-2">ADMT Legal Framework</h4>
-              <p className="text-xs text-slate-600 mb-3">
-                This tool implements proportionality testing under:
-              </p>
-              <ul className="text-xs text-slate-600 space-y-2">
-                <li>• <strong>EU GDPR Article 6:</strong> Lawful basis requirements</li>
-                <li>• <strong>GDPR Article 35:</strong> Data Protection Impact Assessment</li>
-                <li>• <strong>EU ADMT Directive:</strong> Proportionality of automated decisions</li>
-                <li>• <strong>ILO Standards:</strong> Worker dignity and privacy rights</li>
-              </ul>
+              <span className="tu-label">Business Necessity</span>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Is monitoring necessary for legitimate operational purposes?</p>
             </div>
-
-            <div className="border-t border-slate-300 pt-3">
-              <p className="text-xs text-red-600 font-semibold">
-                ⚠️ <strong>Legal Disclaimer:</strong> This tool is for assessment only. Consult qualified legal counsel before deploying workplace monitoring to ensure full compliance.
-              </p>
-            </div>
+            <span className="tu-slider-value">{necessity}/10</span>
           </div>
+          <input
+            type="range" value={necessity} min="0" max="10"
+            onChange={(e) => setNecessity(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: '0.4rem' }}
+          />
+        </div>
+
+        <div className="tu-slider-row">
+          <div className="tu-slider-header">
+            <div>
+              <span className="tu-label">Worker Transparency</span>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Are workers fully informed about monitoring scope and data use?</p>
+            </div>
+            <span className="tu-slider-value">{transparency}/10</span>
+          </div>
+          <input
+            type="range" value={transparency} min="0" max="10"
+            onChange={(e) => setTransparency(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: '0.4rem' }}
+          />
+        </div>
+
+        <div className="tu-slider-row">
+          <div className="tu-slider-header">
+            <div>
+              <span className="tu-label">Intrusiveness</span>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>How invasive is the monitoring (0=least, 10=most)?</p>
+            </div>
+            <span className="tu-slider-value">{intrusiveness}/10</span>
+          </div>
+          <input
+            type="range" value={intrusiveness} min="0" max="10"
+            onChange={(e) => setIntrusiveness(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: '0.4rem' }}
+          />
+        </div>
+
+        <div className="tu-slider-row">
+          <div className="tu-slider-header">
+            <div>
+              <span className="tu-label">Data Safeguards</span>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Are strong controls in place to protect collected data?</p>
+            </div>
+            <span className="tu-slider-value">{safeguards}/10</span>
+          </div>
+          <input
+            type="range" value={safeguards} min="0" max="10"
+            onChange={(e) => setSafeguards(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: '0.4rem' }}
+          />
+        </div>
+
+        <div className="tu-slider-row">
+          <div className="tu-slider-header">
+            <div>
+              <span className="tu-label">Worker Impact</span>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>How significantly does monitoring affect worker autonomy?</p>
+            </div>
+            <span className="tu-slider-value">{workerImpact}/10</span>
+          </div>
+          <input
+            type="range" value={workerImpact} min="0" max="10"
+            onChange={(e) => setWorkerImpact(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: '0.4rem' }}
+          />
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA />
+      <div className="tu-btn-row">
+        <button type="button" className="tu-btn" onClick={handleReset}>Reset Form</button>
+      </div>
+
+      <div className="tu-result tu-animate">
+        <div className="tu-result-hero">
+          <div className="tu-metric">
+            <span className="tu-metric-label">Proportionality Score</span>
+            <span className="tu-metric-value">{result.overallScore}<span className="tu-metric-unit">/ 100</span></span>
+          </div>
+          <div className="tu-metric">
+            <span className="tu-metric-label">Risk Band</span>
+            <span className="tu-metric-value" style={{ color: riskColor, textTransform: 'capitalize' }}>
+              {result.riskBand}
+            </span>
+          </div>
+        </div>
+
+        <div className="tu-table-wrap" style={{ marginBottom: '1.25rem' }}>
+          <table className="tu-table">
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Raw Score</th>
+                <th>Contribution to Overall</th>
+              </tr>
+            </thead>
+            <tbody>
+              {result.factors.map(f => (
+                <tr key={f.name}>
+                  <td style={{ fontWeight: 600 }}>{f.name}</td>
+                  <td>{f.score} / 10</td>
+                  <td>{f.contribution}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {result.recommendations.length > 0 && (
+          <div style={{ padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px' }}>
+            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#991b1b', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Review Needed</p>
+            <ul className="tu-result-list" style={{ marginTop: 0 }}>
+              {result.recommendations.map((rec, idx) => (
+                <li key={idx} style={{ color: '#991b1b' }}>{rec}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        <p style={{ fontSize: "0.8rem", color: "#4f565c", marginTop: "1rem", fontStyle: "italic", textAlign: 'center' }}>
+          Assessment only. Consult legal counsel before deployment.
+        </p>
       </div>
     </div>
   );
