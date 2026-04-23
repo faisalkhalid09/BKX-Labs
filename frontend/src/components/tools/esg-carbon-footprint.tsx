@@ -163,12 +163,12 @@ export function CarbonFootprintTracker() {
 
         <div style={{ padding: '1rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', display: 'flex', gap: '1rem' }}>
           <div style={{ flex: 1, textAlign: 'center', padding: '1rem', background: '#fff', borderRadius: '4px', border: '1px solid #f1f5f9' }}>
-            <span style={{ display: 'block', fontSize: '1.5rem', mb: '0.5rem' }}>🚗</span>
+            <span style={{ display: 'block', fontSize: '1.5rem', marginBottom: '0.5rem' }}>🚗</span>
             <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 700, color: '#1e293b' }}>{Math.round(result.equivalencies.cars).toLocaleString()}</span>
             <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#64748b' }}>Passenger Cars Driven For 1 Year</span>
           </div>
           <div style={{ flex: 1, textAlign: 'center', padding: '1rem', background: '#fff', borderRadius: '4px', border: '1px solid #f1f5f9' }}>
-            <span style={{ display: 'block', fontSize: '1.5rem', mb: '0.5rem' }}>🌲</span>
+            <span style={{ display: 'block', fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌲</span>
             <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 700, color: '#16a34a' }}>{Math.round(result.equivalencies.trees).toLocaleString()}</span>
             <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#64748b' }}>Tree Seedlings Grown For 10 Years</span>
           </div>
