@@ -1,8 +1,7 @@
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
-import { Target, Users, Eye, Linkedin, ArrowRight, ShieldCheck, Code2, BookOpen, award } from 'lucide-react';
-import { Award, Lock, Layers, CheckCircle } from 'lucide-react';
+import { Target, Users, Eye, Linkedin, ArrowRight, ShieldCheck, Code2, BookOpen, Award, Lock, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './About.css';
