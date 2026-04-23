@@ -119,7 +119,8 @@ export function SaaSSoc2Calculator() {
       <p className="tu-subtitle">2026 Continuous Monitoring Model · Automation Multiplier Scoring · CC9.2 &amp; CC6.1 Weighted</p>
       <hr className="tu-divider" />
 
-      <div className={`transition-all ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
+      <div className={`transition-all tu-split-layout ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
+        <div className="tu-split-left">
 
         {/* Gauge + TSC Toggles */}
         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "1.25rem", marginBottom: "1.5rem", alignItems: "start" }}>
@@ -251,73 +252,76 @@ export function SaaSSoc2Calculator() {
           <button onClick={onReset} className="tu-btn">Reset</button>
         </div>
 
-        {/* Gap report */}
-        {result && (
-          <div className="tu-result tu-animate" aria-live="polite">
-            <div className="tu-result-hero">
-              <div className="tu-metric">
-                <span className="tu-metric-label">Overall Readiness</span>
-                <span className="tu-metric-value">{result.overallReadiness}<span className="tu-metric-unit">%</span></span>
+        </div> {/* end tu-split-left */}
+        <div className="tu-split-right">
+          {/* Gap report */}
+          {result && (
+            <div className="tu-result tu-animate" aria-live="polite" style={{ marginTop: 0 }}>
+              <div className="tu-result-hero">
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Overall Readiness</span>
+                  <span className="tu-metric-value">{result.overallReadiness}<span className="tu-metric-unit">%</span></span>
+                </div>
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Est. Timeline</span>
+                  <span className="tu-metric-value">{result.estimatedTimelineMonths}<span className="tu-metric-unit">mo</span></span>
+                </div>
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Total Gaps</span>
+                  <span className={`tu-metric-value ${result.totalGaps > 5 ? "danger" : result.totalGaps > 2 ? "warn" : "success"}`}>
+                    {result.totalGaps}
+                  </span>
+                </div>
               </div>
-              <div className="tu-metric">
-                <span className="tu-metric-label">Est. Timeline</span>
-                <span className="tu-metric-value">{result.estimatedTimelineMonths}<span className="tu-metric-unit">mo</span></span>
-              </div>
-              <div className="tu-metric">
-                <span className="tu-metric-label">Total Gaps</span>
-                <span className={`tu-metric-value ${result.totalGaps > 5 ? "danger" : result.totalGaps > 2 ? "warn" : "success"}`}>
-                  {result.totalGaps}
-                </span>
-              </div>
-            </div>
 
-            {result.criticalGaps.length > 0 && (
-              <div style={{ padding: "0.875rem", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "#991b1b", marginBottom: "0.4rem" }}>⚑ Critical Gaps (High-Weight Controls)</p>
-                <ul className="tu-result-list">
-                  {result.criticalGaps.map((g) => <li key={g} style={{ color: "#dc2626" }}>{g}</li>)}
-                </ul>
-              </div>
-            )}
+              {result.criticalGaps.length > 0 && (
+                <div style={{ padding: "0.875rem", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, marginBottom: "1rem" }}>
+                  <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "#991b1b", marginBottom: "0.4rem" }}>⚑ Critical Gaps (High-Weight Controls)</p>
+                  <ul className="tu-result-list">
+                    {result.criticalGaps.map((g) => <li key={g} style={{ color: "#dc2626" }}>{g}</li>)}
+                  </ul>
+                </div>
+              )}
 
-            <div className="tu-table-wrap">
-              <table className="tu-table">
-                <thead>
-                  <tr>
-                    <th>CC Ref</th>
-                    <th>Control</th>
-                    <th>Status</th>
-                    <th>Evidence</th>
-                    <th style={{ textAlign: "right" }}>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {result.allControls.map((ctrl) => (
-                    <tr key={ctrl.controlDef.id}>
-                      <td style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "#4f565c" }}>{ctrl.controlDef.ccRef}</td>
-                      <td style={{ maxWidth: 200 }}>{ctrl.controlDef.label.split("—")[1]?.trim()}</td>
-                      <td>
-                        <span className={`tu-badge ${ctrl.isGap ? "tu-badge-gap" : "tu-badge-ok"}`}>
-                          {ctrl.isGap ? "GAP" : "OK"}
-                        </span>
-                      </td>
-                      <td>
-                        {ctrl.isGap ? "—" : (
-                          <span style={{ fontSize: "0.78rem", fontWeight: 600, color: ctrl.evidenceMode === "automated" ? "#0d2b5e" : "#d97706" }}>
-                            {ctrl.evidenceMode === "automated" ? "Automated" : "Manual ⚠"}
-                          </span>
-                        )}
-                      </td>
-                      <td style={{ textAlign: "right", fontFamily: "monospace", fontSize: "0.78rem", color: "#4f565c" }}>
-                        {ctrl.earnedPoints.toFixed(1)} / {ctrl.maxPoints.toFixed(1)}
-                      </td>
+              <div className="tu-table-wrap">
+                <table className="tu-table">
+                  <thead>
+                    <tr>
+                      <th>CC Ref</th>
+                      <th>Control</th>
+                      <th>Status</th>
+                      <th>Evidence</th>
+                      <th style={{ textAlign: "right" }}>Score</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {result.allControls.map((ctrl) => (
+                      <tr key={ctrl.controlDef.id}>
+                        <td style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "#4f565c" }}>{ctrl.controlDef.ccRef}</td>
+                        <td style={{ maxWidth: 200 }}>{ctrl.controlDef.label.split("—")[1]?.trim()}</td>
+                        <td>
+                          <span className={`tu-badge ${ctrl.isGap ? "tu-badge-gap" : "tu-badge-ok"}`}>
+                            {ctrl.isGap ? "GAP" : "OK"}
+                          </span>
+                        </td>
+                        <td>
+                          {ctrl.isGap ? "—" : (
+                            <span style={{ fontSize: "0.78rem", fontWeight: 600, color: ctrl.evidenceMode === "automated" ? "#0d2b5e" : "#d97706" }}>
+                              {ctrl.evidenceMode === "automated" ? "Automated" : "Manual ⚠"}
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ textAlign: "right", fontFamily: "monospace", fontSize: "0.78rem", color: "#4f565c" }}>
+                          {ctrl.earnedPoints.toFixed(1)} / {ctrl.maxPoints.toFixed(1)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div> {/* end tu-split-right */}
       </div>
 
       {/* Usage limit overlay */}

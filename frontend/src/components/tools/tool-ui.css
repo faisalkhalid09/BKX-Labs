@@ -64,6 +64,32 @@
 }
 
 /* =====================================================
+   SPLIT LAYOUT (Desktop Side-by-Side)
+===================================================== */
+.tu-split-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .tu-split-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .tu-split-left {
+    min-width: 0;
+  }
+
+  .tu-split-right {
+    position: sticky;
+    top: 100px;
+    min-width: 0;
+  }
+}
+
+/* =====================================================
    AEO / DIRECT ANSWER BLOCK (visible inside tool)
 ===================================================== */
 .tu-aeo {
@@ -618,10 +644,10 @@
    CONTROLS LIST (SOC2 style)
 ===================================================== */
 .tu-control-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.25rem;
 }
 
 .tu-control-item {
