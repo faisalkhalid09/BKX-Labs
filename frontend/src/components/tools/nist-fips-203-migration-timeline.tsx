@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { AlertTriangle, Clock, Zap, TrendingUp, CheckCircle } from 'lucide-react';
+import { AlertTriangle, Clock, Zap, TrendingUp } from 'lucide-react';
 import ToolToAgencyCTA from './ToolToAgencyCTA';
 
 interface MigrationPhase {
@@ -51,7 +51,6 @@ export function NistFips203MigrationTimeline() {
     const discoveryWeeks = 4;
     const inventoryWeeks = 3;
     const assessmentWeeks = 4;
-    const preparationWeeks = 5;
 
     let currentWeek = 0;
 
@@ -186,7 +185,6 @@ export function NistFips203MigrationTimeline() {
   }, [cryptoSystems, teamSize, riskDistribution]);
 
   const handleRiskChange = (key: keyof typeof riskDistribution, value: number) => {
-    const current = riskDistribution[key];
     const others = Object.keys(riskDistribution)
       .filter((k) => k !== key)
       .reduce((sum, k) => sum + riskDistribution[k as keyof typeof riskDistribution], 0);
@@ -466,10 +464,7 @@ export function NistFips203MigrationTimeline() {
 
       {/* CTA Section */}
       <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA 
-          toolName="NIST FIPS 203 Migration Planner" 
-          description="Design and execute enterprise-scale post-quantum cryptography migration roadmaps with risk-based prioritization, vendor coordination, and compliance tracking."
-        />
+        <ToolToAgencyCTA />
       </div>
     </div>
   );

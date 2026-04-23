@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { AlertTriangle, CheckCircle, Zap, AlertCircle, Bug, Code } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Zap, AlertCircle, Bug } from 'lucide-react';
 import ToolToAgencyCTA from './ToolToAgencyCTA';
 
 interface WorkflowNode {
@@ -501,10 +501,7 @@ export function AgenticWorkflowDebugger() {
 
       {/* CTA Section */}
       <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA 
-          toolName="Agentic Workflow Debugger" 
-          description="Debug complex multi-agent workflows for infinite loops, unreachable states, and missing guards. Ensure reliability before production deployment."
-        />
+        <ToolToAgencyCTA />
       </div>
     </div>
   );

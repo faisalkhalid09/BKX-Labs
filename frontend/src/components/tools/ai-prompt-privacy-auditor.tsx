@@ -311,10 +311,7 @@ export function AiPromptPrivacyAuditor() {
 
       {/* CTA Section */}
       <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA 
-          toolName="AI Prompt Privacy Auditor" 
-          description="Implement enterprise-grade PII detection in your AI workflows with custom detection rules and compliance reporting."
-        />
+        <ToolToAgencyCTA />
       </div>
     </div>
   );

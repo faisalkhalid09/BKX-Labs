@@ -371,10 +371,7 @@ export function AdmtProportionalityScorer() {
 
       {/* CTA Section */}
       <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA 
-          toolName="ADMT Proportionality Scorer" 
-          description="Conduct comprehensive compliance audits and proportionality assessments for AI-driven workplace monitoring systems across EU jurisdictions."
-        />
+        <ToolToAgencyCTA />
       </div>
     </div>
   );

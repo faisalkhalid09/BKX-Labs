@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { DollarSign, TrendingUp, Zap, Clock, BarChart3 } from 'lucide-react';
+import { DollarSign, TrendingUp, Clock, BarChart3 } from 'lucide-react';
 import ToolToAgencyCTA from './ToolToAgencyCTA';
 
 interface YearlyProjection {
@@ -37,7 +37,6 @@ export function DirectToChipLiquidCoolingRoi() {
     const capCost = Math.max(0, parseFloat(capitalCost) || 0);
     const airOpex = Math.max(0, parseFloat(airAnnualOpex) || 0);
     const liquidOpex = Math.max(0, parseFloat(liquidAnnualOpex) || 0);
-    const elecCost = Math.max(0, parseFloat(electricityCostPerKwYear) || 0);
     const years = Math.max(1, parseInt(projectYears) || 5);
 
     // Annual savings calculation
@@ -121,7 +120,7 @@ export function DirectToChipLiquidCoolingRoi() {
 
     return {
       capitalCost: capCost,
-      paybackPeriodMonths,
+      paybackPeriodMonths: paybackMonths,
       paybackPeriodYears: parseFloat(paybackYears),
       roi5Year,
       totalSavings5Year,
@@ -140,10 +139,6 @@ export function DirectToChipLiquidCoolingRoi() {
     setLiquidAnnualOpex('45000');
     setElectricityCostPerKwYear('120');
     setProjectYears('5');
-  };
-
-  const formatCurrency = (num: number) => {
-    return `$${(num / 1000).toFixed(1)}k`;
   };
 
   const formatCurrencyFull = (num: number) => {
@@ -437,10 +432,7 @@ export function DirectToChipLiquidCoolingRoi() {
 
       {/* CTA Section */}
       <div className="mt-12 pt-8 border-t border-slate-300">
-        <ToolToAgencyCTA 
-          toolName="Direct-to-Chip Liquid Cooling ROI" 
-          description="Plan large-scale liquid cooling deployments with detailed financial modeling, vendor negotiation support, and implementation timelines for maximum power efficiency and ROI."
-        />
+        <ToolToAgencyCTA />
       </div>
     </div>
   );
