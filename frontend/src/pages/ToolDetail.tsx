@@ -8,9 +8,9 @@ import { CloudGpuCostComparison } from '@/components/tools/cloud-gpu-cost-compar
 import { NvidiaBlackwellEstimator } from '@/components/tools/nvidia-blackwell-estimator';
 import { AiPromptPrivacyAuditor } from '@/components/tools/ai-prompt-privacy-auditor';
 import { AdmtProportionalityScorer } from '@/components/tools/admt-proportionality-scorer';
-import { NistFips203Planner } from '@/components/tools/nist-fips-203-planner';
-import { DirectCoolingROITool } from '@/components/tools/direct-cooling-roi';
-import { AgentWorkflowDebugger } from '@/components/tools/agent-workflow-debugger';
+import { NistFips203MigrationTimeline } from '@/components/tools/nist-fips-203-migration-timeline';
+import { DirectToChipLiquidCoolingRoi } from '@/components/tools/direct-to-chip-liquid-cooling-roi';
+import { AgenticWorkflowDebugger } from '@/components/tools/agentic-workflow-debugger';
 import { GasOptimizer } from '@/components/tools/smart-contract-gas-optimizer';
 import { CarbonFootprintTracker } from '@/components/tools/esg-carbon-footprint';
 import { ZkCircuitValidator } from '@/components/tools/zk-proof-validator';
@@ -31,13 +31,13 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   'nvidia-blackwell-pue-estimator': NvidiaBlackwellEstimator,
   'ai-prompt-privacy-auditor': AiPromptPrivacyAuditor,
   'admt-proportionality-scorer': AdmtProportionalityScorer,
-  'nist-fips-203-migration-planner': NistFips203Planner,
-  'direct-to-chip-liquid-cooling-roi': DirectCoolingROITool,
-  'agentic-workflow-debugger': AgentWorkflowDebugger,
+  'nist-fips-203-migration-timeline-planner': NistFips203MigrationTimeline,
+  'direct-to-chip-liquid-cooling-roi': DirectToChipLiquidCoolingRoi,
+  'agentic-workflow-debugger': AgenticWorkflowDebugger,
   'smart-contract-gas-optimizer': GasOptimizer,
   'esg-carbon-footprint-tracker': CarbonFootprintTracker,
-  'zero-knowledge-proof-validator': ZkCircuitValidator,
-  'deepfake-detector': DeepfakeDetector,
+  'zk-circuit-validator': ZkCircuitValidator,
+  'deepfake-detector-probability': DeepfakeDetector,
   'crypto-agility-maturity-model': CryptoAgilityMaturitModel,
 };
 
