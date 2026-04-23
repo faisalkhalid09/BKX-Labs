@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { ChevronUp, ChevronDown } from 'lucide-react';
 
 // April 2026 GPU Pricing Data
 const GPU_PRICING = {
@@ -163,7 +162,7 @@ export default function CloudGPUCostComparison() {
                     />
                     <span className="ml-2 text-sm text-gray-700">{provider}</span>
                     <span className="ml-auto text-sm font-bold text-gray-900">
-                      ${currentGPU.providers[provider].rate.toFixed(2)}/hr
+                      ${currentGPU.providers[provider as keyof typeof currentGPU.providers].rate.toFixed(2)}/hr
                     </span>
                   </label>
                 ))}
