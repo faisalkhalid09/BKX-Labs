@@ -138,8 +138,8 @@ export default function BlackwellPUEFAQ() {
             <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
               <h3 className="font-semibold text-white mb-3">Cooling Technology Targets</h3>
               <ul className="text-sm text-slate-300 space-y-2">
-                <li>• <strong>PUE Target</strong>: <1.15 for Blackwell</li>
-                <li>• <strong>WUE Target</strong>: <0.4 L/kWh for ESG</li>
+                <li>• <strong>PUE Target</strong>: &lt;1.15 for Blackwell</li>
+                <li>• <strong>WUE Target</strong>: &lt;0.4 L/kWh for ESG</li>
                 <li>• <strong>Thermal Limit</strong>: 50kW max per rack (air)</li>
                 <li>• <strong>DTC PUE</strong>: 1.12-1.15 (standard)</li>
                 <li>• <strong>Immersion PUE</strong>: 1.05-1.08 (premium)</li>
@@ -151,7 +151,7 @@ export default function BlackwellPUEFAQ() {
                 <li>• <strong>B200 TDP</strong>: 700-1000W avg 850W</li>
                 <li>• <strong>GB200 TDP</strong>: 1100-1300W avg 1200W</li>
                 <li>• <strong>B300 TDP</strong>: 1300-1500W avg 1400W</li>
-                <li>• <strong>Electrical</strong>: 480V mandatory >50kW</li>
+                <li>• <strong>Electrical</strong>: 480V mandatory &gt;50kW</li>
                 <li>• <strong>Redundancy</strong>: Dual PSU per GPU</li>
               </ul>
             </div>

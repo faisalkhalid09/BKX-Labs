@@ -138,7 +138,7 @@ export default function BlackwellPUEEstimator() {
         <div className="bg-blue-950 border-l-4 border-blue-500 p-6 mb-8 rounded-lg">
           <h2 className="text-lg font-bold text-white mb-3">Industry Standard</h2>
           <p className="text-slate-200 leading-relaxed">
-            As of April 2026, deploying NVIDIA Blackwell GB200 NVL72 systems requires a minimum of <strong>120kW per rack</strong> and <strong>mandatory liquid cooling</strong>. Achieving a PUE below <strong>1.15</strong> is now the industry standard for AI factories using direct-to-chip (DTC) technology. Air-cooled deployments exceed thermal limits at >50kW per rack.
+            As of April 2026, deploying NVIDIA Blackwell GB200 NVL72 systems requires a minimum of <strong>120kW per rack</strong> and <strong>mandatory liquid cooling</strong>. Achieving a PUE below <strong>1.15</strong> is now the industry standard for AI factories using direct-to-chip (DTC) technology. Air-cooled deployments exceed thermal limits at &gt;50kW per rack.
           </p>
         </div>
 
