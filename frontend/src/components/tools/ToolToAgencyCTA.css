@@ -1,0 +1,78 @@
+/* ─────────────────────────────────────────────
+   Tool → Agency Revenue Loop CTA
+───────────────────────────────────────────── */
+.tool-agency-cta {
+    margin-top: 3rem;
+    border-top: 1px solid var(--border-light);
+    padding-top: 2.5rem;
+}
+
+.tool-agency-cta-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--primary-dark);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.tool-agency-cta-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.tool-agency-cta-content {
+    flex: 1;
+}
+
+.tool-agency-cta-content h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    text-align: left;
+    margin-bottom: 0.35rem;
+}
+
+.tool-agency-cta-content p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+    max-width: none;
+}
+
+.tool-agency-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 50px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tool-agency-cta-btn:hover {
+    background: #22d3ee;
+    transform: translateY(-1px);
+    color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .tool-agency-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+
+    .tool-agency-cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

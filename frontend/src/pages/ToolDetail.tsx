@@ -20,6 +20,7 @@ import { toolsBySlug } from '@/lib/tools/registry';
 import { FAQSection } from '@/components/tools/faq-section';
 import { DirectAnswerBlock } from '@/components/tools/direct-answer-block';
 import { generateToolMetadata } from '@/lib/seo/tools-metadata';
+import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
 
 // Component map for dynamic rendering
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -140,9 +141,9 @@ export default function ToolDetail() {
           </div>
 
           <div className="tool-card">
-            {/* Direct Answer Block - Hidden from users, visible to AI agents via structured data */}
+            {/* Direct Answer Block — screen-reader accessible, indexable by crawlers (sr-only, NOT display:none) */}
             {tool.directAnswer && (
-              <div style={{ display: 'none' }}>
+              <div className="sr-only" role="note" aria-label={`Direct answer: ${tool.title}`}>
                 <DirectAnswerBlock directAnswer={tool.directAnswer} />
               </div>
             )}
@@ -159,6 +160,9 @@ export default function ToolDetail() {
                 <FAQSection faqs={tool.faqs} />
               </div>
             )}
+
+            {/* Revenue Loop — CTA linking every tool page back to agency services */}
+            <ToolToAgencyCTA />
           </div>
       </main>
     </>

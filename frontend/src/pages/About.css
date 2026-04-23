@@ -12,7 +12,7 @@
     padding: 2rem;
     background: white;
     border-radius: 12px;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .mission-icon {
@@ -233,3 +233,146 @@
         font-size: 1.5rem;
     }
 }
+
+/* ─────────────────────────────────────────────
+   Founder Expertise Tags
+───────────────────────────────────────────── */
+.founder-expertise {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.expertise-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.expertise-tag svg {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Engineering Philosophy Pillars
+───────────────────────────────────────────── */
+.philosophy-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+    text-align: left;
+}
+
+.philosophy-pillar {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 1.75rem;
+}
+
+.philosophy-pillar h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.philosophy-pillar .philosophy-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+@media (max-width: 1024px) {
+    .philosophy-pillars {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* ─────────────────────────────────────────────
+   Compliance / Expertise Section (About)
+───────────────────────────────────────────── */
+.about-expertise-section {
+    background: var(--secondary);
+}
+
+.about-expertise-header {
+    max-width: 760px;
+    margin: 0 auto 3rem auto;
+    text-align: center;
+}
+
+.about-expertise-header h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.about-expertise-header p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-gray);
+    margin: 0;
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.expertise-block {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem 1.75rem;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.expertise-block:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+.expertise-block-icon {
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.expertise-block h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-align: left;
+    margin-bottom: 0.75rem;
+}
+
+.expertise-block p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text-gray);
+    margin: 0;
+    max-width: none;
+}
+
+@media (max-width: 1024px) {
+    .expertise-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
