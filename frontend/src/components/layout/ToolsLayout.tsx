@@ -16,11 +16,13 @@ export function ToolsHeader() {
         {/* Center Logo */}
         <div className="tools-header-logo">
           <Link to="/tools" className="tools-logo-anchor">
-            <img 
-              src="/favicon-32x32.png" 
-              alt="BKX Labs Logo" 
-              className="tools-favicon-img" 
-            />
+            <div className="tools-logo-circle">
+              <img 
+                src="/favicon-32x32.png" 
+                alt="BKX Labs Logo" 
+                className="tools-favicon-img" 
+              />
+            </div>
           </Link>
         </div>
 

@@ -139,19 +139,15 @@
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center everything */
   align-items: center;
+  gap: 3rem; /* Space between the three sections */
 }
 
 .tools-header-side {
-  flex: 1;
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
-}
-
-.tools-header-side.right {
-  justify-content: flex-end;
 }
 
 .tools-header-logo {
@@ -161,19 +157,37 @@
   align-items: center;
 }
 
+.tools-logo-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid #000; /* Black stroke as requested */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.tools-logo-circle:hover {
+  transform: scale(1.05);
+}
+
 .tools-favicon-img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: block;
 }
 
 .tools-header-link {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  transition: color 0.2s;
-  letter-spacing: 0.02em;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .tools-header-link:hover {
@@ -645,17 +659,28 @@
 
   /* Header mobile adjustment */
   .tools-header-inner {
-    padding: 0 1rem;
-    gap: 0.75rem;
+    padding: 0 0.5rem;
+    gap: 1rem;
   }
 
   .tools-header-link {
-    font-size: 0.75rem;
-    letter-spacing: 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
   }
 
   .tools-header-side {
-    gap: 0.875rem;
+    gap: 0.75rem;
+  }
+
+  .tools-logo-circle {
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+  }
+
+  .tools-favicon-img {
+    width: 24px;
+    height: 24px;
   }
 
   /* Grid — full width on small phones */
