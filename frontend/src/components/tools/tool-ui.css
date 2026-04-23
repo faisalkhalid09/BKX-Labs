@@ -641,8 +641,74 @@
 }
 
 /* =====================================================
+   SOC2 GAUGE & TOGGLES ROW
+===================================================== */
+.tu-gauge-toggles-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.tu-gauge-toggles-row > div:last-child {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* =====================================================
    CONTROLS LIST (SOC2 style)
 ===================================================== */
+.tu-tsc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.8rem;
+}
+
+.tu-tsc-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.tu-tsc-btn:hover {
+  border-color: #4fa3d1;
+  background: #f5f7fa;
+}
+
+.tu-tsc-btn.active {
+  border-color: #0d2b5e;
+  box-shadow: 0 0 0 1px #0d2b5e;
+}
+
+.tu-tsc-btn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.tu-tsc-name {
+  font-weight: 700;
+  color: #161a1d;
+  font-size: 0.9rem;
+}
+
+.tu-tsc-desc {
+  font-size: 0.78rem;
+  color: #4f565c;
+  line-height: 1.45;
+  margin: 0;
+}
+
 .tu-control-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
