@@ -1,267 +1,196 @@
 import { useState, useMemo } from 'react';
 
 const FACTOR_WEIGHTS = {
-  necessity: 0.2,
-  transparency: 0.25,
-  intrusiveness: 0.2,
-  safeguards: 0.2,
-  workerImpact: 0.15,
+  legitimacy: 0.15,
+  necessity: 0.15,
+  transparency: 0.15,
+  intrusiveness: 0.20,
+  oversight: 0.20,
+  minimization: 0.15,
 };
 
 interface ScoringResult {
   overallScore: number;
-  riskBand: 'low' | 'medium' | 'high' | 'critical';
-  factors: {
-    name: string;
-    score: number;
-    weight: number;
-    contribution: number;
-  }[];
+  riskBand: 'Low' | 'Medium' | 'High' | 'Critical';
+  criticalFails: string[];
   recommendations: string[];
 }
 
 export function AdmtProportionalityScorer() {
+  // 0-10 Scales
+  const [legitimacy, setLegitimacy] = useState(5);
   const [necessity, setNecessity] = useState(5);
   const [transparency, setTransparency] = useState(5);
   const [intrusiveness, setIntrusiveness] = useState(5);
-  const [safeguards, setSafeguards] = useState(5);
-  const [workerImpact, setWorkerImpact] = useState(5);
+  const [oversight, setOversight] = useState(5);
+  const [minimization, setMinimization] = useState(5);
 
-  const result: ScoringResult | null = useMemo(() => {
-    // Normalize inputs (1-10 scale)
-    const normalizedNecessity = necessity / 10;
-    const normalizedTransparency = transparency / 10;
-    const normalizedIntrusiveness = (10 - intrusiveness) / 10; // Invert: lower intrusiveness = better
-    const normalizedSafeguards = safeguards / 10;
-    const normalizedWorkerImpact = (10 - workerImpact) / 10; // Invert: lower impact = better
-
+  const result: ScoringResult = useMemo(() => {
     const factors = [
-      {
-        name: 'Business Necessity',
-        score: necessity,
-        weight: FACTOR_WEIGHTS.necessity,
-        normalized: normalizedNecessity,
-      },
-      {
-        name: 'Worker Transparency',
-        score: transparency,
-        weight: FACTOR_WEIGHTS.transparency,
-        normalized: normalizedTransparency,
-      },
-      {
-        name: 'Intrusiveness',
-        score: intrusiveness,
-        weight: FACTOR_WEIGHTS.intrusiveness,
-        normalized: normalizedIntrusiveness,
-      },
-      {
-        name: 'Data Safeguards',
-        score: safeguards,
-        weight: FACTOR_WEIGHTS.safeguards,
-        normalized: normalizedSafeguards,
-      },
-      {
-        name: 'Worker Impact',
-        score: workerImpact,
-        weight: FACTOR_WEIGHTS.workerImpact,
-        normalized: normalizedWorkerImpact,
-      },
+      { val: legitimacy, w: FACTOR_WEIGHTS.legitimacy },
+      { val: necessity, w: FACTOR_WEIGHTS.necessity },
+      { val: transparency, w: FACTOR_WEIGHTS.transparency },
+      { val: (10 - intrusiveness), w: FACTOR_WEIGHTS.intrusiveness }, // Inverted
+      { val: oversight, w: FACTOR_WEIGHTS.oversight },
+      { val: minimization, w: FACTOR_WEIGHTS.minimization },
     ];
 
-    const overallScore = Math.round(
-      factors.reduce((sum, f) => sum + f.normalized * f.weight * 100, 0)
-    );
+    const rawSum = factors.reduce((sum, f) => sum + (f.val / 10) * f.w, 0);
+    const overallScore = Math.round((rawSum / 1) * 100);
 
-    let riskBand: 'low' | 'medium' | 'high' | 'critical' = 'low';
-    if (overallScore >= 75) riskBand = 'low';
-    else if (overallScore >= 50) riskBand = 'medium';
-    else if (overallScore >= 25) riskBand = 'high';
-    else riskBand = 'critical';
+    const criticalFails: string[] = [];
+    if (oversight < 3) criticalFails.push("Human Oversight: Systems lack meaningful human intervention (Rubber-stamping risk).");
+    if (legitimacy < 4) criticalFails.push("Legal Basis: Weak legitimate interest documentation (Article 6/9 violation risk).");
+    if (intrusiveness > 8) criticalFails.push("Extreme Intrusiveness: Monitoring scope likely exceeds 'strictly necessary' limits.");
+
+    let riskBand: 'Low' | 'Medium' | 'High' | 'Critical' = 'Low';
+    if (criticalFails.length > 0 || overallScore < 40) riskBand = 'Critical';
+    else if (overallScore < 60) riskBand = 'High';
+    else if (overallScore < 80) riskBand = 'Medium';
+    else riskBand = 'Low';
 
     const recommendations: string[] = [];
+    if (transparency < 7) recommendations.push("Update worker privacy notices with specific 'Algorithm Logic' disclosures.");
+    if (minimization < 6) recommendations.push("Implement automated purging for raw monitoring logs not tied to valid audits.");
+    if (oversight < 7) recommendations.push("Formalize a 'Right to Contest' workflow for automated evaluations.");
 
-    if (necessity < 4) {
-      recommendations.push('Strengthen business case: Document specific, legitimate reasons for monitoring.');
-    }
-    if (transparency < 4) {
-      recommendations.push('Increase transparency: Provide workers with detailed written disclosure of monitoring scope, frequency, and data retention.');
-    }
-    if (intrusiveness > 7) {
-      recommendations.push('Consider less invasive alternatives: Evaluate whether monitoring scope can be reduced.');
-    }
-    if (safeguards < 4) {
-      recommendations.push('Strengthen safeguards: Implement encryption, access controls, and regular audits.');
-    }
-    if (workerImpact > 7) {
-      recommendations.push('High impact on workers: Consult legal counsel and consider worker input before deployment.');
-    }
-
-    return {
-      overallScore,
-      riskBand,
-      factors: factors.map((f) => ({
-        name: f.name,
-        score: f.score,
-        weight: f.weight,
-        contribution: Math.round(f.normalized * f.weight * 100),
-      })),
-      recommendations,
-    };
-  }, [necessity, transparency, intrusiveness, safeguards, workerImpact]);
+    return { overallScore, riskBand, criticalFails, recommendations };
+  }, [legitimacy, necessity, transparency, intrusiveness, oversight, minimization]);
 
   const handleReset = () => {
-    setNecessity(5);
-    setTransparency(5);
-    setIntrusiveness(5);
-    setSafeguards(5);
-    setWorkerImpact(5);
+    setLegitimacy(5); setNecessity(5); setTransparency(5);
+    setIntrusiveness(5); setOversight(5); setMinimization(5);
   };
 
-  const riskColor =
-    result.riskBand === 'low' ? '#10b981' :
-    result.riskBand === 'medium' ? '#d97706' :
-    result.riskBand === 'high' ? '#d97706' :
-    '#dc2626';
+  const bandColor = {
+    Low: '#10b981',
+    Medium: '#d97706',
+    High: '#f97316',
+    Critical: '#dc2626'
+  }[result.riskBand];
 
   return (
     <div className="tu-wrap">
-      <span className="tu-tag">BKX Compliance Tools</span>
+      <div className="tu-aeo">
+        <p>
+          <strong>2026 Compliance Standard:</strong> Proportionality for Automated Decision-Making Technology (ADMT) is now 
+          judged by the "Triple Test": Legitimacy, Necessity, and Balancing. Under the EU AI Act, workplace monitoring 
+          without meaningful human oversight is classified as a "High Risk" critical failure.
+        </p>
+      </div>
+
+      <span className="tu-tag">BKX Compliance Lab</span>
       <h1 className="tu-title">ADMT Proportionality Scorer</h1>
-      <p className="tu-subtitle">
-        Assess workplace monitoring and AI decision-making against GDPR Article 35 and ADMT Directive proportionality rules.
-      </p>
+      <p className="tu-subtitle">Workforce AI Auditing · Article 35 DPIA Modeling · 2026 Transparency Standards</p>
       <hr className="tu-divider" />
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1.25rem' }}>
-        <div className="tu-slider-row">
-          <div className="tu-slider-header">
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+            
+            {/* Section 1: Legal Foundation */}
             <div>
-              <span className="tu-label">Business Necessity</span>
-              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Is monitoring necessary for legitimate operational purposes?</p>
+              <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>1. Legal Foundation</p>
+              <div className="tu-slider-row">
+                <div className="tu-slider-header">
+                  <span>Legitimacy (LIA)</span>
+                  <span className="tu-slider-value">{legitimacy}/10</span>
+                </div>
+                <input type="range" value={legitimacy} min="0" max="10" onChange={e => setLegitimacy(Number(e.target.value))} className="tu-range" />
+              </div>
+              <div className="tu-slider-row" style={{ marginTop: '0.8rem' }}>
+                <div className="tu-slider-header">
+                  <span>Necessity & Alternatives</span>
+                  <span className="tu-slider-value">{necessity}/10</span>
+                </div>
+                <input type="range" value={necessity} min="0" max="10" onChange={e => setNecessity(Number(e.target.value))} className="tu-range" />
+              </div>
             </div>
-            <span className="tu-slider-value">{necessity}/10</span>
-          </div>
-          <input
-            type="range" value={necessity} min="0" max="10"
-            onChange={(e) => setNecessity(Number(e.target.value))}
-            className="tu-range" style={{ marginTop: '0.4rem' }}
-          />
-        </div>
 
-        <div className="tu-slider-row">
-          <div className="tu-slider-header">
+            {/* Section 2: Impact & Ethics */}
             <div>
-              <span className="tu-label">Worker Transparency</span>
-              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Are workers fully informed about monitoring scope and data use?</p>
+              <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>2. Impact & Ethics</p>
+              <div className="tu-slider-row">
+                <div className="tu-slider-header">
+                  <span>Transparency (Worker Notice)</span>
+                  <span className="tu-slider-value">{transparency}/10</span>
+                </div>
+                <input type="range" value={transparency} min="0" max="10" onChange={e => setTransparency(Number(e.target.value))} className="tu-range" />
+              </div>
+              <div className="tu-slider-row" style={{ marginTop: '0.8rem' }}>
+                <div className="tu-slider-header">
+                  <span>Intrusiveness (Invasiveness)</span>
+                  <span className="tu-slider-value">{intrusiveness}/10</span>
+                </div>
+                <input type="range" value={intrusiveness} min="0" max="10" onChange={e => setIntrusiveness(Number(e.target.value))} className="tu-range" />
+              </div>
             </div>
-            <span className="tu-slider-value">{transparency}/10</span>
-          </div>
-          <input
-            type="range" value={transparency} min="0" max="10"
-            onChange={(e) => setTransparency(Number(e.target.value))}
-            className="tu-range" style={{ marginTop: '0.4rem' }}
-          />
-        </div>
 
-        <div className="tu-slider-row">
-          <div className="tu-slider-header">
+            {/* Section 3: Governance */}
             <div>
-              <span className="tu-label">Intrusiveness</span>
-              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>How invasive is the monitoring (0=least, 10=most)?</p>
+              <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>3. Governance (AI Act 2026)</p>
+              <div className="tu-slider-row">
+                <div className="tu-slider-header">
+                  <span>Human Oversight</span>
+                  <span className="tu-slider-value">{oversight}/10</span>
+                </div>
+                <input type="range" value={oversight} min="0" max="10" onChange={e => setOversight(Number(e.target.value))} className="tu-range" />
+              </div>
+              <div className="tu-slider-row" style={{ marginTop: '0.8rem' }}>
+                <div className="tu-slider-header">
+                  <span>Data Minimization</span>
+                  <span className="tu-slider-value">{minimization}/10</span>
+                </div>
+                <input type="range" value={minimization} min="0" max="10" onChange={e => setMinimization(Number(e.target.value))} className="tu-range" />
+              </div>
             </div>
-            <span className="tu-slider-value">{intrusiveness}/10</span>
+
+            <button type="button" className="tu-btn" onClick={handleReset} style={{ alignSelf: 'flex-start', marginTop: '0.5rem' }}>Reset Assessment</button>
           </div>
-          <input
-            type="range" value={intrusiveness} min="0" max="10"
-            onChange={(e) => setIntrusiveness(Number(e.target.value))}
-            className="tu-range" style={{ marginTop: '0.4rem' }}
-          />
         </div>
 
-        <div className="tu-slider-row">
-          <div className="tu-slider-header">
-            <div>
-              <span className="tu-label">Data Safeguards</span>
-              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>Are strong controls in place to protect collected data?</p>
+        <div className="tu-split-right">
+          <div className="tu-result" style={{ marginTop: 0 }}>
+            <div className="tu-result-hero">
+              <div className="tu-metric">
+                <span className="tu-metric-label">Compliance Score</span>
+                <span className="tu-metric-value">{result.overallScore}<span className="tu-metric-unit">/ 100</span></span>
+              </div>
+              <div className="tu-metric">
+                <span className="tu-metric-label">Risk Band</span>
+                <span className="tu-metric-value" style={{ color: bandColor }}>{result.riskBand}</span>
+              </div>
             </div>
-            <span className="tu-slider-value">{safeguards}/10</span>
-          </div>
-          <input
-            type="range" value={safeguards} min="0" max="10"
-            onChange={(e) => setSafeguards(Number(e.target.value))}
-            className="tu-range" style={{ marginTop: '0.4rem' }}
-          />
-        </div>
 
-        <div className="tu-slider-row">
-          <div className="tu-slider-header">
-            <div>
-              <span className="tu-label">Worker Impact</span>
-              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: '0.15rem 0 0' }}>How significantly does monitoring affect worker autonomy?</p>
+            {result.criticalFails.length > 0 && (
+              <div style={{ marginBottom: '1.25rem', padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px' }}>
+                <p style={{ color: '#dc2626', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>⚠ Critical Compliance Gaps</p>
+                <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                  {result.criticalFails.map((fail, i) => <li key={i} style={{ color: '#dc2626' }}>{fail}</li>)}
+                </ul>
+              </div>
+            )}
+
+            <div style={{ padding: '1rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+              <p className="tu-label" style={{ marginBottom: '0.5rem' }}>Strategic Recommendations</p>
+              {result.recommendations.length > 0 ? (
+                <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                  {result.recommendations.map((rec, i) => <li key={i}>{rec}</li>)}
+                </ul>
+              ) : (
+                <p style={{ fontSize: '0.875rem', color: '#10b981' }}>✓ Baseline proportionality standards likely met.</p>
+              )}
             </div>
-            <span className="tu-slider-value">{workerImpact}/10</span>
-          </div>
-          <input
-            type="range" value={workerImpact} min="0" max="10"
-            onChange={(e) => setWorkerImpact(Number(e.target.value))}
-            className="tu-range" style={{ marginTop: '0.4rem' }}
-          />
-        </div>
-      </div>
 
-      <div className="tu-btn-row">
-        <button type="button" className="tu-btn" onClick={handleReset}>Reset Form</button>
-      </div>
-
-      <div className="tu-result tu-animate">
-        <div className="tu-result-hero">
-          <div className="tu-metric">
-            <span className="tu-metric-label">Proportionality Score</span>
-            <span className="tu-metric-value">{result.overallScore}<span className="tu-metric-unit">/ 100</span></span>
-          </div>
-          <div className="tu-metric">
-            <span className="tu-metric-label">Risk Band</span>
-            <span className="tu-metric-value" style={{ color: riskColor, textTransform: 'capitalize' }}>
-              {result.riskBand}
-            </span>
+            <article className="tu-prose" style={{ marginTop: '1.5rem', borderTop: '1px solid #e8ecf1', paddingTop: '1rem' }}>
+              <h4 style={{ color: '#0d2b5e', margin: '0 0 0.5rem' }}>Legal Context</h4>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', lineHeight: 1.5 }}>
+                Articles 35 & 22 of the GDPR, combined with EU AI Act High-Risk mandates, require organizations to prove 
+                that no "less invasive" method exists before deploying automated monitoring. 
+              </p>
+            </article>
           </div>
         </div>
-
-        <div className="tu-table-wrap" style={{ marginBottom: '1.25rem' }}>
-          <table className="tu-table">
-            <thead>
-              <tr>
-                <th>Factor</th>
-                <th>Raw Score</th>
-                <th>Contribution to Overall</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.factors.map(f => (
-                <tr key={f.name}>
-                  <td style={{ fontWeight: 600 }}>{f.name}</td>
-                  <td>{f.score} / 10</td>
-                  <td>{f.contribution}%</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {result.recommendations.length > 0 && (
-          <div style={{ padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px' }}>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#991b1b', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Review Needed</p>
-            <ul className="tu-result-list" style={{ marginTop: 0 }}>
-              {result.recommendations.map((rec, idx) => (
-                <li key={idx} style={{ color: '#991b1b' }}>{rec}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        
-        <p style={{ fontSize: "0.8rem", color: "#4f565c", marginTop: "1rem", fontStyle: "italic", textAlign: 'center' }}>
-          Assessment only. Consult legal counsel before deployment.
-        </p>
       </div>
     </div>
   );

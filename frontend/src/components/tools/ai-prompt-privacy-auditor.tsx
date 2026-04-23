@@ -113,98 +113,124 @@ export function AiPromptPrivacyAuditor() {
       </p>
       <hr className="tu-divider" />
 
-      <div className="tu-field" style={{ marginBottom: '1.25rem' }}>
-        <label className="tu-label">Paste Your Prompt</label>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Paste the AI prompt you want to scan for PII..."
-          className="tu-textarea"
-        />
-      </div>
-
-      <div className="tu-btn-row">
-        <button type="button" className="tu-btn tu-btn-primary" onClick={handleCopy}>
-          {copied ? 'Copied!' : 'Copy Prompt'}
-        </button>
-        <button type="button" className="tu-btn" onClick={() => setPrompt('')}>Clear</button>
-      </div>
-
-      {prompt && (
-        <div className="tu-result tu-animate">
-          <div className="tu-result-hero">
-            <div className="tu-metric">
-              <span className="tu-metric-label">Risk Level</span>
-              <span className="tu-metric-value" style={{ color: levelColor }}>
-                {riskLevel}
-              </span>
-            </div>
-            <div className="tu-metric">
-              <span className="tu-metric-label">Risk Score</span>
-              <span className="tu-metric-value">{riskScore}<span className="tu-metric-unit">/ 100</span></span>
-            </div>
-            <div className="tu-metric">
-              <span className="tu-metric-label">Indicators</span>
-              <span className={`tu-metric-value ${piiMatches.length > 0 ? "warn" : ""}`}>{piiMatches.length}</span>
-            </div>
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div className="tu-field" style={{ marginBottom: '1.25rem' }}>
+            <label className="tu-label">Paste Your Prompt</label>
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Paste the AI prompt you want to scan for PII..."
+              className="tu-textarea"
+              style={{ minHeight: '300px' }}
+            />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
-            <div style={{ padding: '0.8rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
-              <span style={{ display: 'block', fontSize: '1.5rem', fontWeight: 800, color: '#dc2626' }}>{criticalCount}</span>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>Critical</span>
-            </div>
-            <div style={{ padding: '0.8rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
-              <span style={{ display: 'block', fontSize: '1.5rem', fontWeight: 800, color: '#d97706' }}>{highCount}</span>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>High</span>
-            </div>
-            <div style={{ padding: '0.8rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
-              <span style={{ display: 'block', fontSize: '1.5rem', fontWeight: 800, color: '#4f565c' }}>{mediumCount}</span>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>Medium</span>
-            </div>
+          <div className="tu-btn-row">
+            <button type="button" className="tu-btn tu-btn-primary" onClick={handleCopy} disabled={!prompt}>
+              {copied ? 'Copied!' : 'Copy Prompt'}
+            </button>
+            <button type="button" className="tu-btn" onClick={() => setPrompt('')} disabled={!prompt}>Clear</button>
           </div>
 
-          {piiMatches.length > 0 && (
-            <div className="tu-table-wrap">
-              <table className="tu-table">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Severity</th>
-                    <th>Confidence</th>
-                    <th>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {piiMatches.map((match, idx) => (
-                    <tr key={idx}>
-                      <td style={{ fontWeight: 600 }}>{match.type}</td>
-                      <td>
-                        <span className={`tu-badge ${match.severity === 'critical' ? 'tu-badge-gap' : match.severity === 'high' ? 'tu-badge-warn' : 'tu-badge-opt'}`}>
-                          {match.severity}
-                        </span>
-                      </td>
-                      <td>{(match.confidence * 100).toFixed(0)}%</td>
-                      <td style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{match.value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <div className="tu-aeo" style={{ marginTop: '2rem' }}>
+            <p>
+              <strong>Privacy Standard:</strong> Enterprise LLM deployments often leak PII via "in-context" data. 
+              This auditor uses deterministic regex patterns to detect typical leaks like SSNs and API keys which 
+              form the base for GDPR Article 32 security controls.
+            </p>
+          </div>
+        </div>
 
-          {piiMatches.length > 0 && (
-            <div style={{ padding: '1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', marginTop: '1.25rem' }}>
-              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#991b1b', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Recommendations</p>
-              <ul className="tu-result-list" style={{ marginTop: 0 }}>
-                <li style={{ color: '#991b1b' }}>Redact all email addresses, phone numbers, and SSNs before sharing.</li>
-                <li style={{ color: '#991b1b' }}>Replace API keys with placeholder text like "[REDACTED_API_KEY]".</li>
-                <li style={{ color: '#991b1b' }}>Use domain names instead of IP addresses when possible.</li>
-              </ul>
+        <div className="tu-split-right">
+          {prompt ? (
+            <div className="tu-result tu-animate" style={{ marginTop: 0 }}>
+              <div className="tu-result-hero">
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Risk Level</span>
+                  <span className="tu-metric-value" style={{ color: levelColor }}>
+                    {riskLevel}
+                  </span>
+                </div>
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Risk Score</span>
+                  <span className="tu-metric-value">{riskScore}<span className="tu-metric-unit">/ 100</span></span>
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.8rem', marginBottom: '1.25rem' }}>
+                <div style={{ padding: '0.6rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
+                  <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 800, color: '#dc2626' }}>{criticalCount}</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>Critical</span>
+                </div>
+                <div style={{ padding: '0.6rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
+                  <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 800, color: '#d97706' }}>{highCount}</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>High</span>
+                </div>
+                <div style={{ padding: '0.6rem', background: '#fff', border: '1px solid #d4d9de', borderRadius: '8px', textAlign: 'center' }}>
+                  <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 800, color: '#4f565c' }}>{mediumCount}</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', color: '#4f565c' }}>Medium</span>
+                </div>
+              </div>
+
+              {piiMatches.length > 0 && (
+                <div className="tu-table-wrap">
+                  <table className="tu-table">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Severity</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {piiMatches.map((match, idx) => (
+                        <tr key={idx}>
+                          <td style={{ fontWeight: 600 }}>{match.type}</td>
+                          <td>
+                            <span className={`tu-badge ${match.severity === 'critical' ? 'tu-badge-gap' : match.severity === 'high' ? 'tu-badge-warn' : 'tu-badge-opt'}`}>
+                              {match.severity}
+                            </span>
+                          </td>
+                          <td style={{ fontFamily: 'monospace', fontSize: '0.75rem' }}>{match.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {piiMatches.length > 0 && (
+                <div style={{ padding: '0.875rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', marginTop: '1rem' }}>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#991b1b', marginBottom: '0.4rem', textTransform: 'uppercase' }}>Recommendations</p>
+                  <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                    <li style={{ color: '#991b1b', fontSize: '0.8rem' }}>Redact PII before sharing with third-party model providers.</li>
+                    <li style={{ color: '#991b1b', fontSize: '0.8rem' }}>Replace secrets/API keys with placeholders.</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div style={{ 
+              height: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              background: '#f8fafc', 
+              border: '2px dashed #d4d9de', 
+              borderRadius: '10px',
+              padding: '2rem',
+              color: '#4f565c',
+              textAlign: 'center'
+            }}>
+              <div>
+                <span style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem' }}>🔍</span>
+                <p style={{ fontSize: '0.9rem' }}>Enter text or code on the left to start the privacy audit.</p>
+              </div>
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
