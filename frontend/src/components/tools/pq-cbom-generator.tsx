@@ -14,14 +14,6 @@ const SHELF_LABELS: Record<AssetEntry["shelfLife"], string> = {
   critical: "Critical (10+ yrs)",
 };
 
-const RISK_COLORS: Record<AssetRisk, string> = {
-  pqc_ready:    "#10b981",
-  cnsa_safe:    "#4fa3d1",
-  transitional: "#d97706",
-  vulnerable:   "#dc2626",
-  critical:     "#dc2626",
-};
-
 const RISK_BADGE_CLASS: Record<AssetRisk, string> = {
   pqc_ready:    "tu-badge-ok",
   cnsa_safe:    "tu-badge-active",
