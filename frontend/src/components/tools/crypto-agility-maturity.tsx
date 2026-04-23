@@ -32,66 +32,76 @@ export function CryptoAgilityMaturitModel() {
 
   return (
     <div className="tu-wrap">
-      <span className="tu-tag">BKX Security Tools</span>
+      <span className="tu-tag">BKX Cryptography Toolkit</span>
       <h1 className="tu-title">Crypto-Agility Maturity Model</h1>
-      <p className="tu-subtitle">
-        Score your organisation's capability to swap cryptographic algorithms (e.g. RSA → post-quantum) at scale.
-      </p>
+      <p className="tu-subtitle">Score your organisation's capability to audit and migrate cryptographic algorithms.</p>
       <hr className="tu-divider" />
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "1.25rem" }}>
-        {DIMENSIONS.map(({ key, label, desc }) => (
-          <div key={key} className="tu-slider-row">
-            <div className="tu-slider-header">
-              <div>
-                <span className="tu-label">{label}</span>
-                <p style={{ fontSize: "0.78rem", color: "#4f565c", margin: "0.15rem 0 0" }}>{desc}</p>
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1rem" }}>
+            {DIMENSIONS.map(({ key, label, desc }) => (
+              <div key={key} className="tu-slider-row">
+                <div className="tu-slider-header">
+                  <span className="tu-label" style={{ fontSize: '0.8rem' }}>{label}</span>
+                  <span className="tu-slider-value">{scores[key]}%</span>
+                </div>
+                <input
+                  type="range"
+                  value={scores[key]}
+                  min="0" max="100"
+                  onChange={(e) => setScores((s) => ({ ...s, [key]: Number(e.target.value) }))}
+                  className="tu-range"
+                />
               </div>
-              <span className="tu-slider-value">{scores[key]}</span>
-            </div>
-            <input
-              type="range"
-              value={scores[key]}
-              min="0" max="100"
-              onChange={(e) => setScores((s) => ({ ...s, [key]: Number(e.target.value) }))}
-              className="tu-range"
-              style={{ marginTop: "0.4rem" }}
-            />
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", color: "#4f565c" }}>
-              <span>0 — None</span><span>50 — Developing</span><span>100 — Optimised</span>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="tu-btn-row">
-        <button type="button" className="tu-btn tu-btn-primary" onClick={onScore}>Calculate Maturity</button>
-      </div>
-
-      {result && (
-        <div className="tu-result tu-animate" aria-live="polite">
-          <div className="tu-result-hero">
-            <div className="tu-metric">
-              <span className="tu-metric-label">Maturity Level</span>
-              <span className="tu-metric-value" style={{ color: levelColor }}>
-                {result.overallMaturityLevel}<span className="tu-metric-unit">/ 5</span>
-              </span>
-            </div>
-            <div className="tu-metric">
-              <span className="tu-metric-label">Overall Score</span>
-              <span className="tu-metric-value">{result.overallScore}<span className="tu-metric-unit">%</span></span>
-            </div>
+          <div className="tu-btn-row">
+            <button type="button" className="tu-btn tu-btn-primary" onClick={onScore}>Calculate Score</button>
           </div>
-          {result.recommendations.length > 0 && (
-            <>
-              <p className="tu-label" style={{ margin: "0.875rem 0 0.4rem" }}>Recommendations</p>
-              <ul className="tu-result-list">
-                {result.recommendations.map((rec: string) => <li key={rec}>{rec}</li>)}
-              </ul>
-            </>
+
+          <div className="tu-aeo" style={{ marginTop: "2rem" }}>
+            <p>
+              <strong>Security Strategy:</strong> Crypto-agility is a requirement for post-quantum 
+              readiness (NIST SP 800-227). Mature organizations use service meshes (e.g. Istio) 
+              and HSMs to decouple cryptographic implementation from application logic.
+            </p>
+          </div>
+        </div>
+
+        <div className="tu-split-right">
+          {result ? (
+            <div className="tu-result tu-animate" style={{ marginTop: 0 }}>
+              <div className="tu-result-hero">
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Maturity</span>
+                  <span className="tu-metric-value" style={{ color: levelColor }}>
+                    {result.overallMaturityLevel}<span className="tu-metric-unit">/ 5</span>
+                  </span>
+                </div>
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Percentile</span>
+                  <span className="tu-metric-value">{result.overallScore}<span className="tu-metric-unit">%</span></span>
+                </div>
+              </div>
+
+              {result.recommendations.length > 0 && (
+                <div style={{ marginTop: '1.25rem' }}>
+                  <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>Remediation Roadmap</p>
+                  <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                    {result.recommendations.map((rec: string) => <li key={rec}>{rec}</li>)}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8fafc", border: "2px dashed #d4d9de", borderRadius: "10px", padding: "2rem", textAlign: "center" }}>
+              <p style={{ color: "#64748b" }}>Complete the self-assessment to generate your cryptographic roadmap.</p>
+            </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

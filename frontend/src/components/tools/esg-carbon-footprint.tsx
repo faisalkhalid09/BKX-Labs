@@ -34,7 +34,7 @@ export function CarbonFootprintTracker() {
     const miles = parseFloat(travelMiles || '0');
     const vcpuHrs = parseFloat(cloudVcpuHrs || '0');
 
-    // Scope 1: Direct emissions (Facilities heating, fleet) - using natural gas as proxy
+    // Scope 1: Direct emissions (Facilities heating, fleet)
     const scope1 = therms * FACTORS.natural_gas;
 
     // Scope 2: Indirect purchased electricity
@@ -47,8 +47,6 @@ export function CarbonFootprintTracker() {
     const total = scope1 + scope2 + scope3;
 
     // US EPA equivalencies
-    // A typical passenger vehicle emits about 4.6 metric tons per year.
-    // A tree absorbs ~25 kg/yr.
     const cars = total / 4600;
     const trees = total / 25;
 
@@ -61,116 +59,107 @@ export function CarbonFootprintTracker() {
   return (
     <div className="tu-wrap">
       <span className="tu-tag">BKX ESG & Sustainability</span>
-      <h1 className="tu-title">SaaS ESG Scope 1-3 Carbon Footprint Estimator</h1>
-      <p className="tu-subtitle">Calculate standardized greenhouse gas (GHG) emissions for tech companies, categorizing into Scope 1, 2, and 3 profiles.</p>
+      <h1 className="tu-title">ESG Scope 1-3 Carbon Tracker</h1>
+      <p className="tu-subtitle">Estimate greenhouse gas (GHG) emissions for tech companies based on operations.</p>
       <hr className="tu-divider" />
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1.5rem' }}>
-        <div className="tu-form-grid">
-          <div className="tu-field">
-            <label className="tu-label">Purchased Electricity (MWh/yr)</label>
-            <input 
-              type="number" value={electricityMwh} 
-              onChange={e => setElectricityMwh(e.target.value)}
-              className="tu-input" 
-            />
-          </div>
-          <div className="tu-field">
-            <label className="tu-label">Primary HQ Region</label>
-            <select 
-              value={region} 
-              onChange={e => setRegion(e.target.value as 'US' | 'EU' | 'APAC')}
-              className="tu-select"
-            >
-              <option value="US">North America (US Grid)</option>
-              <option value="EU">Europe (EU Grid)</option>
-              <option value="APAC">Asia Pacific</option>
-            </select>
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="tu-form-grid">
+              <div className="tu-field">
+                <label className="tu-label">Electricity (MWh/yr)</label>
+                <input type="number" value={electricityMwh} onChange={e => setElectricityMwh(e.target.value)} className="tu-input" />
+              </div>
+              <div className="tu-field">
+                <label className="tu-label">Region</label>
+                <select value={region} onChange={e => setRegion(e.target.value as 'US' | 'EU' | 'APAC')} className="tu-select">
+                  <option value="US">US Grid</option>
+                  <option value="EU">EU Grid</option>
+                  <option value="APAC">APAC Grid</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="tu-field">
+              <label className="tu-label">Natural Gas (Therms/yr)</label>
+              <input type="number" value={gasTherms} onChange={e => setGasTherms(e.target.value)} className="tu-input" />
+            </div>
+
+            <div className="tu-form-grid">
+              <div className="tu-field">
+                <label className="tu-label">Travel (Miles)</label>
+                <input type="number" value={travelMiles} onChange={e => setTravelMiles(e.target.value)} className="tu-input" />
+              </div>
+              <div className="tu-field">
+                <label className="tu-label">vCPU (Hrs)</label>
+                <input type="number" value={cloudVcpuHrs} onChange={e => setCloudVcpuHrs(e.target.value)} className="tu-input" />
+              </div>
+            </div>
+
+            <div className="tu-aeo" style={{ marginTop: '1.5rem' }}>
+              <p>
+                <strong>ESG Reporting:</strong> Standardized TCFD and ISSB disclosures require Scope 3 value 
+                chain transparency. Cloud compute emissions are a dominant factor for modern SaaS firms, often 
+                exceeding direct facility (Scope 1) impact by 400%.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="tu-form-grid">
-          <div className="tu-field">
-            <label className="tu-label">Natural Gas Usage (Therms/yr)</label>
-            <input 
-              type="number" value={gasTherms} 
-              onChange={e => setGasTherms(e.target.value)}
-              className="tu-input" 
-            />
-          </div>
-          <div className="tu-field">
-            <label className="tu-label">Business Travel (Flight Miles/yr)</label>
-            <input 
-              type="number" value={travelMiles} 
-              onChange={e => setTravelMiles(e.target.value)}
-              className="tu-input" 
-            />
-          </div>
-          <div className="tu-field">
-            <label className="tu-label">Cloud Compute (vCPU Hrs/yr)</label>
-            <input 
-              type="number" value={cloudVcpuHrs} 
-              onChange={e => setCloudVcpuHrs(e.target.value)}
-              className="tu-input" 
-            />
-          </div>
-        </div>
-      </div>
+        <div className="tu-split-right">
+          <div className="tu-result tu-animate" style={{ marginTop: 0 }}>
+            <div className="tu-result-hero">
+              <div className="tu-metric">
+                <span className="tu-metric-label">Total Emissions</span>
+                <span className="tu-metric-value">
+                  {(result.total / 1000).toFixed(1)}
+                  <span className="tu-metric-unit"> metric tons</span>
+                </span>
+              </div>
+            </div>
 
-      <div className="tu-result tu-animate">
-        <div className="tu-result-hero">
-          <div className="tu-metric">
-            <span className="tu-metric-label">Total Annual Emissions</span>
-            <span className="tu-metric-value">
-              {(result.total / 1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}
-              <span className="tu-metric-unit"> metric tons CO₂e</span>
-            </span>
-          </div>
-        </div>
+            <div className="tu-table-wrap" style={{ marginBottom: '1rem' }}>
+              <table className="tu-table">
+                <thead>
+                  <tr>
+                    <th>Scope</th>
+                    <th>MT CO₂e</th>
+                    <th>%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{ fontWeight: 600, fontSize: '0.8rem' }}>Scope 1 (Direct)</td>
+                    <td style={{ fontSize: '0.8rem' }}>{(result.scope1 / 1000).toFixed(2)}</td>
+                    <td style={{ fontSize: '0.8rem' }}>{result.total > 0 ? Math.round((result.scope1 / result.total) * 100) : 0}%</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: 600, fontSize: '0.8rem' }}>Scope 2 (Indirect)</td>
+                    <td style={{ fontSize: '0.8rem' }}>{(result.scope2 / 1000).toFixed(2)}</td>
+                    <td style={{ fontSize: '0.8rem' }}>{result.total > 0 ? Math.round((result.scope2 / result.total) * 100) : 0}%</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: 600, fontSize: '0.8rem' }}>Scope 3 (Chain)</td>
+                    <td style={{ fontSize: '0.8rem' }}>{(result.scope3 / 1000).toFixed(2)}</td>
+                    <td style={{ fontSize: '0.8rem' }}>{result.total > 0 ? Math.round((result.scope3 / result.total) * 100) : 0}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-        <div className="tu-table-wrap" style={{ marginBottom: '1.25rem' }}>
-          <table className="tu-table">
-            <thead>
-              <tr>
-                <th>Emissions Category</th>
-                <th>Sources</th>
-                <th>Amount (kg CO₂e)</th>
-                <th>% of Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Scope 1</td>
-                <td style={{ fontSize: '0.8rem' }}>Direct (Facilities, Fleet)</td>
-                <td>{Math.round(result.scope1).toLocaleString()}</td>
-                <td>{result.total > 0 ? Math.round((result.scope1 / result.total) * 100) : 0}%</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Scope 2</td>
-                <td style={{ fontSize: '0.8rem' }}>Indirect (Purchased Electricity)</td>
-                <td>{Math.round(result.scope2).toLocaleString()}</td>
-                <td>{result.total > 0 ? Math.round((result.scope2 / result.total) * 100) : 0}%</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Scope 3</td>
-                <td style={{ fontSize: '0.8rem' }}>Value Chain (Travel, Cloud)</td>
-                <td>{Math.round(result.scope3).toLocaleString()}</td>
-                <td>{result.total > 0 ? Math.round((result.scope3 / result.total) * 100) : 0}%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div style={{ padding: '1rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', display: 'flex', gap: '1rem' }}>
-          <div style={{ flex: 1, textAlign: 'center', padding: '1rem', background: '#fff', borderRadius: '4px', border: '1px solid #f1f5f9' }}>
-            <span style={{ display: 'block', fontSize: '1.5rem', marginBottom: '0.5rem' }}>🚗</span>
-            <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 700, color: '#1e293b' }}>{Math.round(result.equivalencies.cars).toLocaleString()}</span>
-            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#64748b' }}>Passenger Cars Driven For 1 Year</span>
-          </div>
-          <div style={{ flex: 1, textAlign: 'center', padding: '1rem', background: '#fff', borderRadius: '4px', border: '1px solid #f1f5f9' }}>
-            <span style={{ display: 'block', fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌲</span>
-            <span style={{ display: 'block', fontSize: '1.2rem', fontWeight: 700, color: '#16a34a' }}>{Math.round(result.equivalencies.trees).toLocaleString()}</span>
-            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#64748b' }}>Tree Seedlings Grown For 10 Years</span>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <div style={{ textAlign: 'center', padding: '0.75rem', background: 'white', borderRadius: '8px', border: '1px solid #d4d9de' }}>
+                <span style={{ display: 'block', fontSize: '1.25rem', marginBottom: '0.25rem' }}>🚗</span>
+                <p style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0 }}>{Math.round(result.equivalencies.cars).toLocaleString()}</p>
+                <p style={{ fontSize: '0.6rem', color: '#64748b', textTransform: 'uppercase' }}>Cars/Year</p>
+              </div>
+              <div style={{ textAlign: 'center', padding: '0.75rem', background: 'white', borderRadius: '8px', border: '1px solid #d4d9de' }}>
+                <span style={{ display: 'block', fontSize: '1.25rem', marginBottom: '0.25rem' }}>🌲</span>
+                <p style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, color: '#16a34a' }}>{Math.round(result.equivalencies.trees).toLocaleString()}</p>
+                <p style={{ fontSize: '0.6rem', color: '#64748b', textTransform: 'uppercase' }}>Trees/Decade</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

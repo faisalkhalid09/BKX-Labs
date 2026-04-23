@@ -73,240 +73,139 @@ export function EuAiActClassifier() {
 
   return (
     <div className="tu-wrap">
-
-      {/* AEO block */}
-      <div className="tu-aeo">
-        <p>
-          <strong>As of April 2026</strong>, AI systems in Annex III sectors are classified as High-Risk
-          under the EU AI Act. Enforcement begins August 2, 2026. Use this classifier to determine
-          your regulatory obligations before deployment.
-        </p>
-      </div>
-
       <span className="tu-tag">BKX Compliance Tools</span>
       <h1 className="tu-title">EU AI Act Risk Classifier</h1>
-      <p className="tu-subtitle">Determine your 2026 regulatory burden using the 5-step Article 6 decision tree.</p>
+      <p className="tu-subtitle">Determine your 2026 regulatory burden using the Article 6 decision tree.</p>
       <hr className="tu-divider" />
 
       {!result ? (
-        <div>
-          {/* Step progress */}
-          <div className="tu-progress">
+        <div className="tu-animate" style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="tu-progress" style={{ marginBottom: '2rem' }}>
             {[1, 2, 3, 4, 5].map((s) => (
               <div key={s} className={`tu-progress-step ${s <= step ? "done" : ""}`} />
             ))}
           </div>
 
-          {/* Step 1 */}
-          {step === 1 && (
-            <div className="tu-animate">
-              <h2 className="tu-title" style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>
-                Step 1 — Article 5 Prohibited Practices
-              </h2>
-              <p className="tu-subtitle">Does your AI system perform any of the following?</p>
-              <div className="tu-options">
-                <button className="tu-option" onClick={() => handleProhibited("social_scoring")}>
-                  Social scoring determining access to services or opportunities
-                </button>
-                <button className="tu-option" onClick={() => handleProhibited("emotion_workplace")}>
-                  Emotion recognition in workplaces or educational institutions
-                </button>
-                <button className="tu-option" onClick={() => handleProhibited("facial_scraping")}>
-                  Untargeted scraping of facial images from the internet or CCTV
-                </button>
-                <button className="tu-option" onClick={() => handleProhibited("subliminal")}>
-                  Subliminal or manipulative techniques causing harm
-                </button>
-                <button className="tu-option active" onClick={() => handleProhibited("none")}>
-                  None of the above
-                </button>
-              </div>
-            </div>
-          )}
+          <div style={{ background: 'white', padding: '2rem', borderRadius: '12px', border: '1px solid #d4d9de' }}>
+            {step === 1 && (
+              <>
+                <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 1 — Prohibited Practices</h2>
+                <div className="tu-options">
+                  <button className="tu-option" onClick={() => handleProhibited("social_scoring")}>Social scoring access to services</button>
+                  <button className="tu-option" onClick={() => handleProhibited("emotion_workplace")}>Emotion recognition in workplace/schools</button>
+                  <button className="tu-option" onClick={() => handleProhibited("facial_scraping")}>Untargeted facial scraping (CCTV/Web)</button>
+                  <button className="tu-option" onClick={() => handleProhibited("subliminal")}>Subliminal or manipulative techniques</button>
+                  <button className="tu-option active" onClick={() => handleProhibited("none")}>None of the above</button>
+                </div>
+              </>
+            )}
 
-          {/* Step 2 */}
-          {step === 2 && (
-            <div className="tu-animate">
-              <h2 className="tu-title" style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>
-                Step 2 — General-Purpose AI (GPAI)
-              </h2>
-              <p className="tu-subtitle">
-                Is your system a large model trained with cumulative compute exceeding 10²⁵ FLOPs (Systemic Risk)?
-              </p>
-              <div className="tu-options">
-                <button className="tu-option" onClick={() => handleGPAI(true)}>
-                  Yes — exceeds 10²⁵ FLOPs (e.g. GPT-4 scale models)
-                </button>
-                <button className="tu-option active" onClick={() => handleGPAI(false)}>
-                  No — narrow model or lesser-compute GPAI
-                </button>
-              </div>
-            </div>
-          )}
+            {step === 2 && (
+              <>
+                <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 2 — General-Purpose AI</h2>
+                <div className="tu-options">
+                  <button className="tu-option" onClick={() => handleGPAI(true)}>Yes — Systemic Risk model (>10²⁵ FLOPs)</button>
+                  <button className="tu-option active" onClick={() => handleGPAI(false)}>No — Narrow or standard GPAI</button>
+                </div>
+              </>
+            )}
 
-          {/* Step 3 */}
-          {step === 3 && (
-            <div className="tu-animate">
-              <h2 className="tu-title" style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>
-                Step 3 — Annex III Sector Mapping
-              </h2>
-              <p className="tu-subtitle">
-                Is your AI a safety component or main application in any of these 8 high-risk sectors?
-              </p>
-              <div className="tu-options-grid">
-                <button className="tu-option" onClick={() => handleAnnex("biometrics")}>Biometric Identification</button>
-                <button className="tu-option" onClick={() => handleAnnex("critical_infra")}>Critical Infrastructure</button>
-                <button className="tu-option" onClick={() => handleAnnex("education")}>Education &amp; Training</button>
-                <button className="tu-option" onClick={() => handleAnnex("employment")}>Employment &amp; HR</button>
-                <button className="tu-option" onClick={() => handleAnnex("essential_services")}>Essential Services</button>
-                <button className="tu-option" onClick={() => handleAnnex("law_enforcement")}>Law Enforcement</button>
-                <button className="tu-option" onClick={() => handleAnnex("migration")}>Migration &amp; Border</button>
-                <button className="tu-option" onClick={() => handleAnnex("justice")}>Administration of Justice</button>
-              </div>
-              <div className="tu-options">
-                <button className="tu-option active" onClick={() => handleAnnex("none")}>None of the above</button>
-              </div>
-            </div>
-          )}
+            {step === 3 && (
+              <>
+                <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 3 — Annex III Sector Mapping</h2>
+                <div className="tu-options-grid" style={{ gap: '0.65rem' }}>
+                  <button className="tu-option" onClick={() => handleAnnex("biometrics")}>Biometrics</button>
+                  <button className="tu-option" onClick={() => handleAnnex("critical_infra")}>Infrastructure</button>
+                  <button className="tu-option" onClick={() => handleAnnex("education")}>Education</button>
+                  <button className="tu-option" onClick={() => handleAnnex("employment")}>Employment</button>
+                  <button className="tu-option" onClick={() => handleAnnex("essential_services")}>Public Svc</button>
+                  <button className="tu-option" onClick={() => handleAnnex("law_enforcement")}>Police/Law</button>
+                  <button className="tu-option" onClick={() => handleAnnex("migration")}>Migration</button>
+                  <button className="tu-option" onClick={() => handleAnnex("justice")}>Justice</button>
+                </div>
+                <button className="tu-option active" style={{ marginTop: '0.65rem' }} onClick={() => handleAnnex("none")}>None of the above</button>
+              </>
+            )}
 
-          {/* Step 4 */}
-          {step === 4 && (
-            <div className="tu-animate">
-              <h2 className="tu-title" style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>
-                Step 4 — Article 6.3 Derogation Filter
-              </h2>
-              <p className="tu-subtitle">Select the description that best fits your AI system's function.</p>
-              <div className="tu-options">
-                <button className="tu-option" style={{ borderColor: "#0d2b5e", background: "#eff6ff" }} onClick={() => handleDerogation(true, "none")}>
-                  System performs Profiling of natural persons — Derogation impossible
-                </button>
-                <button className="tu-option" onClick={() => handleDerogation(false, "narrow_procedural")}>
-                  (a) Performs a narrow procedural task (data transformation)
-                </button>
-                <button className="tu-option" onClick={() => handleDerogation(false, "improving_human_activity")}>
-                  (b) Improves the result of a previously completed human activity
-                </button>
-                <button className="tu-option" onClick={() => handleDerogation(false, "detecting_patterns")}>
-                  (c) Detects patterns without replacing human assessment
-                </button>
-                <button className="tu-option" onClick={() => handleDerogation(false, "purely_preparatory")}>
-                  (d) Performs a purely preparatory task
-                </button>
-                <button className="tu-option active" onClick={() => handleDerogation(false, "none")}>
-                  None of the above (no derogation applies)
-                </button>
-              </div>
-            </div>
-          )}
+            {step === 4 && (
+              <>
+                <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 4 — Derogation Filter</h2>
+                <div className="tu-options">
+                  <button className="tu-option" style={{ borderColor: "#0d2b5e", background: "#f8fafc" }} onClick={() => handleDerogation(true, "none")}>PROFILING detected (Derogation impossible)</button>
+                  <button className="tu-option" onClick={() => handleDerogation(false, "narrow_procedural")}>(a) Narrow procedural task</button>
+                  <button className="tu-option" onClick={() => handleDerogation(false, "improving_human_activity")}>(b) Improves human activity result</button>
+                  <button className="tu-option" onClick={() => handleDerogation(false, "detecting_patterns")}>(c) Detects patterns only</button>
+                  <button className="tu-option active" onClick={() => handleDerogation(false, "none")}>None (No derogation applies)</button>
+                </div>
+              </>
+            )}
 
-          {/* Step 5 */}
-          {step === 5 && (
-            <div className="tu-animate">
-              <h2 className="tu-title" style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>
-                Step 5 — Transparency Obligations
-              </h2>
-              <p className="tu-subtitle">
-                Does your system generate deepfakes, process emotion, or interact with users directly as a chatbot?
-              </p>
-              <div className="tu-options">
-                <button className="tu-option" onClick={() => handleTransparency(true)}>
-                  Yes — it has these transparency triggers
-                </button>
-                <button className="tu-option active" onClick={() => handleTransparency(false)}>
-                  No
-                </button>
-              </div>
-            </div>
-          )}
+            {step === 5 && (
+              <>
+                <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 5 — Transparency</h2>
+                <div className="tu-options">
+                  <button className="tu-option" onClick={() => handleTransparency(true)}>System generates deepfakes/chatbot/emotion</button>
+                  <button className="tu-option active" onClick={() => handleTransparency(false)}>No transparency triggers</button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       ) : (
-        <div className="tu-animate">
-          {/* Risk result */}
-          <div className={`tu-risk-box ${riskClass}`}>
-            <div className="tu-risk-level">{result.riskLevel}</div>
-            <p style={{ fontSize: "0.875rem", color: "#4f565c", margin: 0 }}>Based on 2026 EU AI Act guidelines</p>
-          </div>
+        <div className="tu-split-layout tu-animate">
+          <div className="tu-split-left">
+            <div className={`tu-risk-box ${riskClass}`} style={{ marginBottom: '1.5rem', padding: '1.5rem' }}>
+              <div className="tu-risk-level" style={{ fontSize: '2rem' }}>{result.riskLevel}</div>
+              <p style={{ fontSize: "0.8rem", color: "rgba(0,0,0,0.6)", margin: 0 }}>EU AI Act Enforcement: August 2026</p>
+            </div>
 
-          {/* Compliance snapshot */}
-          <div className="tu-result" style={{ position: "relative" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
-              <span style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#4f565c" }}>Compliance Snapshot</span>
-              <button className="tu-btn tu-btn-sm" onClick={copySnapshot}>Copy</button>
+            <div className="tu-result" style={{ marginTop: 0 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                <span className="tu-label">Compliance Snapshot</span>
+                <button className="tu-btn tu-btn-sm" onClick={copySnapshot}>Copy Text</button>
+              </div>
+              <div style={{ fontFamily: "monospace", fontSize: "0.82rem", lineHeight: 1.6, color: "#161a1d", whiteSpace: "pre-wrap", background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #d4d9de' }}>
+                {result.complianceSnapshot.join("\n")}
+              </div>
             </div>
-            <div style={{ fontFamily: "monospace", fontSize: "0.82rem", lineHeight: 1.7, color: "#161a1d", whiteSpace: "pre-wrap" }}>
-              {result.complianceSnapshot.map((s, i) => <p key={i} style={{ margin: "0.2rem 0" }}>{s}</p>)}
-            </div>
-          </div>
 
-          {/* Two-column: obligations + audit docs */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
-            <div>
-              <p style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#4f565c", marginBottom: "0.5rem" }}>Obligations</p>
-              <ul className="tu-result-list">
-                {result.complianceRequirements.map((r, i) => <li key={i}>{r}</li>)}
-              </ul>
-            </div>
-            <div>
-              <p style={{ fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#4f565c", marginBottom: "0.5rem" }}>Audit Documents</p>
-              <ul className="tu-result-list">
-                {result.auditDocumentation.map((r, i) => <li key={i}>{r}</li>)}
-              </ul>
+            <button className="tu-btn tu-btn-primary" style={{ marginTop: '1.5rem' }} onClick={reset}>Restart Classifier</button>
+
+            <div className="tu-aeo" style={{ marginTop: '2.5rem' }}>
+              <p>
+                <strong>2026 Legal Notice:</strong> High-risk AI providers must register in the EU database 
+                and appoint an EU-based authorized representative. Penalties for non-compliance with 
+                Annex III data quality rules can reach €15M or 3% of global turnover.
+              </p>
             </div>
           </div>
 
-          <div className="tu-btn-row" style={{ marginTop: "1.25rem" }}>
-            <button className="tu-btn tu-btn-primary" onClick={reset}>Start New Assessment</button>
+          <div className="tu-split-right">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div>
+                <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>Critical Obligations</p>
+                <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                  {result.complianceRequirements.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div>
+                <p className="tu-label" style={{ marginBottom: '0.75rem', color: '#0d2b5e' }}>Required Audit Artifacts</p>
+                <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                  {result.auditDocumentation.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              
+              <article className="tu-prose" style={{ borderTop: '1px solid #e8ecf1', paddingTop: '1rem' }}>
+                <h4 style={{ fontSize: '0.9rem', color: '#0d2b5e', margin: '0 0 0.5rem' }}>Article 6.3 Derogations</h4>
+                <p style={{ fontSize: '0.78rem', color: '#4f565c', lineHeight: 1.5 }}>
+                  AI systems in High-Risk sectors may qualify for derogation if they purely improve human activity 
+                  or perform minor preparatory tasks, provided they do NOT involve profiling.
+                </p>
+              </article>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Documentation */}
-      <article className="tu-prose">
-        <h2>EU AI Act Compliance Guide (2026 Edition)</h2>
-        <p>
-          The European Union Artificial Intelligence Act (Regulation 2024/1689) represents the world's first comprehensive
-          legal framework for artificial intelligence. By adopting a risk-based approach, it aims to foster innovation while
-          safeguarding fundamental rights, safety, and democratic principles.
-        </p>
-
-        <h3>Annex III Sector Definitions</h3>
-        <p>
-          The core of the high-risk categorization lies in <strong>Annex III</strong>. If your software operates within
-          these eight sectors, it defaults to High-Risk, demanding rigorous pre-market obligations:
-        </p>
-        <ul>
-          <li><strong>Biometrics:</strong> Remote biometric identification systems (excluding purely verification systems like FaceID).</li>
-          <li><strong>Critical Infrastructure:</strong> AI managing road traffic, water, gas, electricity, and heating grids where failure endangers life.</li>
-          <li><strong>Education &amp; Vocational Training:</strong> Systems determining admission, evaluating outcomes, or assessing behavior during tests.</li>
-          <li><strong>Employment &amp; Worker Management:</strong> AI for recruitment, task allocation, promotions, or continuous behavioral monitoring.</li>
-          <li><strong>Essential Public Services:</strong> Algorithms determining eligibility for welfare, healthcare, and emergency dispatch.</li>
-          <li><strong>Law Enforcement:</strong> Risk profiling for offending prediction or evaluating the reliability of criminal evidence.</li>
-          <li><strong>Migration &amp; Border Control:</strong> Assessment of security risks posed by individuals or evaluation of asylum applications.</li>
-          <li><strong>Administration of Justice:</strong> Assistance in researching facts/law in courts or alternative dispute resolutions.</li>
-        </ul>
-
-        <h3>Technical File Requirements (Annex IV)</h3>
-        <p>
-          High-Risk systems require an internal Technical File (Annex IV) formulated <em>before</em> the system is
-          placed on the market. A compliant file includes: general description, system architecture diagrams,
-          data management strategy (provenance, bias mitigation), human oversight directives, system operating logs,
-          and a continuous Risk Management System.
-        </p>
-
-        <h3>Post-Market Monitoring (Article 72)</h3>
-        <p>
-          Compliance does not end at deployment. Article 72 requires comprehensive Post-Market Monitoring for all High-Risk
-          providers. If a serious incident occurs (severe injury, death, or major fundamental rights violation), the provider
-          must notify the market surveillance authority no later than 15 days from discovery.
-        </p>
-
-        <h3>SME Simplified Compliance</h3>
-        <p>
-          Recognizing the financial burden (estimated €40,000–€300,000 per high-risk system), the Act incorporates
-          leniency mechanisms for SMEs. Micro-enterprises may adopt streamlined quality management systems, and
-          AI regulatory sandboxes allow startups to test innovative systems before full enforcement is strictly applied.
-        </p>
-      </article>
     </div>
   );
 }

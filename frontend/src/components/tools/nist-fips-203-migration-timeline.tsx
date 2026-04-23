@@ -172,117 +172,121 @@ export function NistFips203MigrationTimeline() {
   return (
     <div className="tu-wrap">
       <span className="tu-tag">BKX Compliance Tools</span>
-      <h1 className="tu-title">NIST FIPS 203 Migration Timeline Planner</h1>
-      <p className="tu-subtitle">Estimate timelines for transitioning to Post-Quantum Cryptography (ML-KEM, ML-DSA) based on workload.</p>
+      <h1 className="tu-title">NIST FIPS 203 Migration Planner</h1>
+      <p className="tu-subtitle">Estimate timelines for transitioning to Post-Quantum Cryptography (ML-KEM, ML-DSA).</p>
       <hr className="tu-divider" />
 
-      <div className="tu-form-grid">
-        <div className="tu-field">
-          <label className="tu-label">Total Systems</label>
-          <input
-            type="number" value={cryptoSystems} min="1" max="5000"
-            onChange={(e) => setCryptoSystems(e.target.value)}
-            className="tu-input"
-          />
-        </div>
-        <div className="tu-field">
-          <label className="tu-label">Team FTEs</label>
-          <input
-            type="number" value={teamSize} min="1" max="50"
-            onChange={(e) => setTeamSize(e.target.value)}
-            className="tu-input"
-          />
-        </div>
-      </div>
-
-      <div className="tu-field" style={{ marginTop: '1.25rem' }}>
-        <label className="tu-label">Risk Distribution (%)</label>
-        <div className="tu-check-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginBottom: 0 }}>
-          {['critical', 'high', 'medium', 'low'].map(key => (
-            <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-              <span style={{ fontSize: '0.7rem', textTransform: 'capitalize', color: '#4f565c' }}>{key}</span>
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div className="tu-form-grid">
+            <div className="tu-field">
+              <label className="tu-label">Total Crypto Systems</label>
               <input
-                type="number"
-                value={riskDistribution[key as keyof typeof riskDistribution]}
-                onChange={(e) => handleRiskChange(key as keyof typeof riskDistribution, parseInt(e.target.value) || 0)}
+                type="number" value={cryptoSystems} min="1" max="5000"
+                onChange={(e) => setCryptoSystems(e.target.value)}
                 className="tu-input"
-                style={{ padding: '0.4rem' }}
               />
             </div>
-          ))}
+            <div className="tu-field">
+              <label className="tu-label">Team FTEs (Staff)</label>
+              <input
+                type="number" value={teamSize} min="1" max="50"
+                onChange={(e) => setTeamSize(e.target.value)}
+                className="tu-input"
+              />
+            </div>
+          </div>
+
+          <div className="tu-field" style={{ marginTop: '1.25rem' }}>
+            <label className="tu-label">Asset Risk Distribution (%)</label>
+            <div className="tu-check-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.8rem', marginTop: '0.5rem' }}>
+              {['critical', 'high', 'medium', 'low'].map(key => (
+                <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', color: '#4f565c' }}>{key}</span>
+                  <input
+                    type="number"
+                    value={riskDistribution[key as keyof typeof riskDistribution]}
+                    onChange={(e) => handleRiskChange(key as keyof typeof riskDistribution, parseInt(e.target.value) || 0)}
+                    className="tu-input"
+                  />
+                </div>
+              ))}
+            </div>
+            {!riskBalanced && <p style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '0.6rem', fontWeight: 600 }}>⚠ Total must equal 100% (current: {riskSum}%)</p>}
+          </div>
+
+          <div className="tu-aeo" style={{ marginTop: '2rem' }}>
+            <p>
+              <strong>FIPS 203 Migration:</strong> NIST requires critical federal systems to migrate to PQC by 2035. 
+              Enterprise timelines are typically 4-8 years. This model assumes a linear migration path with a 
+              15% complexity overhead for every 100 systems.
+            </p>
+          </div>
         </div>
-        {!riskBalanced && <p style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '0.4rem', fontWeight: 600 }}>Total must equal 100% (currently {riskSum}%)</p>}
-      </div>
 
-      <hr className="tu-divider" />
+        <div className="tu-split-right">
+          {riskBalanced && timeline ? (
+            <div className="tu-result tu-animate" style={{ marginTop: 0 }}>
+              <div className="tu-result-hero">
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Estimated Timeline</span>
+                  <span className="tu-metric-value">{timeline.totalMonths}<span className="tu-metric-unit">mo</span></span>
+                </div>
+                <div className="tu-metric">
+                  <span className="tu-metric-label">Total Transition</span>
+                  <span className="tu-metric-value" style={{ color: '#4f565c', fontSize: '1.5rem' }}>{timeline.totalWeeks}<span className="tu-metric-unit">wks</span></span>
+                </div>
+              </div>
+              
+              <div style={{ marginBottom: '1rem', padding: '0.875rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#4f565c', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Risk Assessment</p>
+                <p style={{ fontSize: '0.875rem', fontWeight: 700, color: timeline.riskAssessment.includes('HIGH') ? '#dc2626' : '#161a1d', margin: 0 }}>
+                  {timeline.riskAssessment}
+                </p>
+              </div>
 
-      {riskBalanced && timeline && (
-        <div className="tu-result tu-animate">
-          <div className="tu-result-hero">
-            <div className="tu-metric">
-              <span className="tu-metric-label">Estimated Timeline</span>
-              <span className="tu-metric-value">{timeline.totalMonths}<span className="tu-metric-unit">months</span></span>
+              <div className="tu-table-wrap">
+                <table className="tu-table">
+                  <thead>
+                    <tr>
+                      <th>Migration Phase</th>
+                      <th>Dur.</th>
+                      <th>Assets</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {timeline.phases.map((p, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          <span style={{ fontWeight: 600, display: 'block', fontSize: '0.8rem' }}>{p.name}</span>
+                          <span style={{ fontSize: '0.7rem', color: '#4f565c' }}>Week {p.startWeek}–{p.endWeek}</span>
+                        </td>
+                        <td style={{ fontSize: '0.8rem' }}>{p.durationWeeks}w</td>
+                        <td style={{ fontSize: '0.8rem' }}>{p.systemCount || '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {timeline.recommendations.length > 0 && (
+                <div style={{ marginTop: '1rem', padding: '0.875rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px' }}>
+                  <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#1e3a8a', marginBottom: '0.4rem', textTransform: 'uppercase' }}>Strategic Oversight</p>
+                  <ul className="tu-result-list" style={{ marginTop: 0 }}>
+                    {timeline.recommendations.slice(0, 3).map((rec, idx) => (
+                      <li key={idx} style={{ color: '#1e3a8a', fontSize: '0.78rem' }}>{rec}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-            <div className="tu-metric">
-              <span className="tu-metric-label">Total Weeks</span>
-              <span className="tu-metric-value" style={{ color: '#4f565c', fontSize: '1.5rem' }}>{timeline.totalWeeks}</span>
-            </div>
-          </div>
-          
-          <div className="tu-result-row">
-            <span className="tu-result-row-label">Critical Path</span>
-            <span className="tu-result-row-value" style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '0.8rem' }}>{timeline.criticalPath}</span>
-          </div>
-          <div className="tu-result-row">
-            <span className="tu-result-row-label">Risk Assessment</span>
-            <span className="tu-result-row-value" style={{ color: timeline.riskAssessment.includes('HIGH') ? '#dc2626' : '#161a1d', textAlign: 'left', fontWeight: 'bold', fontSize: '0.8rem' }}>
-              {timeline.riskAssessment}
-            </span>
-          </div>
-
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0d2b5e', margin: '1.5rem 0 1rem' }}>Migration Phases</h3>
-          <div className="tu-table-wrap">
-            <table className="tu-table">
-              <thead>
-                <tr>
-                  <th>Phase</th>
-                  <th>Duration</th>
-                  <th>Systems</th>
-                  <th>Key Deliverables</th>
-                </tr>
-              </thead>
-              <tbody>
-                {timeline.phases.map((p, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <span style={{ fontWeight: 600, display: 'block' }}>{p.name}</span>
-                      <span style={{ fontSize: '0.72rem', color: '#4f565c' }}>Wk {p.startWeek}-{p.endWeek}</span>
-                    </td>
-                    <td>{p.durationWeeks} weeks</td>
-                    <td>{p.systemCount || '—'}</td>
-                    <td style={{ fontSize: '0.75rem' }}>
-                      <ul style={{ margin: 0, paddingLeft: '1rem' }}>
-                        {p.deliverables.map((d, i) => <li key={i}>{d}</li>)}
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {timeline.recommendations.length > 0 && (
-            <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px' }}>
-              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1e3a8a', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Recommendations</p>
-              <ul className="tu-result-list" style={{ marginTop: 0 }}>
-                {timeline.recommendations.map((rec, idx) => (
-                  <li key={idx} style={{ color: '#1e3a8a' }}>{rec}</li>
-                ))}
-              </ul>
+          ) : (
+            <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', border: '2px dashed #d4d9de', borderRadius: '10px', color: '#4f565c' }}>
+              <p>Adjust risk distribution to 100% to view timeline results.</p>
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

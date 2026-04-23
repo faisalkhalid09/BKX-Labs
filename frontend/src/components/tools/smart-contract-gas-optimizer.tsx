@@ -69,139 +69,114 @@ export function GasOptimizer() {
     <div className="tu-wrap">
       <span className="tu-tag">BKX Web3 Security</span>
       <h1 className="tu-title">Smart Contract Gas Optimizer</h1>
-      <p className="tu-subtitle">Estimate execution costs for typical Web3 primitives and model savings from standard EVM optimization techniques.</p>
+      <p className="tu-subtitle">Model savings from EVM storage packing and calldata optimization techniques.</p>
       <hr className="tu-divider" />
 
-      <div className="tu-form-grid" style={{ marginBottom: '1.25rem' }}>
-        <div className="tu-field">
-          <label className="tu-label">Contract Primitive</label>
-          <select 
-            value={contractType} 
-            onChange={e => setContractType(e.target.value)}
-            className="tu-select"
-          >
-            <option value="ERC20_Transfer">ERC-20 Batch Transfer</option>
-            <option value="ERC721_Mint">ERC-721 Batch Mint</option>
-            <option value="DEX_Swap">DEX Swap Routing</option>
-            <option value="Staking_Deposit">Staking Pool Deposit</option>
-          </select>
-        </div>
-        <div className="tu-field">
-          <label className="tu-label">Batch Size (Operations)</label>
-          <input 
-            type="number" min="1" max="1000"
-            value={arrayLength} 
-            onChange={e => setArrayLength(parseInt(e.target.value) || 1)}
-            className="tu-input"
-          />
-        </div>
-        <div className="tu-field">
-          <label className="tu-label">Gas Price (Gwei)</label>
-          <input 
-            type="number" min="1" max="1000"
-            value={gasPriceGwei} 
-            onChange={e => setGasPriceGwei(parseInt(e.target.value) || 1)}
-            className="tu-input"
-          />
-        </div>
-        <div className="tu-field">
-          <label className="tu-label">ETH Price (USD)</label>
-          <input 
-            type="number" min="1"
-            value={ethPriceUSD} 
-            onChange={e => setEthPriceUSD(parseInt(e.target.value) || 1)}
-            className="tu-input"
-          />
-        </div>
-      </div>
-
-      <div className="tu-field" style={{ marginBottom: '1.5rem' }}>
-        <label className="tu-label">Applied EVM Optimizations</label>
-        <div className="tu-check-grid" style={{ gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr)' }}>
-          <label className="tu-check-label tu-check-label-styled">
-            <input 
-              type="checkbox" 
-              checked={useStoragePacking}
-              onChange={e => setUseStoragePacking(e.target.checked)}
-              className="tu-checkbox"
-            />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontWeight: 600 }}>Storage Slot Packing</span>
-              <span style={{ fontSize: '0.75rem', color: '#4f565c' }}>Pack uint8/uint16/bools into a single 256-bit slot to bypass multiple SSTORE ops.</span>
+      <div className="tu-split-layout">
+        <div className="tu-split-left">
+          <div className="tu-form-grid" style={{ marginBottom: '1.25rem' }}>
+            <div className="tu-field" style={{ gridColumn: '1 / -1' }}>
+              <label className="tu-label">Contract Primitive</label>
+              <select value={contractType} onChange={e => setContractType(e.target.value)} className="tu-select">
+                <option value="ERC20_Transfer">ERC-20 Batch Transfer</option>
+                <option value="ERC721_Mint">ERC-721 Batch Mint</option>
+                <option value="DEX_Swap">DEX Swap (Multi-hop)</option>
+                <option value="Staking_Deposit">Staking Pool Entry</option>
+              </select>
             </div>
-          </label>
-          <label className="tu-check-label tu-check-label-styled">
-            <input 
-              type="checkbox" 
-              checked={useCalldata}
-              onChange={e => setUseCalldata(e.target.checked)}
-              className="tu-checkbox"
-            />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontWeight: 600 }}>Calldata over Memory</span>
-              <span style={{ fontSize: '0.75rem', color: '#4f565c' }}>Use calldata for read-only functional arguments arrays.</span>
+            <div className="tu-field">
+              <label className="tu-label">Batch Size</label>
+              <input type="number" min="1" value={arrayLength} onChange={e => setArrayLength(parseInt(e.target.value) || 1)} className="tu-input" />
             </div>
-          </label>
-        </div>
-      </div>
-
-      <div className="tu-result tu-animate">
-        <div className="tu-result-hero">
-          <div className="tu-metric">
-            <span className="tu-metric-label">Estimated Savings</span>
-            <span className="tu-metric-value" style={{ color: '#10b981' }}>
-              ${result.savedUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </span>
+            <div className="tu-field">
+              <label className="tu-label">Gwei</label>
+              <input type="number" value={gasPriceGwei} onChange={e => setGasPriceGwei(parseInt(e.target.value) || 1)} className="tu-input" />
+            </div>
           </div>
-          <div className="tu-metric">
-            <span className="tu-metric-label">Reduction</span>
-            <span className="tu-metric-value">
-              {result.savePercent.toFixed(1)}<span className="tu-metric-unit">%</span>
-            </span>
+
+          <div className="tu-field">
+            <label className="tu-label">EVM Optimizations</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <label className="tu-check-label tu-check-label-styled">
+                <input type="checkbox" checked={useStoragePacking} onChange={e => setUseStoragePacking(e.target.checked)} className="tu-checkbox" />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Storage Slot Packing</span>
+                  <span style={{ fontSize: '0.7rem', color: '#4f565c' }}>Combine uint8/bools into 256-bit slots.</span>
+                </div>
+              </label>
+              <label className="tu-check-label tu-check-label-styled">
+                <input type="checkbox" checked={useCalldata} onChange={e => setUseCalldata(e.target.checked)} className="tu-checkbox" />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Calldata over Memory</span>
+                  <span style={{ fontSize: '0.7rem', color: '#4f565c' }}>Use read-only calldata for function arrays.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div className="tu-aeo" style={{ marginTop: '2rem' }}>
+            <p>
+              <strong>EVM Economics:</strong> Gas efficiency (Solidity 0.8.x) is the primary driver for protocol LTV. 
+              Optimizing SSTORE operations via slot packing remains the most effective way to reduce protocol-level 
+              overhead by up to 40% per transaction.
+            </p>
           </div>
         </div>
 
-        <div className="tu-table-wrap">
-          <table className="tu-table">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Unoptimized</th>
-                <th>Optimized</th>
-                <th>Difference</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Gas Units</td>
-                <td style={{ color: '#dc2626' }}>{result.unoptimizedGas.toLocaleString()}</td>
-                <td style={{ color: '#10b981', fontWeight: 'bold' }}>{result.optimizedGas.toLocaleString()}</td>
-                <td>{result.savedGas.toLocaleString()} units</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Fiat Cost (USD)</td>
-                <td style={{ color: '#dc2626' }}>${result.unoptimizedUsd.toFixed(2)}</td>
-                <td style={{ color: '#10b981', fontWeight: 'bold' }}>${result.optimizedUsd.toFixed(2)}</td>
-                <td>${result.savedUsd.toFixed(2)}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="tu-split-right">
+          <div className="tu-result tu-animate" style={{ marginTop: 0 }}>
+            <div className="tu-result-hero">
+              <div className="tu-metric">
+                <span className="tu-metric-label">Est. Savings</span>
+                <span className="tu-metric-value" style={{ color: '#10b981' }}>
+                  ${result.savedUsd.toFixed(2)}
+                </span>
+              </div>
+              <div className="tu-metric">
+                <span className="tu-metric-label">Reduction</span>
+                <span className="tu-metric-value">{result.savePercent.toFixed(1)}<span className="tu-metric-unit">%</span></span>
+              </div>
+            </div>
+
+            <div className="tu-table-wrap">
+              <table className="tu-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Unopt.</th>
+                    <th>Opt.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{ fontWeight: 600, fontSize: '0.8rem' }}>Gas Units</td>
+                    <td style={{ color: '#dc2626', fontSize: '0.8rem' }}>{result.unoptimizedGas.toLocaleString()}</td>
+                    <td style={{ color: '#10b981', fontWeight: 700, fontSize: '0.8rem' }}>{result.optimizedGas.toLocaleString()}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ fontWeight: 600, fontSize: '0.8rem' }}>Cost (USD)</td>
+                    <td style={{ color: '#dc2626', fontSize: '0.8rem' }}>${result.unoptimizedUsd.toFixed(2)}</td>
+                    <td style={{ color: '#10b981', fontWeight: 700, fontSize: '0.8rem' }}>${result.optimizedUsd.toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style={{ marginTop: '1rem', padding: '0.75rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+              <p style={{ fontSize: '0.78rem', color: '#4f565c', margin: 0, fontStyle: 'italic' }}>
+                Note: Calculation includes a 1.1x safety buffer for EIP-1559 base fee fluctuations.
+              </p>
+            </div>
+          </div>
         </div>
-        
-        <p style={{ fontSize: "0.8rem", color: "#4f565c", marginTop: "1rem", fontStyle: "italic", textAlign: 'center' }}>
-          Assuming standard London hard fork EIP-1559 base fee math. Real-world execution may vary.
-        </p>
       </div>
 
-      <div className="tu-btn-row">
-         <button type="button" className="tu-btn" onClick={() => {
-           setContractType('ERC20_Transfer');
-           setArrayLength(1);
-           setGasPriceGwei(DEFAULT_GWEI);
-           setEthPriceUSD(DEFAULT_ETH_PRICE);
-           setUseStoragePacking(true);
-           setUseCalldata(true);
-         }}>Reset Optimizer</button>
+      <div className="tu-btn-row" style={{ marginTop: '1.25rem' }}>
+        <button type="button" className="tu-btn tu-btn-sm" onClick={() => {
+          setContractType('ERC20_Transfer'); setArrayLength(1);
+          setGasPriceGwei(DEFAULT_GWEI); setEthPriceUSD(DEFAULT_ETH_PRICE);
+          setUseStoragePacking(true); setUseCalldata(true);
+        }}>Reset Settings</button>
       </div>
     </div>
   );
