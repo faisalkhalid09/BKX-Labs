@@ -643,25 +643,13 @@
   }
 
   .tools-header-logo {
-    width: 70px;
-    height: 40px;
-  }
-
-  .tools-logo-circle {
-    width: 70px;
-    height: 70px;
-    top: -10px;
-    border-width: 1px;
-    transform: none; /* using top instead of translate */
-  }
-
-  .tools-logo-circle:hover {
-    transform: scale(1.05);
+    display: flex;
+    justify-content: center;
   }
 
   .tools-favicon-img {
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
   }
 
   /* Grid — full width on small phones */
