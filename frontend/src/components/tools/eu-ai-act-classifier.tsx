@@ -104,7 +104,7 @@ export function EuAiActClassifier() {
               <>
                 <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.5rem" }}>Step 2 — General-Purpose AI</h2>
                 <div className="tu-options">
-                  <button className="tu-option" onClick={() => handleGPAI(true)}>Yes — Systemic Risk model (>10²⁵ FLOPs)</button>
+                  <button className="tu-option" onClick={() => handleGPAI(true)}>Yes — Systemic Risk model ({'>'}10²⁵ FLOPs)</button>
                   <button className="tu-option active" onClick={() => handleGPAI(false)}>No — Narrow or standard GPAI</button>
                 </div>
               </>
