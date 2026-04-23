@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { AlertTriangle, Zap, Leaf, DollarSign } from 'lucide-react';
 
 // Blackwell GPU Power Specifications (April 2026)
@@ -27,32 +27,32 @@ const GPU_SPECS = {
     vram: '256GB HBM3E',
     cooling_options: ['Direct-to-Chip (DTC)', 'Immersion'],
   },
-};
+} as const;
 
 const RACK_CONFIGS = {
   'NVL72': { gpus_per_rack: 9, name: 'NVL72 (9× GPUs)' },
   'NVL36': { gpus_per_rack: 8, name: 'NVL36 (8× GPUs)' },
   'Custom': { gpus_per_rack: 1, name: 'Custom' },
-};
+} as const;
 
 const COOLING_PUE = {
   'Air-Cooled (RDHx)': 1.35,
   'Direct-to-Chip (DTC)': 1.12,
   'Immersion': 1.08,
-};
+} as const;
 
 const POWER_DRAW_PROFILE = {
   'Air-Cooled (RDHx)': 0.95,
   'Direct-to-Chip (DTC)': 0.98,
   'Immersion': 0.99,
-};
+} as const;
 
 const REGIONAL_RATES = {
   'US': { rate: 0.08, carbon_intensity: 0.42 },
   'EU': { rate: 0.15, carbon_intensity: 0.25 },
   'APAC': { rate: 0.12, carbon_intensity: 0.55 },
   'Custom': { rate: 0.10, carbon_intensity: 0.40 },
-};
+} as const;
 
 export default function BlackwellPUEEstimator() {
   const [gpuModel, setGpuModel] = useState('B200');
@@ -65,12 +65,12 @@ export default function BlackwellPUEEstimator() {
   const [customCarbon, setCustomCarbon] = useState(0.40);
   const [utilizationRate, setUtilizationRate] = useState(0.8);
 
-  const currentGPU = GPU_SPECS[gpuModel];
-  const rackConfigData = RACK_CONFIGS[rackConfig];
-  const utilityRate = region === 'Custom' ? customRate : REGIONAL_RATES[region].rate;
-  const carbonIntensity = region === 'Custom' ? customCarbon : REGIONAL_RATES[region].carbon_intensity;
-  const pue = COOLING_PUE[coolingMode];
-  const powerDrawProfile = POWER_DRAW_PROFILE[coolingMode];
+  const currentGPU = GPU_SPECS[gpuModel as keyof typeof GPU_SPECS];
+  const rackConfigData = RACK_CONFIGS[rackConfig as keyof typeof RACK_CONFIGS];
+  const utilityRate = region === 'Custom' ? customRate : REGIONAL_RATES[region as keyof typeof REGIONAL_RATES].rate;
+  const carbonIntensity = region === 'Custom' ? customCarbon : REGIONAL_RATES[region as keyof typeof REGIONAL_RATES].carbon_intensity;
+  const pue = COOLING_PUE[coolingMode as keyof typeof COOLING_PUE];
+  const powerDrawProfile = POWER_DRAW_PROFILE[coolingMode as keyof typeof POWER_DRAW_PROFILE];
 
   // Calculate actual GPU count based on deployment type
   const actualGpuCount = deploymentType === 'Rack Count' 
@@ -234,7 +234,7 @@ export default function BlackwellPUEEstimator() {
                 onChange={(e) => setCoolingMode(e.target.value)}
                 className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {currentGPU.cooling_options.map((option) => (
+                {currentGPU.cooling_options.map((option: string) => (
                   <option key={option} value={option}>{option}</option>
                 ))}
               </select>

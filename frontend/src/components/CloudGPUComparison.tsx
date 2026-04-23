@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 // April 2026 GPU Pricing Data
 const GPU_PRICING = {
@@ -52,7 +52,7 @@ const GPU_PRICING = {
       'Spot': { rate: 0.65, availability: 'High', provider: 'Vast.ai' }
     }
   }
-};
+} as const;
 
 const WORKLOAD_PROFILES = {
   'Inference': {
@@ -70,7 +70,7 @@ const WORKLOAD_PROFILES = {
     hours: 720,
     recommendation: 'H100 Spot or A100'
   }
-};
+} as const;
 
 export default function CloudGPUCostComparison() {
   const [selectedGPU, setSelectedGPU] = useState('H200');
@@ -79,11 +79,11 @@ export default function CloudGPUCostComparison() {
   const [workloadType, setWorkloadType] = useState('Inference');
   const [quantity, setQuantity] = useState(1);
 
-  const currentGPU = GPU_PRICING[selectedGPU];
-  const currentRate = currentGPU.providers[selectedProvider]?.rate || 0;
+  const currentGPU = GPU_PRICING[selectedGPU as keyof typeof GPU_PRICING];
+  const currentRate = currentGPU.providers[selectedProvider as keyof typeof currentGPU.providers]?.rate || 0;
 
   const calculations = useMemo(() => {
-    const hyperscalerRate = currentGPU.providers['Hyperscaler']?.rate || currentRate;
+    const hyperscalerRate = (currentGPU.providers as Record<string, { rate: number; availability: string; provider: string }>)['Hyperscaler']?.rate || currentRate;
     const totalCost = currentRate * usageHours * quantity;
     const hyperscalerCost = hyperscalerRate * usageHours * quantity;
     const monthlyWaste = (hyperscalerRate - currentRate) * usageHours * quantity;
@@ -178,13 +178,13 @@ export default function CloudGPUCostComparison() {
                 onChange={(e) => setWorkloadType(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {Object.entries(WORKLOAD_PROFILES).map(([key, profile]) => (
+                {Object.entries(WORKLOAD_PROFILES).map(([key, _profile]) => (
                   <option key={key} value={key}>
                     {key}
                   </option>
                 ))}
               </select>
-              <p className="text-xs text-gray-500 mt-1">{WORKLOAD_PROFILES[workloadType].description}</p>
+                <p className="text-xs text-gray-500 mt-1">{WORKLOAD_PROFILES[workloadType as keyof typeof WORKLOAD_PROFILES].description}</p>
             </div>
 
             {/* Usage Hours */}
@@ -222,10 +222,10 @@ export default function CloudGPUCostComparison() {
             {/* Provider Info */}
             <div className="bg-gray-50 p-4 rounded-md">
               <p className="text-xs text-gray-500 mb-1">Provider</p>
-              <p className="font-semibold text-gray-900">{currentGPU.providers[selectedProvider].provider}</p>
+              <p className="font-semibold text-gray-900">{currentGPU.providers[selectedProvider as keyof typeof currentGPU.providers].provider}</p>
               <div className="mt-2">
-                <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${availabilityColor[currentGPU.providers[selectedProvider].availability]}`}>
-                  {currentGPU.providers[selectedProvider].availability} Availability
+                <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${availabilityColor[currentGPU.providers[selectedProvider as keyof typeof currentGPU.providers].availability as keyof typeof availabilityColor]}`}>
+                  {currentGPU.providers[selectedProvider as keyof typeof currentGPU.providers].availability} Availability
                 </span>
               </div>
             </div>
@@ -311,9 +311,9 @@ export default function CloudGPUCostComparison() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {Object.entries(GPU_PRICING).map(([key, gpu]) => {
-                  const hyperscaler = gpu.providers['Hyperscaler'];
-                  const specialist = gpu.providers['Specialist'];
-                  const spot = gpu.providers['Spot'] || gpu.providers['Marketplace'];
+                  const hyperscaler = gpu.providers[Object.keys(gpu.providers)[0] as keyof typeof gpu.providers];
+                  const specialist = gpu.providers[Object.keys(gpu.providers)[1] as keyof typeof gpu.providers];
+                  const spot = gpu.providers[Object.keys(gpu.providers)[2] as keyof typeof gpu.providers];
                   const bestRate = Math.min(
                     hyperscaler?.rate || Infinity,
                     specialist?.rate || Infinity,
