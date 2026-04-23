@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { estimateBlackwellPUE } from "@/lib/tools/nvidia-blackwell-pue";
 
@@ -10,104 +9,96 @@ export function NvidiaBlackwellEstimator() {
   const [result, setResult] = useState<ReturnType<typeof estimateBlackwellPUE> | null>(null);
 
   const onCalculate = () => {
-    const res = estimateBlackwellPUE({
-      rackCount: racks,
-      gpusPerRack,
-      utilizationPercent: utilization,
-      coolingType: cooling,
-    });
-    setResult(res);
+    setResult(estimateBlackwellPUE({ rackCount: racks, gpusPerRack, utilizationPercent: utilization, coolingType: cooling }));
   };
 
-  const onReset = () => {
-    setRacks(1);
-    setGpusPerRack(4);
-    setUtilization(75);
-    setCooling("air");
-    setResult(null);
-  };
+  const onReset = () => { setRacks(1); setGpusPerRack(4); setUtilization(75); setCooling("air"); setResult(null); };
 
   return (
-    <>
-      <section className="tool-card">
-        <h1 className="text-xl font-semibold">NVIDIA Blackwell PUE Estimator</h1>
-        <p className="mt-2 text-sm text-[#4f565c]">
-          Calculate Power Usage Effectiveness (PUE) for high-density liquid-cooled GPU racks and estimate annual energy costs.
-        </p>
+    <div className="tu-wrap">
+      <span className="tu-tag">BKX Infrastructure Tools</span>
+      <h1 className="tu-title">NVIDIA Blackwell PUE Estimator</h1>
+      <p className="tu-subtitle">
+        Calculate Power Usage Effectiveness for high-density GPU racks and estimate annual energy costs.
+      </p>
+      <hr className="tu-divider" />
 
-        <div className="field-grid mt-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Number of Racks</label>
-            <input
-              type="number"
-              value={racks}
-              onChange={(e) => setRacks(Math.max(1, Number(e.target.value) || 1))}
-              min="1"
-              className="w-full rounded border border-[#d4d9de] px-2 py-2 text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">GPUs per Rack</label>
-            <input
-              type="number"
-              value={gpusPerRack}
-              onChange={(e) => setGpusPerRack(Math.max(1, Number(e.target.value) || 1))}
-              min="1"
-              className="w-full rounded border border-[#d4d9de] px-2 py-2 text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Utilization (%)</label>
-            <input
-              type="range"
-              value={utilization}
-              onChange={(e) => setUtilization(Number(e.target.value))}
-              min="10"
-              max="100"
-              className="w-full"
-            />
-            <span className="text-xs text-[#4f565c]">{utilization}%</span>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Cooling Type</label>
-            <select
-              value={cooling}
-              onChange={(e) => setCooling(e.target.value as "air" | "liquid")}
-              className="w-full rounded border border-[#d4d9de] px-2 py-2 text-sm"
-            >
-              <option value="air">Air cooling</option>
-              <option value="liquid">Liquid cooling</option>
-            </select>
-          </div>
+      <div className="tu-form-grid">
+        <div className="tu-field">
+          <label className="tu-label">Number of Racks</label>
+          <input
+            type="number" value={racks} min="1"
+            onChange={(e) => setRacks(Math.max(1, Number(e.target.value) || 1))}
+            className="tu-input"
+          />
         </div>
-
-        <div className="mt-4 flex gap-2">
-          <button type="button" className="btn primary" onClick={onCalculate}>
-            Estimate PUE
-          </button>
-          <button type="button" className="btn" onClick={onReset}>
-            Reset
-          </button>
+        <div className="tu-field">
+          <label className="tu-label">GPUs per Rack</label>
+          <input
+            type="number" value={gpusPerRack} min="1"
+            onChange={(e) => setGpusPerRack(Math.max(1, Number(e.target.value) || 1))}
+            className="tu-input"
+          />
         </div>
+        <div className="tu-field">
+          <label className="tu-label">Cooling Type</label>
+          <select value={cooling} onChange={(e) => setCooling(e.target.value as "air" | "liquid")} className="tu-select">
+            <option value="air">Air Cooling</option>
+            <option value="liquid">Liquid Cooling</option>
+          </select>
+        </div>
+        <div className="tu-field">
+          <div className="tu-slider-header">
+            <label className="tu-label">Utilization</label>
+            <span className="tu-slider-value">{utilization}%</span>
+          </div>
+          <input
+            type="range" value={utilization} min="10" max="100"
+            onChange={(e) => setUtilization(Number(e.target.value))}
+            className="tu-range" style={{ marginTop: "0.35rem" }}
+          />
+        </div>
+      </div>
 
-        {result && (
-          <div className="tool-result" aria-live="polite">
-            <p className="text-xs uppercase tracking-[0.08em] text-[#4f565c]">Power Usage Effectiveness</p>
-            <p className="mt-1 text-lg font-semibold">{result.pueValue.toFixed(2)}</p>
-            <div className="mt-3 space-y-2 text-sm text-[#4f565c]">
-              <p>Total GPUs: {result.totalGpus}</p>
-              <p>IT Load: {result.itLoadKw} kW</p>
-              <p>Facility Power: {result.facilityPowerKw} kW</p>
-              <p>Cooling Power: {result.coolingPowerKw} kW</p>
-              <p className="font-semibold">Annual Energy: {result.annualEnergyMwh} MWh</p>
-              <p className="font-semibold text-[#105da8]">Est. Annual Cost: ${result.estimatedAnnualCostUsd.toLocaleString()}</p>
+      <div className="tu-btn-row">
+        <button type="button" className="tu-btn tu-btn-primary" onClick={onCalculate}>Estimate PUE</button>
+        <button type="button" className="tu-btn" onClick={onReset}>Reset</button>
+      </div>
+
+      {result && (
+        <div className="tu-result tu-animate" aria-live="polite">
+          <div className="tu-result-hero">
+            <div className="tu-metric">
+              <span className="tu-metric-label">PUE Value</span>
+              <span className="tu-metric-value">{result.pueValue.toFixed(2)}</span>
+            </div>
+            <div className="tu-metric">
+              <span className="tu-metric-label">Total GPUs</span>
+              <span className="tu-metric-value">{result.totalGpus}</span>
+            </div>
+            <div className="tu-metric">
+              <span className="tu-metric-label">Est. Annual Cost</span>
+              <span className="tu-metric-value success">${result.estimatedAnnualCostUsd.toLocaleString()}</span>
             </div>
           </div>
-        )}
-      </section>
-    </>
+          <div className="tu-result-row">
+            <span className="tu-result-row-label">IT Load</span>
+            <span className="tu-result-row-value">{result.itLoadKw} kW</span>
+          </div>
+          <div className="tu-result-row">
+            <span className="tu-result-row-label">Facility Power</span>
+            <span className="tu-result-row-value">{result.facilityPowerKw} kW</span>
+          </div>
+          <div className="tu-result-row">
+            <span className="tu-result-row-label">Cooling Power</span>
+            <span className="tu-result-row-value">{result.coolingPowerKw} kW</span>
+          </div>
+          <div className="tu-result-row">
+            <span className="tu-result-row-label">Annual Energy</span>
+            <span className="tu-result-row-value">{result.annualEnergyMwh} MWh</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

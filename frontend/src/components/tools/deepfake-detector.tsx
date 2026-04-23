@@ -1,68 +1,88 @@
-
 import { useState } from "react";
 import { analyzeDeepfakeProbability } from "@/lib/tools/deepfake-detector";
 
+const INDICATORS = [
+  { key: "hasCodecAnomalies",      label: "Codec anomalies detected" },
+  { key: "frameCadenceIrregular",  label: "Frame cadence irregular" },
+  { key: "audioVideoDesync",       label: "Audio-video desync present" },
+  { key: "missingMetadata",        label: "Metadata stripped or absent" },
+  { key: "suspiciousPatterns",     label: "Facial/body patterns suspicious" },
+] as const;
+
+type Key = typeof INDICATORS[number]["key"];
+
 export function DeepfakeDetector() {
-  const [codec, setCodec] = useState(false);
-  const [cadence, setCadence] = useState(false);
-  const [desync, setDesync] = useState(false);
-  const [meta, setMeta] = useState(false);
-  const [patterns, setPatterns] = useState(false);
+  const [flags, setFlags] = useState<Record<Key, boolean>>({
+    hasCodecAnomalies:     false,
+    frameCadenceIrregular: false,
+    audioVideoDesync:      false,
+    missingMetadata:       false,
+    suspiciousPatterns:    false,
+  });
+
   const [result, setResult] = useState<ReturnType<typeof analyzeDeepfakeProbability> | null>(null);
 
-  const onAnalyze = () => {
-    const res = analyzeDeepfakeProbability({
-      hasCodecAnomalies: codec,
-      frameCadenceIrregular: cadence,
-      audioVideoDesync: desync,
-      missingMetadata: meta,
-      suspiciousPatterns: patterns,
-    });
-    setResult(res);
-  };
+  const onAnalyze = () => setResult(analyzeDeepfakeProbability(flags));
+  const onReset   = () => { setFlags({ hasCodecAnomalies: false, frameCadenceIrregular: false, audioVideoDesync: false, missingMetadata: false, suspiciousPatterns: false }); setResult(null); };
+
+  const probColor = result
+    ? result.probabilityPercent >= 70 ? "#dc2626" : result.probabilityPercent >= 40 ? "#d97706" : "#10b981"
+    : "#0d2b5e";
 
   return (
-    <>
-      <section className="tool-card">
-        <h1 className="text-xl font-semibold">Deepfake Detection Probability Tool</h1>
-        <p className="mt-2 text-sm text-[#4f565c]">
-          Score the probability that a media file is AI-generated based on artifact indicators.
-        </p>
-        <div className="field-grid mt-4">
-          {[
-            { state: codec, setState: setCodec, label: "Codec anomalies" },
-            { state: cadence, setState: setCadence, label: "Frame cadence irregular" },
-            { state: desync, setState: setDesync, label: "Audio-video desync" },
-            { state: meta, setState: setMeta, label: "Missing metadata" },
-            { state: patterns, setState: setPatterns, label: "Facial patterns suspicious" },
-          ].map((item) => (
-            <label key={item.label} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={item.state}
-                onChange={(e) => item.setState(e.target.checked)}
-                className="h-4 w-4"
-              />
-              <span className="text-sm">{item.label}</span>
-            </label>
-          ))}
-        </div>
-        <button type="button" className="btn primary mt-3" onClick={onAnalyze}>
-          Analyze
-        </button>
-        {result && (
-          <div className="tool-result mt-3" aria-live="polite">
-            <p className="text-lg font-semibold">{result.probabilityPercent}% AI-Generated</p>
-            <p className="mt-2 text-sm capitalize font-semibold">Confidence: {result.confidence}</p>
-            {result.indicators.map((ind: any) => (
-              <p key={ind} className="mt-1 text-sm">
-                •{ind}
-              </p>
-            ))}
-            <p className="mt-3 text-xs text-[#4f565c] italic">{result.disclaimer}</p>
+    <div className="tu-wrap">
+      <span className="tu-tag">BKX Security Tools</span>
+      <h1 className="tu-title">Deepfake Detection Probability</h1>
+      <p className="tu-subtitle">
+        Score the likelihood that a media file is AI-generated based on forensic artifact indicators.
+      </p>
+      <hr className="tu-divider" />
+
+      <p className="tu-label" style={{ marginBottom: "0.5rem" }}>Select all indicators present in the media file</p>
+      <div className="tu-check-grid">
+        {INDICATORS.map(({ key, label }) => (
+          <label key={key} className="tu-check-label">
+            <input
+              type="checkbox"
+              checked={flags[key]}
+              onChange={(e) => setFlags((f) => ({ ...f, [key]: e.target.checked }))}
+            />
+            {label}
+          </label>
+        ))}
+      </div>
+
+      <div className="tu-btn-row">
+        <button type="button" className="tu-btn tu-btn-primary" onClick={onAnalyze}>Analyze</button>
+        <button type="button" className="tu-btn" onClick={onReset}>Reset</button>
+      </div>
+
+      {result && (
+        <div className="tu-result tu-animate" aria-live="polite">
+          <div className="tu-result-hero">
+            <div className="tu-metric">
+              <span className="tu-metric-label">AI-Generated Probability</span>
+              <span className="tu-metric-value" style={{ color: probColor }}>
+                {result.probabilityPercent}<span className="tu-metric-unit">%</span>
+              </span>
+            </div>
+            <div className="tu-metric">
+              <span className="tu-metric-label">Confidence</span>
+              <span className="tu-metric-value" style={{ fontSize: "1.25rem", textTransform: "capitalize" }}>
+                {result.confidence}
+              </span>
+            </div>
           </div>
-        )}
-      </section>
-    </>
+          {result.indicators.length > 0 && (
+            <ul className="tu-result-list">
+              {result.indicators.map((ind: string) => <li key={ind}>{ind}</li>)}
+            </ul>
+          )}
+          <p style={{ fontSize: "0.8rem", color: "#4f565c", marginTop: "0.875rem", fontStyle: "italic" }}>
+            {result.disclaimer}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
