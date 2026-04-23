@@ -43,7 +43,10 @@ export function CryptoAgilityMaturitModel() {
             {DIMENSIONS.map(({ key, label, desc }) => (
               <div key={key} className="tu-slider-row">
                 <div className="tu-slider-header">
-                  <span className="tu-label" style={{ fontSize: '0.8rem' }}>{label}</span>
+                  <div>
+                    <span className="tu-label" style={{ fontSize: '0.8rem' }}>{label}</span>
+                    <p style={{ fontSize: '0.675rem', color: '#64748b', margin: '0.1rem 0 0' }}>{desc}</p>
+                  </div>
                   <span className="tu-slider-value">{scores[key]}%</span>
                 </div>
                 <input
