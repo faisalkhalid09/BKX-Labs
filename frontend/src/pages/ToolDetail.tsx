@@ -21,6 +21,7 @@ import { FAQSection } from '@/components/tools/faq-section';
 import { DirectAnswerBlock } from '@/components/tools/direct-answer-block';
 import { generateToolMetadata } from '@/lib/seo/tools-metadata';
 import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
+import '@/components/tools/tool-ui.css';
 
 // Component map for dynamic rendering
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -54,7 +55,6 @@ export default function ToolDetail() {
   }, [slug]);
 
   useEffect(() => {
-    // Scroll to top on route change
     window.scrollTo(0, 0);
   }, [slug]);
 
@@ -65,13 +65,13 @@ export default function ToolDetail() {
           <title>Tool Not Found - BKX Labs</title>
           <meta name="description" content="The tool you're looking for doesn't exist." />
         </Helmet>
-        <div className="min-h-screen bg-[#f8f8f6] p-6 md:p-8">
+        <div className="min-h-screen bg-[#f5f7fa] p-6 md:p-8">
           <div className="mx-auto max-w-4xl">
             <h1 className="text-2xl font-semibold text-[#161a1d]">Tool Not Found</h1>
             <p className="mt-2 text-[#4f565c]">The tool you're looking for doesn't exist.</p>
             <button
               onClick={() => navigate('/tools')}
-              className="mt-4 inline-block rounded-lg bg-[#105da8] px-4 py-2 text-white font-semibold hover:bg-[#0d4a87]"
+              className="mt-4 inline-block rounded-lg bg-[#0d2b5e] px-4 py-2 text-white font-semibold hover:bg-[#1a3a75]"
             >
               Back to Tools
             </button>
@@ -85,13 +85,13 @@ export default function ToolDetail() {
 
   if (!Component) {
     return (
-      <div className="min-h-screen bg-[#f8f8f6] p-6 md:p-8">
+      <div className="min-h-screen bg-[#f5f7fa] p-6 md:p-8">
         <div className="mx-auto max-w-4xl">
           <h1 className="text-2xl font-semibold text-[#161a1d]">Component Not Found</h1>
           <p className="mt-2 text-[#4f565c]">The component for this tool is not yet available.</p>
           <button
             onClick={() => navigate('/tools')}
-            className="mt-4 inline-block rounded-lg bg-[#105da8] px-4 py-2 text-white font-semibold hover:bg-[#0d4a87]"
+            className="mt-4 inline-block rounded-lg bg-[#0d2b5e] px-4 py-2 text-white font-semibold hover:bg-[#1a3a75]"
           >
             Back to Tools
           </button>
@@ -106,64 +106,94 @@ export default function ToolDetail() {
         <title>{metadata?.title} - BKX Labs</title>
         <meta name="description" content={metadata?.description} />
         <link rel="canonical" href={metadata?.canonical} />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content={metadata?.og.title} />
         <meta property="og:description" content={metadata?.og.description} />
         <meta property="og:url" content={metadata?.og.url} />
         <meta property="og:type" content={metadata?.og.type} />
         <meta property="og:site_name" content={metadata?.og.site_name} />
-        
+
         {/* Twitter */}
         <meta name="twitter:card" content={metadata?.twitter.card} />
         <meta name="twitter:title" content={metadata?.twitter.title} />
         <meta name="twitter:description" content={metadata?.twitter.description} />
-        
+
         {/* Schema.org */}
         <script type="application/ld+json">
           {JSON.stringify(metadata?.schema)}
         </script>
       </Helmet>
-      
+
       <main className="tool-detail-container">
-        {/* Back button */}
-        <a
-          href="/tools"
-          className="tool-detail-back"
-        >
-          ← Back to All Tools
-        </a>
+        {/* Back link */}
+        <a href="/tools" className="tool-detail-back">← Back to All Tools</a>
 
-          {/* Tool page container */}
-          <div className="tool-detail-header">
-            <h1>{tool.title}</h1>
-            <p className="tool-detail-description">{tool.description}</p>
-          </div>
+        {/* Tool page header */}
+        <div className="tool-detail-header">
+          <h1>{tool.title}</h1>
+          <p className="tool-detail-description">{tool.description}</p>
+        </div>
 
-          <div className="tool-card">
-            {/* Direct Answer Block — screen-reader accessible, indexable by crawlers (sr-only, NOT display:none) */}
-            {tool.directAnswer && (
-              <div className="sr-only" role="note" aria-label={`Direct answer: ${tool.title}`}>
-                <DirectAnswerBlock directAnswer={tool.directAnswer} />
-              </div>
-            )}
+        {/* ── CLS-SAFE TOP BANNER AD (728×90) ─────────── */}
+        {/* Space is reserved before ad loads → zero layout shift  */}
+        <div className="tool-ad-banner-wrap">
+          <ins
+            className="adsbygoogle tool-ad-banner"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+            data-ad-slot="XXXXXXXXXX"
+            data-ad-format="horizontal"
+            data-full-width-responsive="false"
+          />
+        </div>
 
-            {/* Tool Component */}
-            <div className="mt-8 border-t border-[#d4d9de] pt-8">
+        {/* ── TWO-COLUMN LAYOUT: tool content + sidebar ── */}
+        <div className="tool-layout-grid">
+
+          {/* ── Main column ── */}
+          <div className="tool-main-col">
+            <div className="tool-card">
+              {/* Direct Answer Block — sr-only, crawler-readable */}
+              {tool.directAnswer && (
+                <div className="sr-only" role="note" aria-label={`Direct answer: ${tool.title}`}>
+                  <DirectAnswerBlock directAnswer={tool.directAnswer} />
+                </div>
+              )}
+
+              {/* Tool Component */}
               <Component />
             </div>
 
             {/* FAQs */}
             {tool.faqs && tool.faqs.length > 0 && (
-              <div className="mt-12 border-t border-[#d4d9de] pt-12">
-                <h2 className="text-2xl font-semibold text-[#161a1d]">Frequently Asked Questions</h2>
+              <div className="tool-card" style={{ marginTop: '1rem' }}>
+                <h2 className="text-xl font-semibold text-[#0d2b5e]" style={{ marginBottom: '1rem' }}>
+                  Frequently Asked Questions
+                </h2>
                 <FAQSection faqs={tool.faqs} />
               </div>
             )}
 
-            {/* Revenue Loop — CTA linking every tool page back to agency services */}
+            {/* Revenue Loop CTA */}
             <ToolToAgencyCTA />
           </div>
+
+          {/* ── Sidebar: CLS-SAFE 300×600 ad ── */}
+          <aside className="tool-sidebar-col">
+            <div className="tool-ad-sidebar-wrap">
+              <ins
+                className="adsbygoogle tool-ad-sidebar"
+                style={{ display: 'block' }}
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="vertical"
+                data-full-width-responsive="false"
+              />
+            </div>
+          </aside>
+
+        </div>
       </main>
     </>
   );

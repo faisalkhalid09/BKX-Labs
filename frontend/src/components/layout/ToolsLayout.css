@@ -7,6 +7,106 @@
    · No ad-slot styling (Google handles it)
 ===================================================== */
 
+/* =====================================================
+   CLS-SAFE AD LAYOUT
+   Dimensions are reserved before ads load so the page
+   never shifts when Google fills the slots.
+===================================================== */
+
+/* Top banner — 728×90 */
+.tool-ad-banner-wrap {
+  width: 100%;
+  max-width: 728px;
+  min-height: 90px;          /* reserved height — prevents CLS */
+  margin: 1rem auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;       /* placeholder bg while ad loads */
+  border: 1px dashed #d4d9de;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tool-ad-banner {
+  width: 728px;
+  height: 90px;
+}
+
+/* Two-column grid: main content + 300px sidebar */
+.tool-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.tool-main-col {
+  min-width: 0;              /* prevent overflow in grid */
+}
+
+/* Sidebar ad — 300×600 */
+.tool-sidebar-col {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.tool-ad-sidebar-wrap {
+  min-height: 600px;         /* reserved height — prevents CLS */
+  width: 300px;
+  background: #f5f7fa;
+  border: 1px dashed #d4d9de;
+  border-radius: 4px;
+  overflow: hidden;
+  position: sticky;
+  top: 80px;                 /* sticks below fixed header */
+}
+
+.tool-ad-sidebar {
+  width: 300px;
+  height: 600px;
+}
+
+/* ── Responsive: collapse to single column ── */
+@media (max-width: 900px) {
+  .tool-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-sidebar-col {
+    width: 100%;
+  }
+
+  .tool-ad-sidebar-wrap {
+    width: 100%;
+    min-height: 250px;       /* mobile leaderboard height */
+  }
+
+  .tool-ad-sidebar {
+    width: 100%;
+    height: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tool-ad-banner-wrap {
+    min-height: 50px;
+    max-width: 100%;
+  }
+
+  .tool-ad-banner {
+    width: 320px;
+    height: 50px;
+  }
+
+  /* Hide sidebar ad entirely on small phones */
+  .tool-sidebar-col {
+    display: none;
+  }
+}
+
+
+
 /* ── Root layout ──────────────────────────────────── */
 .tools-layout {
   display: flex;

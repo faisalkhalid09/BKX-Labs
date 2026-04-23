@@ -1,0 +1,1045 @@
+/* =====================================================
+   TOOL UI — Shared Design System for All 15 Tools
+   Design rules: flat, no gradients, site-aligned palette,
+   mobile-first, clean professional aesthetic.
+===================================================== */
+
+/* ── Colour tokens (local aliases) ──────────────────
+   --t-navy:    #0d2b5e  (primary buttons, headings)
+   --t-blue:    #4fa3d1  (accents, active, links)
+   --t-bg:      #f5f7fa  (page / panel backgrounds)
+   --t-border:  #d4d9de  (all borders)
+   --t-text:    #161a1d  (body copy)
+   --t-muted:   #4f565c  (secondary text, labels)
+   --t-success: #10b981
+   --t-warn:    #d97706
+   --t-danger:  #dc2626
+──────────────────────────────────────────────────── */
+
+/* =====================================================
+   WRAPPER
+   The tool component renders inside .tool-card which
+   already comes from ToolsLayout.css. The inner
+   wrapper is .tu-wrap (tool-ui-wrap).
+===================================================== */
+.tu-wrap {
+  font-family: inherit;
+  color: #161a1d;
+}
+
+/* =====================================================
+   HEADER ROW  (inside each complex tool)
+===================================================== */
+.tu-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4fa3d1;
+  margin-bottom: 0.5rem;
+}
+
+.tu-title {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  color: #0d2b5e;
+  margin: 0 0 0.4rem;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.tu-subtitle {
+  font-size: 0.875rem;
+  color: #4f565c;
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.tu-divider {
+  border: none;
+  border-top: 1px solid #d4d9de;
+  margin: 1.5rem 0;
+}
+
+/* =====================================================
+   AEO / DIRECT ANSWER BLOCK (visible inside tool)
+===================================================== */
+.tu-aeo {
+  background: #f5f7fa;
+  border-left: 3px solid #4fa3d1;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.tu-aeo p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #161a1d;
+  margin: 0;
+  text-align: left;
+  max-width: none;
+}
+
+.tu-aeo strong {
+  color: #0d2b5e;
+}
+
+/* =====================================================
+   FORM ELEMENTS
+===================================================== */
+.tu-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.tu-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tu-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4f565c;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tu-input,
+.tu-select {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  font-size: 0.9rem;
+  color: #161a1d;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 7px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tu-input:focus,
+.tu-select:focus {
+  border-color: #4fa3d1;
+  box-shadow: 0 0 0 3px rgba(79, 163, 209, 0.12);
+}
+
+.tu-input[type="range"] {
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  accent-color: #0d2b5e;
+  height: 6px;
+  cursor: pointer;
+}
+
+.tu-input[type="range"]:focus {
+  box-shadow: none;
+}
+
+.tu-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-family: 'Courier New', monospace;
+  color: #161a1d;
+  background: #f5f7fa;
+  border: 1px solid #d4d9de;
+  border-radius: 7px;
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s;
+  line-height: 1.55;
+  box-sizing: border-box;
+}
+
+.tu-textarea:focus {
+  border-color: #4fa3d1;
+  box-shadow: 0 0 0 3px rgba(79, 163, 209, 0.12);
+  background: white;
+}
+
+/* Checkbox row */
+.tu-check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.tu-check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.875rem;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #161a1d;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+
+.tu-check-label:hover {
+  border-color: #4fa3d1;
+  background: #f5f7fa;
+}
+
+.tu-check-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0d2b5e;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* Slider with value label */
+.tu-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tu-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tu-slider-value {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0d2b5e;
+}
+
+.tu-range {
+  width: 100%;
+  accent-color: #0d2b5e;
+  cursor: pointer;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+.tu-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.tu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 7px;
+  border: 1px solid #d4d9de;
+  background: white;
+  color: #0d2b5e;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.tu-btn:hover {
+  border-color: #4fa3d1;
+  background: #f5f7fa;
+}
+
+.tu-btn-primary {
+  background: #0d2b5e;
+  color: white;
+  border-color: #0d2b5e;
+}
+
+.tu-btn-primary:hover {
+  background: #1a3a75;
+  border-color: #1a3a75;
+}
+
+.tu-btn-success {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.tu-btn-success:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+.tu-btn-sm {
+  padding: 0.4rem 0.875rem;
+  font-size: 0.78rem;
+  min-height: 36px;
+}
+
+/* =====================================================
+   OPTION BUTTON LIST (multi-choice wizard steps)
+===================================================== */
+.tu-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tu-option {
+  width: 100%;
+  text-align: left;
+  padding: 0.875rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #161a1d;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  line-height: 1.45;
+}
+
+.tu-option:hover {
+  border-color: #4fa3d1;
+  background: #f5f7fa;
+}
+
+.tu-option.active {
+  border-color: #0d2b5e;
+  background: #eff6ff;
+  color: #0d2b5e;
+  font-weight: 600;
+}
+
+.tu-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  .tu-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   PROGRESS BAR (wizard steps)
+===================================================== */
+.tu-progress {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.tu-progress-step {
+  flex: 1;
+  height: 4px;
+  background: #e8ecf1;
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.tu-progress-step.done {
+  background: #0d2b5e;
+}
+
+/* =====================================================
+   TABS (category navigation)
+===================================================== */
+.tu-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e8ecf1;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tu-tab {
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4f565c;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tu-tab:hover {
+  color: #0d2b5e;
+}
+
+.tu-tab.active {
+  color: #0d2b5e;
+  border-bottom-color: #0d2b5e;
+}
+
+.tu-tab-badge {
+  margin-left: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+
+.tu-tab-badge.ok { color: #10b981; }
+.tu-tab-badge.warn { color: #d97706; }
+.tu-tab-badge.danger { color: #dc2626; }
+
+/* =====================================================
+   RESULT PANEL
+===================================================== */
+.tu-result {
+  background: #f5f7fa;
+  border: 1px solid #d4d9de;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+  animation: tu-fade-in 0.25s ease;
+}
+
+.tu-result-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #d4d9de;
+}
+
+.tu-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tu-metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4f565c;
+}
+
+.tu-metric-value {
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #0d2b5e;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tu-metric-value.danger { color: #dc2626; }
+.tu-metric-value.warn { color: #d97706; }
+.tu-metric-value.success { color: #10b981; }
+
+.tu-metric-unit {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #4f565c;
+  margin-left: 0.25rem;
+}
+
+/* Result paragraph rows */
+.tu-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e8ecf1;
+  font-size: 0.875rem;
+  gap: 1rem;
+}
+
+.tu-result-row:last-child {
+  border-bottom: none;
+}
+
+.tu-result-row-label {
+  color: #4f565c;
+  flex-shrink: 0;
+}
+
+.tu-result-row-value {
+  font-weight: 600;
+  color: #161a1d;
+  text-align: right;
+}
+
+/* Result list */
+.tu-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tu-result-list li {
+  font-size: 0.875rem;
+  color: #4f565c;
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.5;
+  text-align: left;
+  max-width: none;
+}
+
+.tu-result-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #4fa3d1;
+  font-weight: bold;
+}
+
+/* Risk result box */
+.tu-risk-box {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border: 2px solid;
+  margin-bottom: 1.25rem;
+}
+
+.tu-risk-box.prohibited { border-color: #dc2626; background: #fef2f2; }
+.tu-risk-box.high       { border-color: #d97706; background: #fffbeb; }
+.tu-risk-box.limited    { border-color: #4fa3d1; background: #f0f9ff; }
+.tu-risk-box.minimal    { border-color: #10b981; background: #f0fdf4; }
+.tu-risk-box.gpai       { border-color: #7c3aed; background: #faf5ff; }
+
+.tu-risk-level {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+.tu-risk-box.prohibited .tu-risk-level { color: #dc2626; }
+.tu-risk-box.high       .tu-risk-level { color: #d97706; }
+.tu-risk-box.limited    .tu-risk-level { color: #0d2b5e; }
+.tu-risk-box.minimal    .tu-risk-level { color: #10b981; }
+.tu-risk-box.gpai       .tu-risk-level { color: #7c3aed; }
+
+/* =====================================================
+   BADGES / STATUS CHIPS
+===================================================== */
+.tu-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.tu-badge-ok       { background: #d1fae5; color: #065f46; }
+.tu-badge-gap      { background: #fee2e2; color: #991b1b; }
+.tu-badge-warn     { background: #fef3c7; color: #92400e; }
+.tu-badge-req      { background: #1e3a5f; color: white; }
+.tu-badge-opt      { background: #e8ecf1; color: #4f565c; }
+.tu-badge-active   { background: #0d2b5e; color: white; }
+
+/* =====================================================
+   TABLES
+===================================================== */
+.tu-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #d4d9de;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.tu-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tu-table thead {
+  background: #f5f7fa;
+  border-bottom: 1px solid #d4d9de;
+}
+
+.tu-table th {
+  text-align: left;
+  padding: 0.65rem 0.875rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4f565c;
+  white-space: nowrap;
+}
+
+.tu-table td {
+  padding: 0.65rem 0.875rem;
+  color: #161a1d;
+  border-bottom: 1px solid #f0f0ed;
+  vertical-align: top;
+}
+
+.tu-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tu-table tbody tr:hover td {
+  background: #f9fafb;
+}
+
+/* =====================================================
+   CONTROLS LIST (SOC2 style)
+===================================================== */
+.tu-control-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.tu-control-item {
+  padding: 0.875rem;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 8px;
+  transition: border-color 0.15s;
+}
+
+.tu-control-item:hover {
+  border-color: #4fa3d1;
+}
+
+.tu-control-item.high-weight {
+  border-left: 3px solid #d97706;
+  background: #fffbeb;
+}
+
+.tu-control-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.tu-control-header input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0d2b5e;
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.tu-control-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.tu-control-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161a1d;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tu-control-ref {
+  font-size: 0.72rem;
+  font-family: monospace;
+  color: #4f565c;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.tu-evidence-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #e8ecf1;
+}
+
+.tu-evidence-label {
+  font-size: 0.78rem;
+  color: #4f565c;
+}
+
+.tu-evidence-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 5px;
+  border: 1px solid #d4d9de;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tu-evidence-btn.selected {
+  background: #0d2b5e;
+  color: white;
+  border-color: #0d2b5e;
+}
+
+.tu-evidence-warn {
+  font-size: 0.75rem;
+  color: #d97706;
+  font-weight: 600;
+}
+
+/* =====================================================
+   ASSET INPUT TABLE (CBOM)
+===================================================== */
+.tu-asset-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.tu-asset-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 2fr 2fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .tu-asset-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tu-asset-row .tu-input:last-of-type,
+  .tu-asset-row .tu-select {
+    grid-column: 1 / -1;
+  }
+}
+
+.tu-asset-col-labels {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 2fr 2fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .tu-asset-col-labels {
+    display: none;
+  }
+}
+
+.tu-asset-col-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4f565c;
+}
+
+.tu-remove-btn {
+  background: none;
+  border: none;
+  color: #d4d9de;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.4rem;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.tu-remove-btn:hover {
+  color: #dc2626;
+}
+
+/* =====================================================
+   GAUGE / RADIAL SCORE WIDGET
+===================================================== */
+.tu-gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 10px;
+}
+
+.tu-gauge-sub {
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.tu-gauge-sub-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #4f565c;
+}
+
+.tu-gauge-sub-value {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0d2b5e;
+  line-height: 1.2;
+}
+
+.tu-gauge-sub-desc {
+  display: block;
+  font-size: 0.75rem;
+  color: #4f565c;
+}
+
+/* Gap pills under gauge */
+.tu-gap-pills {
+  margin-top: 0.875rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tu-gap-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+/* =====================================================
+   TSC TOGGLE BUTTONS (SOC2 category selectors)
+===================================================== */
+.tu-tsc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tu-tsc-btn {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tu-tsc-btn.active {
+  border-color: #0d2b5e;
+  background: #f5f7fa;
+}
+
+.tu-tsc-btn-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.tu-tsc-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161a1d;
+}
+
+.tu-tsc-desc {
+  font-size: 0.78rem;
+  color: #4f565c;
+  margin-top: 0.2rem;
+}
+
+/* =====================================================
+   USAGE LIMIT OVERLAY (offerwall replacement)
+===================================================== */
+.tu-limit-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+}
+
+.tu-limit-box {
+  background: white;
+  border: 1px solid #d4d9de;
+  border-radius: 10px;
+  padding: 2rem;
+  max-width: 380px;
+  width: calc(100% - 2rem);
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
+
+.tu-limit-box h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d2b5e;
+  margin-bottom: 0.65rem;
+  text-align: center;
+}
+
+.tu-limit-box p {
+  font-size: 0.875rem;
+  color: #4f565c;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* =====================================================
+   ARTICLE / PROSE DOCUMENTATION
+===================================================== */
+.tu-prose {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #d4d9de;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #4f565c;
+}
+
+.tu-prose h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0d2b5e;
+  margin: 0 0 1rem;
+  text-align: left;
+}
+
+.tu-prose h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #161a1d;
+  margin: 2rem 0 0.65rem;
+  text-align: left;
+}
+
+.tu-prose p {
+  margin: 0 0 0.875rem;
+  text-align: left;
+  max-width: none;
+}
+
+.tu-prose ul,
+.tu-prose ol {
+  padding-left: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+.tu-prose li {
+  margin-bottom: 0.4rem;
+  text-align: left;
+}
+
+.tu-prose strong {
+  color: #161a1d;
+  font-weight: 600;
+}
+
+.tu-prose code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  background: #f5f7fa;
+  border: 1px solid #e8ecf1;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  color: #0d2b5e;
+}
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+@keyframes tu-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tu-animate {
+  animation: tu-fade-in 0.25s ease;
+}
+
+/* =====================================================
+   COPY / EXPORT BUTTON ROW
+===================================================== */
+.tu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+}
+
+/* =====================================================
+   RESPONSIVE OVERRIDES
+===================================================== */
+@media (max-width: 768px) {
+  .tu-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tu-check-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tu-result-hero {
+    gap: 1.25rem;
+  }
+
+  .tu-metric-value {
+    font-size: 2rem;
+  }
+
+  .tu-gauge-wrap {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tu-tab {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  .tu-result {
+    padding: 1rem;
+  }
+
+  .tu-control-item {
+    padding: 0.65rem;
+  }
+}
