@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $metadata['title'] }}</title>
+    <title>{{ $metadata['title'] ?? ($tool['title'] . ' | BKX Labs') }}</title>
     <meta name="description" content="{{ $metadata['description'] }}">
     <link rel="canonical" href="{{ $metadata['canonical'] }}">
     

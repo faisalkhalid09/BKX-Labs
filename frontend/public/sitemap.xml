@@ -133,4 +133,36 @@
     <priority>0.80</priority>
   </url>
 
+  <!-- ── Glossary Pages ── -->
+  <url>
+    <loc>https://bkxlabs.com/glossary/post-quantum-cbom</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bkxlabs.com/glossary/soc2-type-2-compliance</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bkxlabs.com/glossary/eu-ai-act-annex-iii</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bkxlabs.com/glossary/data-center-pue</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bkxlabs.com/glossary/gpu-cloud-egress-fees</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

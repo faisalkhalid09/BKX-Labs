@@ -1,5 +1,5 @@
-import { useMemo, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useMemo, useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { EuAiActClassifier } from '@/components/tools/eu-ai-act-classifier';
 import { PostQuantumCBOMGenerator } from '@/components/tools/pq-cbom-generator';
@@ -54,9 +54,20 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   'crypto-agility-maturity-model': CryptoAgilityMaturitModel,
 };
 
+type GlossaryRegistryItem = {
+  term: string;
+  title: string;
+  targetToolSlug: string;
+};
+
+function getRelatedGlossaryConcepts(currentToolSlug: string, entries: GlossaryRegistryItem[]): GlossaryRegistryItem[] {
+  return entries.filter((entry) => entry.targetToolSlug === currentToolSlug);
+}
+
 export default function ToolDetail() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [relatedConcepts, setRelatedConcepts] = useState<GlossaryRegistryItem[]>([]);
 
   const tool = useMemo(() => {
     return slug ? toolsBySlug[slug] : null;
@@ -66,8 +77,50 @@ export default function ToolDetail() {
     return slug ? generateToolMetadata(slug) : null;
   }, [slug]);
 
+  const pageTitle = useMemo(() => {
+    if (tool?.title) return `${tool.title} | BKX Labs`;
+    if (metadata?.title) return metadata.title;
+    return 'BKX Labs Tools';
+  }, [tool, metadata]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [slug]);
+
+  useEffect(() => {
+    document.title = pageTitle;
+  }, [pageTitle]);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadRelatedConcepts = async () => {
+      if (!slug) {
+        if (active) setRelatedConcepts([]);
+        return;
+      }
+
+      try {
+        const response = await fetch('/data/glossary-registry.json', { cache: 'no-store' });
+        if (!response.ok) {
+          if (active) setRelatedConcepts([]);
+          return;
+        }
+
+        const glossaryEntries = (await response.json()) as GlossaryRegistryItem[];
+        if (active) {
+          setRelatedConcepts(getRelatedGlossaryConcepts(slug, glossaryEntries));
+        }
+      } catch {
+        if (active) setRelatedConcepts([]);
+      }
+    };
+
+    loadRelatedConcepts();
+
+    return () => {
+      active = false;
+    };
   }, [slug]);
 
   useEffect(() => {
@@ -136,7 +189,7 @@ export default function ToolDetail() {
   return (
     <>
       <Helmet>
-        <title>{metadata?.title} - BKX Labs</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={metadata?.description} />
         <link rel="canonical" href={metadata?.canonical} />
 
@@ -207,6 +260,26 @@ export default function ToolDetail() {
                   Frequently Asked Questions
                 </h2>
                 <FAQSection faqs={tool.faqs} />
+              </div>
+            )}
+
+            {relatedConcepts.length > 0 && (
+              <div className="tool-card" style={{ marginTop: '1rem' }}>
+                <h2 className="text-lg font-semibold text-[#0d2b5e]" style={{ marginBottom: '0.6rem' }}>
+                  Related Concepts
+                </h2>
+                <ul style={{ margin: 0, paddingLeft: '1rem' }}>
+                  {relatedConcepts.map((concept) => (
+                    <li key={concept.term} style={{ marginBottom: '0.35rem' }}>
+                      <Link
+                        to={`/glossary/${concept.term}`}
+                        style={{ color: '#105da8', textDecoration: 'none', fontWeight: 500 }}
+                      >
+                        Learn more: {concept.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
