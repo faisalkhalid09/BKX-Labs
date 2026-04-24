@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { EuAiActClassifier } from '@/components/tools/eu-ai-act-classifier';
@@ -21,6 +21,7 @@ import { FAQSection } from '@/components/tools/faq-section';
 import { DirectAnswerBlock } from '@/components/tools/direct-answer-block';
 import { generateToolMetadata } from '@/lib/seo/tools-metadata';
 import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
+import { glossaryRegistry } from '@/lib/glossary/registry';
 import '@/components/tools/tool-ui.css';
 
 const ADSENSE_CLIENT = 'ca-pub-8538157876247266';
@@ -67,7 +68,6 @@ function getRelatedGlossaryConcepts(currentToolSlug: string, entries: GlossaryRe
 export default function ToolDetail() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [relatedConcepts, setRelatedConcepts] = useState<GlossaryRegistryItem[]>([]);
 
   const tool = useMemo(() => {
     return slug ? toolsBySlug[slug] : null;
@@ -75,6 +75,11 @@ export default function ToolDetail() {
 
   const metadata = useMemo(() => {
     return slug ? generateToolMetadata(slug) : null;
+  }, [slug]);
+
+  const relatedConcepts = useMemo(() => {
+    if (!slug) return [];
+    return getRelatedGlossaryConcepts(slug, glossaryRegistry as GlossaryRegistryItem[]);
   }, [slug]);
 
   const pageTitle = useMemo(() => {
@@ -90,46 +95,6 @@ export default function ToolDetail() {
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
-
-  useEffect(() => {
-    let active = true;
-
-    const loadRelatedConcepts = async () => {
-      if (!slug) {
-        if (active) setRelatedConcepts([]);
-        return;
-      }
-
-      const registryPaths = ['/api/glossary-registry', '/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
-
-      try {
-        for (const path of registryPaths) {
-          const response = await fetch(path, { cache: 'no-store' });
-          if (!response.ok) continue;
-
-          const raw = await response.text();
-          const looksLikeJson = raw.trim().startsWith('[') || raw.trim().startsWith('{');
-          if (!looksLikeJson) continue;
-
-          const glossaryEntries = JSON.parse(raw) as GlossaryRegistryItem[];
-          if (active) {
-            setRelatedConcepts(getRelatedGlossaryConcepts(slug, glossaryEntries));
-          }
-          return;
-        }
-
-        if (active) setRelatedConcepts([]);
-      } catch {
-        if (active) setRelatedConcepts([]);
-      }
-    };
-
-    loadRelatedConcepts();
-
-    return () => {
-      active = false;
-    };
-  }, [slug]);
 
   useEffect(() => {
     if (!hasTopAdSlot && !hasSidebarAdSlot) return;

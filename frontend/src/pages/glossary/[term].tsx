@@ -1,17 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { toolsBySlug } from '@/lib/tools/registry';
-
-type GlossaryEntry = {
-  term: string;
-  title: string;
-  seoTitle: string;
-  metaDescription: string;
-  targetToolSlug: string;
-  definitionMarkdown: string;
-};
+import { glossaryRegistry } from '@/lib/glossary/registry';
 
 function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'ol'; text?: string; items?: string[] }> {
   const lines = markdown.split('\n');
@@ -89,58 +81,7 @@ function renderInline(text: string): string {
 
 export default function GlossaryTermPage() {
   const { term } = useParams<{ term: string }>();
-  const [entries, setEntries] = useState<GlossaryEntry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-
-    const loadRegistry = async () => {
-      setLoading(true);
-      setError(null);
-      const registryPaths = ['/api/glossary-registry', '/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
-
-      try {
-        for (const path of registryPaths) {
-          const response = await fetch(path, { cache: 'no-store' });
-          if (!response.ok) continue;
-
-          const raw = await response.text();
-          const looksLikeJson = raw.trim().startsWith('[') || raw.trim().startsWith('{');
-          if (!looksLikeJson) continue;
-
-          const data = JSON.parse(raw) as GlossaryEntry[];
-          if (mounted) {
-            setEntries(data);
-            setError(null);
-          }
-          return;
-        }
-
-        if (mounted) {
-          setError('Glossary content is temporarily unavailable.');
-          setEntries([]);
-        }
-      } catch (err) {
-        if (mounted) {
-          setError(err instanceof Error ? err.message : 'Unable to load glossary content.');
-          setEntries([]);
-        }
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadRegistry();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const entry = useMemo(() => entries.find((item) => item.term === term), [entries, term]);
+  const entry = useMemo(() => glossaryRegistry.find((item) => item.term === term), [term]);
   const tool = entry ? toolsBySlug[entry.targetToolSlug] : null;
   const articleBlocks = useMemo(() => parseMarkdown(entry?.definitionMarkdown ?? ''), [entry?.definitionMarkdown]);
 
@@ -177,15 +118,7 @@ export default function GlossaryTermPage() {
             </span>
           </div>
 
-          {loading ? (
-            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-slate-600">
-              Loading glossary term...
-            </div>
-          ) : error ? (
-            <div className="rounded-xl border border-rose-200 bg-rose-50 p-8 text-center text-rose-700">
-              {error}
-            </div>
-          ) : !entry ? (
+          {!entry ? (
             <div className="rounded-xl border border-amber-200 bg-amber-50 p-8 text-center text-amber-800">
               We could not find this glossary term.
             </div>
