@@ -113,12 +113,12 @@ export default function GlossaryTermPage() {
         <meta property="og:type" content="article" />
       </Helmet>
 
-      <main className="tool-detail-container">
-        <div className="mb-5 flex items-center justify-between gap-4">
+      <main className="tool-detail-container glossary-term-page">
+        <div className="glossary-topbar mb-5 flex items-center justify-between gap-4">
             <Link to="/tools" className="tool-detail-back">
               ← Back to Tools
             </Link>
-            <span className="rounded-full border border-[#d4d9de] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#4f565c] shadow-sm">
+            <span className="glossary-shell-badge rounded-full border border-[#d4d9de] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#4f565c] shadow-sm">
               BKX Technical Glossary
             </span>
         </div>
@@ -128,22 +128,22 @@ export default function GlossaryTermPage() {
               We could not find this glossary term.
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-              <article className="rounded-2xl border border-[#d4d9de] bg-white p-6 shadow-sm md:p-10">
-                <div className="mb-4 flex items-start justify-between gap-4">
+            <div className="glossary-layout grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <article className="glossary-article rounded-2xl border border-[#d4d9de] bg-white p-6 shadow-sm md:p-10">
+                <div className="glossary-hero mb-4 flex items-start justify-between gap-4">
                   <div>
                     <p className="tu-tag">BKX Technical Glossary</p>
-                    <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-[#161a1d] md:text-5xl">
+                    <h1 className="glossary-title mt-1 text-3xl font-extrabold tracking-tight text-[#161a1d] md:text-5xl">
                       {entry.title}
                     </h1>
                   </div>
-                  <span className="hidden rounded-full border border-[#d4d9de] bg-[#f5f7fa] px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#4f565c] md:inline-flex">
+                  <span className="glossary-mapped-badge hidden rounded-full border border-[#d4d9de] bg-[#f5f7fa] px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#4f565c] md:inline-flex">
                     Mapped to {tool?.title ?? 'Tool'}
                   </span>
                 </div>
 
                 {introPreview ? (
-                  <div className="tu-aeo mb-6 rounded-xl border border-[#d4d9de] bg-[#f5f7fa] px-5 py-4">
+                  <div className="glossary-intro tu-aeo mb-6 rounded-xl border border-[#d4d9de] bg-[#f5f7fa] px-5 py-4">
                     <p className="text-sm leading-7 text-[#161a1d]">
                       <strong className="text-[#0d2b5e]">In one sentence:</strong> {introPreview}
                     </p>
@@ -199,7 +199,7 @@ export default function GlossaryTermPage() {
                     return (
                       <p
                         key={`p-${index}`}
-                        className="mb-6 max-w-none text-[1.08rem] leading-8 text-[#4f565c]"
+                        className="glossary-paragraph mb-6 max-w-none text-[1.08rem] leading-8 text-[#4f565c]"
                         dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
                       />
                     );
@@ -209,7 +209,7 @@ export default function GlossaryTermPage() {
                 <ToolToAgencyCTA />
               </article>
 
-              <aside className="space-y-4 lg:sticky lg:top-[96px] lg:self-start">
+              <aside className="glossary-aside space-y-4 lg:sticky lg:top-[96px] lg:self-start">
                 <div className="tool-card">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Mapped Tool</p>
                   <h2 className="mt-2 text-lg font-bold text-[#0d2b5e]">{tool?.title ?? entry.targetToolSlug}</h2>
