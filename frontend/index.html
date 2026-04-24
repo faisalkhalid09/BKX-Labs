@@ -119,24 +119,33 @@
     }
   </script>
 
+  <style>
+    @keyframes bkxPulse {
+      0%,
+      100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes bkxLoad {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(300%); }
+    }
+  </style>
+
 </head>
 
 <body>
-  <!-- Static hero shell — paints immediately for fast LCP, replaced by React on mount -->
-  <div id="root"><div style="min-height:100svh;display:flex;flex-direction:column;background:#0a0f1e;font-family:Outfit,Inter,system-ui,sans-serif;">
-    <nav style="height:64px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 2rem;">
-      <img src="/brand-logo.png" alt="BKX Labs" style="height:30px;width:auto;" fetchpriority="high">
-    </nav>
-    <div style="flex:1;display:flex;align-items:center;padding:4rem 2rem;max-width:1200px;margin:0 auto;width:100%;">
-      <div style="width:100%;text-align:center;">
-        <h1 style="font-size:clamp(2.2rem,5vw,4rem);font-weight:800;color:#1e3a8a;margin:0 auto 1.5rem;line-height:1.1;letter-spacing:-0.02em;text-align:center;">Don't Let Bad Code Kill Your Business.</h1>
-        <p style="font-size:clamp(1rem,1.3rem,1.3rem);color:#64748b;max-width:700px;margin:0 auto 2.5rem;line-height:1.6;text-align:center;">Startups and enterprises lose millions on failed agency transitions and accumulated technical debt. Our specialized engineering team takes over broken codebases, stabilizes your infrastructure, and delivers what others couldn't.</p>
-        <div style="display:flex;justify-content:center;">
-          <a href="/contact" style="display:inline-flex;align-items:center;background:linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);color:#fff;padding:0.72rem 2rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.95rem;box-shadow:0 4px 15px rgba(30, 58, 138, 0.2);">Request a Technical Health Check</a>
+  <div id="root">
+    <div style="min-height:100svh;display:flex;align-items:center;justify-content:center;background:#0f172a;color:#e2e8f0;font-family:Outfit,Inter,system-ui,sans-serif;">
+      <div style="width:min(560px,92vw);padding:2rem 1.25rem;text-align:center;">
+        <img src="/brand-logo.png" alt="BKX Labs" style="height:36px;width:auto;margin:0 auto 1.25rem;opacity:0.92;animation:bkxPulse 1.8s ease-in-out infinite;" fetchpriority="high" />
+        <p style="font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#94a3b8;margin:0 0 1rem;">Loading Workspace</p>
+        <div style="height:6px;border-radius:999px;background:#1e293b;overflow:hidden;position:relative;">
+          <span style="position:absolute;inset:0 auto 0 0;width:42%;background:linear-gradient(90deg,#38bdf8 0%,#2563eb 100%);border-radius:999px;animation:bkxLoad 1.2s ease-in-out infinite;"></span>
         </div>
       </div>
     </div>
-  </div></div>
+  </div>
   <script type="module" src="/src/main.tsx"></script>
 
   <!-- Google AdSense — injected only when browser is idle, never during initial load -->
