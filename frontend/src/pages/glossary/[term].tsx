@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { toolsBySlug } from '@/lib/tools/registry';
 import { glossaryRegistry } from '@/lib/glossary/registry';
+import '@/components/tools/tool-ui.css';
 
 function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'ol'; text?: string; items?: string[] }> {
   const lines = markdown.split('\n');
@@ -84,6 +85,10 @@ export default function GlossaryTermPage() {
   const entry = useMemo(() => glossaryRegistry.find((item) => item.term === term), [term]);
   const tool = entry ? toolsBySlug[entry.targetToolSlug] : null;
   const articleBlocks = useMemo(() => parseMarkdown(entry?.definitionMarkdown ?? ''), [entry?.definitionMarkdown]);
+  const introPreview = useMemo(() => {
+    const firstParagraph = articleBlocks.find((block) => block.type === 'p' && block.text);
+    return firstParagraph?.text ?? '';
+  }, [articleBlocks]);
 
   const canonical = entry
     ? `https://bkxlabs.com/glossary/${entry.term}`
@@ -107,100 +112,150 @@ export default function GlossaryTermPage() {
         <meta property="og:type" content="article" />
       </Helmet>
 
-      <main className="bg-gradient-to-b from-slate-50 via-white to-slate-100 px-6 py-12 md:px-10 lg:px-14">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-10">
-          <div className="mb-6 flex items-center justify-between gap-4">
-            <Link to="/tools" className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
+      <main className="bg-[#f5f7fa] px-4 py-8 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <Link to="/tools" className="text-sm font-medium text-[#4f565c] transition-colors hover:text-[#0d2b5e]">
               ← Back to Tools
             </Link>
-            <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">
+            <span className="rounded-full border border-[#d4d9de] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#4f565c] shadow-sm">
               BKX Technical Glossary
             </span>
           </div>
 
           {!entry ? (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-8 text-center text-amber-800">
+            <div className="rounded-2xl border border-[#d4d9de] bg-white p-8 text-center text-[#4f565c] shadow-sm">
               We could not find this glossary term.
             </div>
           ) : (
-            <article className="text-slate-800">
-              {articleBlocks.map((block, index) => {
-                if (block.type === 'h1') {
-                  return (
-                    <h1
-                      key={`h1-${index}`}
-                      className="mb-6 text-3xl font-extrabold tracking-tight text-slate-950 md:text-4xl"
-                      dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                    />
-                  );
-                }
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <article className="rounded-2xl border border-[#d4d9de] bg-white p-6 shadow-sm md:p-10">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="tu-tag">BKX Technical Glossary</p>
+                    <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-[#161a1d] md:text-5xl">
+                      {entry.title}
+                    </h1>
+                  </div>
+                  <span className="hidden rounded-full border border-[#d4d9de] bg-[#f5f7fa] px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#4f565c] md:inline-flex">
+                    Mapped to {tool?.title ?? 'Tool'}
+                  </span>
+                </div>
 
-                if (block.type === 'h2') {
-                  return (
-                    <h2
-                      key={`h2-${index}`}
-                      className="mt-10 mb-4 text-2xl font-bold tracking-tight text-slate-900"
-                      dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                    />
-                  );
-                }
+                {introPreview ? (
+                  <div className="tu-aeo mb-6 rounded-xl border border-[#d4d9de] bg-[#f5f7fa] px-5 py-4">
+                    <p className="text-sm leading-7 text-[#161a1d]">
+                      <strong className="text-[#0d2b5e]">In one sentence:</strong> {introPreview}
+                    </p>
+                  </div>
+                ) : null}
 
-                if (block.type === 'h3') {
-                  return (
-                    <h3
-                      key={`h3-${index}`}
-                      className="mt-8 mb-3 text-xl font-semibold text-slate-900"
-                      dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                    />
-                  );
-                }
+                <div className="glossary-prose max-w-none text-[#161a1d]">
+                  {articleBlocks.map((block, index) => {
+                    if (block.type === 'h1') {
+                      return null;
+                    }
 
-                if (block.type === 'ul') {
-                  return (
-                    <ul key={`ul-${index}`} className="mb-6 ml-6 list-disc space-y-2 text-[1.04rem] leading-8 text-slate-700">
-                      {block.items?.map((item, itemIndex) => (
-                        <li key={`uli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
-                      ))}
-                    </ul>
-                  );
-                }
+                    if (block.type === 'h2') {
+                      return (
+                        <h2
+                          key={`h2-${index}`}
+                          className="mt-10 mb-4 text-2xl font-bold tracking-tight text-[#0d2b5e]"
+                          dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
+                        />
+                      );
+                    }
 
-                if (block.type === 'ol') {
-                  return (
-                    <ol key={`ol-${index}`} className="mb-6 ml-6 list-decimal space-y-2 text-[1.04rem] leading-8 text-slate-700">
-                      {block.items?.map((item, itemIndex) => (
-                        <li key={`oli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
-                      ))}
-                    </ol>
-                  );
-                }
+                    if (block.type === 'h3') {
+                      return (
+                        <h3
+                          key={`h3-${index}`}
+                          className="mt-8 mb-3 text-xl font-semibold text-[#161a1d]"
+                          dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
+                        />
+                      );
+                    }
 
-                return (
-                  <p
-                    key={`p-${index}`}
-                    className="mb-6 text-[1.06rem] leading-8 text-slate-700"
-                    dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                  />
-                );
-              })}
+                    if (block.type === 'ul') {
+                      return (
+                        <ul key={`ul-${index}`} className="mb-6 ml-6 list-disc space-y-2 text-[1.05rem] leading-8 text-[#4f565c]">
+                          {block.items?.map((item, itemIndex) => (
+                            <li key={`uli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                          ))}
+                        </ul>
+                      );
+                    }
 
-              <section className="mt-12 rounded-2xl border border-sky-300 bg-gradient-to-r from-sky-900 via-blue-900 to-indigo-900 p-6 text-white shadow-lg md:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sky-200">Implementation Bridge</p>
-                <h2 className="mt-2 text-2xl font-bold tracking-tight text-white">Ready to apply this to your codebase?</h2>
-                <p className="mt-3 max-w-2xl text-sm text-sky-100 md:text-base">
-                  Use our free {tool?.title ?? 'tool'} calculator to turn this concept into an actionable technical assessment for your team.
-                </p>
-                <div className="mt-5">
+                    if (block.type === 'ol') {
+                      return (
+                        <ol key={`ol-${index}`} className="mb-6 ml-6 list-decimal space-y-2 text-[1.05rem] leading-8 text-[#4f565c]">
+                          {block.items?.map((item, itemIndex) => (
+                            <li key={`oli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                          ))}
+                        </ol>
+                      );
+                    }
+
+                    return (
+                      <p
+                        key={`p-${index}`}
+                        className="mb-6 max-w-none text-[1.08rem] leading-8 text-[#4f565c]"
+                        dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
+                      />
+                    );
+                  })}
+                </div>
+
+                <section className="mt-12 rounded-2xl border border-[#d4d9de] bg-[#f8fafc] p-6 shadow-sm md:p-8">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Implementation Bridge</p>
+                  <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#0d2b5e]">Ready to apply this to your codebase?</h2>
+                  <p className="mt-3 max-w-2xl text-sm leading-7 text-[#4f565c] md:text-base">
+                    Use our free {tool?.title ?? 'tool'} calculator to turn this concept into an actionable technical assessment for your team.
+                  </p>
+                  <div className="mt-5">
+                    <Link
+                      to={entry.targetToolSlug ? `/tools/${entry.targetToolSlug}` : '/tools'}
+                      className="inline-flex items-center gap-2 rounded-lg bg-[#0d2b5e] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#1a3a75]"
+                    >
+                      Use our free {tool?.title ?? 'calculator'} calculator
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </section>
+              </article>
+
+              <aside className="space-y-4 lg:sticky lg:top-[96px] lg:self-start">
+                <div className="rounded-2xl border border-[#d4d9de] bg-white p-5 shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Mapped Tool</p>
+                  <h2 className="mt-2 text-lg font-bold text-[#0d2b5e]">{tool?.title ?? entry.targetToolSlug}</h2>
+                  <p className="mt-2 text-sm leading-6 text-[#4f565c]">
+                    This glossary term is linked directly to the tool users can apply right away.
+                  </p>
                   <Link
-                    to={entry.targetToolSlug ? `/tools/${entry.targetToolSlug}` : '/tools'}
-                    className="inline-flex items-center gap-2 rounded-lg bg-amber-300 px-5 py-3 text-sm font-bold text-slate-900 transition-colors hover:bg-amber-200"
+                    to={`/tools/${entry.targetToolSlug}`}
+                    className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[#d4d9de] bg-[#f5f7fa] px-4 py-2 text-sm font-semibold text-[#0d2b5e] transition-colors hover:border-[#4fa3d1] hover:bg-white"
                   >
-                    Use our free {tool?.title ?? 'calculator'} calculator
+                    Open Tool
                     <ArrowRight size={16} />
                   </Link>
                 </div>
-              </section>
-            </article>
+
+                <div className="rounded-2xl border border-[#d4d9de] bg-[#0d2b5e] p-5 text-white shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7cc9f5]">Learn More</p>
+                  <h3 className="mt-2 text-lg font-bold">Explore the companion tool</h3>
+                  <p className="mt-2 text-sm leading-6 text-white/80">
+                    Use the calculator to quantify this concept against your real inputs, then share the result with your team.
+                  </p>
+                  <Link
+                    to={`/tools/${entry.targetToolSlug}`}
+                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-bold text-[#0d2b5e] transition-colors hover:bg-[#f5f7fa]"
+                  >
+                    View Tool
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </aside>
+            </div>
           )}
         </div>
       </main>
