@@ -74,3 +74,24 @@ Route::group(['prefix' => 'restricted'], function () {
     });
 });
 
+Route::get('/glossary-registry', function () {
+    $registryPath = public_path('data/glossary-registry.json');
+
+    if (!file_exists($registryPath)) {
+        return response()->json([
+            'message' => 'Glossary registry not found.',
+        ], 404);
+    }
+
+    $json = file_get_contents($registryPath);
+    $decoded = json_decode($json, true);
+
+    if (!is_array($decoded)) {
+        return response()->json([
+            'message' => 'Glossary registry is invalid JSON.',
+        ], 500);
+    }
+
+    return response()->json($decoded);
+});
+

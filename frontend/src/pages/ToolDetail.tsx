@@ -100,7 +100,7 @@ export default function ToolDetail() {
         return;
       }
 
-      const registryPaths = ['/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
+      const registryPaths = ['/api/glossary-registry', '/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
 
       try {
         for (const path of registryPaths) {
