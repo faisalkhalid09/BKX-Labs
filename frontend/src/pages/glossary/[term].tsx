@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { toolsBySlug } from '@/lib/tools/registry';
 import { glossaryRegistry } from '@/lib/glossary/registry';
 import '@/components/tools/tool-ui.css';
+import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
 
 function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'ol'; text?: string; items?: string[] }> {
   const lines = markdown.split('\n');
@@ -112,19 +113,18 @@ export default function GlossaryTermPage() {
         <meta property="og:type" content="article" />
       </Helmet>
 
-      <main className="bg-[#f5f7fa] px-4 py-8 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <Link to="/tools" className="text-sm font-medium text-[#4f565c] transition-colors hover:text-[#0d2b5e]">
+      <main className="tool-detail-container">
+        <div className="mb-5 flex items-center justify-between gap-4">
+            <Link to="/tools" className="tool-detail-back">
               ← Back to Tools
             </Link>
             <span className="rounded-full border border-[#d4d9de] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#4f565c] shadow-sm">
               BKX Technical Glossary
             </span>
-          </div>
+        </div>
 
           {!entry ? (
-            <div className="rounded-2xl border border-[#d4d9de] bg-white p-8 text-center text-[#4f565c] shadow-sm">
+            <div className="tool-card">
               We could not find this glossary term.
             </div>
           ) : (
@@ -206,30 +206,15 @@ export default function GlossaryTermPage() {
                   })}
                 </div>
 
-                <section className="mt-12 rounded-2xl border border-[#d4d9de] bg-[#f8fafc] p-6 shadow-sm md:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Implementation Bridge</p>
-                  <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#0d2b5e]">Ready to apply this to your codebase?</h2>
-                  <p className="mt-3 max-w-2xl text-sm leading-7 text-[#4f565c] md:text-base">
-                    Use our free {tool?.title ?? 'tool'} calculator to turn this concept into an actionable technical assessment for your team.
-                  </p>
-                  <div className="mt-5">
-                    <Link
-                      to={entry.targetToolSlug ? `/tools/${entry.targetToolSlug}` : '/tools'}
-                      className="inline-flex items-center gap-2 rounded-lg bg-[#0d2b5e] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#1a3a75]"
-                    >
-                      Use our free {tool?.title ?? 'calculator'} calculator
-                      <ArrowRight size={16} />
-                    </Link>
-                  </div>
-                </section>
+                <ToolToAgencyCTA />
               </article>
 
               <aside className="space-y-4 lg:sticky lg:top-[96px] lg:self-start">
-                <div className="rounded-2xl border border-[#d4d9de] bg-white p-5 shadow-sm">
+                <div className="tool-card">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Mapped Tool</p>
                   <h2 className="mt-2 text-lg font-bold text-[#0d2b5e]">{tool?.title ?? entry.targetToolSlug}</h2>
                   <p className="mt-2 text-sm leading-6 text-[#4f565c]">
-                    This glossary term is linked directly to the tool users can apply right away.
+                    Apply this concept with the companion calculator and compare your real inputs.
                   </p>
                   <Link
                     to={`/tools/${entry.targetToolSlug}`}
@@ -240,15 +225,15 @@ export default function GlossaryTermPage() {
                   </Link>
                 </div>
 
-                <div className="rounded-2xl border border-[#d4d9de] bg-[#0d2b5e] p-5 text-white shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7cc9f5]">Learn More</p>
-                  <h3 className="mt-2 text-lg font-bold">Explore the companion tool</h3>
-                  <p className="mt-2 text-sm leading-6 text-white/80">
+                <div className="tool-card">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Learn More</p>
+                  <h3 className="mt-2 text-lg font-bold text-[#0d2b5e]">Explore the companion tool</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#4f565c]">
                     Use the calculator to quantify this concept against your real inputs, then share the result with your team.
                   </p>
                   <Link
                     to={`/tools/${entry.targetToolSlug}`}
-                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-bold text-[#0d2b5e] transition-colors hover:bg-[#f5f7fa]"
+                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#0d2b5e] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#1a3a75]"
                   >
                     View Tool
                     <ArrowRight size={16} />
@@ -257,7 +242,6 @@ export default function GlossaryTermPage() {
               </aside>
             </div>
           )}
-        </div>
       </main>
     </>
   );
