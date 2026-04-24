@@ -6,6 +6,7 @@ import {
   type AssetRisk,
   type CBOMResult,
 } from "@/lib/tools/pq-cbom";
+import { Download, Linkedin, Twitter } from "lucide-react";
 
 const SHELF_LABELS: Record<AssetEntry["shelfLife"], string> = {
   short:    "Short (<2 yrs)",
@@ -25,6 +26,24 @@ const RISK_BADGE_CLASS: Record<AssetRisk, string> = {
 function uid(): string { return Math.random().toString(36).slice(2, 8); }
 function blankAsset(): AssetEntry {
   return { id: uid(), name: "", algorithm: "", keySize: null, implementation: "", shelfLife: "medium" };
+}
+
+function csvEscape(value: string | number | boolean): string {
+  const raw = String(value ?? "");
+  if (raw.includes(",") || raw.includes("\n") || raw.includes("\"")) {
+    return `"${raw.replace(/\"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 function scoreColor(score: number): string {
@@ -80,6 +99,55 @@ export function PostQuantumCBOMGenerator() {
   };
 
   const onReset = () => { setAssets([blankAsset()]); setResult(null); };
+
+  const onDownloadAuditCsv = () => {
+    if (!result) return;
+
+    const cleanAssets = assets.filter((a) => a.name && a.algorithm);
+    const csvRows: Array<Array<string | number | boolean>> = [
+      ["Tool", "Post-Quantum CBOM Generator"],
+      ["Generated At", new Date().toISOString()],
+      ["Quantum Risk Score", result.quantumRiskScore],
+      ["Total Assets", result.totalAssets],
+      ["Critical Assets", result.criticalCount],
+      ["Vulnerable Assets", result.vulnerableCount],
+      ["Transitional Assets", result.transitionalCount],
+      ["Safe Assets", result.safeCount],
+      [],
+      ["Input Assets"],
+      ["Name", "Algorithm", "Key Size", "Implementation", "Shelf Life"],
+      ...cleanAssets.map((asset) => [asset.name, asset.algorithm, asset.keySize ?? "n/a", asset.implementation || "n/a", asset.shelfLife]),
+      [],
+      ["Analyzed Results"],
+      ["Asset", "Algorithm", "Risk", "Risk Score", "Quantum Safe", "CNSA 2.0", "NIS2 Flagged", "Standard", "Migration Target", "Remediation"],
+      ...result.assets.map((asset) => [
+        asset.name,
+        asset.algorithm,
+        asset.risk,
+        asset.riskScore,
+        asset.quantumSafe,
+        asset.cnsa20Compliant,
+        asset.nis2Flagged,
+        asset.fiproStatus,
+        asset.migrateTo || "n/a",
+        asset.remediationAction,
+      ]),
+    ];
+
+    const csv = csvRows.map((row) => row.map(csvEscape).join(",")).join("\n");
+    downloadCsvFile(csv, `BKX-PQ-CBOM-Audit-${Date.now()}.csv`);
+  };
+
+  const shareCopy = "I just ran a Post-Quantum CBOM audit via @BKXLabs. Check your compliance score here:";
+  const toolUrl = "https://bkxlabs.com/tools/post-quantum-cbom-generator";
+  const shareToX = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  };
+  const shareToLinkedIn = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="tu-wrap" style={{ position: "relative" }}>
@@ -183,6 +251,47 @@ export function PostQuantumCBOMGenerator() {
                 <div className="tu-btn-row" style={{ marginTop: "1rem", justifyContent: "center" }}>
                   <button onClick={onExport} className="tu-btn tu-btn-sm tu-btn-success">Export JSON</button>
                   <button onClick={onCopy} className="tu-btn tu-btn-sm">{copied ? "Copied!" : "Copy"}</button>
+                </div>
+
+                <div style={{ marginTop: "0.85rem" }}>
+                  <button
+                    onClick={onDownloadAuditCsv}
+                    className="tu-btn"
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      gap: "0.45rem",
+                      background: "#0d2b5e",
+                      color: "#fff",
+                      borderColor: "#0d2b5e",
+                      fontWeight: 700,
+                    }}
+                    aria-label="Download Audit Report as CSV"
+                  >
+                    <Download size={16} aria-hidden="true" />
+                    Download Audit Report (CSV)
+                  </button>
+
+                  <div
+                    style={{
+                      marginTop: "0.65rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "0.5rem",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <span style={{ fontSize: "0.8rem", color: "#4f565c" }}>Share Results:</span>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <button onClick={shareToLinkedIn} className="tu-btn tu-btn-sm" aria-label="Share CBOM result to LinkedIn">
+                        <Linkedin size={14} aria-hidden="true" /> LinkedIn
+                      </button>
+                      <button onClick={shareToX} className="tu-btn tu-btn-sm" aria-label="Share CBOM result to X">
+                        <Twitter size={14} aria-hidden="true" /> X
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

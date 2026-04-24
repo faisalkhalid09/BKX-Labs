@@ -2,12 +2,12 @@ import { useState, useMemo } from "react";
 import {
   CONTROL_DEFS,
   calculateSoc2Readiness,
-  generateGapReportCSV,
   type TSCCategory,
   type EvidenceMode,
   type ControlEntry,
   type Soc2Result,
 } from "@/lib/tools/soc2-readiness";
+import { Download, Linkedin, Twitter } from "lucide-react";
 
 const CATEGORY_META: Record<TSCCategory, { label: string; description: string; optional: boolean }> = {
   security:        { label: "Security (CC)",      description: "Common Criteria — mandatory for all SOC 2 reports",     optional: false },
@@ -21,6 +21,24 @@ const ALL_CATS: TSCCategory[] = ["security", "availability", "confidentiality", 
 const COUNTER_KEY = "bkx_soc2_reports";
 function getReports(): number { return Number(sessionStorage.getItem(COUNTER_KEY) ?? 0); }
 function bumpReports() { sessionStorage.setItem(COUNTER_KEY, String(getReports() + 1)); }
+
+function csvEscape(value: string | number | boolean): string {
+  const raw = String(value ?? "");
+  if (raw.includes(",") || raw.includes("\n") || raw.includes("\"")) {
+    return `"${raw.replace(/\"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 // Radial SVG gauge — site navy palette
 function RadialGauge({ value }: { value: number }) {
@@ -83,14 +101,55 @@ export function SaaSSoc2Calculator() {
 
   const onExportCSV = () => {
     if (!result) return;
-    const csv = generateGapReportCSV(result);
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "BKX-SOC2-Readiness-Snapshot.csv";
-    a.click();
-    URL.revokeObjectURL(url);
+    const selectedCategoryRows = ALL_CATS.map((category) => [
+      "Selected Category",
+      category,
+      selectedCats.has(category),
+    ]);
+
+    const controlRows = result.allControls.map((ctrl) => [
+      ctrl.controlDef.ccRef,
+      ctrl.controlDef.label,
+      ctrl.controlDef.category,
+      ctrl.implemented,
+      ctrl.evidenceMode,
+      ctrl.earnedPoints.toFixed(1),
+      ctrl.maxPoints.toFixed(1),
+      ctrl.isGap ? "GAP" : "OK",
+      ctrl.controlDef.isHighWeight ? "CRITICAL" : "STANDARD",
+    ]);
+
+    const rows: Array<Array<string | number | boolean>> = [
+      ["Tool", "SaaS SOC 2 Readiness Calculator"],
+      ["Generated At", new Date().toISOString()],
+      ["Overall Readiness", `${result.overallReadiness}%`],
+      ["Automation Score", `${result.automationScore}%`],
+      ["Estimated Timeline (Months)", result.estimatedTimelineMonths],
+      ["Total Gaps", result.totalGaps],
+      ["Critical Gaps", result.criticalGaps.join(" | ") || "None"],
+      [],
+      ["Input Summary"],
+      ["Field", "Value", "Included"],
+      ...selectedCategoryRows,
+      [],
+      ["Control Results"],
+      ["CC Ref", "Control", "Category", "Implemented", "Evidence", "Earned Points", "Max Points", "Status", "Priority"],
+      ...controlRows,
+    ];
+
+    const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
+    downloadCsvFile(csv, `BKX-SOC2-Audit-Report-${Date.now()}.csv`);
+  };
+
+  const shareCopy = "I just ran a SaaS SOC 2 Readiness Calculator audit via @BKXLabs. Check your compliance score here:";
+  const toolUrl = "https://bkxlabs.com/tools/saas-soc2-readiness-calculator";
+  const shareToX = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  };
+  const shareToLinkedIn = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   };
 
   const onReset = () => {
@@ -245,9 +304,6 @@ export function SaaSSoc2Calculator() {
         {/* Action buttons */}
         <div className="tu-btn-row">
           <button onClick={onGenerateReport} className="tu-btn tu-btn-primary">Generate Gap Report</button>
-          {result && (
-            <button onClick={onExportCSV} className="tu-btn">Export CSV</button>
-          )}
           <button onClick={onReset} className="tu-btn">Reset</button>
         </div>
 
@@ -315,6 +371,47 @@ export function SaaSSoc2Calculator() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            <div style={{ marginTop: "1rem" }}>
+              <button
+                onClick={onExportCSV}
+                className="tu-btn"
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  gap: "0.45rem",
+                  background: "#0d2b5e",
+                  color: "#fff",
+                  borderColor: "#0d2b5e",
+                  fontWeight: 700,
+                }}
+                aria-label="Download Audit Report as CSV"
+              >
+                <Download size={16} aria-hidden="true" />
+                Download Audit Report (CSV)
+              </button>
+
+              <div
+                style={{
+                  marginTop: "0.75rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ fontSize: "0.8rem", color: "#4f565c" }}>Share Results:</span>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <button onClick={shareToLinkedIn} className="tu-btn tu-btn-sm" aria-label="Share SOC2 result to LinkedIn">
+                    <Linkedin size={14} aria-hidden="true" /> LinkedIn
+                  </button>
+                  <button onClick={shareToX} className="tu-btn tu-btn-sm" aria-label="Share SOC2 result to X">
+                    <Twitter size={14} aria-hidden="true" /> X
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

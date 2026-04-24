@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { classifyEuAiActRisk, type EuAiActInput, type EuAiActResult } from "@/lib/tools/eu-ai-act";
+import { Download, Linkedin, Twitter } from "lucide-react";
 
 type RiskClass = "prohibited" | "high" | "limited" | "minimal" | "gpai";
 
@@ -9,6 +10,24 @@ function getRiskClass(level: string): RiskClass {
   if (level.toLowerCase().includes("gpai")) return "gpai";
   if (level.toLowerCase().includes("limited")) return "limited";
   return "minimal";
+}
+
+function csvEscape(value: string | number | boolean): string {
+  const raw = String(value ?? "");
+  if (raw.includes(",") || raw.includes("\n") || raw.includes("\"")) {
+    return `"${raw.replace(/\"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export function EuAiActClassifier() {
@@ -67,6 +86,55 @@ export function EuAiActClassifier() {
     if (result) {
       navigator.clipboard.writeText(result.complianceSnapshot.join("\n"));
     }
+  };
+
+  const downloadAuditCsv = () => {
+    if (!result) return;
+
+    const rows: Array<Array<string | number | boolean>> = [
+      ["Tool", "EU AI Act Risk Classifier"],
+      ["Generated At", new Date().toISOString()],
+      ["Risk Level", result.riskLevel],
+      [],
+      ["Input Summary"],
+      ["Field", "Value"],
+      ["Prohibited Type", input.prohibitedType],
+      ["Annex III Sector", input.annexIIISector],
+      ["Profiling", input.isProfiling],
+      ["Derogation Category", input.derogationCategory],
+      ["GPAI Systemic Risk", input.isGPAISystemicRisk],
+      ["Transparency Trigger", input.hasTransparencyNeed],
+      [],
+      ["Classification Reasons"],
+      ["Reason"],
+      ...result.reasons.map((reason) => [reason]),
+      [],
+      ["Compliance Requirements"],
+      ["Requirement"],
+      ...result.complianceRequirements.map((item) => [item]),
+      [],
+      ["Audit Documentation"],
+      ["Artifact"],
+      ...result.auditDocumentation.map((item) => [item]),
+      [],
+      ["Regulatory References"],
+      ["Reference"],
+      ...result.regulatoryReferences.map((item) => [item]),
+    ];
+
+    const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
+    downloadCsvFile(csv, `BKX-EU-AI-Act-Audit-${Date.now()}.csv`);
+  };
+
+  const shareCopy = "I just ran a EU AI Act Classifier audit via @BKXLabs. Check your compliance score here:";
+  const toolUrl = "https://bkxlabs.com/tools/eu-ai-act-risk-level-classifier";
+  const shareToX = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  };
+  const shareToLinkedIn = () => {
+    const text = `${shareCopy} ${toolUrl}`;
+    window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   };
 
   const riskClass = result ? getRiskClass(result.riskLevel) : null;
@@ -170,6 +238,47 @@ export function EuAiActClassifier() {
             </div>
 
             <button className="tu-btn tu-btn-primary" style={{ marginTop: '1.5rem' }} onClick={reset}>Restart Classifier</button>
+
+            <div style={{ marginTop: '0.85rem' }}>
+              <button
+                onClick={downloadAuditCsv}
+                className="tu-btn"
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  gap: '0.45rem',
+                  background: '#0d2b5e',
+                  color: '#fff',
+                  borderColor: '#0d2b5e',
+                  fontWeight: 700,
+                }}
+                aria-label="Download Audit Report as CSV"
+              >
+                <Download size={16} aria-hidden="true" />
+                Download Audit Report (CSV)
+              </button>
+
+              <div
+                style={{
+                  marginTop: '0.65rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <span style={{ fontSize: '0.8rem', color: '#4f565c' }}>Share Results:</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button onClick={shareToLinkedIn} className="tu-btn tu-btn-sm" aria-label="Share EU AI Act result to LinkedIn">
+                    <Linkedin size={14} aria-hidden="true" /> LinkedIn
+                  </button>
+                  <button onClick={shareToX} className="tu-btn tu-btn-sm" aria-label="Share EU AI Act result to X">
+                    <Twitter size={14} aria-hidden="true" /> X
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div className="tu-aeo" style={{ marginTop: '2.5rem' }}>
               <p>
