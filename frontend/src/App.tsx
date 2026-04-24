@@ -14,6 +14,7 @@ import PdfViewer from './pages/PdfViewer';
 import RezgoDemo from './pages/RezgoDemo';
 import ToolsIndex from './pages/ToolsIndex';
 import ToolDetail from './pages/ToolDetail';
+import GlossaryTermPage from './pages/glossary/[term]';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
+          <Route path="/glossary/:term" element={<GlossaryTermPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
