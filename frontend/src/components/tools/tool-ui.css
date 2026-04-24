@@ -1135,3 +1135,193 @@
     padding: 0.65rem;
   }
 }
+
+/* =====================================================
+   GLOSSARY TERM PAGE
+   Shared responsive rules for /glossary/:term
+===================================================== */
+.glossary-term-page {
+  max-width: 1320px;
+}
+
+.glossary-topbar {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.glossary-topbar .tool-detail-back {
+  margin-bottom: 0;
+}
+
+.glossary-shell-badge {
+  white-space: nowrap;
+}
+
+.glossary-layout {
+  align-items: start;
+}
+
+.glossary-article {
+  overflow: hidden;
+}
+
+.glossary-title {
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.glossary-mapped-badge {
+  flex-shrink: 0;
+}
+
+.glossary-intro {
+  margin-top: 0.35rem;
+}
+
+.glossary-prose {
+  font-size: 1rem;
+}
+
+.glossary-prose h2 {
+  line-height: 1.25;
+  scroll-margin-top: 110px;
+}
+
+.glossary-prose h3 {
+  line-height: 1.3;
+  scroll-margin-top: 110px;
+}
+
+.glossary-prose p,
+.glossary-prose li {
+  max-width: none;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.glossary-paragraph {
+  font-size: 1.04rem;
+  line-height: 1.85;
+}
+
+.glossary-prose ul,
+.glossary-prose ol {
+  padding-right: 0.35rem;
+}
+
+.glossary-prose code {
+  word-break: break-word;
+}
+
+.glossary-aside .tool-card {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .glossary-shell-badge {
+    order: 2;
+  }
+
+  .glossary-topbar .tool-detail-back {
+    order: 1;
+  }
+
+  .glossary-article {
+    padding: 2rem;
+  }
+
+  .glossary-aside {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .glossary-term-page {
+    max-width: 100%;
+  }
+
+  .glossary-topbar {
+    gap: 0.65rem;
+  }
+
+  .glossary-shell-badge {
+    width: fit-content;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .glossary-article {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .glossary-hero {
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .glossary-title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+
+  .glossary-intro {
+    padding: 0.85rem 0.95rem;
+    border-radius: 10px;
+  }
+
+  .glossary-intro p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .glossary-prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.35rem;
+  }
+
+  .glossary-prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.1rem;
+  }
+
+  .glossary-paragraph,
+  .glossary-prose ul,
+  .glossary-prose ol {
+    font-size: 0.985rem;
+    line-height: 1.72;
+    margin-bottom: 1rem;
+  }
+
+  .glossary-prose ul,
+  .glossary-prose ol {
+    margin-left: 1.2rem;
+  }
+
+  .glossary-aside {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .glossary-aside .tool-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .glossary-title {
+    font-size: 1.35rem;
+  }
+
+  .glossary-paragraph,
+  .glossary-prose ul,
+  .glossary-prose ol {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+}
