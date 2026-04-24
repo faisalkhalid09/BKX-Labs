@@ -1,8 +1,27 @@
 import { useState } from "react";
 import { compareCloudGpuCosts } from "@/lib/tools/cloud-gpu-cost";
+import { Download, Linkedin, Twitter } from "lucide-react";
 
 const GPU_TYPES = ["a100-40gb", "a100-80gb", "h100-80gb", "v100-32gb"];
 const COMMON_REGIONS = ["us-east-1", "eu-west-1", "us-central1", "us-east", "uk-south"];
+
+function csvEscape(value: string | number | boolean): string {
+  const raw = String(value ?? "");
+  if (raw.includes(",") || raw.includes("\n") || raw.includes("\"")) {
+    return `"${raw.replace(/\"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = fileName;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
 
 export function CloudGpuCostComparison() {
   const [gpuType, setGpuType] = useState("a100-40gb");
@@ -15,6 +34,59 @@ export function CloudGpuCostComparison() {
   };
 
   const onReset = () => { setGpuType("a100-40gb"); setRegion("us-east-1"); setHoursPerMonth(730); setResult(null); };
+
+  const onExportCsv = () => {
+    if (!result) return;
+
+    const rows: Array<Array<string | number | boolean>> = [
+      ["Tool", "Cloud GPU Cost Comparison"],
+      ["Generated At", new Date().toISOString()],
+      [],
+      ["Input Summary"],
+      ["GPU Type", gpuType.toUpperCase()],
+      ["Region", region],
+      ["Monthly Hours", Math.max(1, hoursPerMonth)],
+      [],
+      ["Output Summary"],
+      ["Cheapest Provider", result.cheapestProvider],
+      ["Cheapest Monthly Cost (USD)", result.cheapestCost.toFixed(2)],
+      ["Potential Monthly Savings vs Highest (USD)", result.monthlySavings.toFixed(2)],
+      [],
+      ["Provider Comparison"],
+      ["Provider", "Hourly Rate (USD)", "Monthly Cost (USD)", "Hours", "Cheapest"],
+      ...result.results.map((item) => [
+        item.provider,
+        item.hourlyRate.toFixed(4),
+        item.monthlyCost.toFixed(2),
+        item.utilizationHours,
+        item.provider === result.cheapestProvider,
+      ]),
+    ];
+
+    const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
+    downloadCsvFile(csv, `BKX-Cloud-GPU-Comparison-${Date.now()}.csv`);
+  };
+
+  const toolUrl = "https://bkxlabs.com/tools/cloud-gpu-cost-comparison";
+  const shareMessage = result
+    ? `I just compared ${gpuType.toUpperCase()} cloud pricing and found ${result.cheapestProvider.toUpperCase()} at $${result.cheapestCost.toFixed(0)}/month using @BKXLabs. Benchmark your AI GPU spend:`
+    : "I just benchmarked multi-cloud GPU pricing for AI workloads using @BKXLabs. Compare providers instantly:";
+
+  const shareToX = () => {
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${shareMessage} ${toolUrl}`)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  const shareToLinkedIn = () => {
+    window.open(
+      `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareMessage} ${toolUrl}`)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
 
   return (
     <div className="tu-wrap">
@@ -98,6 +170,21 @@ export function CloudGpuCostComparison() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                <div className="tu-btn-row" style={{ marginTop: "1rem", flexWrap: "wrap" }}>
+                  <button type="button" className="tu-btn tu-btn-primary" onClick={onExportCsv}>
+                    <Download size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                    Download Audit/Comparison Report (CSV)
+                  </button>
+                  <button type="button" className="tu-btn" onClick={shareToLinkedIn}>
+                    <Linkedin size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                    Share to LinkedIn
+                  </button>
+                  <button type="button" className="tu-btn" onClick={shareToX}>
+                    <Twitter size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                    Share to X
+                  </button>
                 </div>
               </div>
             </div>

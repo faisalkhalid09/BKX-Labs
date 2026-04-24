@@ -41,9 +41,53 @@
             --color-primary: #105da8;
             --color-primary-dark: #0d4a87;
         }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: #f8f8f6;
+        }
+
+        body[data-route="tools"] #agency-hero,
+        body[data-route="tools"] .homepage-wrapper,
+        body[data-route="tools"] .home-page,
+        body[data-route="tools"] .agency-layout,
+        body[data-route="tools"] .navbar,
+        body[data-route="tools"] .site-header,
+        body[data-route="tools"] .site-footer {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        body[data-route="tools"] .tools-boot-slate {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(180deg, #f8f8f6 0%, #eef2f6 100%);
+        }
+
+        body[data-route="tools"] .tools-boot-slate::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(16, 93, 168, 0.06), transparent 32%),
+                radial-gradient(circle at 80% 20%, rgba(13, 74, 135, 0.05), transparent 28%),
+                radial-gradient(circle at 50% 80%, rgba(16, 93, 168, 0.04), transparent 30%);
+        }
+
+        body[data-route="tools"] main {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900" data-route="tools">
+    <div class="tools-boot-slate" aria-hidden="true"></div>
     <!-- ═══════════════════════════════════════════════════════════════════
          DIRECT ANSWER BLOCK — Visible for crawlers + users
          This ensures Google, Bing, and AI crawlers see the direct answer

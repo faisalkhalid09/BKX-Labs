@@ -1,5 +1,24 @@
 import { useState } from "react";
 import { estimateBlackwellPUE } from "@/lib/tools/nvidia-blackwell-pue";
+import { Download, Linkedin, Twitter } from "lucide-react";
+
+function csvEscape(value: string | number | boolean): string {
+  const raw = String(value ?? "");
+  if (raw.includes(",") || raw.includes("\n") || raw.includes("\"")) {
+    return `"${raw.replace(/\"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = fileName;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
 
 export function NvidiaBlackwellEstimator() {
   const [racks, setRacks] = useState(1);
@@ -13,6 +32,54 @@ export function NvidiaBlackwellEstimator() {
   };
 
   const onReset = () => { setRacks(1); setGpusPerRack(4); setUtilization(75); setCooling("air"); setResult(null); };
+
+  const onExportCsv = () => {
+    if (!result) return;
+
+    const rows: Array<Array<string | number | boolean>> = [
+      ["Tool", "NVIDIA Blackwell PUE Estimator"],
+      ["Generated At", new Date().toISOString()],
+      [],
+      ["Input Summary"],
+      ["Rack Count", racks],
+      ["GPUs Per Rack", gpusPerRack],
+      ["Utilization Percent", utilization],
+      ["Cooling Type", cooling],
+      [],
+      ["Output Summary"],
+      ["Total Platform GPUs", result.totalGpus],
+      ["PUE Value", result.pueValue.toFixed(2)],
+      ["IT Power Load (kW)", result.itLoadKw.toFixed(2)],
+      ["Cooling Power (kW)", result.coolingPowerKw.toFixed(2)],
+      ["Facility Total Power (kW)", result.facilityPowerKw.toFixed(2)],
+      ["Annual Energy Consumption (MWh)", result.annualEnergyMwh],
+      ["Estimated Annual Cost (USD)", result.estimatedAnnualCostUsd],
+    ];
+
+    const csv = rows.map((row) => row.map(csvEscape).join(",")).join("\n");
+    downloadCsvFile(csv, `BKX-Blackwell-PUE-Audit-${Date.now()}.csv`);
+  };
+
+  const toolUrl = "https://bkxlabs.com/tools/nvidia-blackwell-pue-estimator";
+  const shareMessage = result
+    ? `I just calculated my AI Factory PUE at ${result.pueValue.toFixed(2)} with ${(result.estimatedAnnualCostUsd / 1000).toFixed(1)}k annual energy cost using @BKXLabs. Benchmark your Blackwell facility plan:`
+    : "I just modeled Blackwell AI factory power and PUE scenarios using @BKXLabs. Estimate your facility efficiency:";
+
+  const shareToX = () => {
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${shareMessage} ${toolUrl}`)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  const shareToLinkedIn = () => {
+    window.open(
+      `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareMessage} ${toolUrl}`)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
 
   return (
     <div className="tu-wrap">
@@ -94,6 +161,21 @@ export function NvidiaBlackwellEstimator() {
                 <p style={{ fontSize: '0.75rem', color: '#4f565c', margin: 0, fontStyle: 'italic' }}>
                   Annual Energy Consumption: <strong>{result.annualEnergyMwh.toLocaleString()} MWh</strong>
                 </p>
+              </div>
+
+              <div className="tu-btn-row" style={{ marginTop: "1rem", flexWrap: "wrap" }}>
+                <button type="button" className="tu-btn tu-btn-primary" onClick={onExportCsv}>
+                  <Download size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                  Download Audit/Comparison Report (CSV)
+                </button>
+                <button type="button" className="tu-btn" onClick={shareToLinkedIn}>
+                  <Linkedin size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                  Share to LinkedIn
+                </button>
+                <button type="button" className="tu-btn" onClick={shareToX}>
+                  <Twitter size={16} style={{ marginRight: "0.4rem", verticalAlign: "text-bottom" }} />
+                  Share to X
+                </button>
               </div>
             </div>
           ) : (
