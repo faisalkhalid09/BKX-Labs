@@ -24,13 +24,13 @@ import BookingPage from './pages/BookingPage';
 
 function App() {
   const location = useLocation();
-  const isToolsPage = location.pathname.startsWith('/tools');
+  const isToolsShellPage = location.pathname.startsWith('/tools') || location.pathname.startsWith('/glossary');
 
   useEffect(() => {
     trackPageView(location.pathname);
   }, [location]);
 
-  if (isToolsPage) {
+  if (isToolsShellPage) {
     return (
       <>
         <ScrollToTop />
@@ -38,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/tools" element={<ToolsIndex />} />
             <Route path="/tools/:slug" element={<ToolDetail />} />
+            <Route path="/glossary/:term" element={<GlossaryTermPage />} />
           </Routes>
         </ToolsLayoutWrapper>
       </>
@@ -61,7 +62,6 @@ function App() {
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
-          <Route path="/glossary/:term" element={<GlossaryTermPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
