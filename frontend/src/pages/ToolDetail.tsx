@@ -23,6 +23,18 @@ import { generateToolMetadata } from '@/lib/seo/tools-metadata';
 import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
 import '@/components/tools/tool-ui.css';
 
+const ADSENSE_CLIENT = 'ca-pub-8538157876247266';
+const ADSENSE_TOP_SLOT = import.meta.env.VITE_ADSENSE_TOOLS_TOP_SLOT ?? '';
+const ADSENSE_SIDEBAR_SLOT = import.meta.env.VITE_ADSENSE_TOOLS_SIDEBAR_SLOT ?? '';
+const hasTopAdSlot = /^\d+$/.test(ADSENSE_TOP_SLOT);
+const hasSidebarAdSlot = /^\d+$/.test(ADSENSE_SIDEBAR_SLOT);
+
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
 // Component map for dynamic rendering
 const componentMap: Record<string, React.ComponentType<any>> = {
   'eu-ai-act-risk-level-classifier': EuAiActClassifier,
@@ -56,6 +68,27 @@ export default function ToolDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [slug]);
+
+  useEffect(() => {
+    if (!hasTopAdSlot && !hasSidebarAdSlot) return;
+
+    // Request ad fill only for configured slots to avoid invalid ad requests.
+    const initAds = () => {
+      try {
+        if (hasTopAdSlot) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+        if (hasSidebarAdSlot) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+      } catch {
+        // Ignore duplicate init and blocked-ad runtime errors.
+      }
+    };
+
+    const timer = window.setTimeout(initAds, 0);
+    return () => window.clearTimeout(timer);
   }, [slug]);
 
   if (!tool) {
@@ -138,14 +171,16 @@ export default function ToolDetail() {
         {/* ── CLS-SAFE TOP BANNER AD (728×90) ─────────── */}
         {/* Space is reserved before ad loads → zero layout shift  */}
         <div className="tool-ad-banner-wrap">
-          <ins
-            className="adsbygoogle tool-ad-banner"
-            style={{ display: 'block' }}
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-            data-ad-slot="XXXXXXXXXX"
-            data-ad-format="horizontal"
-            data-full-width-responsive="false"
-          />
+          {hasTopAdSlot ? (
+            <ins
+              className="adsbygoogle tool-ad-banner"
+              style={{ display: 'block' }}
+              data-ad-client={ADSENSE_CLIENT}
+              data-ad-slot={ADSENSE_TOP_SLOT}
+              data-ad-format="horizontal"
+              data-full-width-responsive="false"
+            />
+          ) : null}
         </div>
 
         {/* ── TWO-COLUMN LAYOUT: tool content + sidebar ── */}
@@ -182,14 +217,16 @@ export default function ToolDetail() {
           {/* ── Sidebar: CLS-SAFE 300×600 ad ── */}
           <aside className="tool-sidebar-col">
             <div className="tool-ad-sidebar-wrap">
-              <ins
-                className="adsbygoogle tool-ad-sidebar"
-                style={{ display: 'block' }}
-                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                data-ad-slot="XXXXXXXXXX"
-                data-ad-format="vertical"
-                data-full-width-responsive="false"
-              />
+              {hasSidebarAdSlot ? (
+                <ins
+                  className="adsbygoogle tool-ad-sidebar"
+                  style={{ display: 'block' }}
+                  data-ad-client={ADSENSE_CLIENT}
+                  data-ad-slot={ADSENSE_SIDEBAR_SLOT}
+                  data-ad-format="vertical"
+                  data-full-width-responsive="false"
+                />
+              ) : null}
             </div>
           </aside>
 

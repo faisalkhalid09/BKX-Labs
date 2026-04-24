@@ -85,7 +85,7 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://bkxlabs.com/tools/nist-fips-203-migration-planner</loc>
+    <loc>https://bkxlabs.com/tools/nist-fips-203-migration-timeline-planner</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
@@ -115,13 +115,13 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://bkxlabs.com/tools/zero-knowledge-proof-validator</loc>
+    <loc>https://bkxlabs.com/tools/zk-circuit-validator</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://bkxlabs.com/tools/deepfake-detector</loc>
+    <loc>https://bkxlabs.com/tools/deepfake-detector-probability</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
