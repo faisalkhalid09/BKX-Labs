@@ -99,14 +99,28 @@ export default function GlossaryTermPage() {
     const loadRegistry = async () => {
       setLoading(true);
       setError(null);
+      const registryPaths = ['/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
+
       try {
-        const response = await fetch('/data/glossary-registry.json', { cache: 'no-store' });
-        if (!response.ok) {
-          throw new Error(`Failed to load glossary registry (${response.status})`);
+        for (const path of registryPaths) {
+          const response = await fetch(path, { cache: 'no-store' });
+          if (!response.ok) continue;
+
+          const raw = await response.text();
+          const looksLikeJson = raw.trim().startsWith('[') || raw.trim().startsWith('{');
+          if (!looksLikeJson) continue;
+
+          const data = JSON.parse(raw) as GlossaryEntry[];
+          if (mounted) {
+            setEntries(data);
+            setError(null);
+          }
+          return;
         }
-        const data = (await response.json()) as GlossaryEntry[];
+
         if (mounted) {
-          setEntries(data);
+          setError('Glossary content is temporarily unavailable.');
+          setEntries([]);
         }
       } catch (err) {
         if (mounted) {

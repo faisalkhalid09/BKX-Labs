@@ -100,17 +100,25 @@ export default function ToolDetail() {
         return;
       }
 
+      const registryPaths = ['/data/glossary-registry.json', '/backend/data/glossary-registry.json'];
+
       try {
-        const response = await fetch('/data/glossary-registry.json', { cache: 'no-store' });
-        if (!response.ok) {
-          if (active) setRelatedConcepts([]);
+        for (const path of registryPaths) {
+          const response = await fetch(path, { cache: 'no-store' });
+          if (!response.ok) continue;
+
+          const raw = await response.text();
+          const looksLikeJson = raw.trim().startsWith('[') || raw.trim().startsWith('{');
+          if (!looksLikeJson) continue;
+
+          const glossaryEntries = JSON.parse(raw) as GlossaryRegistryItem[];
+          if (active) {
+            setRelatedConcepts(getRelatedGlossaryConcepts(slug, glossaryEntries));
+          }
           return;
         }
 
-        const glossaryEntries = (await response.json()) as GlossaryRegistryItem[];
-        if (active) {
-          setRelatedConcepts(getRelatedGlossaryConcepts(slug, glossaryEntries));
-        }
+        if (active) setRelatedConcepts([]);
       } catch {
         if (active) setRelatedConcepts([]);
       }
