@@ -73,7 +73,7 @@ function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p'
   }
 
   return blocks;
-}
+                <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
 
 function renderInline(text: string): string {
   return text
@@ -117,13 +117,13 @@ export default function GlossaryTermPage() {
         {/* Back link */}
         <Link to="/tools" className="tool-detail-back">← Back to All Tools</Link>
 
-          {!entry ? (
-            <div className="tool-card" style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2 style={{ color: '#0d2b5e', marginBottom: '0.5rem' }}>Term Not Found</h2>
-              <p style={{ color: '#4f565c' }}>We could not find this glossary term.</p>
-            </div>
-          ) : (
-            <>
+        {!entry ? (
+          <div className="tool-card" style={{ padding: '2rem', textAlign: 'center' }}>
+            <h2 style={{ color: '#0d2b5e', marginBottom: '0.5rem' }}>Term Not Found</h2>
+            <p style={{ color: '#4f565c' }}>We could not find this glossary term.</p>
+          </div>
+        ) : (
+          <>
             {/* Glossary Header */}
             <div className="tool-detail-header" style={{ marginBottom: '2rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
@@ -137,7 +137,7 @@ export default function GlossaryTermPage() {
                 )}
               </div>
               <h1 style={{ fontSize: 'clamp(1.875rem, 5vw, 3rem)', fontWeight: 800, color: '#161a1d', marginBottom: '0.5rem', lineHeight: 1.2 }}>
-                      {entry.title}
+                {entry.title}
               </h1>
               <p style={{ fontSize: '1rem', color: '#4f565c', lineHeight: 1.6, maxWidth: '90ch' }}>
                 {entry.metaDescription}
@@ -145,9 +145,9 @@ export default function GlossaryTermPage() {
             </div>
 
             {/* Two-column layout: main content + sidebar */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', gridAutoFlow: 'dense' }}>
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
               {/* Main Content */}
-              <div style={{ gridColumn: 'span 1' }}>
+              <div>
                 {/* Quick Summary Card */}
                 {introPreview ? (
                   <div className="tool-card" style={{ marginBottom: '1.5rem', backgroundColor: '#f5f7fa', borderLeft: '4px solid #4fa3d1' }}>
@@ -161,7 +161,7 @@ export default function GlossaryTermPage() {
                 ) : null}
 
                 {/* Main Article Content */}
-                <div className="tool-card">
+                <div className="tool-card" style={{ border: '0', background: 'transparent', boxShadow: 'none', padding: 0 }}>
                   {articleBlocks.map((block, index) => {
                     if (block.type === 'h1') {
                       return null;
@@ -216,14 +216,10 @@ export default function GlossaryTermPage() {
                     );
                   })}
                 </div>
-
-                {/* CTA Section */}
-
               </div>
-                <ToolToAgencyCTA />
+
               {/* Sidebar */}
-              <aside style={{ gridColumn: 'span 1', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* Related Tool Card */}
+              <aside className="xl:sticky xl:top-24 xl:self-start" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div className="tool-card">
                   <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.75rem' }}>
                     📊 companion tool
@@ -249,10 +245,8 @@ export default function GlossaryTermPage() {
                     Open Calculator
                     <ArrowRight size={16} />
                   </Link>
-
                 </div>
 
-                {/* Next Steps Card */}
                 <div className="tool-card" style={{ backgroundColor: '#f5f7fa', borderTop: '2px solid #4fa3d1' }}>
                   <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.75rem' }}>
                     🚀 next step
@@ -266,8 +260,13 @@ export default function GlossaryTermPage() {
                 </div>
               </aside>
             </div>
-            </>
-          )}
+
+            {/* Keep this at the end so article can fully expand first */}
+            <div style={{ marginTop: '1.5rem' }}>
+              <ToolToAgencyCTA />
+            </div>
+          </>
+        )}
       </main>
     </>
   );
