@@ -113,44 +113,55 @@ export default function GlossaryTermPage() {
         <meta property="og:type" content="article" />
       </Helmet>
 
-      <main className="tool-detail-container glossary-term-page">
-        <div className="glossary-topbar mb-5 flex items-center justify-between gap-4">
-            <Link to="/tools" className="tool-detail-back">
-              ← Back to Tools
-            </Link>
-            <span className="glossary-shell-badge rounded-full border border-[#d4d9de] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#4f565c] shadow-sm">
-              BKX Technical Glossary
-            </span>
-        </div>
+      <main className="tool-detail-container">
+        {/* Back link */}
+        <Link to="/tools" className="tool-detail-back">← Back to All Tools</Link>
 
           {!entry ? (
-            <div className="tool-card">
-              We could not find this glossary term.
+            <div className="tool-card" style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2 style={{ color: '#0d2b5e', marginBottom: '0.5rem' }}>Term Not Found</h2>
+              <p style={{ color: '#4f565c' }}>We could not find this glossary term.</p>
             </div>
           ) : (
-            <div className="glossary-layout grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-              <article className="glossary-article rounded-2xl border border-[#d4d9de] bg-white p-6 shadow-sm md:p-10">
-                <div className="glossary-hero mb-4 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="tu-tag">BKX Technical Glossary</p>
-                    <h1 className="glossary-title mt-1 text-3xl font-extrabold tracking-tight text-[#161a1d] md:text-5xl">
-                      {entry.title}
-                    </h1>
-                  </div>
-                  <span className="glossary-mapped-badge hidden rounded-full border border-[#d4d9de] bg-[#f5f7fa] px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#4f565c] md:inline-flex">
-                    Mapped to {tool?.title ?? 'Tool'}
+            <>
+            {/* Glossary Header */}
+            <div className="tool-detail-header" style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', backgroundColor: '#f5f7fa', padding: '0.375rem 0.75rem', borderRadius: '9999px' }}>
+                  Glossary
+                </span>
+                {tool && (
+                  <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4f565c', backgroundColor: '#e8ecf1', padding: '0.375rem 0.75rem', borderRadius: '9999px' }}>
+                    Mapped to {tool.title}
                   </span>
-                </div>
+                )}
+              </div>
+              <h1 style={{ fontSize: 'clamp(1.875rem, 5vw, 3rem)', fontWeight: 800, color: '#161a1d', marginBottom: '0.5rem', lineHeight: 1.2 }}>
+                      {entry.title}
+              </h1>
+              <p style={{ fontSize: '1rem', color: '#4f565c', lineHeight: 1.6, maxWidth: '90ch' }}>
+                {entry.metaDescription}
+              </p>
+            </div>
 
+            {/* Two-column layout: main content + sidebar */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', gridAutoFlow: 'dense' }}>
+              {/* Main Content */}
+              <div style={{ gridColumn: 'span 1' }}>
+                {/* Quick Summary Card */}
                 {introPreview ? (
-                  <div className="glossary-intro tu-aeo mb-6 rounded-xl border border-[#d4d9de] bg-[#f5f7fa] px-5 py-4">
-                    <p className="text-sm leading-7 text-[#161a1d]">
-                      <strong className="text-[#0d2b5e]">In one sentence:</strong> {introPreview}
+                  <div className="tool-card" style={{ marginBottom: '1.5rem', backgroundColor: '#f5f7fa', borderLeft: '4px solid #4fa3d1' }}>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.5rem' }}>
+                      Quick Summary
+                    </p>
+                    <p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#161a1d', margin: 0 }}>
+                      {introPreview}
                     </p>
                   </div>
                 ) : null}
 
-                <div className="glossary-prose max-w-none text-[#161a1d]">
+                {/* Main Article Content */}
+                <div className="tool-card">
                   {articleBlocks.map((block, index) => {
                     if (block.type === 'h1') {
                       return null;
@@ -160,7 +171,7 @@ export default function GlossaryTermPage() {
                       return (
                         <h2
                           key={`h2-${index}`}
-                          className="mt-10 mb-4 text-2xl font-bold tracking-tight text-[#0d2b5e]"
+                          style={{ marginTop: '1.75rem', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 700, color: '#0d2b5e', lineHeight: 1.3 }}
                           dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
                         />
                       );
@@ -170,7 +181,7 @@ export default function GlossaryTermPage() {
                       return (
                         <h3
                           key={`h3-${index}`}
-                          className="mt-8 mb-3 text-xl font-semibold text-[#161a1d]"
+                          style={{ marginTop: '1.25rem', marginBottom: '0.75rem', fontSize: '1.125rem', fontWeight: 600, color: '#161a1d', lineHeight: 1.4 }}
                           dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
                         />
                       );
@@ -178,9 +189,9 @@ export default function GlossaryTermPage() {
 
                     if (block.type === 'ul') {
                       return (
-                        <ul key={`ul-${index}`} className="mb-6 ml-6 list-disc space-y-2 text-[1.05rem] leading-8 text-[#4f565c]">
+                        <ul key={`ul-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'disc', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                           {block.items?.map((item, itemIndex) => (
-                            <li key={`uli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                            <li key={`uli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
                           ))}
                         </ul>
                       );
@@ -188,9 +199,9 @@ export default function GlossaryTermPage() {
 
                     if (block.type === 'ol') {
                       return (
-                        <ol key={`ol-${index}`} className="mb-6 ml-6 list-decimal space-y-2 text-[1.05rem] leading-8 text-[#4f565c]">
+                        <ol key={`ol-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                           {block.items?.map((item, itemIndex) => (
-                            <li key={`oli-${itemIndex}`} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                            <li key={`oli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
                           ))}
                         </ol>
                       );
@@ -199,48 +210,63 @@ export default function GlossaryTermPage() {
                     return (
                       <p
                         key={`p-${index}`}
-                        className="glossary-paragraph mb-6 max-w-none text-[1.08rem] leading-8 text-[#4f565c]"
+                        style={{ marginBottom: '1rem', fontSize: '1rem', lineHeight: 1.7, color: '#4f565c' }}
                         dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
                       />
                     );
                   })}
                 </div>
 
-                <ToolToAgencyCTA />
-              </article>
+                {/* CTA Section */}
 
-              <aside className="glossary-aside space-y-4 lg:sticky lg:top-[96px] lg:self-start">
+              </div>
+                <ToolToAgencyCTA />
+              {/* Sidebar */}
+              <aside style={{ gridColumn: 'span 1', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Related Tool Card */}
                 <div className="tool-card">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Mapped Tool</p>
-                  <h2 className="mt-2 text-lg font-bold text-[#0d2b5e]">{tool?.title ?? entry.targetToolSlug}</h2>
-                  <p className="mt-2 text-sm leading-6 text-[#4f565c]">
-                    Apply this concept with the companion calculator and compare your real inputs.
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.75rem' }}>
+                    📊 companion tool
+                  </p>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0d2b5e', marginBottom: '0.5rem' }}>
+                    {tool?.title ?? 'Related Tool'}
+                  </h3>
+                  <p style={{ fontSize: '0.925rem', lineHeight: 1.6, color: '#4f565c', marginBottom: '1rem' }}>
+                    Use the interactive calculator to apply this concept with your own inputs.
                   </p>
                   <Link
                     to={`/tools/${entry.targetToolSlug}`}
-                    className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[#d4d9de] bg-[#f5f7fa] px-4 py-2 text-sm font-semibold text-[#0d2b5e] transition-colors hover:border-[#4fa3d1] hover:bg-white"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', backgroundColor: '#0d2b5e', color: 'white', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 600, fontSize: '0.925rem', transition: 'all 0.2s', border: '1px solid #0d2b5e' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#1a3a75';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0d2b5e';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
                   >
-                    Open Tool
+                    Open Calculator
                     <ArrowRight size={16} />
                   </Link>
+
                 </div>
 
-                <div className="tool-card">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#4fa3d1]">Learn More</p>
-                  <h3 className="mt-2 text-lg font-bold text-[#0d2b5e]">Explore the companion tool</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#4f565c]">
-                    Use the calculator to quantify this concept against your real inputs, then share the result with your team.
+                {/* Next Steps Card */}
+                <div className="tool-card" style={{ backgroundColor: '#f5f7fa', borderTop: '2px solid #4fa3d1' }}>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.75rem' }}>
+                    🚀 next step
                   </p>
-                  <Link
-                    to={`/tools/${entry.targetToolSlug}`}
-                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#0d2b5e] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#1a3a75]"
-                  >
-                    View Tool
-                    <ArrowRight size={16} />
-                  </Link>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0d2b5e', marginBottom: '0.5rem' }}>
+                    Implementation
+                  </h3>
+                  <p style={{ fontSize: '0.925rem', lineHeight: 1.6, color: '#4f565c', marginBottom: '0' }}>
+                    Ready to apply this? Try the calculator to see how it works in practice.
+                  </p>
                 </div>
               </aside>
             </div>
+            </>
           )}
       </main>
     </>
