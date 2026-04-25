@@ -52,14 +52,9 @@ function scoreColor(score: number): string {
   return "#dc2626";
 }
 
-const COUNTER_KEY = "bkx_cbom_uses";
-function getUses(): number { return Number(localStorage.getItem(COUNTER_KEY) ?? 0); }
-function bumpUses() { localStorage.setItem(COUNTER_KEY, String(getUses() + 1)); }
-
 export function PostQuantumCBOMGenerator() {
   const [assets, setAssets] = useState<AssetEntry[]>([blankAsset()]);
   const [result, setResult] = useState<CBOMResult | null>(null);
-  const [locked, setLocked] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const addAsset = () => setAssets((p) => [...p, blankAsset()]);
@@ -69,9 +64,6 @@ export function PostQuantumCBOMGenerator() {
   };
 
   const onAnalyze = () => {
-    const uses = getUses();
-    if (uses >= 5) { setLocked(true); return; } // Increased limit for better UX
-    bumpUses();
     const filtered = assets.filter((a) => a.name.trim() && a.algorithm.trim());
     if (!filtered.length) return;
     setResult(analyzePostQuantumCBOM(filtered));
@@ -303,15 +295,7 @@ export function PostQuantumCBOMGenerator() {
         </div>
       </div>
 
-      {locked && (
-        <div className="tu-limit-overlay">
-          <div className="tu-limit-box">
-            <h2>Analysis Limit Reached</h2>
-            <p>You've used your free sessions. Upgrade for unlimited CBOM generation.</p>
-            <a href="/contact" className="tu-btn tu-btn-primary">Unlock Pro Features</a>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }

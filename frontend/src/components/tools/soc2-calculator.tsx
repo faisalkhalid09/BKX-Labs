@@ -18,9 +18,7 @@ const CATEGORY_META: Record<TSCCategory, { label: string; description: string; o
 };
 
 const ALL_CATS: TSCCategory[] = ["security", "availability", "confidentiality", "integrity", "privacy"];
-const COUNTER_KEY = "bkx_soc2_reports";
-function getReports(): number { return Number(sessionStorage.getItem(COUNTER_KEY) ?? 0); }
-function bumpReports() { sessionStorage.setItem(COUNTER_KEY, String(getReports() + 1)); }
+
 
 function csvEscape(value: string | number | boolean): string {
   const raw = String(value ?? "");
@@ -71,7 +69,6 @@ export function SaaSSoc2Calculator() {
   const [selectedCats, setSelectedCats] = useState<Set<TSCCategory>>(new Set(["security"]));
   const [entries, setEntries] = useState<Map<string, ControlEntry>>(new Map());
   const [result, setResult] = useState<Soc2Result | null>(null);
-  const [locked, setLocked] = useState(false);
   const [activeTab, setActiveTab] = useState<TSCCategory>("security");
 
   const liveResult = useMemo(() => calculateSoc2Readiness(entries, selectedCats), [entries, selectedCats]);
@@ -94,8 +91,6 @@ export function SaaSSoc2Calculator() {
   };
 
   const onGenerateReport = () => {
-    if (getReports() >= 3) { setLocked(true); return; }
-    bumpReports();
     setResult(calculateSoc2Readiness(entries, selectedCats));
   };
 
@@ -417,21 +412,7 @@ export function SaaSSoc2Calculator() {
         )}
       </div>
 
-      {/* Usage limit overlay */}
-      {locked && (
-        <div className="tu-limit-overlay">
-          <div className="tu-limit-box">
-            <h2>Usage Limit Reached</h2>
-            <p>
-              You've generated 3 Gap Reports this session. Upgrade to BKX Labs Pro for unlimited reports,
-              team exports, and automated control integrations.
-            </p>
-            <a href="/contact" className="tu-btn tu-btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-              Unlock Unlimited Access
-            </a>
-          </div>
-        </div>
-      )}
+
 
       {/* Documentation */}
       <article className="tu-prose">
