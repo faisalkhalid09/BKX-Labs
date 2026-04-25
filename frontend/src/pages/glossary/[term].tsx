@@ -73,6 +73,7 @@ function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p'
   }
 
   return blocks;
+}
 
 function renderInline(text: string): string {
   return text
