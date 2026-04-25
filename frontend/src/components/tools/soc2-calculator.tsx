@@ -173,7 +173,7 @@ export function SaaSSoc2Calculator() {
       <p className="tu-subtitle">2026 Continuous Monitoring Model · Automation Multiplier Scoring · CC9.2 &amp; CC6.1 Weighted</p>
       <hr className="tu-divider" />
 
-      <div className={`transition-all ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
+      <div className="transition-all">
 
         {/* Gauge + TSC Toggles */}
         <div className="tu-gauge-toggles-row">

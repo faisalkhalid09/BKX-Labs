@@ -148,7 +148,7 @@ export function PostQuantumCBOMGenerator() {
       <p className="tu-subtitle">Map cryptographic asset risks and generate CycloneDX v1.6 exports.</p>
       <hr className="tu-divider" />
 
-      <div className={`tu-split-layout ${locked ? "pointer-events-none opacity-40 blur-sm" : ""}`}>
+      <div className="tu-split-layout">
         <div className="tu-split-left">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
             <h3 style={{ fontSize: "0.85rem", fontWeight: 700, margin: 0, color: "#0d2b5e", textTransform: "uppercase" }}>Asset Inventory</h3>
