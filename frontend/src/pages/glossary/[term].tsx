@@ -144,82 +144,79 @@ export default function GlossaryTermPage() {
               </p>
             </div>
 
-            {/* Two-column layout: main content + sidebar */}
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-              {/* Main Content */}
-              <div>
-                {/* Quick Summary Card */}
-                {introPreview ? (
-                  <div className="tool-card" style={{ marginBottom: '1.5rem', backgroundColor: '#f5f7fa', borderLeft: '4px solid #4fa3d1' }}>
-                    <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.5rem' }}>
-                      Quick Summary
-                    </p>
-                    <p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#161a1d', margin: 0 }}>
-                      {introPreview}
-                    </p>
-                  </div>
-                ) : null}
+            {/* Full-width glossary flow */}
+            <div>
+              {/* Quick Summary Card */}
+              {introPreview ? (
+                <div className="tool-card" style={{ marginBottom: '1.5rem', backgroundColor: '#f5f7fa', borderLeft: '4px solid #4fa3d1' }}>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.5rem' }}>
+                    Quick Summary
+                  </p>
+                  <p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#161a1d', margin: 0 }}>
+                    {introPreview}
+                  </p>
+                </div>
+              ) : null}
 
-                {/* Main Article Content */}
-                <div className="tool-card" style={{ border: '0', background: 'transparent', boxShadow: 'none', padding: 0 }}>
-                  {articleBlocks.map((block, index) => {
-                    if (block.type === 'h1') {
-                      return null;
-                    }
+              {/* Main Article Content */}
+              <div className="tool-card" style={{ border: '0', background: 'transparent', boxShadow: 'none', padding: 0 }}>
+                {articleBlocks.map((block, index) => {
+                  if (block.type === 'h1') {
+                    return null;
+                  }
 
-                    if (block.type === 'h2') {
-                      return (
-                        <h2
-                          key={`h2-${index}`}
-                          style={{ marginTop: '1.75rem', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 700, color: '#0d2b5e', lineHeight: 1.3 }}
-                          dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                        />
-                      );
-                    }
-
-                    if (block.type === 'h3') {
-                      return (
-                        <h3
-                          key={`h3-${index}`}
-                          style={{ marginTop: '1.25rem', marginBottom: '0.75rem', fontSize: '1.125rem', fontWeight: 600, color: '#161a1d', lineHeight: 1.4 }}
-                          dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
-                        />
-                      );
-                    }
-
-                    if (block.type === 'ul') {
-                      return (
-                        <ul key={`ul-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'disc', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          {block.items?.map((item, itemIndex) => (
-                            <li key={`uli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
-                          ))}
-                        </ul>
-                      );
-                    }
-
-                    if (block.type === 'ol') {
-                      return (
-                        <ol key={`ol-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          {block.items?.map((item, itemIndex) => (
-                            <li key={`oli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
-                          ))}
-                        </ol>
-                      );
-                    }
-
+                  if (block.type === 'h2') {
                     return (
-                      <p
-                        key={`p-${index}`}
-                        style={{ marginBottom: '1rem', fontSize: '1rem', lineHeight: 1.7, color: '#4f565c' }}
+                      <h2
+                        key={`h2-${index}`}
+                        style={{ marginTop: '1.75rem', marginBottom: '1rem', fontSize: '1.5rem', fontWeight: 700, color: '#0d2b5e', lineHeight: 1.3 }}
                         dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
                       />
                     );
-                  })}
-                </div>
+                  }
+
+                  if (block.type === 'h3') {
+                    return (
+                      <h3
+                        key={`h3-${index}`}
+                        style={{ marginTop: '1.25rem', marginBottom: '0.75rem', fontSize: '1.125rem', fontWeight: 600, color: '#161a1d', lineHeight: 1.4 }}
+                        dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
+                      />
+                    );
+                  }
+
+                  if (block.type === 'ul') {
+                    return (
+                      <ul key={`ul-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'disc', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {block.items?.map((item, itemIndex) => (
+                          <li key={`uli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                        ))}
+                      </ul>
+                    );
+                  }
+
+                  if (block.type === 'ol') {
+                    return (
+                      <ol key={`ol-${index}`} style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {block.items?.map((item, itemIndex) => (
+                          <li key={`oli-${itemIndex}`} style={{ fontSize: '1rem', lineHeight: 1.6, color: '#4f565c' }} dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+                        ))}
+                      </ol>
+                    );
+                  }
+
+                  return (
+                    <p
+                      key={`p-${index}`}
+                      style={{ marginBottom: '1rem', fontSize: '1rem', lineHeight: 1.7, color: '#4f565c' }}
+                      dangerouslySetInnerHTML={{ __html: renderInline(block.text ?? '') }}
+                    />
+                  );
+                })}
               </div>
 
-              {/* Sidebar */}
-              <aside className="xl:sticky xl:top-24 xl:self-start" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Support cards below content to avoid right-side blank space */}
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2" style={{ marginTop: '1.25rem' }}>
                 <div className="tool-card">
                   <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#4fa3d1', marginBottom: '0.75rem' }}>
                     📊 companion tool
@@ -258,7 +255,7 @@ export default function GlossaryTermPage() {
                     Ready to apply this? Try the calculator to see how it works in practice.
                   </p>
                 </div>
-              </aside>
+              </div>
             </div>
 
             {/* Keep this at the end so article can fully expand first */}
