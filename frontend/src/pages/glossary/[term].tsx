@@ -73,7 +73,6 @@ function parseMarkdown(markdown: string): Array<{ type: 'h1' | 'h2' | 'h3' | 'p'
   }
 
   return blocks;
-                <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
 
 function renderInline(text: string): string {
   return text
