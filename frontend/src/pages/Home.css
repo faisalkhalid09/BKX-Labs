@@ -757,11 +757,11 @@ h3 {
 }
 
 .compliance-tool-card--all h4 {
-    color: white;
+    color: #ffffff;
 }
 
 .compliance-tool-card--all p {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .compliance-tool-card--all .compliance-tool-link {

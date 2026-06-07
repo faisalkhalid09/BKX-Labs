@@ -505,13 +505,13 @@ const Home = () => {
                                 <a
                                     href="/tools"
                                     className="compliance-tool-card compliance-tool-card--all"
-                                    aria-label="View all 14 compliance and security tools"
+                                    aria-label="View all 15 compliance and security tools"
                                 >
                                     <div className="compliance-tool-icon">
                                         <Cpu size={24} strokeWidth={1.5} />
                                     </div>
                                     <div>
-                                        <h4>View All 14 Tools</h4>
+                                        <h4>View All 15 Tools</h4>
                                         <p>The full BKX Labs compliance and infrastructure tool suite — free, deterministic, and aligned to 2026 regulatory timelines.</p>
                                         <span className="compliance-tool-link">Browse Tools →</span>
                                     </div>
