@@ -182,7 +182,7 @@ class BookingController extends Controller
             Calendar::CALENDAR_READONLY,
         ]);
 
-        $refreshToken = Setting::get('google_calendar_refresh_token');
+        $refreshToken = Setting::get('google_calendar_refresh_token') ?: env('GOOGLE_REFRESH_TOKEN');
 
         if (!$refreshToken) {
             throw new \Exception('Google Calendar not authenticated. Please visit /api/google/auth/');
