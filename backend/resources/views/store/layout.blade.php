@@ -7,7 +7,7 @@
     <meta name="description" content="@yield('description', 'High-performance AI models, automation scripts, and technical templates for international enterprise engineering teams. Built by BKX Labs.')"/>
     <meta name="keywords" content="@yield('keywords', 'software assets, AI models, automation scripts, technical templates, professional engineering tools, code repository, BKX Labs')"/>
     <meta name="robots" content="@yield('robots', 'index, follow')"/>
-    <link rel="canonical" href="@yield('canonical', url()->current())"/>
+    <link rel="canonical" href="@yield('canonical', 'https://bkxlabs.com' . request()->getPathInfo())"/>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website"/>

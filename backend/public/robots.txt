@@ -1,2 +1,26 @@
+# This file must stay in sync with frontend/public/robots.txt
+# Do not change this file independently unless the frontend copy is also updated.
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Block admin and restricted backend routes
+Disallow: /admin
+Disallow: /admin/
+Disallow: /restricted/
+Disallow: /restricted-portal/
+Disallow: /api/
+Disallow: /_internal/
+
+# Block Laravel/Filament framework paths
+Disallow: /filament/
+Disallow: /horizon/
+Disallow: /telescope/
+Disallow: /sanctum/
+
+# Block duplicate content from query strings
+Disallow: /*?*utm_source=
+Disallow: /*?*ref=
+
+# Sitemap
+Sitemap: https://bkxlabs.com/sitemap.xml
