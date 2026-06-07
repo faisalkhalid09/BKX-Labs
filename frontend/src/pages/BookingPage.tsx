@@ -46,11 +46,13 @@ const BookingPage: React.FC = () => {
     setSlotsError('');
     try {
       const response = await fetch('/api/booking/slots');
+      const result = await response.json().catch(() => ({} as any));
+
       if (!response.ok) {
-        throw new Error('Unable to load time slots right now. Please refresh or contact support.');
+        throw new Error(result.message || 'Unable to load time slots right now. Please refresh or contact support.');
       }
 
-      const data: SlotsResponse = await response.json();
+      const data: SlotsResponse = result;
       setSlotsData(data.slots);
       setTimezone(data.timezone || '');
       
@@ -59,9 +61,9 @@ const BookingPage: React.FC = () => {
         setSelectedDate(dates[0]);
       }
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching slots:', error);
-      setSlotsError('Unable to load available slots right now. Please try again in a few minutes.');
+      setSlotsError(error?.message || 'Unable to load available slots right now. Please try again in a few minutes.');
       setLoading(false);
     }
   };
