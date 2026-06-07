@@ -195,83 +195,98 @@ class BookingController extends Controller
 
     public function getAvailableSlots(Request $request)
     {
-        $timezone = $request->query('timezone', 'Asia/Karachi');
-        $busyTimes = Cache::remember('google_slots', 300, function () use ($timezone) {
-            $startDate = Carbon::now($timezone)->startOfDay();
-            $endDate = Carbon::now($timezone)->addDays(7)->endOfDay();
+        try {
+            $timezone = $request->query('timezone', 'Asia/Karachi');
+            $busyTimes = Cache::remember('google_slots', 300, function () use ($timezone) {
+                $startDate = Carbon::now($timezone)->startOfDay();
+                $endDate = Carbon::now($timezone)->addDays(7)->endOfDay();
 
-            $client = $this->getGoogleClient();
-            $service = new Calendar($client);
+                $client = $this->getGoogleClient();
+                $service = new Calendar($client);
 
-            $freeBusyRequest = new FreeBusyRequest();
-            $freeBusyRequest->setTimeMin($startDate->toRfc3339String());
-            $freeBusyRequest->setTimeMax($endDate->toRfc3339String());
-            $freeBusyRequest->setTimeZone($timezone);
+                $freeBusyRequest = new FreeBusyRequest();
+                $freeBusyRequest->setTimeMin($startDate->toRfc3339String());
+                $freeBusyRequest->setTimeMax($endDate->toRfc3339String());
+                $freeBusyRequest->setTimeZone($timezone);
 
-            $item = new FreeBusyRequestItem();
-            $item->setId(config('services.google.calendar_id', 'primary'));
-            $freeBusyRequest->setItems([$item]);
+                $item = new FreeBusyRequestItem();
+                $item->setId(config('services.google.calendar_id', 'primary'));
+                $freeBusyRequest->setItems([$item]);
 
-            $query = $service->freebusy->query($freeBusyRequest);
-            return $query->getCalendars()[config('services.google.calendar_id', 'primary')]->getBusy();
-        });
+                $query = $service->freebusy->query($freeBusyRequest);
+                return $query->getCalendars()[config('services.google.calendar_id', 'primary')]->getBusy();
+            });
 
-        $availableSlots = [];
-        
-        // Define working hours (10:00 AM to 7:30 PM PKT)
-        $startHour = 10;
-        $startMinute = 0;
-        $endHour = 19;
-        $endMinute = 30;
-        $duration = 15; // minutes
-        $buffer = 60;   // minutes
-
-        for ($i = 0; $i < 7; $i++) {
-            $day = Carbon::now($timezone)->addDays($i);
+            $availableSlots = [];
             
-            // Skip weekends
-            if ($day->isWeekend()) continue;
+            // Define working hours (10:00 AM to 7:30 PM PKT)
+            $startHour = 10;
+            $startMinute = 0;
+            $endHour = 19;
+            $endMinute = 30;
+            $duration = 15; // minutes
+            $buffer = 60;   // minutes
 
-            $slotStart = $day->copy()->setTime($startHour, $startMinute);
-            $dayEnd = $day->copy()->setTime($endHour, $endMinute);
-
-            while ($slotStart->copy()->addMinutes($duration)->lte($dayEnd)) {
-                $slotEnd = $slotStart->copy()->addMinutes($duration);
+            for ($i = 0; $i < 7; $i++) {
+                $day = Carbon::now($timezone)->addDays($i);
                 
-                // Do not show past slots (give 1 hour lead time)
-                if ($slotStart->lte(Carbon::now($timezone)->addHour())) {
-                    $slotStart->addMinutes($duration + $buffer);
-                    continue;
-                }
+                // Skip weekends
+                if ($day->isWeekend()) continue;
 
-                $isBusy = false;
-                foreach ($busyTimes as $busy) {
-                    $busyStart = Carbon::parse($busy->getStart());
-                    $busyEnd = Carbon::parse($busy->getEnd());
+                $slotStart = $day->copy()->setTime($startHour, $startMinute);
+                $dayEnd = $day->copy()->setTime($endHour, $endMinute);
 
-                    // Check for overlap
-                    if ($slotStart->lt($busyEnd) && $slotEnd->gt($busyStart)) {
-                        $isBusy = true;
-                        break;
+                while ($slotStart->copy()->addMinutes($duration)->lte($dayEnd)) {
+                    $slotEnd = $slotStart->copy()->addMinutes($duration);
+                    
+                    // Do not show past slots (give 1 hour lead time)
+                    if ($slotStart->lte(Carbon::now($timezone)->addHour())) {
+                        $slotStart->addMinutes($duration + $buffer);
+                        continue;
                     }
-                }
 
-                if (!$isBusy) {
-                    $availableSlots[$day->format('Y-m-d')][] = [
-                        'start' => $slotStart->toIso8601String(),
-                        'end' => $slotEnd->toIso8601String(),
-                        'time_label' => $slotStart->format('h:i A'),
-                    ];
-                }
+                    $isBusy = false;
+                    foreach ($busyTimes as $busy) {
+                        $busyStart = Carbon::parse($busy->getStart());
+                        $busyEnd = Carbon::parse($busy->getEnd());
 
-                $slotStart->addMinutes($duration + $buffer); 
+                        // Check for overlap
+                        if ($slotStart->lt($busyEnd) && $slotEnd->gt($busyStart)) {
+                            $isBusy = true;
+                            break;
+                        }
+                    }
+
+                    if (!$isBusy) {
+                        $availableSlots[$day->format('Y-m-d')][] = [
+                            'start' => $slotStart->toIso8601String(),
+                            'end' => $slotEnd->toIso8601String(),
+                            'time_label' => $slotStart->format('h:i A'),
+                        ];
+                    }
+
+                    $slotStart->addMinutes($duration + $buffer); 
+                }
             }
-        }
 
-        return response()->json([
-            'slots' => $availableSlots,
-            'timezone' => $timezone
-        ]);
+            return response()->json([
+                'slots' => $availableSlots,
+                'timezone' => $timezone
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Booking slots error: ' . $e->getMessage());
+
+            $publicMessage = 'Unable to load booking slots right now. Please try again later.';
+            if (str_contains($e->getMessage(), 'Google Calendar not authenticated')) {
+                $publicMessage = 'Scheduling is temporarily unavailable because Google Calendar is not connected. Please reconnect calendar access.';
+            }
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $publicMessage,
+                'error' => config('app.debug') ? $e->getMessage() : null,
+            ], 503);
+        }
     }
 
     public function createBooking(Request $request)
