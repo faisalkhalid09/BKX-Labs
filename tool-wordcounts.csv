@@ -1,0 +1,16 @@
+slug,file,wordCount
+agentic-workflow-debugger,agentic-workflow-debugger.tsx,55
+crypto-agility-maturity-model,crypto-agility-maturity.tsx,80
+cloud-gpu-cost-comparison,cloud-gpu-cost-comparison.tsx,85
+zk-circuit-validator,zk-proof-validator.tsx,85
+esg-carbon-footprint-tracker,esg-carbon-footprint.tsx,88
+direct-to-chip-liquid-cooling-roi,direct-to-chip-liquid-cooling-roi.tsx,93
+deepfake-detector-probability,deepfake-detector.tsx,96
+smart-contract-gas-optimizer,smart-contract-gas-optimizer.tsx,112
+ai-prompt-privacy-auditor,ai-prompt-privacy-auditor.tsx,114
+nvidia-blackwell-pue-estimator,nvidia-blackwell-estimator.tsx,121
+nist-fips-203-migration-timeline-planner,nist-fips-203-migration-timeline.tsx,127
+post-quantum-cbom-generator,pq-cbom-generator.tsx,129
+admt-proportionality-scorer,admt-proportionality-scorer.tsx,165
+eu-ai-act-risk-level-classifier,eu-ai-act-classifier.tsx,216
+saas-soc2-readiness-calculator,soc2-calculator.tsx,498

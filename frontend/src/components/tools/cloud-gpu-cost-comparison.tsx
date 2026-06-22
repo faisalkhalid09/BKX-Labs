@@ -194,7 +194,52 @@ export function CloudGpuCostComparison() {
             </div>
           )}
         </div>
-      </div>
+
+      {/* Documentation */}
+      <article className="tu-prose">
+        <h2>Cloud GPU Pricing Guide (2026 Edition)</h2>
+
+        <h3>Why Hyperscaler Pricing Diverges From Specialized AI Clouds</h3>
+        <p>
+          AWS, Azure, and GCP price GPU instances at a premium relative to specialized 
+          providers like Lambda, CoreWeave, and RunPod — but the gap isn't purely margin. 
+          Hyperscaler pricing bundles enterprise SLAs, compliance certifications, and 
+          integration with their broader managed-service ecosystem. Specialized AI clouds 
+          operate leaner, focused purely on GPU provisioning, which is the main driver 
+          behind the 30-40% savings teams typically see for comparable on-demand training capacity.
+        </p>
+
+        <h3>The Hidden Cost Most Comparisons Miss: Data Egress</h3>
+        <p>
+          The hourly rate is only part of the bill. Moving trained checkpoints or large 
+          datasets out of a hyperscaler's network incurs egress fees that many specialized 
+          AI clouds waive entirely. For teams iterating across multiple environments or 
+          frequently downloading model weights, egress charges can meaningfully increase 
+          total infrastructure spend beyond what a pure compute-hour comparison shows — 
+          worth factoring in before committing to a provider based on sticker price alone.
+        </p>
+
+        <h3>Matching Commitment Type to Workload</h3>
+        <p>
+          On-demand pricing suits short-lived or unpredictable inference workloads. 
+          Reserved or committed-use discounts — often 30-50% cheaper than on-demand — fit 
+          long training runs spanning weeks, at the cost of a 1-3 year lock-in. Spot or 
+          preemptible instances offer the steepest discounts but carry interruption risk, 
+          making them a good fit for checkpointed training jobs that can resume after a 
+          pause, and a poor fit for production inference serving live traffic.
+        </p>
+
+        <h3>The Blackwell Transition Is Already Pricing Pressure on H100</h3>
+        <p>
+          As NVIDIA's Blackwell architecture (B200/GB200) becomes more broadly available, 
+          H100 capacity pricing faces downward pressure as providers reallocate fleet 
+          capacity toward newer generations. Teams considering a multi-year reserved 
+          commitment on H100 should weigh their workload's migration timeline — locking 
+          in long-term pricing on an aging generation can erase savings if a move to 
+          next-gen hardware is on the near-term roadmap.
+        </p>
+      </article>
+
     </div>
   );
 }
