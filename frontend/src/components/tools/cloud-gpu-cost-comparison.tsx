@@ -194,6 +194,7 @@ export function CloudGpuCostComparison() {
             </div>
           )}
         </div>
+      </div>
 
       {/* Documentation */}
       <article className="tu-prose">
