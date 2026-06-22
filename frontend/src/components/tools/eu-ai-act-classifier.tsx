@@ -315,6 +315,57 @@ export function EuAiActClassifier() {
           </div>
         </div>
       )}
+
+      {/* Documentation */}
+      <article className="tu-prose">
+        <h2>EU AI Act Classification Guide (2026 Edition)</h2>
+
+        <h3>Why the Annex III List Is Not a Simple Checklist</h3>
+        <p>
+          Mapping your system to an Annex III sector — biometrics, employment, education, 
+          critical infrastructure — only completes one step of a cumulative test. A system 
+          can sit squarely in a high-risk sector and still avoid high-risk classification 
+          if it qualifies for derogation, or it can fall outside every Annex III category 
+          and still face obligations under the Act's transparency or prohibited-practice 
+          provisions. Treat each step as independent; skipping the derogation or 
+          transparency checks because a system "looks" high-risk is the most common 
+          misclassification error.
+        </p>
+
+        <h3>The Derogation Filter Most Teams Get Wrong</h3>
+        <p>
+          Article 6.3 derogation is unavailable the moment a system performs profiling 
+          of natural persons — no exception applies, regardless of how narrow the task 
+          seems. For systems that don't profile, the bar is still strict: the system must 
+          perform a narrow procedural task, improve the result of a completed human 
+          activity, or detect patterns without informing decisions. The burden of proof 
+          sits with the deployer, not the regulator — claiming derogation without 
+          documented justification in your technical file is itself a compliance gap.
+        </p>
+
+        <h3>General-Purpose AI Lives Outside the Annex III Path Entirely</h3>
+        <p>
+          A system built on a general-purpose AI model doesn't automatically inherit 
+          Annex III treatment. GPAI models are governed separately under the Act's 
+          provisions for systemic-risk and transparency obligations. This matters in 
+          practice: a chatbot or LLM-based feature can trigger Article 50 transparency 
+          duties — disclosing AI involvement to users — without ever being classified 
+          as high-risk, simply because it generates synthetic content or interacts 
+          conversationally with people.
+        </p>
+
+        <h3>What August 2026 Enforcement Actually Changes</h3>
+        <p>
+          Earlier phases of the Act covered prohibited practices and GPAI transparency. 
+          From August 2026, the Annex III high-risk obligations become fully enforceable: 
+          mandatory EU database registration before market placement, an EU-based 
+          authorized representative requirement, and data-quality governance under 
+          Annex III. Non-compliance penalties for this phase reach €15M or 3% of global 
+          turnover — providers who treated earlier deadlines as the finish line are the 
+          ones most likely to be caught unprepared.
+        </p>
+      </article>
+
     </div>
   );
 }

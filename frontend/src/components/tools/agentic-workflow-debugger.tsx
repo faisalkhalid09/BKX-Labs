@@ -140,6 +140,49 @@ export function AgenticWorkflowDebugger() {
           </div>
         </div>
       </div>
+
+      {/* Documentation */}
+      <article className="tu-prose">
+        <h2>Agentic Workflow Debugging Guide (2026 Edition)</h2>
+
+        <h3>Why Multi-Agent Systems Fail Differently Than Single-Model Calls</h3>
+        <p>
+          A single LLM call has bounded failure — bad output, retry, move on. Multi-agent 
+          orchestration introduces compounding failure: one agent's hallucinated context 
+          propagates downstream, an orchestrator can enter infinite delegation loops, and 
+          cost can spiral silently across dozens of sub-calls before anyone notices. 
+          Trace-level visibility into the execution graph, not just the final output, is 
+          what catches these patterns before they hit production budgets.
+        </p>
+
+        <h3>Three Failure Patterns That Recur Across Frameworks</h3>
+        <p>Regardless of orchestration library — AutoGen, LangGraph, CrewAI — the same handful of failure modes account for most production incidents:</p>
+        <ul>
+          <li><strong>Infinite delegation loops:</strong> two agents repeatedly hand a task back to each other without progress, usually from a missing termination condition.</li>
+          <li><strong>Context hallucination escalation:</strong> a downstream agent treats an upstream agent's unverified claim as ground truth, and the error compounds with each hop.</li>
+          <li><strong>Token overflow at handoff boundaries:</strong> accumulated context exceeds the model's window exactly at a handoff, silently truncating the next agent's instructions.</li>
+        </ul>
+
+        <h3>Dynamic RAG Optimization Mitigates, It Doesn't Fix</h3>
+        <p>
+          Retrieving only relevant context per agent rather than passing full conversation 
+          history reduces overflow risk and limits how far a hallucinated claim can 
+          propagate. It doesn't replace explicit verification steps or termination 
+          conditions designed into the workflow graph itself — optimization without 
+          structural safeguards just delays the same failure.
+        </p>
+
+        <h3>What to Log Before You Need It</h3>
+        <p>
+          Cost spirals and infinite loops are forensics problems after the fact unless 
+          per-node token counts, tool-call arguments, and termination decisions are 
+          logged in real time. Teams that add this instrumentation after an incident 
+          usually rebuild it from scratch — designing the execution DAG with node-level 
+          tracing from day one is far cheaper than retrofitting observability into a 
+          live agent system.
+        </p>
+      </article>
+
     </div>
   );
 }
