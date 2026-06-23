@@ -178,6 +178,50 @@ export function GasOptimizer() {
           setUseStoragePacking(true); setUseCalldata(true);
         }}>Reset Settings</button>
       </div>
+
+      <article className="tu-prose">
+        <h2>EVM Gas Optimization Guide (2026 Edition)</h2>
+
+        <h3>Storage Slot Packing Is Still the Highest-Leverage Optimization</h3>
+        <p>
+          The EVM charges for every distinct 256-bit storage slot a transaction touches,
+          regardless of how much of that slot is actually used. Combining multiple small
+          values — booleans, small integers, short addresses — into a single packed slot
+          can cut SSTORE costs dramatically, because the optimizer is paying for slots,
+          not for the data sitting inside them. Contracts that declare variables in
+          naive order routinely waste slots that proper field ordering would have packed
+          for free.
+        </p>
+
+        <h3>Calldata Over Memory Is a Free Win for Read-Only Arrays</h3>
+        <p>
+          Function parameters that are only read, never modified, cost less gas when
+          declared as calldata rather than copied into memory. This is one of the few
+          optimizations with effectively no tradeoff — it changes nothing about contract
+          behavior, only how the EVM accounts for data location, which is why auditors
+          flag unnecessary memory copies as a default gas-efficiency finding.
+        </p>
+
+        <h3>Why Batch Operations Don't Scale Savings Linearly</h3>
+        <p>
+          Batching transfers or mints amortizes the fixed per-transaction overhead —
+          base fee, signature verification — across multiple operations. But each
+          additional item in a batch still touches its own storage slots, so savings
+          per item diminish as batch size grows rather than scaling linearly. Estimating
+          savings from a single batch size and extrapolating to larger batches typically
+          overstates the benefit.
+        </p>
+
+        <h3>EIP-1559 Base Fee Volatility Means Point Estimates Understate Risk</h3>
+        <p>
+          Gas cost projections calculated against a single base fee snapshot can miss
+          the mark significantly during periods of network congestion, when base fee
+          can spike well beyond typical levels within a single block range. A
+          cost-conscious deployment plan budgets a safety margin above the calculated
+          baseline rather than treating a point-in-time estimate as a guarantee.
+        </p>
+      </article>
+
     </div>
   );
 }

@@ -106,6 +106,49 @@ export function DeepfakeDetector() {
           )}
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>Deepfake Detection Guide (2026 Edition)</h2>
+
+        <h3>Why Visual Artifact Detection Is Losing Ground</h3>
+        <p>
+          Earlier-generation deepfake detection relied heavily on visible artifacts —
+          unnatural blinking, lighting inconsistencies, blending seams around the face.
+          Modern generative models like Sora and Kling have closed most of that gap,
+          producing output clean enough that artifact-based heuristics increasingly miss
+          sophisticated fakes while flagging legitimate footage with unusual lighting or
+          compression as suspicious.
+        </p>
+
+        <h3>Frame Cadence Irregularity Remains the Most Durable Heuristic</h3>
+        <p>
+          While visual artifacts have become easier for generative models to suppress,
+          inconsistencies in frame-to-frame timing and motion cadence are harder to
+          eliminate because they stem from how the generation process samples frames
+          rather than from any single rendered pixel. For non-technical audits without
+          access to forensic tooling, cadence irregularity remains one of the more
+          reliable indicators available.
+        </p>
+
+        <h3>C2PA Metadata Is Becoming the Verification Layer That Pixels Can't Provide</h3>
+        <p>
+          As generation quality improves, the industry is shifting verification from
+          "does this look real" to "can this be cryptographically traced to its origin."
+          C2PA content credentials embed provenance metadata at capture or generation
+          time, and tampering with that metadata is detectable even when the visual
+          content itself shows no irregularities at all.
+        </p>
+
+        <h3>Article 50(2) Is Making Watermarking a Legal Requirement, Not a Best Practice</h3>
+        <p>
+          Under the EU AI Act, providers of systems that generate synthetic audio, image,
+          video, or text content face mandatory machine-readable marking obligations
+          under Article 50(2). This shifts part of the detection burden upstream — onto
+          generation tools themselves — rather than leaving it entirely to downstream
+          forensic analysis after content is already in circulation.
+        </p>
+      </article>
+
     </div>
   );
 }

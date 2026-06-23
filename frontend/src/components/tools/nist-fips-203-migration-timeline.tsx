@@ -287,6 +287,52 @@ export function NistFips203MigrationTimeline() {
           )}
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>Post-Quantum Migration Guide (2026 Edition)</h2>
+
+        <h3>Why 2035 Feels Distant but Migration Timelines Aren't</h3>
+        <p>
+          NIST's mandate for critical federal systems to complete migration to
+          post-quantum cryptography by 2035 can read as a comfortable runway. In
+          practice, enterprise migrations of this scope typically take 4-8 years once
+          inventory, testing, and phased rollout are accounted for — which means
+          organizations starting their assessment today are already inside the
+          realistic window, not ahead of it.
+        </p>
+
+        <h3>Why "Harvest Now, Decrypt Later" Changes the Urgency Calculus</h3>
+        <p>
+          Data encrypted today with RSA or ECC can be harvested and stored by an
+          adversary now, then decrypted later once quantum computing capability
+          catches up. This means the actual deadline for migrating any given system
+          isn't 2035 — it's whatever date in the future a sufficiently powerful quantum
+          computer arrives, minus the shelf life of the data that system protects.
+          Systems handling long-lived sensitive data face effective deadlines far
+          earlier than systems handling short-lived data.
+        </p>
+
+        <h3>ML-KEM and ML-DSA Aren't Drop-In Replacements</h3>
+        <p>
+          Migrating to NIST's standardized post-quantum algorithms involves more than
+          swapping a configuration value. Key and signature sizes differ substantially
+          from classical algorithms, which can affect protocol overhead, storage
+          requirements, and compatibility with systems that weren't designed with
+          larger cryptographic payloads in mind — testing and validation typically
+          consume more of the timeline than the cryptographic swap itself.
+        </p>
+
+        <h3>Why Linear Migration Models Understate Complexity at Scale</h3>
+        <p>
+          Migration complexity doesn't scale linearly with system count. Each
+          additional hundred systems tends to introduce compounding integration
+          overhead — dependency chains between systems, shared certificate
+          infrastructure, and staff bandwidth constraints all create friction that a
+          simple per-system time estimate misses. Organizations migrating large
+          inventories should budget meaningful contingency above a linear projection.
+        </p>
+      </article>
+
     </div>
   );
 }

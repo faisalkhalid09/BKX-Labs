@@ -185,6 +185,50 @@ export function NvidiaBlackwellEstimator() {
           )}
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>Blackwell Thermal Management Guide (2026 Edition)</h2>
+
+        <h3>Why Per-GPU Power Draw Changed the Cooling Conversation</h3>
+        <p>
+          NVIDIA's Blackwell architecture pushes per-GPU power consumption up to roughly
+          1,200W, a sharp increase over prior generations. At rack scale, that power
+          density turns cooling from a secondary infrastructure decision into the
+          primary constraint on how many GPUs a facility can actually deploy — the
+          limiting factor often becomes heat removal capacity, not power delivery or
+          floor space.
+        </p>
+
+        <h3>The Annual Electricity Bill Most Teams Underestimate</h3>
+        <p>
+          A single rack running at high utilization can cost tens of thousands of
+          dollars annually in electricity alone, before accounting for the cooling
+          overhead required to remove that heat. Teams budgeting GPU infrastructure
+          based on hardware acquisition cost alone routinely underestimate total cost
+          of ownership, because the ongoing power and cooling cost over a multi-year
+          deployment often rivals or exceeds the upfront hardware spend.
+        </p>
+
+        <h3>Why Liquid Cooling Stops Being Optional at This Density</h3>
+        <p>
+          Air cooling's practical ceiling sits well below what fully-loaded Blackwell
+          racks demand. Liquid cooling typically reduces PUE overhead from around 1.6
+          to roughly 1.15 — but at B200/GB200 power densities, the relevant question
+          isn't whether liquid cooling improves efficiency, it's whether air cooling
+          can physically remove heat fast enough to avoid thermal throttling at all.
+        </p>
+
+        <h3>Utilization Rate Changes the Payback Math More Than Hardware Choice Does</h3>
+        <p>
+          A cooling infrastructure upgrade that pays for itself quickly at 80%
+          utilization can take substantially longer to justify at 40%, since the
+          energy savings that drive payback scale directly with how much the GPUs are
+          actually running. Facilities planning for variable or growing workloads
+          should model payback across a utilization range, not a single optimistic
+          assumption.
+        </p>
+      </article>
+
     </div>
   );
 }

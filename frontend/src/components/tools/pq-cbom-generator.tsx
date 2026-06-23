@@ -296,6 +296,50 @@ export function PostQuantumCBOMGenerator() {
       </div>
 
 
+      <article className="tu-prose">
+        <h2>Cryptographic Bill of Materials Guide (2026 Edition)</h2>
+
+        <h3>Why a CBOM Exists Separately From a Software Bill of Materials</h3>
+        <p>
+          A standard SBOM tracks software dependencies and their versions, but says
+          nothing about which cryptographic algorithms those dependencies actually use
+          internally. A Cryptographic Bill of Materials closes that gap by inventorying
+          every cryptographic asset — algorithms, key lengths, certificate authorities —
+          across an organization's systems, which is the foundation NIS2 and
+          post-quantum migration planning both depend on.
+        </p>
+
+        <h3>Shelf Life Is the Variable That Determines Urgency, Not Algorithm Type Alone</h3>
+        <p>
+          An RSA-2048 certificate protecting data with a six-month shelf life carries
+          very different risk than the same algorithm protecting records that must
+          remain confidential for decades. "Harvest now, decrypt later" attacks make
+          shelf life the determining factor for migration priority — flagging every
+          RSA or ECC asset as equally critical regardless of how long its protected
+          data needs to stay confidential misallocates remediation effort.
+        </p>
+
+        <h3>Why CycloneDX v1.6 Became the De Facto Export Format</h3>
+        <p>
+          CycloneDX's cryptographic asset extension gives organizations a
+          machine-readable, standardized way to exchange CBOM data with auditors,
+          regulators, and supply-chain partners without each party needing a custom
+          parser. Generating CBOM data in a proprietary format creates friction at
+          exactly the moment it matters most — when a regulator or downstream customer
+          requests it on a deadline.
+        </p>
+
+        <h3>Implementation Details Matter as Much as Algorithm Choice</h3>
+        <p>
+          Two systems using the identical algorithm can carry very different risk
+          profiles depending on how that algorithm is implemented — library version,
+          key management practices, and whether the implementation has known
+          vulnerabilities all factor into actual exposure. A complete CBOM captures
+          implementation context alongside the algorithm name, not just a list of
+          cryptographic primitives in use.
+        </p>
+      </article>
+
     </div>
   );
 }

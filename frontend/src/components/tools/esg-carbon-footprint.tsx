@@ -163,6 +163,50 @@ export function CarbonFootprintTracker() {
           </div>
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>ESG Emissions Reporting Guide (2026 Edition)</h2>
+
+        <h3>Why Scope 3 Dominates Tech Company Carbon Footprints</h3>
+        <p>
+          For most software and SaaS companies, direct facility emissions (Scope 1) and
+          purchased electricity (Scope 2) are dwarfed by Scope 3 — the emissions embedded
+          in cloud compute, vendor supply chains, and employee activities the company
+          doesn't directly control. Cloud compute alone often exceeds direct facility
+          impact by 400%, which is why TCFD and ISSB disclosure standards increasingly
+          treat Scope 3 transparency as non-negotiable rather than supplementary.
+        </p>
+
+        <h3>Grid Carbon Intensity Varies More Than Most Estimates Account For</h3>
+        <p>
+          A megawatt-hour of compute in a region running on hydro or nuclear baseload
+          carries a fraction of the emissions of the same compute on a coal-heavy grid.
+          Treating all cloud regions as equivalent for emissions purposes — a common
+          shortcut in early-stage ESG reporting — can understate or overstate footprint
+          by several multiples depending on where workloads actually run.
+        </p>
+
+        <h3>Why Disclosure Standards Are Converging on Mandatory Reporting</h3>
+        <p>
+          TCFD-aligned and ISSB disclosure frameworks are moving from voluntary
+          best-practice to regulatory expectation across multiple jurisdictions.
+          Companies that build emissions tracking into routine operations now — rather
+          than reconstructing historical estimates under deadline pressure — avoid the
+          scramble that follows when a disclosure requirement becomes mandatory with
+          limited lead time.
+        </p>
+
+        <h3>Where Most Self-Reported Estimates Go Wrong</h3>
+        <p>
+          Self-reported Scope 3 estimates commonly undercount cloud compute by relying
+          on average grid figures rather than region-specific intensity, and by omitting
+          the embedded carbon of vendor infrastructure entirely. A defensible estimate
+          separates Scope 1, 2, and 3 explicitly rather than presenting a single blended
+          number, since auditors and stakeholders increasingly expect that breakdown as
+          a baseline, not an enhancement.
+        </p>
+      </article>
+
     </div>
   );
 }

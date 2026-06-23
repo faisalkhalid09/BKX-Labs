@@ -130,6 +130,50 @@ export function ZkCircuitValidator() {
           </div>
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>ZK Proof System Guide (2026 Edition)</h2>
+
+        <h3>Trusted Setup Is the Tradeoff Most Teams Underweight</h3>
+        <p>
+          Groth16's compact ~128-byte proofs come with a dependency on a trusted setup 
+          ceremony — if the Common Reference String (CRS) generation is compromised, an 
+          attacker can forge valid-looking proofs without detection. PLONK's universal 
+          setup removes the need to repeat this ceremony per circuit, reducing operational 
+          risk. STARKs eliminate trusted setup entirely, removing that single point of 
+          failure at the cost of significantly larger proof sizes.
+        </p>
+
+        <h3>Why Verification Gas Cost Often Dominates the Decision</h3>
+        <p>
+          On Ethereum L1, the cost that matters in production is on-chain verification, 
+          not proof generation. Groth16's small proof size and pairing-based verification 
+          make it the cheapest option to verify on-chain. STARK verification gas runs 
+          roughly 8x higher due to hash-based verification, which is why STARKs are more 
+          commonly deployed on L2s with cheaper compute, where proof recursion and 
+          post-quantum security outweigh the verification cost difference.
+        </p>
+
+        <h3>Post-Quantum Security Isn't Optional Forever</h3>
+        <p>
+          Groth16 and PLONK both rely on elliptic-curve pairing assumptions that a 
+          sufficiently powerful quantum computer could break. STARKs derive their 
+          security purely from hash functions, making them post-quantum secure by 
+          construction. Systems handling data or assets with long shelf lives should 
+          weight this difference even when near-term gas costs favor a SNARK-based 
+          approach.
+        </p>
+
+        <h3>Browser and WASM Feasibility Determines Where Proving Can Happen</h3>
+        <p>
+          Constraint count and prover memory requirements determine whether proof 
+          generation can run client-side in a browser or requires server-side proving 
+          infrastructure. High-constraint circuits routinely exceed WASM client memory 
+          limits, forcing teams toward centralized proving services — which reintroduces 
+          exactly the kind of trust dependency the underlying ZK system was designed to 
+          remove.
+        </p>
+      </article>
     </div>
   );
 }

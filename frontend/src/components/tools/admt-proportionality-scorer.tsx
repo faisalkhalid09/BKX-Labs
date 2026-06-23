@@ -192,6 +192,51 @@ export function AdmtProportionalityScorer() {
           </div>
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>ADMT Proportionality Guide (2026 Edition)</h2>
+
+        <h3>The Triple Test Replaces Simple Risk Checklists</h3>
+        <p>
+          Proportionality for Automated Decision-Making Technology is no longer judged
+          by whether a system is "high-risk enough" to require review. The 2026
+          standard applies a Triple Test — Legitimacy, Necessity, and Balancing — to
+          every deployment, meaning a system can pass a basic risk checklist and still
+          fail proportionality if a less invasive alternative was available and
+          wasn't seriously considered.
+        </p>
+
+        <h3>Why Workplace Monitoring Without Oversight Is a Critical Failure, Not a Flag</h3>
+        <p>
+          Under the EU AI Act, deploying workplace monitoring technology without
+          meaningful human oversight isn't treated as one risk factor among several —
+          it's classified as a High-Risk critical failure on its own. This changes how
+          organizations should triage findings: a missing oversight mechanism demands
+          remediation before deployment, not a note for the next compliance review
+          cycle.
+        </p>
+
+        <h3>"No Less Invasive Method Exists" Is a Burden of Proof, Not an Assumption</h3>
+        <p>
+          Articles 35 and 22 of the GDPR, combined with EU AI Act High-Risk mandates,
+          require organizations to affirmatively demonstrate that no less invasive
+          method could achieve the same legitimate purpose. Deploying automated
+          monitoring on the assumption that it's the only practical option — without
+          documented evaluation of alternatives — leaves the necessity prong of the
+          Triple Test unsupported regardless of how well-intentioned the deployment is.
+        </p>
+
+        <h3>Why Transparency and Data Minimization Are Scored Separately From Legality</h3>
+        <p>
+          A system can have solid legal grounding (a valid Legitimate Interest
+          Assessment) and still score poorly on proportionality if worker notice is
+          inadequate or data collection extends beyond what the stated purpose
+          requires. Treating legal basis and proportionality as the same question is
+          a common compliance gap — a system needs both a lawful basis and a
+          proportionality justification, and one doesn't substitute for the other.
+        </p>
+      </article>
+
     </div>
   );
 }

@@ -231,6 +231,52 @@ export function AiPromptPrivacyAuditor() {
           )}
         </div>
       </div>
+
+      <article className="tu-prose">
+        <h2>AI Prompt Privacy Guide (2026 Edition)</h2>
+
+        <h3>Why In-Context Data Leaks Slip Past Traditional DLP Tools</h3>
+        <p>
+          Conventional data-loss-prevention systems are built to scan files, emails,
+          and structured database fields — not free-text prompts pasted into a chat
+          interface. An engineer debugging a production issue who pastes a log snippet
+          containing a customer's SSN or an internal API key into an LLM prompt bypasses
+          every DLP control built for the rest of the organization's data flow, simply
+          because the prompt box was never the threat model those tools were designed for.
+        </p>
+
+        <h3>Deterministic Pattern Matching Catches What Models Miss</h3>
+        <p>
+          Asking a model to self-report whether a prompt contains sensitive data is
+          unreliable — the model can miss formats it wasn't trained to recognize, or
+          flag false positives that erode trust in the tool. Regex-based detection for
+          structured patterns like SSNs, credit card numbers, and API key formats is
+          less flexible but far more consistent, which is why it forms the deterministic
+          backbone of most production-grade prompt scanning rather than relying on model
+          judgment alone.
+        </p>
+
+        <h3>GDPR Article 32 Treats This as a Technical Control Requirement</h3>
+        <p>
+          Article 32 requires organizations to implement technical measures appropriate
+          to the risk of processing personal data — and routing PII through a third-party
+          LLM provider without a redaction step is increasingly viewed as a processing
+          activity that falls squarely under that requirement. Scanning prompts before
+          they leave your environment isn't just good hygiene; it's becoming the kind of
+          control regulators expect to see documented.
+        </p>
+
+        <h3>Redaction Needs to Happen Before the API Call, Not After</h3>
+        <p>
+          Once a prompt has been sent to a third-party model provider, the exposure has
+          already occurred regardless of what happens to the response. Effective
+          practice treats prompt scanning as a pre-flight check — redacting or replacing
+          sensitive values before the request leaves your infrastructure — rather than
+          auditing logs after the fact, when the only thing left to do is document the
+          incident.
+        </p>
+      </article>
+
     </div>
   );
 }
