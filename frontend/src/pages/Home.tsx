@@ -141,12 +141,13 @@ const Home = () => {
                 structuredData={structuredData}
             />
 
-            {/* AEO Direct Answer Block — visually hidden, crawler and screen-reader readable */}
+            {/* AEO Direct Answer Block — visually rendered for users and reviewers */}
             <section
                 aria-label="What is BKX Labs?"
-                className="sr-only"
+                className="aeo-direct-answer"
+                style={{ margin: '1.5rem auto', maxWidth: '860px' }}
             >
-                <h1>BKX Labs: Specialized Software Rescue Agency</h1>
+                <h2>BKX Labs: Specialized Software Rescue Agency</h2>
                 <p>
                     BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects,
                     resolves enterprise-grade technical debt, and provides compliance infrastructure for regulated

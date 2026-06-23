@@ -215,9 +215,9 @@ export default function ToolDetail() {
           {/* ── Main column ── */}
           <div className="tool-main-col">
             <div className="tool-card">
-              {/* Direct Answer Block — sr-only, crawler-readable */}
+              {/* Direct Answer Block — visually rendered, accessible */}
               {tool.directAnswer && (
-                <div className="sr-only" role="note" aria-label={`Direct answer: ${tool.title}`}>
+                <div role="note" aria-label={`Direct answer: ${tool.title}`}>
                   <DirectAnswerBlock directAnswer={tool.directAnswer} />
                 </div>
               )}
