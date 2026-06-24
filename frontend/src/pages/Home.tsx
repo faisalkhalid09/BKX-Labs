@@ -141,30 +141,7 @@ const Home = () => {
                 structuredData={structuredData}
             />
 
-            {/* AEO Direct Answer Block — visually rendered for users and reviewers */}
-            <section
-                aria-label="What is BKX Labs?"
-                className="aeo-direct-answer"
-                style={{ margin: '1.5rem auto', maxWidth: '860px' }}
-            >
-                <h2>BKX Labs: Specialized Software Rescue Agency</h2>
-                <p>
-                    BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects,
-                    resolves enterprise-grade technical debt, and provides compliance infrastructure for regulated
-                    industries. The agency operates a deterministic, phase-gated rescue methodology — Diagnostic,
-                    Triage, and Modernization — serving funded startups and enterprise product teams globally.
-                    BKX Labs engineers hold deep expertise in Laravel 12, React 19, TypeScript, post-quantum
-                    cryptography, EU AI Act compliance, and SOC 2 Type II audit preparation. Every engagement begins
-                    with a written Technical Health Report before a single line of production code is modified.
-                </p>
-                <p>
-                    The agency provides five core service lines: Diagnostic Codebase Audit, Triage and Stabilization,
-                    Modernization Retainer, Greenfield Development, and Compliance Infrastructure Engineering.
-                    BKX Labs also operates a free public compliance tool suite at bkxlabs.com/tools, covering
-                    EU AI Act risk classification, Post-Quantum CBOM generation, SOC 2 readiness scoring,
-                    cloud GPU cost comparison, and thirteen additional regulatory and infrastructure calculators.
-                </p>
-            </section>
+
 
             {/* Hero Section */}
             <Hero
@@ -564,6 +541,50 @@ const Home = () => {
                                 guides. No vendor lock-in — you can take our work to any team in the future.
                             </p>
                         </Card>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* About / Agency Overview Section */}
+            <Section className="agency-overview-section">
+                <Container>
+                    <div className="agency-overview-grid">
+                        <div className="agency-overview-left">
+                            <span className="accent-label">About BKX Labs</span>
+                            <h2>Specialized Software Rescue Agency</h2>
+                            <p>
+                                BKX Labs is a specialized software rescue agency that recovers failing Laravel and
+                                React projects, resolves enterprise-grade technical debt, and provides compliance
+                                infrastructure for regulated industries.
+                            </p>
+                            <p>
+                                Our deterministic, phase-gated rescue methodology — Diagnostic, Triage, and
+                                Modernization — serves funded startups and enterprise product teams globally. Every
+                                engagement begins with a written Technical Health Report before a single line of
+                                production code is modified.
+                            </p>
+                        </div>
+                        <div className="agency-overview-right">
+                            <div className="agency-overview-meta">
+                                <span className="accent-label">Core Expertise</span>
+                                <ul className="agency-expertise-list">
+                                    <li>Laravel 12 &amp; React 19 Recovery</li>
+                                    <li>TypeScript &amp; Architecture Modernization</li>
+                                    <li>Post-Quantum Cryptography Readiness</li>
+                                    <li>EU AI Act Compliance Engineering</li>
+                                    <li>SOC 2 Type II Audit Preparation</li>
+                                </ul>
+                            </div>
+                            <div className="agency-overview-meta">
+                                <span className="accent-label">Free Compliance Tools</span>
+                                <p className="agency-overview-tools-desc">
+                                    Access our public tool suite at{' '}
+                                    <a href="/tools" className="agency-tools-link">bkxlabs.com/tools</a>{' '}
+                                    — covering EU AI Act risk classification, Post-Quantum CBOM generation,
+                                    SOC 2 readiness scoring, and thirteen additional regulatory calculators.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </Container>
             </Section>
