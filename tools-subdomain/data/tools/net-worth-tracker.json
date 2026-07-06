@@ -1,0 +1,21 @@
+{
+  "slug": "net-worth-tracker",
+  "category": "finance-tools",
+  "categoryLabel": "Finance Tools",
+  "title": "Net Worth Tracker",
+  "metaDescription": "Calculate your total net worth by listing assets and liabilities, instantly in your browser. Nothing you enter is saved or transmitted.",
+  "shortDescription": "Add your assets and liabilities to calculate total net worth.",
+  "guideHeading": "Net Worth Tracking Guide",
+  "guideSections": [
+    { "heading": "Why Net Worth Is a Snapshot, Not a Trend, Until You Repeat It", "body": "A single net worth calculation tells you where things stand today but says nothing about direction. The number becomes genuinely useful once it's recalculated at consistent intervals — quarterly or annually — so the trend, not the absolute figure, becomes the thing worth paying attention to." },
+    { "heading": "Why Illiquid Assets Need Honest Valuation, Not Optimistic Estimates", "body": "Home equity, vehicle value, and other illiquid assets are easy to overstate, since their listed value isn't the same as what they'd actually sell for after transaction costs. A net worth figure built on inflated illiquid asset values can create a misleading sense of financial cushion that isn't really there if it needed to be accessed quickly." },
+    { "heading": "Nothing You Enter Here Is Saved", "body": "This tool runs entirely in your browser. Closing or refreshing this page clears everything you've entered — nothing is transmitted to or stored on any server." }
+  ],
+  "inputType": "dynamic-list",
+  "lists": [
+    { "id": "assets", "label": "Assets", "itemLabel": "Asset", "addButtonText": "+ Add Asset" },
+    { "id": "liabilities", "label": "Liabilities", "itemLabel": "Liability", "addButtonText": "+ Add Liability" }
+  ],
+  "calculateFunction": "calcNetWorth",
+  "outputType": "stats-grid"
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "days-between-dates",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "Days Between Dates Calculator",
+  "metaDescription": "Calculate the exact number of days, weeks, and approximate months between two dates, instantly in your browser.",
+  "shortDescription": "Calculate the exact number of days, weeks, and months between two dates.",
+  "guideHeading": "Days Between Dates Guide",
+  "guideSections": [
+    { "heading": "Why 'Approximate Months' Can't Be Made Exact", "body": "Unlike days and weeks, which have fixed lengths, a month varies between 28 and 31 days, so any day-count-to-months conversion is inherently an approximation using an average month length. For exact month-and-day precision between two specific calendar dates, calendar-aware subtraction (as used in the Age Calculator) is more precise than this average-based approach." },
+    { "heading": "Why Date Order Doesn't Matter Here", "body": "This tool returns the absolute difference between two dates regardless of which one is entered first, since 'how many days apart' is typically what's useful rather than a signed positive-or-negative value depending on input order." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "startDate", "label": "Start Date", "type": "date", "required": true },
+    { "name": "endDate", "label": "End Date", "type": "date", "required": true }
+  ],
+  "calculateFunction": "calcDaysBetween",
+  "outputType": "stats-grid"
+}

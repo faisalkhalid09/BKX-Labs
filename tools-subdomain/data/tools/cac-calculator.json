@@ -1,0 +1,27 @@
+{
+  "slug": "cac-calculator",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "Customer Acquisition Cost (CAC) Calculator",
+  "metaDescription": "Calculate your true Customer Acquisition Cost by combining sales and marketing spend, instantly in your browser.",
+  "shortDescription": "Calculate CAC from total sales and marketing spend divided by new customers acquired.",
+  "guideHeading": "CAC Calculation Guide",
+  "guideSections": [
+    {
+      "heading": "Why Marketing Spend Alone Understates True CAC",
+      "body": "A common mistake is calculating CAC using only ad spend, while ignoring sales team salaries, commissions, and tooling costs that also went into acquiring those customers. A complete CAC figure includes the full sales and marketing expenditure for the period, not just the most visible line item."
+    },
+    {
+      "heading": "Why CAC Means Nothing Without LTV Context",
+      "body": "A CAC of $200 is excellent for a customer paying $5,000 a year and disastrous for one paying $15 a month. CAC is a diagnostic number, not a verdict on its own — it needs to be weighed against customer lifetime value (LTV) before judging whether an acquisition channel is actually profitable."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "marketingSpend", "label": "Total Marketing Spend ($)", "type": "number", "placeholder": "e.g. 5000", "required": true },
+    { "name": "salesSpend",     "label": "Total Sales Spend ($)",     "type": "number", "placeholder": "e.g. 3000", "required": true },
+    { "name": "newCustomers",   "label": "New Customers Acquired",    "type": "number", "placeholder": "e.g. 40",   "required": true }
+  ],
+  "calculateFunction": "calcCAC",
+  "outputType": "stats-grid"
+}

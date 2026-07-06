@@ -1,0 +1,22 @@
+{
+  "slug": "mortgage-amortization-calculator",
+  "category": "finance-tools",
+  "categoryLabel": "Finance Tools",
+  "title": "Mortgage Amortization Schedule Generator",
+  "metaDescription": "Generate a full month-by-month mortgage amortization schedule with principal, interest, and remaining balance, instantly in your browser.",
+  "shortDescription": "Generate a complete monthly mortgage payment schedule.",
+  "guideHeading": "Mortgage Amortization Guide",
+  "guideSections": [
+    { "heading": "Why Early Payments Are Mostly Interest", "body": "In the first years of a mortgage, the majority of each payment goes toward interest rather than principal, because interest is calculated on the remaining balance and that balance starts at its highest point. The principal portion of each payment grows slowly at first and accelerates significantly in the later years of the loan." },
+    { "heading": "Why an Extra Principal Payment Early Saves More Than One Made Later", "body": "An extra payment applied directly to principal in year 2 reduces the balance that interest gets calculated against for the entire remaining term, while the same extra payment in year 25 only affects a few years of remaining interest. This is why mortgage payoff strategies emphasize extra payments early over waiting until later in the loan." },
+    { "heading": "This Is an Estimate, Not a Binding Loan Quote", "body": "This calculator does not include property taxes, homeowners insurance, PMI, or closing costs, all of which affect a real monthly payment. Use it to understand principal-and-interest mechanics, not as a substitute for a quote from an actual lender." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "loanAmount", "label": "Loan Amount ($)", "type": "number", "placeholder": "e.g. 300000", "required": true },
+    { "name": "annualRate", "label": "Annual Interest Rate (%)", "type": "number", "placeholder": "e.g. 6", "required": true },
+    { "name": "termYears", "label": "Loan Term (Years)", "type": "number", "placeholder": "e.g. 30", "required": true }
+  ],
+  "calculateFunction": "calcMortgageAmortization",
+  "outputType": "data-table"
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "bmr-calculator",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "BMR (Basal Metabolic Rate) Calculator",
+  "metaDescription": "Estimate your Basal Metabolic Rate using the Mifflin-St Jeor or Harris-Benedict equations, instantly in your browser.",
+  "shortDescription": "Estimate daily calories burned at rest using standard BMR formulas.",
+  "guideHeading": "BMR Calculation Guide",
+  "guideSections": [
+    { "heading": "Why Mifflin-St Jeor Is Generally Preferred Today", "body": "The Harris-Benedict equation dates to 1919 and was revised in 1984, while Mifflin-St Jeor (1990) is generally considered more accurate for most modern populations based on later validation studies. Harris-Benedict tends to slightly overestimate BMR compared to Mifflin-St Jeor, which is why this tool offers both rather than picking one silently." },
+    { "heading": "BMR Is Not the Same as Your Maintenance Calories", "body": "BMR estimates energy burned at complete rest — it does not include calories burned through daily movement, exercise, or digestion. Using BMR alone as a calorie target without adding an activity multiplier will significantly underestimate actual daily energy needs for anyone who isn't bedridden." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "age", "label": "Age (years)", "type": "number", "placeholder": "e.g. 30", "required": true },
+    { "name": "gender", "label": "Gender", "type": "select", "options": ["male", "female"], "required": true },
+    { "name": "heightCm", "label": "Height (cm)", "type": "number", "placeholder": "e.g. 175", "required": true },
+    { "name": "weightKg", "label": "Weight (kg)", "type": "number", "placeholder": "e.g. 70", "required": true },
+    { "name": "formula", "label": "Formula", "type": "select", "options": ["mifflin", "harris"], "required": true }
+  ],
+  "calculateFunction": "calcBMR",
+  "outputType": "stats-grid"
+}

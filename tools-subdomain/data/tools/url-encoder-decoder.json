@@ -1,0 +1,25 @@
+{
+  "slug": "url-encoder-decoder",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "URL Encoder / Decoder",
+  "metaDescription": "Encode and decode URL components instantly in your browser. Properly escape special characters for query parameters and API calls.",
+  "shortDescription": "Safely encode or decode text for use in URLs and query parameters.",
+  "guideHeading": "URL Encoding Guide",
+  "guideSections": [
+    {
+      "heading": "encodeURIComponent vs encodeURI: The Difference That Breaks Query Strings",
+      "body": "encodeURI leaves characters like &, =, and ? untouched because it assumes you're encoding a full URL where those characters are structurally meaningful. encodeURIComponent escapes them too, which is exactly what you want when encoding a single value that will be placed inside a query parameter — using the wrong one is a common source of broken links when a value itself contains an ampersand."
+    },
+    {
+      "heading": "Why Decoding Twice Can Silently Corrupt Data",
+      "body": "If a value was already decoded once by a framework or proxy before reaching your code, decoding it again can misinterpret a literal percent sign or transform characters incorrectly. Encoding and decoding should happen exactly once at a clearly defined boundary in your code, not defensively at multiple points just in case."
+    },
+    {
+      "heading": "Where This Actually Matters: Search Terms and Special Characters",
+      "body": "A search query containing a space, an ampersand, or a non-English character needs encoding before it can safely become part of a URL — a raw space becomes %20, and an ampersand inside a value becomes %26 so it isn't mistaken for a parameter separator. Testing this tool with a string containing spaces and an ampersand makes the practical difference immediately visible."
+    }
+  ],
+  "inputType": "encode-decode-toggle",
+  "outputType": "text"
+}

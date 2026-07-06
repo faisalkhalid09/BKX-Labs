@@ -1,0 +1,19 @@
+{
+  "slug": "age-calculator",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "Age Calculator",
+  "metaDescription": "Calculate your exact age in years, months, and days, plus total days lived and days until your next birthday, instantly in your browser.",
+  "shortDescription": "Calculate exact age in years, months, and days from a birth date.",
+  "guideHeading": "Age Calculation Guide",
+  "guideSections": [
+    { "heading": "Why Calendar-Aware Math Beats Simple Day Division", "body": "Dividing total days lived by 365.25 gives an approximate age in years but produces a slightly different number of months and days than counting through actual calendar months, which vary in length. This calculator walks through actual calendar years, months, and days, which is why the breakdown matches what you'd get counting by hand on a calendar." },
+    { "heading": "Why Leap Years Make Total Days Lived a Genuinely Useful Number", "body": "Total days lived isn't just a novelty figure — it's the only one of the numbers here that accounts precisely for every leap year encountered, rather than relying on an average year length. For exact day-count milestones, this number is more reliable than multiplying years by 365." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "birthDate", "label": "Birth Date", "type": "date", "required": true }
+  ],
+  "calculateFunction": "calcAge",
+  "outputType": "stats-grid"
+}

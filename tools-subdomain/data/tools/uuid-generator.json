@@ -1,0 +1,26 @@
+{
+  "slug": "uuid-generator",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "UUID Generator",
+  "metaDescription": "Generate RFC 4122 version 4 UUIDs instantly in your browser using cryptographically secure randomness. No data sent to any server.",
+  "shortDescription": "Generate cryptographically random UUIDs (v4) instantly.",
+  "guideHeading": "UUID Generation Guide",
+  "guideSections": [
+    {
+      "heading": "Why UUIDs Beat Auto-Incrementing IDs at Scale",
+      "body": "Sequential database IDs require a single source of truth to avoid collisions, which becomes a bottleneck the moment you have multiple services or database shards generating records independently. UUIDs are generated with enough randomness that two systems can create IDs simultaneously, with no coordination, and the probability of a collision is low enough to treat as zero in practice."
+    },
+    {
+      "heading": "Version 4 Is Random, Not Sequential — and That's the Point",
+      "body": "A v4 UUID derives 122 of its 128 bits from a random or pseudo-random source, with the remaining bits fixed to identify the version and variant. This randomness means UUIDs reveal nothing about creation order or count, which is useful when you don't want an ID itself to leak information like how many records exist or how recently one was created."
+    },
+    {
+      "heading": "Where UUIDs Cost You Something in Return",
+      "body": "Random UUIDs as primary keys fragment database indexes more than sequential integers, since new rows insert at random points in an index rather than appending to the end. For very high-write-volume tables, this is a real tradeoff worth knowing about — not a reason to avoid UUIDs, but a reason some systems use sequential UUIDs (v7) for primary keys while using v4 for externally-facing identifiers."
+    }
+  ],
+  "inputType": "generator",
+  "outputType": "text",
+  "generatorOptions": []
+}

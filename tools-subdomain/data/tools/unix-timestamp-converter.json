@@ -1,0 +1,23 @@
+{
+  "slug": "unix-timestamp-converter",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "Unix Timestamp Converter",
+  "metaDescription": "Convert Unix timestamps to human-readable dates and back, instantly in your browser. Handles both seconds and milliseconds epoch formats.",
+  "shortDescription": "Convert between Unix epoch timestamps and human-readable dates.",
+  "guideHeading": "Unix Timestamp Guide",
+  "guideSections": [
+    {
+      "heading": "Why the Same Epoch Number Can Mean Two Different Times",
+      "body": "Unix time is conventionally measured in seconds, but JavaScript's own Date object internally uses milliseconds — mixing the two up is one of the most common timestamp bugs. A 10-digit number is almost always seconds; a 13-digit number is almost always milliseconds, which is the heuristic this tool uses to guess the correct unit automatically."
+    },
+    {
+      "heading": "Why Showing Both UTC and Local Time Matters",
+      "body": "A raw epoch value has no timezone of its own — it's a count of seconds since a fixed UTC reference point. Displaying only the local-time interpretation can make a timestamp look wrong if you're debugging a server log written in UTC, which is why this tool shows both side by side rather than picking one."
+    }
+  ],
+  "inputType": "dual-mode-toggle",
+  "toggleLabels": ["Timestamp \u2192 Date", "Date \u2192 Timestamp"],
+  "toggleFunctions": ["epochToDate", "dateToEpoch"],
+  "outputType": "text"
+}

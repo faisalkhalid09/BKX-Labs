@@ -1,0 +1,46 @@
+{
+  "slug": "unit-converter",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "Unit Converter (Length, Weight, Temperature)",
+  "metaDescription": "Convert between metric and imperial units of length, weight, and temperature instantly in your browser.",
+  "shortDescription": "Convert between common length, weight, and temperature units.",
+  "guideHeading": "Unit Conversion Guide",
+  "guideSections": [
+    { "heading": "Why Temperature Conversion Isn't Just a Multiplier", "body": "Length and weight conversions are simple ratios — multiply by a fixed factor and you're done. Temperature scales have different zero points as well as different scale sizes, which is why converting Celsius to Fahrenheit requires both a multiplication and an addition, not just a single conversion factor like the other categories here." },
+    { "heading": "Why Kelvin Has No Negative Values", "body": "Kelvin is an absolute temperature scale starting at absolute zero, the theoretical point where all thermal motion stops — there is no physical meaning to a negative Kelvin value, which is why this tool flags it as an error rather than returning a number that doesn't correspond to anything real." }
+  ],
+  "inputType": "unit-converter",
+  "converterCategories": [
+    {
+      "id": "length", "label": "Length",
+      "units": [
+        { "id": "m", "label": "Meters", "toBase": 1 },
+        { "id": "km", "label": "Kilometers", "toBase": 1000 },
+        { "id": "mi", "label": "Miles", "toBase": 1609.344 },
+        { "id": "ft", "label": "Feet", "toBase": 0.3048 },
+        { "id": "in", "label": "Inches", "toBase": 0.0254 },
+        { "id": "cm", "label": "Centimeters", "toBase": 0.01 }
+      ]
+    },
+    {
+      "id": "weight", "label": "Weight",
+      "units": [
+        { "id": "kg", "label": "Kilograms", "toBase": 1 },
+        { "id": "g", "label": "Grams", "toBase": 0.001 },
+        { "id": "lb", "label": "Pounds", "toBase": 0.453592 },
+        { "id": "oz", "label": "Ounces", "toBase": 0.0283495 }
+      ]
+    },
+    {
+      "id": "temperature", "label": "Temperature",
+      "units": [
+        { "id": "celsius", "label": "Celsius" },
+        { "id": "fahrenheit", "label": "Fahrenheit" },
+        { "id": "kelvin", "label": "Kelvin" }
+      ]
+    }
+  ],
+  "calculateFunction": "convertUnit",
+  "outputType": "stats-grid"
+}

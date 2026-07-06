@@ -1,0 +1,10 @@
+# Generated output — do not commit
+dist/
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

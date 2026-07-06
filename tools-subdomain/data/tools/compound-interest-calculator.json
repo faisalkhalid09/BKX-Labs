@@ -1,0 +1,23 @@
+{
+  "slug": "compound-interest-calculator",
+  "category": "finance-tools",
+  "categoryLabel": "Finance Tools",
+  "title": "Compound Interest Calculator",
+  "metaDescription": "Calculate compound interest growth with optional monthly contributions, with a full year-by-year breakdown, instantly in your browser.",
+  "shortDescription": "Project investment growth with compound interest and monthly contributions.",
+  "guideHeading": "Compound Interest Guide",
+  "guideSections": [
+    { "heading": "Why Monthly Contributions Compound Differently Than a Lump Sum", "body": "A lump sum deposited today has the maximum possible time to compound. Money added monthly compounds for progressively less time as the schedule continues — the first contribution compounds for nearly the full period, the last contribution barely compounds at all. This is why the order and frequency of contributions changes the outcome, not just the total amount contributed." },
+    { "heading": "Why the Rate You Enter Should Be Realistic, Not Aspirational", "body": "Small differences in assumed annual return compound into very large differences over long periods, which makes optimistic rate assumptions especially misleading for multi-decade projections. Running this calculator at a few different rate assumptions — conservative, moderate, optimistic — gives a more honest range than trusting a single number." },
+    { "heading": "This Is Not Financial Advice", "body": "This tool models a mathematical projection based on the numbers entered. It does not account for taxes, inflation, fees, or market volatility, and it should not be treated as a guarantee or recommendation about any specific investment." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "principal", "label": "Initial Investment ($)", "type": "number", "placeholder": "e.g. 10000", "required": true },
+    { "name": "annualRate", "label": "Expected Annual Return (%)", "type": "number", "placeholder": "e.g. 7", "required": true },
+    { "name": "years", "label": "Number of Years", "type": "number", "placeholder": "e.g. 10", "required": true },
+    { "name": "monthlyContribution", "label": "Monthly Contribution ($) — optional", "type": "number", "placeholder": "e.g. 200", "required": false }
+  ],
+  "calculateFunction": "calcCompoundInterest",
+  "outputType": "data-table"
+}

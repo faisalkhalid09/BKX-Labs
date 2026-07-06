@@ -1,0 +1,20 @@
+{
+  "slug": "dti-calculator",
+  "category": "finance-tools",
+  "categoryLabel": "Finance Tools",
+  "title": "Debt-to-Income (DTI) Ratio Calculator",
+  "metaDescription": "Calculate your debt-to-income ratio and see how it compares to standard lending thresholds, instantly in your browser.",
+  "shortDescription": "Calculate your DTI ratio from monthly debt payments and gross income.",
+  "guideHeading": "Debt-to-Income Guide",
+  "guideSections": [
+    { "heading": "Why Lenders Care About This Ratio More Than Credit Score Alone", "body": "Credit score reflects how reliably debt has been repaid historically, while DTI reflects whether there's enough income capacity to take on more debt right now. A strong credit history with a high DTI can still result in loan denial, since the lender's primary concern at that point is monthly cash flow, not past behavior." },
+    { "heading": "Why 'Gross' Income, Not Take-Home Pay, Is the Standard", "body": "DTI calculations conventionally use gross monthly income before taxes and deductions, which produces a different — usually more favorable — ratio than calculating against take-home pay. Using net income instead of gross when comparing your DTI against published lending thresholds will make the comparison inaccurate." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "monthlyDebtPayments", "label": "Total Monthly Debt Payments ($)", "type": "number", "placeholder": "e.g. 1800", "required": true },
+    { "name": "grossMonthlyIncome", "label": "Gross Monthly Income ($)", "type": "number", "placeholder": "e.g. 6000", "required": true }
+  ],
+  "calculateFunction": "calcDTI",
+  "outputType": "stats-grid"
+}

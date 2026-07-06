@@ -1,0 +1,20 @@
+{
+  "slug": "emergency-fund-calculator",
+  "category": "finance-tools",
+  "categoryLabel": "Finance Tools",
+  "title": "Emergency Fund Target Calculator",
+  "metaDescription": "Calculate how much you should keep in an emergency fund based on your monthly expenses, instantly in your browser.",
+  "shortDescription": "Calculate your target emergency fund size based on monthly expenses.",
+  "guideHeading": "Emergency Fund Guide",
+  "guideSections": [
+    { "heading": "Why the Right Buffer Period Depends on Income Stability, Not a Fixed Rule", "body": "Three months of expenses is a commonly cited minimum, but it assumes relatively stable, predictable income. Commission-based work, freelancing, or a single-income household with dependents typically warrants a larger buffer — six to twelve months — since the cost of an income gap compounds when there's less flexibility to absorb it." },
+    { "heading": "Why This Should Be Based on Expenses, Not Income", "body": "Sizing an emergency fund against income rather than actual monthly expenses overstates what's needed for someone with a high savings rate and understates it for someone living closer to their full income. The fund exists to cover real spending during a gap, which makes expenses the more accurate basis for the calculation." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "monthlyExpenses", "label": "Essential Monthly Expenses ($)", "type": "number", "placeholder": "e.g. 3000", "required": true },
+    { "name": "bufferMonths", "label": "Target Buffer (Months)", "type": "number", "placeholder": "e.g. 6", "required": true }
+  ],
+  "calculateFunction": "calcEmergencyFund",
+  "outputType": "stats-grid"
+}

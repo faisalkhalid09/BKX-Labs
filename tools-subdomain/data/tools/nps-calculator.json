@@ -1,0 +1,27 @@
+{
+  "slug": "nps-calculator",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "NPS (Net Promoter Score) Calculator",
+  "metaDescription": "Calculate your Net Promoter Score from promoter, passive, and detractor response counts, instantly in your browser.",
+  "shortDescription": "Calculate NPS from survey response counts across promoters, passives, and detractors.",
+  "guideHeading": "NPS Calculation Guide",
+  "guideSections": [
+    {
+      "heading": "Why Passives Are Excluded From the Score Itself",
+      "body": "NPS is calculated as the percentage of promoters minus the percentage of detractors — passives count toward the total respondent pool but don't appear in the subtraction. This is intentional: passives are considered neutral enough that they don't meaningfully predict referral behavior in either direction."
+    },
+    {
+      "heading": "Why a Single NPS Number Hides as Much as It Reveals",
+      "body": "Two companies can both report an NPS of 40 with very different underlying distributions — one with mostly promoters and few detractors, another with a more polarized mix of strong promoters and strong detractors balancing out. Looking at the underlying percentages, not just the final score, shows which situation you're actually in."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "promoters",   "label": "Promoters (scored 9\u201310)", "type": "number", "placeholder": "e.g. 60", "required": true },
+    { "name": "passives",    "label": "Passives (scored 7\u20138)",  "type": "number", "placeholder": "e.g. 25", "required": true },
+    { "name": "detractors",  "label": "Detractors (scored 0\u20136)", "type": "number", "placeholder": "e.g. 15", "required": true }
+  ],
+  "calculateFunction": "calcNPS",
+  "outputType": "stats-grid"
+}

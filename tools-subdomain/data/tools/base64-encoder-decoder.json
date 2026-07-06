@@ -1,0 +1,25 @@
+{
+  "slug": "base64-encoder-decoder",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "Base64 Encoder / Decoder",
+  "metaDescription": "Encode and decode Base64 strings instantly in your browser, with full Unicode support. No data is sent to any server.",
+  "shortDescription": "Encode text to Base64 or decode Base64 back to text, with full Unicode support.",
+  "guideHeading": "Base64 Encoding Guide",
+  "guideSections": [
+    {
+      "heading": "Why Base64 Isn't Encryption",
+      "body": "Base64 is a reversible encoding scheme, not a security mechanism — anyone can decode it back to the original text with no key required. It exists to safely represent binary or special-character data using only characters that are guaranteed safe in contexts like JSON strings, URLs, or email bodies, not to hide information from anyone who looks."
+    },
+    {
+      "heading": "Why Naive Base64 Tools Break on Non-English Text",
+      "body": "The native browser functions btoa() and atob() only handle Latin1 text correctly and throw errors or produce garbled output on Unicode characters like emoji or non-Latin scripts. This tool first converts text to UTF-8 bytes before encoding, and decodes back through UTF-8 explicitly, so accented characters and non-English text round-trip correctly."
+    },
+    {
+      "heading": "Where Base64 Shows Up Without You Realizing It",
+      "body": "Data URIs that embed small images directly inside CSS or HTML, the credentials portion of HTTP Basic Authentication headers, and email attachment encoding all rely on Base64 under the hood. Recognizing the pattern — a long string of letters, numbers, plus signs, and slashes, often ending in one or two equals signs — helps when debugging unfamiliar data formats."
+    }
+  ],
+  "inputType": "encode-decode-toggle",
+  "outputType": "text"
+}

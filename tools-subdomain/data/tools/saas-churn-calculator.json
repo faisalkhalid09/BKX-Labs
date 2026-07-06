@@ -1,0 +1,28 @@
+{
+  "slug": "saas-churn-calculator",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "SaaS Churn Rate Calculator",
+  "metaDescription": "Calculate customer churn rate and revenue churn rate for your SaaS business, instantly in your browser.",
+  "shortDescription": "Calculate customer and revenue churn rate over a given period.",
+  "guideHeading": "SaaS Churn Guide",
+  "guideSections": [
+    {
+      "heading": "Why Customer Churn and Revenue Churn Tell Different Stories",
+      "body": "Losing 10% of customers sounds uniformly bad until you check which 10% — if the churned accounts were your smallest plans, revenue churn can be meaningfully lower than customer churn, and vice versa if you lost a few large accounts. Tracking both numbers separately surfaces which one actually deserves attention."
+    },
+    {
+      "heading": "Why Churn Rate Needs a Fixed Time Period to Mean Anything",
+      "body": "A churn rate without a stated period — monthly, quarterly, annual — is not comparable to any benchmark, since a 5% monthly churn rate compounds to a dramatically worse annual figure. Always pair a churn number with the period it was measured over before comparing it against industry standards."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "customersStart", "label": "Customers at Start of Period",             "type": "number", "placeholder": "e.g. 500",    "required": true  },
+    { "name": "customersLost",  "label": "Customers Lost During Period",             "type": "number", "placeholder": "e.g. 25",     "required": true  },
+    { "name": "mrrStart",       "label": "MRR at Start of Period ($) — optional",   "type": "number", "placeholder": "e.g. 100000", "required": false },
+    { "name": "mrrLost",        "label": "MRR Lost During Period ($) — optional",   "type": "number", "placeholder": "e.g. 4000",   "required": false }
+  ],
+  "calculateFunction": "calcSaaSChurn",
+  "outputType": "stats-grid"
+}

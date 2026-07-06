@@ -1,0 +1,26 @@
+{
+  "slug": "roas-calculator",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "ROAS (Return on Ad Spend) Calculator",
+  "metaDescription": "Calculate your Return on Ad Spend ratio and percentage instantly in your browser.",
+  "shortDescription": "Calculate ROAS ratio, percentage, and net profit from ad campaign spend and revenue.",
+  "guideHeading": "ROAS Calculation Guide",
+  "guideSections": [
+    {
+      "heading": "Why a 4:1 ROAS Isn't Automatically Profitable",
+      "body": "ROAS measures revenue generated per dollar of ad spend, but it doesn't account for cost of goods sold, fulfillment costs, or payment processing fees. A 4:1 ROAS on a product with thin margins can still result in a net loss once those costs are factored in separately."
+    },
+    {
+      "heading": "Why Comparing ROAS Across Channels Can Mislead",
+      "body": "Different channels often serve different parts of the funnel — a retargeting campaign with a high ROAS is reaching warm traffic that may have converted anyway, while a prospecting campaign with a lower ROAS is generating net-new demand. Comparing the two on ROAS alone ignores what each channel is actually contributing."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "adSpend",   "label": "Total Ad Spend ($)",    "type": "number", "placeholder": "e.g. 2000", "required": true },
+    { "name": "adRevenue", "label": "Revenue from Ads ($)", "type": "number", "placeholder": "e.g. 8000", "required": true }
+  ],
+  "calculateFunction": "calcROAS",
+  "outputType": "stats-grid"
+}

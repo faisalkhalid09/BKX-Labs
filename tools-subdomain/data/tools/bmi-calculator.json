@@ -1,0 +1,21 @@
+{
+  "slug": "bmi-calculator",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "BMI (Body Mass Index) Calculator",
+  "metaDescription": "Calculate your Body Mass Index instantly in your browser using standard WHO thresholds. For general reference only, not a diagnostic tool.",
+  "shortDescription": "Calculate BMI from height and weight using WHO classification thresholds.",
+  "guideHeading": "BMI Calculation Guide",
+  "guideSections": [
+    { "heading": "What BMI Does and Doesn't Measure", "body": "BMI is a ratio of weight to height squared, designed as a quick population-level screening tool, not an individual diagnostic measure. It doesn't distinguish between muscle mass and fat mass, which is why a muscular athlete and a sedentary person of the same height and weight can receive the same BMI despite very different body compositions." },
+    { "heading": "Why the WHO Thresholds Are General Guidelines, Not Universal Cutoffs", "body": "The standard thresholds used here were developed primarily from population studies and don't account for age, sex-specific body composition differences, or ethnicity-specific research suggesting different risk thresholds for some populations. Treat the category label as a general reference point rather than a personal health verdict." },
+    { "heading": "This Is Not Medical Advice", "body": "This calculator provides a general reference number based on standard formulas. It is not a substitute for assessment by a healthcare professional, who can account for factors this calculation cannot." }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "heightCm", "label": "Height (cm)", "type": "number", "placeholder": "e.g. 175", "required": true },
+    { "name": "weightKg", "label": "Weight (kg)", "type": "number", "placeholder": "e.g. 70", "required": true }
+  ],
+  "calculateFunction": "calcBMI",
+  "outputType": "stats-grid"
+}

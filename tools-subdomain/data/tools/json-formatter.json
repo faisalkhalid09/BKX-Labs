@@ -1,0 +1,30 @@
+{
+  "slug": "json-formatter",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "JSON Formatter & Validator",
+  "metaDescription": "Free online JSON formatter and validator. Paste raw JSON to beautify, validate, and detect syntax errors instantly in your browser — no data leaves your device.",
+  "shortDescription": "Paste raw JSON to format, validate, and catch syntax errors instantly.",
+  "guideHeading": "JSON Formatting Guide",
+  "guideSections": [
+    {
+      "heading": "Why Client-Side Validation Matters for Sensitive Payloads",
+      "body": "Pasting API responses or configuration files containing tokens or internal identifiers into a server-side formatting tool means that data leaves your machine and passes through someone else's infrastructure. This formatter runs entirely in your browser using the native JSON.parse() method — nothing you paste is ever transmitted anywhere, which matters when the JSON you're debugging contains anything you wouldn't want logged on a third-party server."
+    },
+    {
+      "heading": "Why Syntax Errors in JSON Are Often Misleading",
+      "body": "JSON parsers report the position of the character where parsing failed, not necessarily where the actual mistake is. A missing closing brace three lines up commonly surfaces as an error several lines later, at the point where the parser's expectations finally break down. Reading the reported line number as a strong hint rather than a precise location saves time when debugging deeply nested structures."
+    },
+    {
+      "heading": "Trailing Commas Are the Most Common Hand-Written JSON Mistake",
+      "body": "Unlike JavaScript object literals, strict JSON does not permit a trailing comma after the last item in an array or object. Code copied from a JS file into a JSON config file frequently carries this over invisibly, since most editors don't flag it until the file is actually parsed as JSON rather than as JavaScript."
+    },
+    {
+      "heading": "When to Validate vs When to Just Format",
+      "body": "Formatting (indentation, line breaks) and validation (syntax correctness) are different operations that often get bundled together. A file can be syntactically valid JSON and still be poorly formatted for human review, or appear readable while containing a subtle error a formatter alone won't catch. Running both steps separately, rather than assuming one implies the other, catches more real-world issues."
+    }
+  ],
+  "inputType": "textarea",
+  "inputLabel": "Paste your JSON",
+  "outputType": "formatted-code"
+}

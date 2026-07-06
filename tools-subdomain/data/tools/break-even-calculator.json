@@ -1,0 +1,27 @@
+{
+  "slug": "break-even-calculator",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "Break-Even Analysis Calculator",
+  "metaDescription": "Calculate the exact unit sales volume needed to cover fixed and variable costs, instantly in your browser.",
+  "shortDescription": "Calculate break-even units and revenue from fixed costs, price, and variable cost per unit.",
+  "guideHeading": "Break-Even Analysis Guide",
+  "guideSections": [
+    {
+      "heading": "Why Contribution Margin, Not Profit Margin, Drives This Number",
+      "body": "Break-even analysis cares about how much each additional unit contributes toward covering fixed costs — price minus variable cost per unit — not the fully-loaded profit margin reported on a P&L. Confusing the two leads to a break-even estimate that's wrong in either direction depending on how overhead is allocated."
+    },
+    {
+      "heading": "Why This Number Shifts Every Time Fixed Costs Change",
+      "body": "Break-even point isn't a fixed property of a product — it moves whenever fixed costs change, such as adding headcount or renewing a software contract. Treating a break-even calculation as a one-time exercise rather than something to revisit after cost structure changes is a common planning gap."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "fixedCosts",          "label": "Total Fixed Costs ($)",       "type": "number", "placeholder": "e.g. 12000", "required": true },
+    { "name": "pricePerUnit",         "label": "Price per Unit ($)",          "type": "number", "placeholder": "e.g. 50",    "required": true },
+    { "name": "variableCostPerUnit",  "label": "Variable Cost per Unit ($)",  "type": "number", "placeholder": "e.g. 30",    "required": true }
+  ],
+  "calculateFunction": "calcBreakEven",
+  "outputType": "stats-grid"
+}

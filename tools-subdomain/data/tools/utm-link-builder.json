@@ -1,0 +1,30 @@
+{
+  "slug": "utm-link-builder",
+  "category": "business-tools",
+  "categoryLabel": "Business & SaaS Tools",
+  "title": "UTM Campaign Link Builder",
+  "metaDescription": "Build properly encoded UTM tracking links for Google Analytics campaigns, instantly in your browser.",
+  "shortDescription": "Build a UTM-tagged campaign URL for accurate analytics tracking.",
+  "guideHeading": "UTM Link Building Guide",
+  "guideSections": [
+    {
+      "heading": "Why Inconsistent UTM Naming Quietly Breaks Your Reports",
+      "body": "A campaign tagged 'Newsletter' in one link and 'newsletter' in another is treated as two separate sources by most analytics platforms, since UTM parameters are typically case-sensitive. Settling on a consistent naming convention before generating links matters more than the specific convention chosen."
+    },
+    {
+      "heading": "Which Parameters Are Required vs Genuinely Optional",
+      "body": "utm_source, utm_medium, and utm_campaign are the three parameters every analytics platform expects populated. utm_term and utm_content add useful granularity for paid search keywords or A/B testing specific creative variants, but omitting them when not relevant keeps the URL shorter without losing essential tracking data."
+    }
+  ],
+  "inputType": "multi-field",
+  "fields": [
+    { "name": "baseUrl",  "label": "Destination URL",                            "type": "url",  "placeholder": "https://example.com/landing-page", "required": true  },
+    { "name": "source",   "label": "Campaign Source (utm_source)",               "type": "text", "placeholder": "e.g. newsletter",                  "required": true  },
+    { "name": "medium",   "label": "Campaign Medium (utm_medium)",               "type": "text", "placeholder": "e.g. email",                       "required": true  },
+    { "name": "campaign", "label": "Campaign Name (utm_campaign)",               "type": "text", "placeholder": "e.g. june_promo",                  "required": true  },
+    { "name": "term",     "label": "Campaign Term (utm_term) \u2014 optional",   "type": "text", "placeholder": "e.g. running+shoes",                "required": false },
+    { "name": "content",  "label": "Campaign Content (utm_content) \u2014 optional", "type": "text", "placeholder": "e.g. header_banner",           "required": false }
+  ],
+  "calculateFunction": "buildUTMLink",
+  "outputType": "text"
+}

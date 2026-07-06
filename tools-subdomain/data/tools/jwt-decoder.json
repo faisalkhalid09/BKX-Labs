@@ -1,0 +1,22 @@
+{
+  "slug": "jwt-decoder",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "JWT Decoder",
+  "metaDescription": "Decode JWT (JSON Web Token) headers and payloads instantly in your browser. Signature is not verified — this is a decoding tool, not a validator.",
+  "shortDescription": "Decode a JWT's header and payload. Does not verify the signature.",
+  "guideHeading": "JWT Decoding Guide",
+  "guideSections": [
+    {
+      "heading": "Decoding a Token Tells You Nothing About Whether It's Valid",
+      "body": "A JWT's header and payload are only base64URL-encoded, not encrypted, which means anyone can decode and read them without any key. Decoding confirms what a token claims, not whether those claims are genuine — verifying authenticity requires checking the signature against the issuer's secret or public key, which this tool deliberately does not do since that key is never available client-side."
+    },
+    {
+      "heading": "Why JWTs Use Base64URL Instead of Standard Base64",
+      "body": "Standard base64 uses +, /, and = characters, all of which have special meaning inside a URL. JWTs are frequently passed as URL parameters or HTTP headers, so the spec swaps in URL-safe characters and drops padding — which is why naively running standard base64 decoding on a raw JWT segment often fails."
+    }
+  ],
+  "inputType": "textarea",
+  "inputLabel": "Paste your JWT",
+  "outputType": "jwt-decoded"
+}

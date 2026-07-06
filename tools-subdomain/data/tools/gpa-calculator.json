@@ -1,0 +1,27 @@
+{
+  "slug": "gpa-calculator",
+  "category": "health-academic-tools",
+  "categoryLabel": "Health & Academic Tools",
+  "title": "GPA (Grade Point Average) Calculator",
+  "metaDescription": "Calculate your cumulative GPA from courses, credit hours, and letter grades, instantly in your browser.",
+  "shortDescription": "Add your courses, credit hours, and grades to calculate cumulative GPA.",
+  "guideHeading": "GPA Calculation Guide",
+  "guideSections": [
+    { "heading": "Why Credit Hours, Not Just Grades, Determine GPA", "body": "GPA is a weighted average, not a simple average of grade points — a 4-credit course with a B carries more weight in the final calculation than a 1-credit course with an A. Two students with identical letter grades can end up with different GPAs if their credit hour distributions differ." },
+    { "heading": "Why This Uses the Standard 4.0 Scale", "body": "This calculator uses the most common US grading scale where A=4.0 down to F=0.0 in standard increments. Some institutions use different scales or weight honors/AP courses differently — check your institution's specific scale if you need to match an official transcript exactly." }
+  ],
+  "inputType": "dynamic-list",
+  "lists": [
+    {
+      "id": "courses", "label": "Courses", "itemLabel": "Course",
+      "fields": [
+        { "name": "name", "label": "Course Name", "type": "text" },
+        { "name": "creditHours", "label": "Credit Hours", "type": "number" },
+        { "name": "grade", "label": "Grade", "type": "select", "options": ["A","A-","B+","B","B-","C+","C","C-","D+","D","D-","F"] }
+      ],
+      "addButtonText": "+ Add Course"
+    }
+  ],
+  "calculateFunction": "calcGPA",
+  "outputType": "stats-grid"
+}

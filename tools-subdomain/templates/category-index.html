@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{categoryLabel}} Tools — BKX Labs</title>
+  <meta name="description" content="Free {{categoryLabel}} tools. {{categoryDescription}}" />
+  <link rel="canonical" href="https://tools.bkxlabs.com/{{category}}/" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="site-logo">BKX<span>Labs</span> Tools</a>
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="/">Tools</a></li>
+          <li aria-current="page">{{categoryLabel}}</li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="home-hero">
+        <h1>{{categoryLabel}} Tools</h1>
+        <p>{{categoryDescription}}</p>
+      </div>
+
+      <div class="category-block">
+        <div class="tools-grid">
+          {{toolCards}}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>&copy; 2025 <a href="https://bkxlabs.com">BKX Labs</a>. All rights reserved.</span>
+      <span><a href="/">All Tools</a> &middot; <a href="/privacy/">Privacy Policy</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>

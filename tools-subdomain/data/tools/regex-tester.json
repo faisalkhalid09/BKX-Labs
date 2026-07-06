@@ -1,0 +1,22 @@
+{
+  "slug": "regex-tester",
+  "category": "developer-tools",
+  "categoryLabel": "Developer Tools",
+  "title": "Regex Tester",
+  "metaDescription": "Test and debug regular expressions against sample text instantly in your browser, with live match highlighting and capture group output.",
+  "shortDescription": "Test a regex pattern against sample text with live match highlighting.",
+  "guideHeading": "Regex Testing Guide",
+  "guideSections": [
+    {
+      "heading": "Why the Global Flag Changes What exec() Returns",
+      "body": "Without the global flag, calling exec() repeatedly on the same pattern returns the same first match every time. With it, the regex object tracks a lastIndex position internally, advancing through the string on each call — which is exactly the behavior needed to find every match rather than just the first one."
+    },
+    {
+      "heading": "Greedy Quantifiers Match More Than Most People Expect",
+      "body": "A pattern like <.+> against the text <b>bold</b> matches the entire string from the first < to the last >, not just <b>, because + is greedy by default and grabs as much as possible before backtracking. Adding a ? after the quantifier, as in <.+?>, makes it lazy and matches the shortest possible string instead."
+    }
+  ],
+  "inputType": "regex-tester",
+  "regexFields": ["pattern", "flags", "testString"],
+  "outputType": "regex-matches"
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}} — BKX Labs Tools</title>
+  <meta name="description" content="{{metaDescription}}" />
+  <link rel="canonical" href="https://tools.bkxlabs.com/{{category}}/{{slug}}" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://tools.bkxlabs.com/{{category}}/{{slug}}" />
+  <meta property="og:title"       content="{{title}} — BKX Labs Tools" />
+  <meta property="og:description" content="{{metaDescription}}" />
+  <meta property="og:site_name"   content="BKX Labs Tools" />
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- ── Site Header ─────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="site-logo">BKX<span>Labs</span> Tools</a>
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="/">Tools</a></li>
+          <li><a href="/{{category}}/">{{categoryLabel}}</a></li>
+          <li aria-current="page">{{title}}</li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Main ────────────────────────────────────────────── -->
+  <main>
+    <div class="container">
+
+      <!-- Page heading -->
+      <div class="page-heading">
+        <h1>{{title}}</h1>
+        <p class="short-desc">{{shortDescription}}</p>
+      </div>
+
+      <!-- Tool UI card — content injected by build.mjs based on inputType -->
+      <section class="tool-card" aria-label="{{title}} tool">
+        {{toolUI}}
+      </section>
+
+      <!-- Guide section -->
+      <section class="guide-section" aria-labelledby="guide-heading">
+        <h2 id="guide-heading">{{guideHeading}}</h2>
+        <div class="guide-items">
+          {{guideSections}}
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── Site Footer ─────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container">
+      <span>&copy; 2025 <a href="https://bkxlabs.com">BKX Labs</a>. All rights reserved.</span>
+      <span>
+        <a href="/">All Tools</a> &middot;
+        <a href="/privacy/">Privacy Policy</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="/calc-utils.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      {{toolScript}}
+    })();
+  </script>
+
+</body>
+</html>
