@@ -93,8 +93,9 @@ main { flex: 1; padding: 2.5rem 0 4rem; }
 }
 
 .site-logo img {
-  height: 36px;
+  height: 32px;
   width: auto;
+  max-width: 160px;
   display: block;
 }
 
