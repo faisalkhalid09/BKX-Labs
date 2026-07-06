@@ -1485,6 +1485,7 @@ writeText(path.join(PATHS.dist, 'index.html'), homeHtml);
 console.log('\nCopying shared assets...');
 copyFile(path.join(PATHS.shared, 'styles.css'),    path.join(PATHS.dist, 'styles.css'));
 copyFile(path.join(PATHS.shared, 'calc-utils.js'), path.join(PATHS.dist, 'calc-utils.js'));
+copyFile(path.join(PATHS.shared, 'brand-logo.png'), path.join(PATHS.dist, 'brand-logo.png'));
 
 // Build date for sitemap + privacy page (YYYY-MM-DD)
 const today = new Date().toISOString().slice(0, 10);

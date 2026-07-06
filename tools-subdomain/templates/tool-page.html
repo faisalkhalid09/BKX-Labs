@@ -5,23 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{title}} — BKX Labs Tools</title>
   <meta name="description" content="{{metaDescription}}" />
-  <link rel="canonical" href="https://tools.bkxlabs.com/{{category}}/{{slug}}" />
+  <link rel="canonical" href="https://tools.bkxlabs.com/{{category}}/{{slug}}/" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://tools.bkxlabs.com/{{category}}/{{slug}}" />
+  <meta property="og:url"         content="https://tools.bkxlabs.com/{{category}}/{{slug}}/" />
   <meta property="og:title"       content="{{title}} — BKX Labs Tools" />
   <meta property="og:description" content="{{metaDescription}}" />
   <meta property="og:site_name"   content="BKX Labs Tools" />
 
+  <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
 
-  <!-- ── Site Header ─────────────────────────────────────── -->
+  <!-- ── Site Header ─────────────────────────────────────────── -->
   <header class="site-header">
     <div class="container">
-      <a href="/" class="site-logo">BKX<span>Labs</span> Tools</a>
+      <a href="/" class="site-logo" aria-label="BKX Labs Tools — Home">
+        <img src="/brand-logo.png" alt="BKX Labs" />
+      </a>
+      <span class="site-tagline">Free Browser Tools</span>
       <nav aria-label="Breadcrumb">
         <ol class="breadcrumb">
           <li><a href="/">Tools</a></li>
@@ -32,11 +36,10 @@
     </div>
   </header>
 
-  <!-- ── Main ────────────────────────────────────────────── -->
+  <!-- ── Main ──────────────────────────────────────────────────── -->
   <main>
     <div class="container">
 
-      <!-- Page heading -->
       <div class="page-heading">
         <h1>{{title}}</h1>
         <p class="short-desc">{{shortDescription}}</p>
@@ -58,7 +61,7 @@
     </div>
   </main>
 
-  <!-- ── Site Footer ─────────────────────────────────────── -->
+  <!-- ── Site Footer ─────────────────────────────────────────── -->
   <footer class="site-footer">
     <div class="container">
       <span>&copy; 2025 <a href="https://bkxlabs.com">BKX Labs</a>. All rights reserved.</span>
