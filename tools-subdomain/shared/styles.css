@@ -72,41 +72,35 @@ main { flex: 1; padding: 2.5rem 0 4rem; }
 .site-header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 0;
+  padding: 0.75rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .site-header .container {
   display: flex;
-  flex-direction: column;
+  justify-content: center; /* Center everything */
   align-items: center;
-  gap: 0;
-  padding-top: 1.25rem;
-  padding-bottom: 1rem;
 }
 
-/* Logo image — centered */
-.site-logo {
-  display: inline-flex;
+.tools-header-logo {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-decoration: none;
-  margin-bottom: .625rem;
 }
 
-.site-logo img {
-  height: 32px;
-  width: auto;
-  max-width: 160px;
+.tools-favicon-img {
+  width: 42px;
+  height: 42px;
   display: block;
+  transition: transform 0.2s ease;
 }
 
-/* Tagline below logo */
-.site-tagline {
-  font-size: .75rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin-bottom: .75rem;
+.tools-favicon-img:hover {
+  transform: scale(1.1);
 }
 
 /* Breadcrumb — shown on inner pages */

@@ -1485,7 +1485,9 @@ writeText(path.join(PATHS.dist, 'index.html'), homeHtml);
 console.log('\nCopying shared assets...');
 copyFile(path.join(PATHS.shared, 'styles.css'),    path.join(PATHS.dist, 'styles.css'));
 copyFile(path.join(PATHS.shared, 'calc-utils.js'), path.join(PATHS.dist, 'calc-utils.js'));
-copyFile(path.join(PATHS.shared, 'brand-logo.png'), path.join(PATHS.dist, 'brand-logo.png'));
+copyFile(path.join(PATHS.shared, 'favicon.ico'),        path.join(PATHS.dist, 'favicon.ico'));
+copyFile(path.join(PATHS.shared, 'favicon-32x32.png'),  path.join(PATHS.dist, 'favicon-32x32.png'));
+copyFile(path.join(PATHS.shared, 'favicon-16x16.png'),  path.join(PATHS.dist, 'favicon-16x16.png'));
 
 // Build date for sitemap + privacy page (YYYY-MM-DD)
 const today = new Date().toISOString().slice(0, 10);
