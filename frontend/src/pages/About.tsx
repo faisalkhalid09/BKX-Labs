@@ -59,8 +59,8 @@ const About = () => {
     return (
         <div>
             <SEO
-                title="About BKX Labs | Founder Background & Engineering Philosophy"
-                description="BKX Labs is led by specialist engineers with 8+ years recovering failing Laravel and React enterprise codebases. Learn about our forensic rescue methodology, zero-vendor-lock-in philosophy, and compliance engineering expertise."
+                title="About BKX Labs — Software Rescue Specialists"
+                description="Specialist engineers who diagnose, stabilize, and modernize failing Laravel & React systems. Forensic audits delivered in 5–10 days. Zero vendor lock-in."
                 keywords="bkx labs about, faisal khalid engineer, software rescue agency team, laravel expert agency, react rescue specialists, enterprise software audit team, post-quantum cryptography experts, eu ai act compliance engineers"
                 structuredData={structuredData}
             />

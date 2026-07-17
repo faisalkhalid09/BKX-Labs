@@ -42,6 +42,18 @@ export const toolsRegistry: ToolDef[] = [
       {
         question: "What is the EU AI Notification & Surveillance System (NASS)?",
         answer: "NASS is the centralized database where providers of high-risk AI systems must register their models before placing them on the EU market. Registration involves submitting public technical summaries and conformity declarations."
+      },
+      {
+        question: "What technical artifacts are mandatory for Annex IV documentation in a High-Risk AI file?",
+        answer: "At minimum, Annex IV technical documentation should include model purpose and intended users, system architecture, data governance controls, validation and testing evidence, risk management logs, human oversight design, cybersecurity controls, and post-market monitoring procedures. Auditors typically expect traceability from requirements to test evidence."
+      },
+      {
+        question: "Can a non-EU company still be fully liable under the EU AI Act?",
+        answer: "Yes. The EU AI Act applies extraterritorially when AI output is used in the EU market, regardless of where the provider is established. Non-EU providers of High-Risk systems generally need an EU authorized representative and must satisfy conformity, registration, and incident reporting obligations equivalent to EU-based providers."
+      },
+      {
+        question: "How should teams integrate AI Act compliance into MLOps without slowing delivery?",
+        answer: "Best practice is to shift compliance left: add risk classification gates in CI/CD, enforce dataset provenance checks, attach model cards to releases, automate monitoring alerts, and maintain versioned technical documentation. This preserves release velocity while maintaining audit-ready evidence across each model iteration."
       }
     ],
   },
@@ -86,6 +98,18 @@ export const toolsRegistry: ToolDef[] = [
       {
         question: "When is Q-Day expected to arrive?",
         answer: "Q-Day — the day a CRQC can cryptanalytically break RSA-2048 in hours — has no hard consensus date. The most cited estimate from NIST, NSA, and CISA guidance is the 2030–2040 window. However, NSA's Commercial National Security Algorithm (CNSA) Suite 2.0 mandates PQC-ready systems for high-priority National Security Systems by 2030, with full classical algorithm deprecation by 2033. Given HNDL attacks are already occurring, the migration window is effectively now."
+      },
+      {
+        question: "What is a practical hybrid cryptography migration pattern for production systems?",
+        answer: "A common pattern is hybrid key establishment and dual-signature validation during transition windows. Teams can run classical and PQC paths in parallel, validate interoperability under production load, then progressively disable classical algorithms by environment and business criticality. This lowers cutover risk while keeping services available."
+      },
+      {
+        question: "How often should a CBOM be regenerated for regulated environments?",
+        answer: "Most regulated programs regenerate CBOM artifacts on every material cryptographic change and at least per release cycle. For high-sensitivity systems, daily or CI-triggered generation is recommended so inventory drift and newly flagged dependencies are caught before production deployment."
+      },
+      {
+        question: "How does a CBOM support board-level cyber risk reporting?",
+        answer: "A CBOM translates cryptographic exposure into measurable metrics: count of vulnerable assets, critical data shelf-life risk, migration backlog, and time-to-remediation. These indicators can be reported quarterly to leadership alongside compliance milestones, enabling governance teams to track quantum-readiness as an enterprise risk program."
       }
     ],
   },
@@ -142,6 +166,18 @@ export const toolsRegistry: ToolDef[] = [
       {
         question: "Does my startup need SOC 2 if we have fewer than 50 employees?",
         answer: "SOC 2 is not legally mandated for any company size, but it is increasingly required by enterprise buyers as a procurement prerequisite. Approximately 78% of Fortune 500 procurement teams require a SOC 2 Type II report before signing SaaS contracts. For startups, the inflection point for the ROI of SOC 2 is typically when a single enterprise deal exceeds $50,000 ARR, as that deal value justifies the audit cost. Cloud-native startups using IaC and managed services can achieve SOC 2 readiness in under 90 days using automated compliance platforms."
+      },
+      {
+        question: "What evidence retention policy should we use to stay audit-ready year-round?",
+        answer: "A strong baseline is retaining control evidence for the full observation period plus a policy-defined buffer, with immutable storage for high-risk artifacts. Teams should version policies, preserve approval trails, and maintain timestamped logs to prove controls were operating continuously rather than prepared retroactively."
+      },
+      {
+        question: "How should SOC 2 controls map to cloud-native architecture patterns?",
+        answer: "Cloud-native SOC 2 programs typically map controls directly to infrastructure-as-code, identity federation, CI/CD approval gates, centralized logging, and automated backup validation. This creates deterministic, reproducible evidence and reduces variance across environments, which is crucial for Type II consistency."
+      },
+      {
+        question: "Can one control satisfy multiple Trust Services Criteria without audit risk?",
+        answer: "Yes, provided the control objective and evidence clearly demonstrate coverage across each criterion. For example, centralized key management may support Security and Confidentiality simultaneously, but audit workpapers must explicitly document scope, ownership, and testing procedures for each mapped criterion to avoid over-claiming."
       }
     ],
   },
@@ -154,9 +190,9 @@ export const toolsRegistry: ToolDef[] = [
       "Compare GPU costs across 4 cloud providers instant and identify monthly savings in one lookup.",
     directAnswer: {
       sentence1:
-        "This tool compares hourly GPU pricing across AWS, Azure, Google Cloud, and Lambda Lambda for a specified GPU type, region, and usage profile.",
+        "This tool models monthly GPU spend by combining instance-rate benchmarks with workload hours, region selection, and provider-specific pricing behavior to identify the lowest-cost option for a given training or inference profile.",
       sentence2:
-        "It is authoritative because prices are sourced from each provider's official pricing APIs/tables (updated quarterly) and calculations account for regional variance and utilization hours.",
+        "It is authoritative because it distinguishes raw compute rates from real bill drivers (Spot interruptions, egress exposure, storage/network overhead, and VRAM-fit constraints), so decisions are made on effective cost rather than headline hourly price alone.",
     },
     faqs: [
       {
@@ -174,6 +210,34 @@ export const toolsRegistry: ToolDef[] = [
         answer:
           "This tool calculates GPU compute costs only. Data egress, storage, and networking fees are not included.",
       },
+      {
+        question: "How much can egress fees change the final cost decision?",
+        answer: "For data-heavy inference and distributed training, egress can erase apparent compute savings quickly. A provider that is 15% cheaper on GPU hourly rate can become more expensive once outbound transfer, cross-zone traffic, and object-storage retrieval costs are included in total workload economics."
+      },
+      {
+        question: "Should I use Spot/Preemptible GPUs instead of On-Demand?",
+        answer: "Spot/Preemptible can reduce compute spend significantly, but only for interruption-tolerant workloads with checkpointing and retry orchestration. Production-critical latency paths and long uninterrupted training jobs often need an On-Demand or reserved baseline with Spot as a burst layer."
+      },
+      {
+        question: "How do I choose the right VRAM size for my model?",
+        answer: "VRAM sizing should be based on model parameters, sequence length, batch size, optimizer state, and precision strategy. If the model does not fit cleanly, teams either degrade throughput through smaller batches or pay hidden overhead via tensor/model parallelism and interconnect traffic."
+      },
+      {
+        question: "Why do alternative AI clouds sometimes beat hyperscalers on cost?",
+        answer: "Specialized GPU clouds often optimize for high utilization, lean control planes, and narrower product scope, allowing lower margins on accelerator workloads. Hyperscalers usually offer broader enterprise controls and regional depth, but that flexibility can come with higher blended pricing."
+      },
+      {
+        question: "Do interconnect and multi-node networking affect cost efficiency?",
+        answer: "Yes. For distributed training, interconnect topology (for example NVLink, InfiniBand classes, or east-west bandwidth limits) determines scaling efficiency. Poor scaling increases time-to-train, which directly inflates total GPU-hours and effective cost per experiment."
+      },
+      {
+        question: "What hidden costs should be included in a true GPU TCO model?",
+        answer: "A realistic model includes orchestration overhead, engineering support hours, failed-job reruns, checkpoint storage, observability costs, and queue delays. These operational factors frequently exceed simple hourly-rate deltas when teams compare clouds at scale."
+      },
+      {
+        question: "How often should pricing and provider choice be re-evaluated?",
+        answer: "For active AI programs, monthly review is a practical baseline and weekly review is common during heavy experimentation cycles. GPU supply shifts, promotional pricing, and model architecture changes can materially alter the best provider within a single quarter."
+      }
     ],
   },
   {
@@ -185,9 +249,9 @@ export const toolsRegistry: ToolDef[] = [
       "Get instant PUE and annual energy cost forecasts for Blackwell deployments without manual infrastructure design.",
     directAnswer: {
       sentence1:
-        "This tool calculates Power Usage Effectiveness (PUE) by deriving IT load from GPU count and utilization, then multiplying by a PUE factor (1.9 for air, 1.2 for liquid) to estimate facility-wide power.",
+        "This estimator projects Blackwell facility power by calculating IT load from GPU density and utilization, then applying cooling-path efficiency assumptions (air versus direct liquid) to derive realistic PUE-driven power and cost outcomes.",
       sentence2:
-        "It is authoritative because PUE values are based on industry benchmarks for high-density racks, and the GPU power draw (1.456 kW) is from NVIDIA Blackwell specifications.",
+        "It is authoritative because it aligns Blackwell-era high-density planning with practical data center constraints, including thermal envelopes, cooling topology thresholds, and rack-level power behavior that materially change capex and opex decisions.",
     },
     faqs: [
       {
@@ -205,6 +269,34 @@ export const toolsRegistry: ToolDef[] = [
         answer:
           "The estimate assumes $85/MWh electricity cost (US average). Your actual costs depend on local power rates.",
       },
+      {
+        question: "At what rack density does liquid cooling become operationally necessary?",
+        answer: "Air cooling can remain practical at lower rack densities, but once sustained thermal loads rise into high-density accelerator profiles, airflow-only designs face diminishing returns. At that point, direct liquid cooling is typically adopted to maintain thermal headroom and predictable performance under continuous load."
+      },
+      {
+        question: "How should we evaluate Water Usage Effectiveness (WUE) alongside PUE?",
+        answer: "PUE measures electrical efficiency, while WUE captures water consumption impacts. Facilities should evaluate both because a low PUE design can still create environmental or regulatory pressure if water intensity is high in drought-sensitive regions."
+      },
+      {
+        question: "What should teams assume for GB200-era rack power limits?",
+        answer: "GB200-class deployments require planning for substantially higher rack power than legacy enterprise compute. Teams should validate utility feed, PDUs, busway, breaker strategy, and cooling capacity with conservative headroom instead of sizing to nominal averages."
+      },
+      {
+        question: "Does higher coolant temperature always reduce total facility cost?",
+        answer: "Not always. Warmer supply temperatures can improve chiller efficiency in some designs, but reliability, component tolerances, and local climate must be modeled. The optimal operating point is a balance between energy efficiency and operational risk."
+      },
+      {
+        question: "How does partial-load operation affect PUE planning?",
+        answer: "Partial load usually worsens effective PUE because fixed overhead systems become a larger share of total power. Capacity planning should include ramp phases and non-peak scenarios rather than assuming full utilization from day one."
+      },
+      {
+        question: "What redundancy model should be considered for liquid loops?",
+        answer: "Mission-critical deployments commonly require redundancy across pumps, heat exchangers, and distribution paths. N+1 or better loop resilience improves uptime but raises capex, so redundancy should be tied to SLA requirements and outage tolerance."
+      },
+      {
+        question: "Why does facility design quality matter as much as GPU efficiency?",
+        answer: "Efficient silicon cannot offset poor thermal or electrical design. In high-density environments, infrastructure inefficiencies can dominate total cost of ownership, making facility architecture a primary determinant of long-term Blackwell economics."
+      }
     ],
   },
   {
@@ -216,9 +308,9 @@ export const toolsRegistry: ToolDef[] = [
       "Instantly identify PII leaks in prompts before sending to ChatGPT, Claude, or other AI services.",
     directAnswer: {
       sentence1:
-        "This tool pattern-matches a prompt for PII signals (emails, phone numbers, social security numbers, API keys, credit cards, IP addresses) using regex patterns with confidence weighting.",
+        "This auditor scans prompt text for structured and semi-structured sensitive signals, including identifiers, credentials, and financial markers, before data is sent to external or internal LLM endpoints.",
       sentence2:
-        "It is authoritative because detection patterns are derived from OWASP PII guidelines and common data breach indicators, with each signal flagged with a confidence score.",
+        "It is authoritative because it operationalizes OWASP-style detection patterns into pre-submission controls, enabling teams to enforce enterprise AI data policies and reduce accidental disclosure risk at the prompt layer.",
     },
     faqs: [
       {
@@ -236,6 +328,34 @@ export const toolsRegistry: ToolDef[] = [
         answer:
           "Email and IP patterns can have false positives (e.g., config file syntax). Review flagged items manually.",
       },
+      {
+        question: "Do LLM providers train on submitted prompts by default?",
+        answer: "Training and retention behavior depends on provider, plan tier, and account settings. Enterprise plans may support stricter no-training commitments, but teams must validate contractual terms, telemetry settings, and regional processing controls before assuming prompts are excluded from model improvement workflows."
+      },
+      {
+        question: "What are the main limitations of regex-only PII detection?",
+        answer: "Regex performs well for structured patterns but misses contextual sensitivity and semantic variants. It may fail on obfuscated identifiers, multilingual entities, or domain-specific secrets that do not follow predictable formats, so layered detection and policy review are recommended."
+      },
+      {
+        question: "Can this tool detect company secrets that are not classic PII?",
+        answer: "Partially. It can flag common key and token formats, but proprietary intellectual property, strategy text, and internal project codenames often require policy-based classification and human review beyond pattern matching."
+      },
+      {
+        question: "How should enterprises enforce prompt privacy at scale?",
+        answer: "Mature programs combine pre-prompt scanning, role-based access controls, DLP gateways, approval workflows for high-risk datasets, and immutable audit logging. This creates enforcement at both user and platform layers instead of relying on user caution alone."
+      },
+      {
+        question: "What policy standards should prompt security align with?",
+        answer: "Teams often map controls to GDPR data-minimization principles, SOC 2 confidentiality controls, ISO 27001 data handling, and internal acceptable-use policies for AI. The key is explicit classification, allowed-use definitions, and escalation paths for policy violations."
+      },
+      {
+        question: "Does anonymization always make prompts safe for LLM use?",
+        answer: "Not always. Poor anonymization can still permit re-identification through context, linkage, or rare attributes. Effective de-identification must be tested against re-identification risk, not just token replacement success."
+      },
+      {
+        question: "Can this scanner be used as a compliance evidence artifact?",
+        answer: "Yes, as a control-layer artifact showing preventive checks were applied before prompt submission. For audits, pair scan logs with policy documents, incident response records, and provider governance evidence to demonstrate end-to-end control effectiveness."
+      }
     ],
   },
   {
@@ -247,9 +367,9 @@ export const toolsRegistry: ToolDef[] = [
       "Score proportionality of worker monitoring in minutes; defensible assessment reduces litigation risk.",
     directAnswer: {
       sentence1:
-        "This tool weights five legal factors (necessity, transparency, intrusiveness, safeguards, worker impact) and normalizes them to a 0–100 proportionality score mapped to risk bands (low, medium, high).",
+        "This scorer quantifies workplace AI monitoring risk by weighting legal proportionality factors such as necessity, transparency, intrusiveness, safeguards, and employee impact into a defensibility-oriented risk score.",
       sentence2:
-        "It is authoritative because the scoring rubric aligns with ADMT statutory proportionality tests and EU labor law standards for workplace monitoring.",
+        "It is authoritative because the rubric mirrors core European legal tests used in GDPR-era employment contexts, including proportionality analysis for automated decision-making and surveillance-intensive processing.",
     },
     faqs: [
       {
@@ -267,6 +387,34 @@ export const toolsRegistry: ToolDef[] = [
         answer:
           "Necessity exists when monitoring addresses legitimate operational needs (e.g., safety, compliance) that cannot be achieved less intrusively.",
       },
+      {
+        question: "How does GDPR Article 22 affect AI-driven workplace decisions?",
+        answer: "Article 22 restricts decisions based solely on automated processing when those decisions produce legal or similarly significant effects on individuals. In workplace settings, employers often need meaningful human review, transparency, and challenge mechanisms before high-impact decisions are actioned."
+      },
+      {
+        question: "What is the legal meaning of 'necessity' in surveillance programs?",
+        answer: "Necessity requires demonstrating that the monitoring objective cannot be achieved through less intrusive alternatives. If equivalent risk reduction is possible through milder controls, broad surveillance is likely disproportionate and vulnerable to legal challenge."
+      },
+      {
+        question: "Do national workplace surveillance rules override a generic EU scoring model?",
+        answer: "National labor frameworks, regulator guidance, and case law can materially change implementation limits even within the EU baseline. The score is a strategic screening layer and should be supplemented with jurisdiction-specific review before deployment."
+      },
+      {
+        question: "Is a DPIA mandatory for employee monitoring AI?",
+        answer: "In many cases, yes. If processing is high-risk due to systematic monitoring, sensitive data handling, or significant rights impact, a Data Protection Impact Assessment is generally required before rollout and should include residual risk decisions and mitigation controls."
+      },
+      {
+        question: "How do works councils and employee representatives affect deployment?",
+        answer: "In several jurisdictions, consultation or co-determination obligations apply before introducing monitoring technology. Ignoring these governance steps can create legal exposure independent of technical control quality."
+      },
+      {
+        question: "Are biometric or emotion analytics in workplaces treated as high risk?",
+        answer: "Yes, these categories are typically considered highly intrusive due to sensitivity and potential discriminatory impact. Deployments require stronger legal basis, stricter safeguards, and often face tighter regulatory scrutiny than standard operational telemetry."
+      },
+      {
+        question: "What evidence improves legal defensibility in proportionality assessments?",
+        answer: "Defensibility improves when organizations keep a clear decision log: objective definition, alternatives assessed, data minimization rationale, retention policy, access controls, and documented human oversight. Evidence quality often determines audit and litigation outcomes more than policy language alone."
+      }
     ],
   },
   {
@@ -278,9 +426,9 @@ export const toolsRegistry: ToolDef[] = [
       "Get a realistic 6-phase migration roadmap (discovery to cutover) in one calculation.",
     directAnswer: {
       sentence1:
-        "This tool estimates migration duration by dividing cryptographic assets among team members and scaling by criticality, then distributing effort across six phases (assessment, design, implementation, testing, dual-run, cutover).",
+        "This planner estimates post-quantum migration timelines by modeling cryptographic asset volume, team capacity, and criticality weighting across phased execution from discovery through dual-run and production cutover.",
       sentence2:
-        "It is authoritative because phase durations are calibrated to industry PQC migration pilots and NIST transition guidance.",
+        "It is authoritative because it reflects NIST-aligned transition sequencing and practical enterprise constraints, including interoperability windows, dependency bottlenecks, and high-value data prioritization under harvest-now risk pressure.",
     },
     faqs: [
       {
@@ -298,6 +446,34 @@ export const toolsRegistry: ToolDef[] = [
         answer:
           "Dual-run (running both classical and PQC side-by-side) typically lasts 3–6 months to catch interoperability issues.",
       },
+      {
+        question: "Why does 'Harvest Now, Decrypt Later' change migration priority?",
+        answer: "Because adversaries can collect encrypted traffic today and decrypt it later once quantum capability matures. Systems protecting long-lived confidentiality should be prioritized first, even if current cryptography appears operationally stable."
+      },
+      {
+        question: "How should teams integrate Kyber/ML-KEM into existing TLS stacks?",
+        answer: "Most programs begin with hybrid key establishment in controlled environments, then expand to production endpoints after interoperability and performance validation. Integration requires certificate-chain planning, library compatibility testing, and fallback handling for legacy clients."
+      },
+      {
+        question: "What team size is realistic for enterprise PQC migration?",
+        answer: "Team size depends on asset footprint and platform diversity. Large estates typically need cross-functional staffing across PKI, platform engineering, application owners, security architecture, and compliance operations rather than a single cryptography specialist track."
+      },
+      {
+        question: "What should be inventoried before timeline commitments are made?",
+        answer: "Inventory should include keys, certificates, protocol endpoints, cryptographic libraries, HSM dependencies, third-party SaaS integrations, and embedded systems. Migration plans fail when hidden crypto dependencies are discovered late in the execution cycle."
+      },
+      {
+        question: "Should organizations migrate signatures and key exchange at the same speed?",
+        answer: "Not always. Key exchange and signature migration often move on different tracks due to protocol and trust-chain constraints. Many teams sequence changes to reduce outage risk while preserving cryptographic continuity across dependent systems."
+      },
+      {
+        question: "How should vendor and hardware dependencies be reflected in the roadmap?",
+        answer: "Critical external dependencies should be treated as schedule gates with explicit lead-time buffers. Vendor library readiness, HSM firmware support, and managed service roadmap alignment frequently become dominant critical-path constraints."
+      },
+      {
+        question: "What milestones indicate a migration plan is execution-ready?",
+        answer: "Execution readiness usually requires a validated crypto inventory, approved reference architecture, pilot success in dual-stack mode, rollback-tested change plans, and governance sign-off on residual risks. Without these milestones, timeline estimates are usually optimistic."
+      }
     ],
   },
   {

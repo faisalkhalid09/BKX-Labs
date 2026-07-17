@@ -58,8 +58,8 @@ const Process = () => {
     return (
         <div>
             <SEO
-                title="The Rescue Protocol | Auditable 5-Phase Software Recovery Process"
-                description="BKX Labs uses a forensic, phase-gated rescue methodology: Diagnostic Audit, Triage, Modernization, Weekly Transparency, and Full Handover. PHPStan, OWASP ZAP, PestPHP 3. Fixed-price, zero-downtime. Written report before any code changes."
+                title="5-Phase Software Rescue Process — BKX Labs"
+                description="Forensic audit in 5–10 days, emergency triage in 72 hrs, then weekly sprints to full handover. Fixed-price, zero-downtime. Written report before any code changes."
                 keywords="software rescue protocol, project recovery process, laravel codebase audit process, react modernization approach, technical debt remediation steps, how to rescue a failing project, software rescue methodology, enterprise code handover process"
                 structuredData={structuredData}
             />

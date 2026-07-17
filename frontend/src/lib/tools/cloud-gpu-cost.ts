@@ -26,25 +26,25 @@ const GPU_PRICING: Record<string, Record<CloudProvider, Record<string, number>>>
     aws: { "us-east-1": 2.92, "eu-west-1": 3.21 },
     azure: { "us-east": 3.06, "uk-south": 3.41 },
     "google-cloud": { "us-central1": 2.93, "us-east1": 2.93 },
-    lambda: { default: 0.0001 },
+    lambda: { default: 1.29 },
   },
   "a100-80gb": {
     aws: { "us-east-1": 4.88, "eu-west-1": 5.37 },
     azure: { "us-east": 5.12, "uk-south": 5.71 },
     "google-cloud": { "us-central1": 4.95, "us-east1": 4.95 },
-    lambda: { default: 0.00015 },
+    lambda: { default: 1.99 },
   },
   "h100-80gb": {
     aws: { "us-east-1": 7.09, "eu-west-1": 7.81 },
     azure: { "us-east": 7.2, "uk-south": 8.0 },
     "google-cloud": { "us-central1": 7.25, "us-east1": 7.25 },
-    lambda: { default: 0.0002 },
+    lambda: { default: 2.49 },
   },
   "v100-32gb": {
     aws: { "us-east-1": 3.06, "eu-west-1": 3.37 },
     azure: { "us-east": 2.97, "uk-south": 3.3 },
     "google-cloud": { "us-central1": 2.48, "us-east1": 2.48 },
-    lambda: { default: 0.00008 },
+    lambda: { default: 0.55 },
   },
 };
 

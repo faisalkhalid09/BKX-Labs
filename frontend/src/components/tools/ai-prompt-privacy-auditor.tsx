@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Download } from 'lucide-react';
 
 // PII Detection patterns with confidence weighting
 const PII_PATTERNS = [
@@ -47,6 +48,26 @@ interface PiiMatch {
   confidence: number;
   severity: 'critical' | 'high' | 'medium';
 }
+
+// ── CSV helpers (same pattern as soc2-calculator.tsx) ───────────────────────
+function csvEscape(value: string | number): string {
+  const raw = String(value ?? '');
+  if (raw.includes(',') || raw.includes('\n') || raw.includes('"')) {
+    return `"${raw.replace(/"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsvFile(csvContent: string, fileName: string) {
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+// ────────────────────────────────────────────────────────────────────────────
 
 export function AiPromptPrivacyAuditor() {
   const [prompt, setPrompt] = useState('');
@@ -104,6 +125,37 @@ export function AiPromptPrivacyAuditor() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleDownloadCsv = () => {
+    const rows: string[] = [
+      // Header
+      ['PII Type', 'Severity', 'Detected Value', 'Confidence', 'Position in Prompt'].map(csvEscape).join(','),
+      // Data rows
+      ...piiMatches.map((m) =>
+        [
+          m.type,
+          m.severity,
+          m.value,
+          `${Math.round(m.confidence * 100)}%`,
+          m.position,
+        ]
+          .map(csvEscape)
+          .join(',')
+      ),
+      // Blank separator
+      '',
+      // Summary
+      ['SUMMARY', '', '', '', ''].map(csvEscape).join(','),
+      ['Risk Level', riskLevel, '', '', ''].map(csvEscape).join(','),
+      ['Risk Score', `${riskScore} / 100`, '', '', ''].map(csvEscape).join(','),
+      ['Critical Findings', criticalCount, '', '', ''].map(csvEscape).join(','),
+      ['High Findings', highCount, '', '', ''].map(csvEscape).join(','),
+      ['Medium Findings', mediumCount, '', '', ''].map(csvEscape).join(','),
+      ['Total PII Signals', piiMatches.length, '', '', ''].map(csvEscape).join(','),
+    ];
+
+    downloadCsvFile(rows.join('\n'), 'pii-audit-report.csv');
+  };
+
   return (
     <div className="tu-wrap">
       <span className="tu-tag">BKX Data Security</span>
@@ -129,6 +181,17 @@ export function AiPromptPrivacyAuditor() {
           <div className="tu-btn-row">
             <button type="button" className="tu-btn tu-btn-primary" onClick={handleCopy} disabled={!prompt}>
               {copied ? 'Copied!' : 'Copy Prompt'}
+            </button>
+            <button
+              type="button"
+              className="tu-btn tu-btn-primary"
+              onClick={handleDownloadCsv}
+              disabled={piiMatches.length === 0}
+              title="Download audit findings as CSV"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            >
+              <Download size={14} />
+              Download Report
             </button>
             <button type="button" className="tu-btn" onClick={() => setPrompt('')} disabled={!prompt}>Clear</button>
           </div>
