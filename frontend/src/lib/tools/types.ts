@@ -19,4 +19,10 @@ export type ToolDef = {
   valueProposition: string;
   directAnswer: DirectAnswer;
   faqs: FaqItem[];
+  toolGuide?: {
+    sections: Array<{
+      heading: string;
+      body: string;
+    }>;
+  };
 };

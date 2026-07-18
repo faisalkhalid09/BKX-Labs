@@ -207,6 +207,25 @@ export default function ToolDetail() {
               <Component />
             </div>
 
+            {/* Tool Guide */}
+            {tool.toolGuide && tool.toolGuide.sections.length > 0 && (
+              <div className="tool-card" style={{ marginTop: '1rem' }}>
+                {tool.toolGuide.sections.map((section, i) => (
+                  <div key={i} style={{ marginBottom: i < tool.toolGuide!.sections.length - 1 ? '1.75rem' : 0 }}>
+                    <h2
+                      className="text-xl font-semibold text-[#0d2b5e]"
+                      style={{ marginBottom: '0.6rem' }}
+                    >
+                      {section.heading}
+                    </h2>
+                    <p style={{ color: '#4f565c', lineHeight: '1.75', fontSize: '0.9375rem' }}>
+                      {section.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* FAQs */}
             {tool.faqs && tool.faqs.length > 0 && (
               <div className="tool-card" style={{ marginTop: '1rem' }}>

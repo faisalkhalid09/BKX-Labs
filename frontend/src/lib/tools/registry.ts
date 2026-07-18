@@ -141,50 +141,58 @@ export const toolsRegistry: ToolDef[] = [
       sentence2:
         "It is authoritative because it operationalizes OWASP-style detection patterns into pre-submission controls, enabling teams to enforce enterprise AI data policies and reduce accidental disclosure risk at the prompt layer.",
     },
+    toolGuide: {
+      sections: [
+        {
+          heading: "Why Pasting PII Into LLM Prompts Is a GDPR Article 32 Risk",
+          body: "GDPR Article 32 requires organisations to implement appropriate technical measures to ensure security of personal data processing. When a developer or analyst pastes a real customer record, support ticket, or internal document into an LLM interface, they are initiating a data transfer to a third-party processor — the LLM provider. Most enterprise LLM API agreements do not guarantee that prompt inputs are excluded from model training data unless a Data Processing Agreement with explicit training opt-out provisions is in place. Even with such agreements, prompt data transits the provider's infrastructure and is processed in their environment. If that data includes names, SSNs, credit card numbers, API keys, or email addresses, the transfer constitutes personal data processing under Article 4(2) GDPR. Failure to prevent unauthorised transmission of personal data to third parties is an Article 32 violation that carries fines up to 2 percent of global annual turnover under Article 83(4). This tool is designed to catch PII before it leaves your browser — not after.",
+        },
+        {
+          heading: "How the Six Detection Patterns Work",
+          body: "The auditor runs six deterministic regex patterns against your prompt text, all executing locally in your browser with no network requests. Credit card detection uses a Luhn-adjacent grouping pattern matching 16-digit sequences in common dash, space, and continuous formats, returning 92 percent confidence to account for edge cases where numeric sequences are not financial data. SSN detection uses the full exclusion pattern defined by the US Social Security Administration — excluding 000, 666, and 900-series prefixes and 00 group numbers — achieving 99 percent confidence. API key and secret detection targets strings following common key-value assignment patterns with a minimum 20-character alphanumeric secret, covering AWS access keys, Bearer tokens, and generic API key assignments with 85 percent confidence due to variable formatting conventions. Email addresses are matched against RFC 5322 simplified pattern with 95 percent confidence. US phone numbers are matched across ITU-T E.164 and NANP formats including country code prefix, parenthetical area codes, and dot-separated styles at 88 percent confidence. IP addresses match all four IPv4 octets within valid range bounds (0–255) at 80 percent confidence, accounting for version numbers and port references that may resemble but are not IP addresses.",
+        },
+        {
+          heading: "How the Risk Score Is Calculated",
+          body: "The tool assigns each detection category a severity tier based on regulatory exposure and identity theft potential. Critical tier (credit cards, SSNs, API keys) carries a 50-point weight per detection. High tier (email addresses, phone numbers) carries a 25-point weight per detection. Medium tier (IP addresses) carries a 10-point weight per detection. The final risk score is: minimum of 100 and the sum of (critical count × 50) plus (high count × 25) plus (medium count × 10). This formula reaches the maximum score of 100 with two critical detections alone, or one critical plus two high detections. A score below 25 is Low risk — the prompt contains at most one medium-severity detection. Scores of 25 to 49 indicate Medium risk — typically one or more high-severity detections requiring review. Scores of 50 to 74 indicate High risk — at least one critical detection or multiple high-tier items requiring immediate remediation before the prompt is shared. Scores of 75 and above are Critical — multiple high-severity items or any combination that creates compound identity or credential exposure risk.",
+        },
+      ],
+    },
     faqs: [
       {
-        question: "What if my prompt has legitimate email addresses?",
+        question: "Does this tool send my prompt text to any external server?",
         answer:
-          "The tool flags all detected patterns; you decide if they should be redacted. Always err on the side of caution.",
+          "No. All six detection patterns run as JavaScript regex operations inside your browser's local runtime. No network request is made when you click Audit. Your prompt text never leaves your device. This is verifiable by opening your browser's network inspector before running the audit — you will see zero outbound requests triggered by the analysis.",
       },
       {
-        question: "Does this check data already in AI training?",
+        question: "What does a Critical risk score mean under GDPR?",
         answer:
-          "No. This tool only scans your current prompt before sending it. Historical training data leaks are outside its scope.",
+          "A Critical score means your prompt contains at least two items classified as high-severity PII — typically combinations of SSNs, credit card numbers, or API credentials. Transmitting this prompt to any external LLM API without a valid Data Processing Agreement in place would constitute unauthorised personal data transfer under GDPR Article 28. If your organisation has a DPA with your LLM provider that includes training opt-out, transmission may be permissible but should still be logged as a data processing activity under Article 30.",
       },
       {
-        question: "What's the false-positive rate?",
+        question: "Why is SSN detection rated at 99% confidence but API key detection at 85%?",
         answer:
-          "Email and IP patterns can have false positives (e.g., config file syntax). Review flagged items manually.",
+          "SSN format is precisely defined by the US Social Security Administration with documented exclusion zones for invalid prefixes and group numbers. The regex implements all exclusions, leaving very little ambiguity. API key format has no universal standard — different providers use different prefix conventions, lengths, and character sets. The 85 percent confidence for API keys reflects cases where a long alphanumeric string follows a key-value assignment pattern but may be a hash, UUID, or non-credential identifier rather than a live credential.",
       },
       {
-        question: "Do LLM providers train on submitted prompts by default?",
-        answer: "Training and retention behavior depends on provider, plan tier, and account settings. Enterprise plans may support stricter no-training commitments, but teams must validate contractual terms, telemetry settings, and regional processing controls before assuming prompts are excluded from model improvement workflows."
+        question: "What PII does this tool not detect?",
+        answer:
+          "The tool does not detect: names and surnames (too many false positives with common words), UK National Insurance numbers, EU national ID formats, IBAN or SWIFT codes, passport numbers, or unstructured address data. It also does not perform semantic analysis — it cannot detect PII disguised through substitution or identify a customer by a combination of non-PII attributes. For comprehensive data classification across structured datasets, a dedicated DLP solution with named-entity recognition is more appropriate.",
       },
       {
-        question: "What are the main limitations of regex-only PII detection?",
-        answer: "Regex performs well for structured patterns but misses contextual sensitivity and semantic variants. It may fail on obfuscated identifiers, multilingual entities, or domain-specific secrets that do not follow predictable formats, so layered detection and policy review are recommended."
+        question: "How should I use the CSV export for compliance documentation?",
+        answer:
+          "The CSV export lists each detected item with its type, the matched value, severity tier, and confidence percentage. This file serves as evidence of a pre-transmission PII review. If your organisation maintains an Article 30 Record of Processing Activities, the CSV can be attached as documentation that a manual review step occurred before a specific prompt was submitted to an external processor. Store exports with the date, the LLM provider used, and the outcome (whether the prompt was modified, abandoned, or transmitted with DPA coverage).",
       },
       {
-        question: "Can this tool detect company secrets that are not classic PII?",
-        answer: "Partially. It can flag common key and token formats, but proprietary intellectual property, strategy text, and internal project codenames often require policy-based classification and human review beyond pattern matching."
+        question: "Does this tool replace a formal Data Protection Impact Assessment?",
+        answer:
+          "No. A DPIA under GDPR Article 35 is a structured assessment of a processing activity covering necessity, proportionality, risk to data subjects, and mitigation measures. This tool addresses one narrow technical control — detecting PII in a specific text input before transmission. It is a preventive measure, not an assessment of the broader processing activity. If your organisation uses LLMs to process personal data at scale, a DPIA covering that activity is separately required regardless of whether individual prompts are screened.",
       },
       {
-        question: "How should enterprises enforce prompt privacy at scale?",
-        answer: "Mature programs combine pre-prompt scanning, role-based access controls, DLP gateways, approval workflows for high-risk datasets, and immutable audit logging. This creates enforcement at both user and platform layers instead of relying on user caution alone."
+        question: "What should I do if I find PII in a prompt I have already submitted?",
+        answer:
+          "First, check your LLM provider's data retention and training policy. OpenAI, Anthropic, Google, and Azure OpenAI each have different default retention periods and opt-out mechanisms. If the transmission constitutes a personal data breach under GDPR Article 4(12) — meaning it is likely to result in risk to the rights and freedoms of natural persons — your organisation may have a 72-hour notification obligation to your supervisory authority under Article 33. Consult your Data Protection Officer before determining whether notification is required.",
       },
-      {
-        question: "What policy standards should prompt security align with?",
-        answer: "Teams often map controls to GDPR data-minimization principles, SOC 2 confidentiality controls, ISO 27001 data handling, and internal acceptable-use policies for AI. The key is explicit classification, allowed-use definitions, and escalation paths for policy violations."
-      },
-      {
-        question: "Does anonymization always make prompts safe for LLM use?",
-        answer: "Not always. Poor anonymization can still permit re-identification through context, linkage, or rare attributes. Effective de-identification must be tested against re-identification risk, not just token replacement success."
-      },
-      {
-        question: "Can this scanner be used as a compliance evidence artifact?",
-        answer: "Yes, as a control-layer artifact showing preventive checks were applied before prompt submission. For audits, pair scan logs with policy documents, incident response records, and provider governance evidence to demonstrate end-to-end control effectiveness."
-      }
     ],
   },
   {
@@ -204,50 +212,58 @@ export const toolsRegistry: ToolDef[] = [
       sentence2:
         "It is authoritative because the rubric mirrors core European legal tests used in GDPR-era employment contexts, including proportionality analysis for automated decision-making and surveillance-intensive processing.",
     },
+    toolGuide: {
+      sections: [
+        {
+          heading: "What ADMT Is and Why It Triggers Heightened GDPR Obligations",
+          body: "Automated Decision-Making Technology in the workplace — ADMT — refers to any system that monitors, evaluates, or makes decisions about workers through automated means. This includes productivity monitoring software that scores keystrokes or mouse activity, surveillance systems that track physical location or facial expressions, algorithmic scheduling that determines shift allocation without human review, and performance management tools that feed automated scores into appraisal processes. Under GDPR Article 22, individuals have the right not to be subject to decisions based solely on automated processing that produce legal or similarly significant effects. For employment decisions — hiring, disciplinary action, termination, promotion — this standard is almost always met. Separately, Article 35 requires a Data Protection Impact Assessment before deploying any processing that is likely to result in high risk to individuals, with the Article 29 Working Party guidance specifically listing systematic monitoring of employees as a presumptive high-risk category requiring DPIA. The EU AI Act 2024, which reached full applicability in August 2026, separately classifies AI systems used for evaluating workers, including monitoring their performance and behaviour, as high-risk AI under Annex III, imposing conformity assessment, technical documentation, and human oversight requirements that operate in parallel with GDPR. Organisations deploying workplace monitoring technology must satisfy both regimes simultaneously.",
+        },
+        {
+          heading: "How the Six Dimensions Map to the GDPR Article 35 Triple Test",
+          body: "The GDPR Article 35 DPIA framework and the Article 29 Working Party guidance on DPIA methodology require assessing necessity, proportionality, and risk mitigation for high-risk processing activities. This tool operationalises that assessment through six weighted dimensions. Legitimacy — the lawful basis and legitimate interest assessment — addresses whether the processing has a valid legal foundation under Article 6 and whether that basis is documented. Necessity and alternatives tests whether less intrusive means could achieve the same objective, a core proportionality requirement under Article 25 data minimisation. Transparency addresses Article 13 and 14 obligations to inform workers about the nature, scope, and purpose of monitoring before it begins. Intrusiveness is weighted inversely — high intrusiveness reduces the score — reflecting the principle that processing which penetrates into private spheres requires correspondingly stronger justification. Human oversight addresses Article 22 requirements that consequential automated decisions involve meaningful human review rather than rubber-stamping. Data minimisation assesses whether the system collects only what is strictly necessary for the stated purpose, implementing Article 5(1)(c). The weighting gives highest combined weight to oversight and intrusiveness at 20 percent each, reflecting that these dimensions generate the most enforcement action — the ICO and CNIL have both issued fines specifically for automated systems with insufficient human review and disproportionate data collection scope.",
+        },
+        {
+          heading: "How to Read Critical Gaps Alongside the Overall Score",
+          body: "A composite score above 80 indicates Low overall risk, but the tool separately flags three critical conditions that represent compliance failures regardless of the aggregate score: oversight below 3, legitimacy below 4, and intrusiveness above 8. These thresholds are calibrated against DPA enforcement precedent. Oversight below 3 reflects rubber-stamping risk — a scenario where nominally human-reviewed decisions are in practice never reversed, which regulators treat as equivalent to fully automated decision-making under Article 22. Legitimacy below 4 reflects a weak or undocumented legal basis, the single most common basis for GDPR enforcement action. Intrusiveness above 8 flags processing that is disproportionate in scope — for example, continuous biometric monitoring of remote workers or real-time keystroke logging at character level. When any critical gap is triggered, the tool sets the overall risk band to Critical regardless of the aggregate score. This matters because an organisation could score 75 in aggregate — Medium risk — while still having a legitimacy score of 3 due to weak LIA documentation, creating a Critical gap that should be remediated before any data collection begins. Read the critical gaps flags first, then use the overall score for prioritising remediation of non-critical dimensions.",
+        },
+      ],
+    },
     faqs: [
       {
-        question: "Is a high score always legal?",
+        question: "What is the difference between GDPR Article 22 and Article 35 for ADMT compliance?",
         answer:
-          "A high proportionality score suggests defensibility, but does not guarantee legal compliance. Consult a labor lawyer for final decisions.",
+          "Article 22 gives individuals a specific right not to be subject to solely automated decisions with significant effects, and requires that where such decisions occur the organisation must implement suitable safeguards including the ability to obtain human intervention, express a point of view, and contest the decision. Article 35 requires a Data Protection Impact Assessment before deploying any high-risk processing activity — including systematic employee monitoring — regardless of whether the decisions are fully automated. An organisation can comply with Article 35 by completing a DPIA that documents and mitigates risks, while separately complying with Article 22 by implementing human review procedures. Both obligations exist in parallel for workplace ADMT deployments.",
       },
       {
-        question: "What is 'worker transparency'?",
+        question: "Does the EU AI Act 2024 create obligations on top of GDPR for workplace monitoring AI?",
         answer:
-          "Full disclosure of monitoring scope, data use, and retention. High transparency reduces legal risk.",
+          "Yes. The EU AI Act classifies AI systems used to evaluate or score natural persons in the employment context — including performance monitoring, behaviour tracking, and allocation of tasks — as high-risk AI under Annex III category 4. High-risk AI systems must undergo a conformity assessment, maintain technical documentation under Article 11, implement a quality management system under Article 17, register in the EU database under Article 71, and provide workers with meaningful explanations of how the system affects decisions concerning them under Article 86. These obligations apply to both providers placing such systems on the market and deployers operating them in the workplace. They operate alongside GDPR and do not replace the DPIA requirement.",
       },
       {
-        question: "When is monitoring 'necessary'?",
+        question: "What legitimacy score triggers the critical gap flag and why?",
         answer:
-          "Necessity exists when monitoring addresses legitimate operational needs (e.g., safety, compliance) that cannot be achieved less intrusively.",
+          "A legitimacy score below 4 out of 10 triggers the critical gap. This threshold reflects cases where the legal basis for processing is absent, undocumented, or implausible. Consent is generally not a valid lawful basis for employee monitoring under GDPR because of the inherent power imbalance between employer and employee — consent is not freely given when refusal has employment consequences. Legitimate interest requires a three-part LIA: establishing a genuine interest, demonstrating necessity, and balancing the interest against worker rights. A score below 4 indicates this assessment has not been completed or documented to a standard that would satisfy a regulatory review.",
       },
       {
-        question: "How does GDPR Article 22 affect AI-driven workplace decisions?",
-        answer: "Article 22 restricts decisions based solely on automated processing when those decisions produce legal or similarly significant effects on individuals. In workplace settings, employers often need meaningful human review, transparency, and challenge mechanisms before high-impact decisions are actioned."
+        question: "What human oversight score is sufficient to avoid the Article 22 rubber-stamping risk?",
+        answer:
+          "The tool flags oversight below 3 as a critical gap. An oversight score of 5 or above indicates a process where human reviewers demonstrably exercise independent judgment — meaning automated recommendations are regularly modified or reversed based on contextual factors the algorithm does not capture. Regulatory guidance from the ICO and the French CNIL has established that human oversight is not meaningful when reviewers lack the training, time, or authority to override system outputs. A score of 3 or 4 indicates oversight exists formally but may not be substantive, requiring documentation of actual override rates and reviewer training to confirm compliance.",
       },
       {
-        question: "What is the legal meaning of 'necessity' in surveillance programs?",
-        answer: "Necessity requires demonstrating that the monitoring objective cannot be achieved through less intrusive alternatives. If equivalent risk reduction is possible through milder controls, broad surveillance is likely disproportionate and vulnerable to legal challenge."
+        question: "Can this tool's output be used as evidence in a GDPR DPIA?",
+        answer:
+          "The tool output — compliance score, risk band, critical gaps, and recommendations — can serve as structured input to a DPIA process. It is not a completed DPIA. A DPIA under Article 35 must also document the specific processing operations and their purposes, assess the necessity and proportionality of those specific operations, identify the specific risks to data subjects, and document consultation with the Data Protection Officer under Article 35(2). The tool's risk band and critical gap analysis is suitable for inclusion as a supporting document in the DPIA record, alongside the full DPIA narrative.",
       },
       {
-        question: "Do national workplace surveillance rules override a generic EU scoring model?",
-        answer: "National labor frameworks, regulator guidance, and case law can materially change implementation limits even within the EU baseline. The score is a strategic screening layer and should be supplemented with jurisdiction-specific review before deployment."
+        question: "What intrusiveness level represents disproportionate monitoring under GDPR?",
+        answer:
+          "An intrusiveness score above 8 is flagged as critical. This corresponds to monitoring that captures intimate or continuous data about workers — real-time biometric data, continuous ambient audio recording, keystroke-level input logging, or facial expression analysis. The Article 29 Working Party guidance and the EDPB's subsequent guidance on the use of tracking technologies both indicate that continuous monitoring of workers in their personal environment (including home office monitoring) requires an exceptionally compelling justification that cannot typically be met by productivity management objectives alone.",
       },
       {
-        question: "Is a DPIA mandatory for employee monitoring AI?",
-        answer: "In many cases, yes. If processing is high-risk due to systematic monitoring, sensitive data handling, or significant rights impact, a Data Protection Impact Assessment is generally required before rollout and should include residual risk decisions and mitigation controls."
+        question: "What are the most common ADMT compliance failures that lead to regulatory fines?",
+        answer:
+          "The three most common enforcement patterns are: first, deploying employee monitoring without a lawful basis or valid legitimate interest assessment — the Swedish DPA fined an employer for using software that tracked which applications employees used without a documented LIA. Second, failing to inform workers about monitoring — multiple national DPAs have fined organisations for deploying tracking software without the Article 13 disclosures required before monitoring began. Third, allowing automated performance scoring to feed consequential employment decisions without meaningful human review — the Amsterdam District Court ruled that Uber's use of algorithmic fraud detection to terminate driver contracts without human review violated Article 22. These three failure modes correspond directly to the legitimacy, transparency, and oversight dimensions this tool assesses.",
       },
-      {
-        question: "How do works councils and employee representatives affect deployment?",
-        answer: "In several jurisdictions, consultation or co-determination obligations apply before introducing monitoring technology. Ignoring these governance steps can create legal exposure independent of technical control quality."
-      },
-      {
-        question: "Are biometric or emotion analytics in workplaces treated as high risk?",
-        answer: "Yes, these categories are typically considered highly intrusive due to sensitivity and potential discriminatory impact. Deployments require stronger legal basis, stricter safeguards, and often face tighter regulatory scrutiny than standard operational telemetry."
-      },
-      {
-        question: "What evidence improves legal defensibility in proportionality assessments?",
-        answer: "Defensibility improves when organizations keep a clear decision log: objective definition, alternatives assessed, data minimization rationale, retention policy, access controls, and documented human oversight. Evidence quality often determines audit and litigation outcomes more than policy language alone."
-      }
     ],
   },
   {
@@ -330,21 +346,62 @@ export const toolsRegistry: ToolDef[] = [
       sentence2:
         "It is authoritative because the model accounts for both CapEx (one-time implementation) and OpEx (recurring costs), standard metrics in data-center infrastructure decisions.",
     },
+    toolGuide: {
+      sections: [
+        {
+          heading: "Why Liquid Cooling ROI Requires Modelling Both CapEx and OpEx",
+          body: "A common mistake in data centre cooling decisions is comparing only energy bills. Direct-to-chip liquid cooling has a significant upfront capital cost — manifolds, coolant distribution units, cold plates, leak detection, and deionised water treatment — that air cooling does not. Evaluating only the ongoing power savings overstates the return and leads to unrealistic payback expectations. Accurate ROI analysis requires summing the full 5-year cost of each architecture: recurring annual operating expenditure for both systems, plus the one-time capital expenditure for the liquid cooling implementation. This tool calculates that complete picture. It does not assume a fixed CapEx per rack — you enter your actual vendor quote, which accounts for whether you are retrofitting existing racks or building liquid infrastructure into a greenfield deployment.",
+        },
+        {
+          heading: "How the ROI Model Works",
+          body: "The tool computes annual cooling OpEx for both architectures using your IT load (kW), the PUE of each system, and your electricity rate. PUE — Power Usage Effectiveness — is the ratio of total facility power to IT load. An air-cooled system with PUE 1.5 consumes 50 percent more power than the IT equipment alone; a liquid-cooled system at PUE 1.15 consumes only 15 percent overhead. The annual cooling power difference between the two systems is: (PUE_air − PUE_liquid) × IT_load_kW × 8,760 hours × cost_per_kWh. That figure is your annual saving. The tool then computes 5-year cumulative OpEx for each architecture and adds your liquid cooling CapEx to the liquid total. Return on investment is expressed as: (5-year air OpEx − 5-year liquid total cost) ÷ CapEx × 100. Break-even is the year in which cumulative liquid savings exceed CapEx.",
+        },
+        {
+          heading: "Worked Example: 10-Rack NVIDIA Blackwell Deployment",
+          body: "Consider 10 racks each drawing 60 kW of IT load, totalling 600 kW. At air cooling PUE 1.5, total facility power is 900 kW. At liquid cooling PUE 1.15, total facility power is 690 kW — a 210 kW reduction. At an electricity rate of 0.08 USD per kWh and 8,760 operating hours per year, annual savings are 210 × 8,760 × 0.08 = 147,168 USD. A realistic CapEx for 10 racks including CDU hardware, manifold installation, and water treatment setup is approximately 200,000 USD. Cumulative savings exceed CapEx during month 17, giving a break-even well within the 5-year model window. At this scale the 5-year net saving after CapEx recovery is approximately 536,000 USD. These figures use conservative PUE values — production deployments often achieve PUE closer to 1.10, which improves the break-even further.",
+        },
+      ],
+    },
     faqs: [
       {
-        question: "Does liquid cooling always pay for itself?",
+        question: "What PUE improvement is realistic for direct-to-chip liquid cooling?",
         answer:
-          "Only if annual savings from lower OpEx exceed the initial investement within the equipment lifetime (5+ years).",
+          "Independent measurements from hyperscale operators place direct-to-chip liquid cooling PUE between 1.05 and 1.15, compared to 1.4 to 1.6 for forced-air cooling in high-density GPU environments. The improvement narrows below 1.05 only in full-immersion deployments, which this tool does not model. The 1.15 default in this calculator is a conservative production figure achievable without purpose-built facility modifications.",
       },
       {
-        question: "What costs are included in OpEx?",
+        question: "What CapEx should I budget per rack for liquid cooling?",
         answer:
-          "Cooling Power consumption, maintenance labor, fluid replacement, and pump/chiller repairs.",
+          "Retrofit costs typically range from 15,000 to 40,000 USD per rack depending on manifold complexity, coolant distribution unit capacity, and whether existing floor tiles or overhead cable trays require modification. Greenfield deployments cost less because liquid infrastructure is designed in from the start. Enter your actual vendor quote into the CapEx field — the tool does not apply a fixed per-rack assumption.",
       },
       {
-        question: "Do I need water treatment?",
+        question: "Does this tool account for water infrastructure costs?",
         answer:
-          "Yes, direct-to-chip cooling requires de-ionized water treatment to prevent corrosion. This is part of annual OpEx.",
+          "The CapEx field captures your total implementation cost, which should include CDU hardware, piping, leak detection sensors, and deionised water treatment setup. Annual water treatment and fluid replacement costs belong in the annual OpEx field. The tool models aggregate CapEx and annual OpEx difference between the two architectures — it does not break these into sub-line items.",
+      },
+      {
+        question: "How does liquid cooling affect GPU thermal throttling losses?",
+        answer:
+          "Air-cooled high-density GPU racks routinely thermal-throttle under sustained workloads when ambient temperature exceeds ASHRAE A2 class limits. Throttling typically reduces effective compute throughput by 8 to 15 percent. Direct-to-chip cooling maintains junction temperatures within GPU manufacturer specifications at 100 percent sustained utilisation. The productivity recovery from eliminating throttle events is a real financial benefit this tool does not model, meaning the ROI figures shown are conservative.",
+      },
+      {
+        question: "What is the typical break-even period for a 100-rack deployment?",
+        answer:
+          "At 60 kW per rack, 100 racks is 6 MW of IT load. At a PUE improvement from 1.5 to 1.15 and an electricity rate of 0.08 USD per kWh, the cooling overhead reduction is approximately 2.1 MW, yielding around 1.47 million USD in annual energy savings. Against a CapEx estimate of 3 to 5 million USD for a 100-rack deployment, break-even falls between 24 and 40 months — well within the 5-year window this tool models.",
+      },
+      {
+        question: "How do I account for regional electricity rates accurately?",
+        answer:
+          "Use your blended rate including all demand charges, transmission fees, and taxes — not just the commodity rate from your utility contract. Rates vary from 0.04 USD per kWh in hydroelectric-heavy regions to over 0.14 USD per kWh in California and parts of Western Europe. A 0.01 USD change in your kWh rate shifts annual savings by approximately 87,600 USD per megawatt of cooling overhead reduced at the scale used in the worked example above.",
+      },
+      {
+        question: "Does liquid cooling require specific water quality standards?",
+        answer:
+          "ASHRAE TC 9.9 Water Cooling Guidelines define water quality classes W1 through W4 for data centre applications. Direct-to-chip systems targeting GPU cold plates typically require W2 or W3 quality — deionised or reverse osmosis water with resistivity above 1 MΩ·cm and pH between 7 and 9. Failure to maintain this specification accelerates galvanic corrosion in aluminium and copper cold plates. Water treatment costs should be included in your annual OpEx input.",
+      },
+      {
+        question: "What is the difference between rear-door heat exchangers and direct-to-chip cooling?",
+        answer:
+          "Rear-door heat exchangers mount at the back of an air-cooled rack and capture exhaust heat using chilled water coils. They reduce facility cooling load but do not change how heat is removed at the chip — GPUs still rely on internal heatsink-and-fan airflow. Direct-to-chip cooling pipes chilled fluid to a cold plate seated on the GPU die, removing heat at the source. Rear-door exchangers typically achieve PUE improvements of 0.1 to 0.2 points; direct-to-chip systems achieve 0.3 to 0.5 points from the same baseline.",
       },
     ],
   },
@@ -400,21 +457,52 @@ export const toolsRegistry: ToolDef[] = [
       sentence2:
         "It is authoritative because it checks for mandatory structural elements defined in zero-knowledge proof frameworks like Circom, and highlights patterns that indicate unsound constraints.",
     },
+    toolGuide: {
+      sections: [
+        {
+          heading: "Groth16, PLONK, and STARK: What the Choice Actually Costs You",
+          body: "The three proof systems this tool models make fundamentally different trade-offs between setup trust requirements, proof size, constraint overhead, and on-chain verification cost. Groth16 requires a circuit-specific trusted setup ceremony — a multi-party computation that generates a structured reference string tied to your exact circuit. If the circuit changes, the ceremony must be repeated. This constraint produces the smallest proof size on Ethereum (approximately 128 bytes for the verification key components) and the lowest gas cost for on-chain verification. It is the dominant choice for production ZK applications where circuits are stable, including Zcash and most zkEVM implementations. PLONK uses a universal trusted setup — one ceremony covers any circuit that fits within the SRS size parameter, so circuit changes do not require a new ceremony. Proof size is roughly 300 to 400 bytes and constraint overhead is 1.3 times Groth16 for the same logical operations. PLONK is preferred when circuits are in active development or when the cost of organising a per-circuit ceremony is prohibitive. STARK requires no trusted setup at all — security relies entirely on cryptographic hash functions, making it post-quantum resistant. The trade-off is that proof sizes are orders of magnitude larger than Groth16 or PLONK (typically 50 to 200 kilobytes), on-chain verification is significantly more expensive, and the constraint overhead is 2.1 times Groth16. STARKs are used where eliminating trust assumptions outweighs proof size and verification cost concerns, most notably in StarkWare's production deployments.",
+        },
+        {
+          heading: "How Circuit Constraints Translate to Hardware Memory Requirements",
+          body: "A circuit constraint is an arithmetic relationship — typically an addition or multiplication gate — that the prover must satisfy during proof generation. The prover works over a finite field, performing polynomial operations across all constraints simultaneously via Fast Fourier Transform. This is why memory requirements scale non-linearly with constraint count rather than linearly. The FFT step requires holding coefficient vectors of size equal to the next power of two above your constraint count, and doing multiple passes over that data. Empirically, Groth16 prover memory peaks at approximately 100 to 200 bytes per constraint for the FFT working set, with a 4 to 8 times multiplier for intermediate polynomial products. At 500,000 constraints this gives roughly 400 megabytes to 800 megabytes — well within the WebAssembly 4 gigabyte address space limit and feasible in most browsers. At 1,500,000 constraints the working set approaches 1.2 to 2.4 gigabytes, which is feasible on desktop but problematic on mobile or in memory-constrained CI environments. Above 2,000,000 constraints — the browser feasibility threshold this tool uses — peak memory reliably exceeds 4 gigabytes, requiring a native prover process or GPU-accelerated proving infrastructure such as RapidSNARK or Bellman running server-side. The STARK multiplier of 2.1 means a circuit with 500,000 logical operations translates to over 1,000,000 effective constraints, pushing hardware requirements into the server-side range earlier.",
+        },
+        {
+          heading: "Worked Example: ZK Age Verification With Hashed Identity Attributes",
+          body: "Consider a ZK proof that a user is over 18 without revealing their exact birthdate or national ID. The circuit takes three private inputs — a birthdate integer, a hashed national ID, and a salt — and two public inputs — the minimum age threshold and the current date. Two Poseidon hash operations are performed inside the circuit to commit the private attributes. Using Groth16: constraints equal ((3 private inputs times 15) plus (2 public inputs times 30) plus (2 hash operations times 300)) times 1.0 system factor, totalling 705 constraints. This is well below the 2 million browser feasibility threshold. Peak RAM is negligible — under 10 megabytes. The Ethereum L1 verification gas cost for a Groth16 proof of this size is approximately 220,000 to 250,000 gas, which at 20 gwei and 3,000 USD ETH corresponds to roughly 13 to 15 USD per verification. For a production KYC gate processing thousands of users per day, this on-chain cost makes L1 verification prohibitive — the same circuit on a zkRollup verification layer reduces per-user cost by approximately 1,000 times by amortising the proof across many state transitions, making the approach economically viable at scale.",
+        },
+      ],
+    },
     faqs: [
       {
-        question: "What is a signal in ZK circuits?",
+        question: "What is a circuit constraint and why does the count matter?",
         answer:
-          "A signal is a variable in a zero-knowledge circuit. Input signals are public/private, output signals are the proof result, and intermediate signals are computed.",
+          "A constraint is a single arithmetic equation — typically R1CS form: a times b equals c over a prime field — that the prover must satisfy. Every logical operation in your ZK program compiles down to one or more constraints: a field multiplication is roughly one constraint, a comparison operation is 30 to 50 constraints depending on bit width, and a cryptographic hash over a ZK-friendly function like Poseidon is approximately 300 constraints. Constraint count determines prover RAM, proving time, and ultimately whether browser-based proving is feasible without dedicated hardware.",
       },
       {
-        question: "What makes a constraint unsound?",
+        question: "Why does STARK have a 2.1 times constraint multiplier compared to Groth16?",
         answer:
-          "Direct signal assignment (signal x = y) without constraint operators. Constraints (x <== y * z) bind variables algebraically and enable proof verification.",
+          "STARK arithmetisation uses AIR (Algebraic Intermediate Representation) rather than R1CS, which requires expressing computations over execution traces rather than individual gate equations. The trace encoding introduces additional auxiliary columns for boundary constraints, transition constraints, and FRI (Fast Reed-Solomon IOP) proximity checks. These structural overheads mean that a computation requiring 100,000 R1CS constraints in Groth16 requires approximately 210,000 effective trace cells in a STARK, before any FRI repetition parameter overhead. The 2.1 multiplier in this tool is a conservative mid-range figure — actual multipliers vary between 1.8 and 2.5 depending on the specific STARK implementation and circuit structure.",
       },
       {
-        question: "Can I test a circuit before deployment?",
+        question: "What hash function should I use for ZK-friendly operations inside a circuit?",
         answer:
-          "Yes. Most ZK frameworks support witness generation and proof testing. This tool is a pre-flight check, not a replacement for full testing.",
+          "Standard cryptographic hash functions like SHA-256 and Keccak are expensive inside ZK circuits because they use bitwise operations that map poorly to prime-field arithmetic. SHA-256 in a Groth16 circuit costs approximately 25,000 constraints per hash. ZK-native hash functions designed for algebraic structures — Poseidon, MiMC, and Rescue — reduce this to 200 to 400 constraints per hash by working natively in the same prime field the proving system uses. This tool uses 300 constraints per hash operation as a mid-range estimate. If your application requires Ethereum Keccak compatibility for on-chain verification, either accept the constraint cost or use a recursive proof to bridge between the native hash and Keccak.",
+      },
+      {
+        question: "What does browser WASM feasibility mean in practice?",
+        answer:
+          "Browser feasibility means the proof can be generated client-side using a WASM-compiled prover library such as snarkjs without exceeding the WebAssembly linear memory limit of 4 gigabytes. This is significant for user-privacy applications — a browser-based prover means the private inputs never leave the user's device, because the proof is generated locally before any network request is made. Server-side proving requires sending private inputs to the prover server, which reintroduces the trust assumption that ZK proofs are often used to eliminate. If your circuit exceeds the 2 million constraint browser threshold, you must either simplify the circuit, use a recursive composition approach to split proving across smaller sub-circuits, or accept that private inputs will transit to a proving server.",
+      },
+      {
+        question: "How much does Groth16 verification cost on Ethereum mainnet in USD?",
+        answer:
+          "On-chain Groth16 verification gas cost is largely independent of circuit size — it depends on the verification key size, which is proportional to the number of public inputs. A typical Groth16 verifier with 2 to 4 public inputs costs 200,000 to 300,000 gas. At 20 gwei gas price and ETH at 3,000 USD, that is approximately 12 to 18 USD per verification. At 100 gwei — common during high network load — the cost rises to 60 to 90 USD. This makes direct L1 verification economically viable only for high-value transactions. Layer 2 rollup verification amortises the cost across thousands of proofs by verifying one aggregated batch proof per settlement transaction, reducing effective per-user cost to fractions of a cent.",
+      },
+      {
+        question: "When does the 2,000,000 constraint threshold become a practical problem?",
+        answer:
+          "Most simple ZK applications — age gates, credential proofs, single-value range proofs — stay well below 100,000 constraints and are comfortably browser-feasible. The 2 million threshold becomes relevant when circuits include: multiple Keccak or SHA-256 hashes for Ethereum compatibility (25,000 constraints each), deep Merkle proof paths (roughly 5,000 constraints per 20-level tree), complex arithmetic over 256-bit integers rather than native field elements, or repeated verification of cryptographic signatures inside the circuit. zkEVM circuits — which must prove every Ethereum opcode execution — are the most constraint-intensive common application, typically requiring tens of millions of constraints per block and GPU cluster infrastructure to prove within block time.",
       },
     ],
   },
