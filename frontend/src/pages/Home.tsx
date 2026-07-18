@@ -435,61 +435,17 @@ const Home = () => {
                         <div className="compliance-tools">
                             <h3>Free Compliance Assessment Tools</h3>
                             <div className="compliance-tool-cards">
-                                <a
-                                    href="/tools/eu-ai-act-risk-level-classifier"
-                                    className="compliance-tool-card"
-                                    aria-label="EU AI Act Risk Level Classifier tool"
-                                >
-                                    <div className="compliance-tool-icon">
-                                        <ShieldCheck size={24} strokeWidth={1.5} />
-                                    </div>
-                                    <div>
-                                        <h4>EU AI Act Risk Classifier</h4>
-                                        <p>Classify your AI system under Annex III with full Article 5 prohibited practice detection and compliance checklist generation.</p>
-                                        <span className="compliance-tool-link">Run Assessment →</span>
-                                    </div>
-                                </a>
-
-                                <a
-                                    href="/tools/saas-soc2-readiness-calculator"
-                                    className="compliance-tool-card"
-                                    aria-label="SOC 2 Readiness Calculator tool"
-                                >
-                                    <div className="compliance-tool-icon">
-                                        <FileText size={24} strokeWidth={1.5} />
-                                    </div>
-                                    <div>
-                                        <h4>SOC 2 Readiness Calculator</h4>
-                                        <p>Gap-analysis scoring across all Trust Services Criteria. Identify your highest-risk control failures before the auditor does.</p>
-                                        <span className="compliance-tool-link">Calculate Readiness →</span>
-                                    </div>
-                                </a>
-
-                                <a
-                                    href="/tools/post-quantum-cbom-generator"
-                                    className="compliance-tool-card"
-                                    aria-label="Post-Quantum CBOM Generator tool"
-                                >
-                                    <div className="compliance-tool-icon">
-                                        <Lock size={24} strokeWidth={1.5} />
-                                    </div>
-                                    <div>
-                                        <h4>Post-Quantum CBOM Generator</h4>
-                                        <p>Scan your dependency list for quantum-vulnerable cryptographic libraries and receive a NIST FIPS 203/204/205 migration roadmap.</p>
-                                        <span className="compliance-tool-link">Scan Dependencies →</span>
-                                    </div>
-                                </a>
 
                                 <a
                                     href="/tools"
                                     className="compliance-tool-card compliance-tool-card--all"
-                                    aria-label="View all 15 compliance and security tools"
+                                    aria-label="View all 9 compliance and security tools"
                                 >
                                     <div className="compliance-tool-icon">
                                         <Cpu size={24} strokeWidth={1.5} />
                                     </div>
                                     <div>
-                                        <h4>View All 15 Tools</h4>
+                                        <h4>View All 9 Tools</h4>
                                         <p>The full BKX Labs compliance and infrastructure tool suite — free, deterministic, and aligned to 2026 regulatory timelines.</p>
                                         <span className="compliance-tool-link">Browse Tools →</span>
                                     </div>

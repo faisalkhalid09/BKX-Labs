@@ -14,6 +14,8 @@ export type ToolDef = {
   slug: string;
   title: string;
   description: string;
+  metaDescription?: string;
+  metaKeywords?: string;
   valueProposition: string;
   directAnswer: DirectAnswer;
   faqs: FaqItem[];

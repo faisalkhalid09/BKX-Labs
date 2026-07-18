@@ -123,11 +123,8 @@ class ToolController extends Controller
         $siteUrl = config('app.url');
         $toolUrl = "{$siteUrl}/tools/{$tool['slug']}";
         
-        // Create a comprehensive meta description from direct answer
-        $metaDescription = $tool['description'];
-        if (!empty($tool['directAnswer']['sentence1'])) {
-            $metaDescription = \Str::limit($tool['directAnswer']['sentence1'], 160);
-        }
+        // Use the dedicated metaDescription field when present, otherwise fall back to description
+        $metaDescription = $tool['metaDescription'] ?? $tool['description'];
 
         // Use a default OG image from public storage
         $ogImage = "{$siteUrl}/images/tools-og-image.png";

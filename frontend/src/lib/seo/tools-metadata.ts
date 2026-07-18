@@ -6,16 +6,6 @@ import { toolsBySlug } from '@/lib/tools/registry';
  * (action-oriented rewrites to improve CTR from search snippets).
  */
 const TOOL_META_OVERRIDES: Record<string, { title: string; description: string }> = {
-  'deepfake-detector-probability': {
-    title: 'Deepfake Probability Scorer — Free Tool | BKX Labs',
-    description:
-      'Score any media file for AI-generation probability in seconds. Weighted artifact indicators — codec, cadence, A/V desync, facial anomalies. No forensics lab required.',
-  },
-  'agentic-workflow-debugger': {
-    title: 'Agentic AI Workflow Debugger — Free Tool | BKX Labs',
-    description:
-      'Detect infinite loops, dead nodes, and missing guards in your agent graph before deployment. Free static analysis — no signup, no install required.',
-  },
 };
 
 /**
@@ -59,10 +49,11 @@ export function generateToolMetadata(slug: string) {
 
   const toolUrl = `https://bkxlabs.com/tools/${tool.slug}`;
 
-  // Apply per-slug CTR overrides when present, otherwise use generic template
+  // Apply per-slug CTR overrides when present, otherwise use metaDescription, then generic description
   const override = TOOL_META_OVERRIDES[slug];
   const pageTitle = override?.title ?? `${tool.title} | Free Tool - BKX Labs`;
-  const pageDescription = override?.description ?? tool.description;
+  const pageDescription = override?.description ?? tool.metaDescription ?? tool.description;
+  const pageKeywords = tool.metaKeywords ?? extractKeywords(tool.title, tool.description);
 
   // Base SoftwareApplication schema
   const softwareSchema: Record<string, unknown> = {
@@ -109,7 +100,7 @@ export function generateToolMetadata(slug: string) {
   return {
     title: pageTitle,
     description: pageDescription,
-    keywords: extractKeywords(tool.title, tool.description),
+    keywords: pageKeywords,
     canonical: toolUrl,
     og: {
       title: override?.title ?? tool.title,

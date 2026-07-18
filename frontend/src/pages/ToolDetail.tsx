@@ -1,24 +1,18 @@
 import { useMemo, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { EuAiActClassifier } from '@/components/tools/eu-ai-act-classifier';
 import { PostQuantumCBOMGenerator } from '@/components/tools/pq-cbom-generator';
-import { SaaSSoc2Calculator } from '@/components/tools/soc2-calculator';
-import { CloudGpuCostComparison } from '@/components/tools/cloud-gpu-cost-comparison';
 import { NvidiaBlackwellEstimator } from '@/components/tools/nvidia-blackwell-estimator';
 import { AiPromptPrivacyAuditor } from '@/components/tools/ai-prompt-privacy-auditor';
 import { AdmtProportionalityScorer } from '@/components/tools/admt-proportionality-scorer';
 import { NistFips203MigrationTimeline } from '@/components/tools/nist-fips-203-migration-timeline';
 import { DirectToChipLiquidCoolingRoi } from '@/components/tools/direct-to-chip-liquid-cooling-roi';
-import { AgenticWorkflowDebugger } from '@/components/tools/agentic-workflow-debugger';
-import { GasOptimizer } from '@/components/tools/smart-contract-gas-optimizer';
 import { CarbonFootprintTracker } from '@/components/tools/esg-carbon-footprint';
 import { ZkCircuitValidator } from '@/components/tools/zk-proof-validator';
-import { DeepfakeDetector } from '@/components/tools/deepfake-detector';
 import { CryptoAgilityMaturitModel } from '@/components/tools/crypto-agility-maturity';
 import { toolsBySlug } from '@/lib/tools/registry';
 import { FAQSection } from '@/components/tools/faq-section';
-import { DirectAnswerBlock } from '@/components/tools/direct-answer-block';
+
 import { generateToolMetadata } from '@/lib/seo/tools-metadata';
 import ToolToAgencyCTA from '@/components/tools/ToolToAgencyCTA';
 import { glossaryRegistry } from '@/lib/glossary/registry';
@@ -38,20 +32,14 @@ declare global {
 
 // Component map for dynamic rendering
 const componentMap: Record<string, React.ComponentType<any>> = {
-  'eu-ai-act-risk-level-classifier': EuAiActClassifier,
   'post-quantum-cbom-generator': PostQuantumCBOMGenerator,
-  'saas-soc2-readiness-calculator': SaaSSoc2Calculator,
-  'cloud-gpu-cost-comparison': CloudGpuCostComparison,
   'nvidia-blackwell-pue-estimator': NvidiaBlackwellEstimator,
   'ai-prompt-privacy-auditor': AiPromptPrivacyAuditor,
   'admt-proportionality-scorer': AdmtProportionalityScorer,
   'nist-fips-203-migration-timeline-planner': NistFips203MigrationTimeline,
   'direct-to-chip-liquid-cooling-roi': DirectToChipLiquidCoolingRoi,
-  'agentic-workflow-debugger': AgenticWorkflowDebugger,
-  'smart-contract-gas-optimizer': GasOptimizer,
   'esg-carbon-footprint-tracker': CarbonFootprintTracker,
   'zk-circuit-validator': ZkCircuitValidator,
-  'deepfake-detector-probability': DeepfakeDetector,
   'crypto-agility-maturity-model': CryptoAgilityMaturitModel,
 };
 
@@ -215,13 +203,6 @@ export default function ToolDetail() {
           {/* ── Main column ── */}
           <div className="tool-main-col">
             <div className="tool-card">
-              {/* Direct Answer Block — visually rendered, accessible */}
-              {tool.directAnswer && (
-                <div role="note" aria-label={`Direct answer: ${tool.title}`}>
-                  <DirectAnswerBlock directAnswer={tool.directAnswer} />
-                </div>
-              )}
-
               {/* Tool Component */}
               <Component />
             </div>

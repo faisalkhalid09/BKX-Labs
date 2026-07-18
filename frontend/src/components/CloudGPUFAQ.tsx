@@ -177,24 +177,7 @@ export default function CloudGPUFAQ() {
         ))}
 
         {/* CTA Section */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 mt-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
-            Ready to Optimize Your GPU Costs?
-          </h2>
-          <p className="text-gray-700 mb-6">
-            Use our interactive{' '}
-            <a href="/tools/cloud-gpu-cost-comparison" className="font-bold text-blue-600 hover:underline">
-              Cloud GPU Cost Comparison Calculator
-            </a>
-            {' '}to model your specific workload and get price quotes from all major providers.
-          </p>
-          <a
-            href="/tools/cloud-gpu-cost-comparison"
-            className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-          >
-            Open Calculator →
-          </a>
-        </div>
+
       </div>
 
       {/* Schema Markup for FAQ */}

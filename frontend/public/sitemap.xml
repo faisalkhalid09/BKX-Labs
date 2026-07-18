@@ -47,29 +47,11 @@
     <priority>0.95</priority>
   </url>
 
-  <!-- ── Individual Tool Pages (15 tools) ── -->
-  <url>
-    <loc>https://bkxlabs.com/tools/eu-ai-act-risk-level-classifier</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
+  <!-- ── Individual Tool Pages (9 tools) ── -->
   <url>
     <loc>https://bkxlabs.com/tools/post-quantum-cbom-generator</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bkxlabs.com/tools/saas-soc2-readiness-calculator</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bkxlabs.com/tools/cloud-gpu-cost-comparison</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
@@ -103,18 +85,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://bkxlabs.com/tools/agentic-workflow-debugger</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://bkxlabs.com/tools/smart-contract-gas-optimizer</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://bkxlabs.com/tools/esg-carbon-footprint-tracker</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>monthly</changefreq>
@@ -122,12 +92,6 @@
   </url>
   <url>
     <loc>https://bkxlabs.com/tools/zk-circuit-validator</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://bkxlabs.com/tools/deepfake-detector-probability</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
