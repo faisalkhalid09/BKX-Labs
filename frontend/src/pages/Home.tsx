@@ -17,8 +17,6 @@ import {
     FlaskConical,
     Users2,
     ClipboardList,
-    ShieldCheck,
-    Lock,
     Cpu,
     GitBranch,
     Code2,

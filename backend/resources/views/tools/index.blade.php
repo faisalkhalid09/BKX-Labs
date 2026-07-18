@@ -34,7 +34,7 @@
                     <a href="/tools/{{ $tool['slug'] }}" class="block p-6 bg-white border rounded-lg hover:shadow-lg transition-shadow" style="border-color: var(--color-border);">
                         <h3 class="text-xl font-semibold mb-2" style="color: var(--color-text-primary);">{{ $tool['title'] }}</h3>
                         <p class="mb-4 line-clamp-2" style="color: var(--color-text-secondary);">{{ $tool['description'] }}</p>
-                        <div class="inline-flex items-center font-semibold" style="color: var(--color-primary);">
+                        <div class="inline-flex items-center font-semibold" style="color: #105da8;">
                             View Tool <span class="ml-2">→</span>
                         </div>
                     </a>

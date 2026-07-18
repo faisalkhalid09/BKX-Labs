@@ -10,7 +10,8 @@ import CaseStudy from './pages/CaseStudy';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
-import PdfViewer from './pages/PdfViewer';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import RezgoDemo from './pages/RezgoDemo';
 import ToolsIndex from './pages/ToolsIndex';
 import ToolDetail from './pages/ToolDetail';
@@ -57,8 +58,9 @@ function App() {
           <Route path="/case-study" element={<CaseStudy />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy-policy" element={<PdfViewer />} />
-          <Route path="/TOS" element={<PdfViewer />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/TOS" element={<TermsOfService />} />
+          <Route path="/tos" element={<TermsOfService />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
