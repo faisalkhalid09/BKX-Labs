@@ -3,12 +3,6 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import SEO from '../components/ui/SEO';
 
-const privacyNav = privacySections.map((section, index) => ({
-    id: `privacy-${index + 1}`,
-    label: section.title,
-    index: index + 1,
-}));
-
 const privacySections = [
     {
         title: 'Information We Collect',
@@ -61,6 +55,12 @@ const privacySections = [
         ]
     }
 ];
+
+const privacyNav = privacySections.map((section, index) => ({
+    id: `privacy-${index + 1}`,
+    label: section.title,
+    index: index + 1,
+}));
 
 const buildPrivacyDownload = () => {
     const lines = [

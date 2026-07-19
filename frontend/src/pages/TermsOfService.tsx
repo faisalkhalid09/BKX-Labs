@@ -3,12 +3,6 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import SEO from '../components/ui/SEO';
 
-const termsNav = termsSections.map((section, index) => ({
-    id: `terms-${index + 1}`,
-    label: section.title,
-    index: index + 1,
-}));
-
 const termsSections = [
     {
         title: 'Acceptance of Terms and Service Description',
@@ -64,6 +58,12 @@ const termsSections = [
         ]
     }
 ];
+
+const termsNav = termsSections.map((section, index) => ({
+    id: `terms-${index + 1}`,
+    label: section.title,
+    index: index + 1,
+}));
 
 const buildTermsDownload = () => {
     const lines = [
