@@ -10,11 +10,11 @@ const Services = () => {
     const faqItems = [
         {
             question: "How much does a codebase rescue cost?",
-            answer: "A BKX Labs Diagnostic Codebase Audit — the mandatory first step for all rescue engagements — is scoped as a fixed-price deliverable typically ranging from $3,500 to $8,000 depending on the size and complexity of the system under review. The audit produces a written Technical Health Report and a severity-ranked remediation roadmap with per-item cost estimates. Triage and Stabilization engagements, scoped from the audit findings, typically range from $8,000 to $35,000. Long-term Modernization Retainers are structured as monthly fixed-fee arrangements scaled to team size and sprint scope. We do not bill hourly — every phase of work is quoted on a fixed-price basis so your finance and legal teams have a defined commitment before a single line of code is written."
+            answer: "A BKX Labs Diagnostic Codebase Audit, the mandatory first step for all rescue engagements, is scoped as a fixed-price deliverable typically ranging from $3,500 to $8,000 depending on the size and complexity of the system under review. The audit produces a written Technical Health Report and a severity-ranked remediation roadmap with per-item cost estimates. Triage and Stabilization engagements, scoped from the audit findings, typically range from $8,000 to $35,000. Long-term Modernization Retainers are structured as monthly fixed-fee arrangements scaled to team size and sprint scope. We do not bill hourly. Every phase of work is quoted on a fixed-price basis so your finance and legal teams have a defined commitment before a single line of code is written."
         },
         {
             question: "How do you take over an existing Laravel project?",
-            answer: "Our project takeover protocol follows a strict zero-disruption sequence. We begin with read-only access to your repository, database schema, and production environment logs — no write access until the diagnostic phase is fully complete. During diagnosis, we use PHPStan Level 9, Rector analysis, OWASP ZAP security scanning, and Laravel Telescope profiling to build a complete picture of the system's current state. We establish a reproducible local development environment and a staging branch before any intervention. The first production change we make is always the deployment pipeline itself — establishing GitHub Actions CI/CD, automated test runs, and rollback capabilities. This ensures that every subsequent change we make to production is reversible if needed. Typically, initial production stabilization occurs within the first two weeks of engagement."
+            answer: "Our project takeover protocol follows a strict zero-disruption sequence. We begin with read-only access to your repository, database schema, and production environment logs, and require no write access until the diagnostic phase is fully complete. During diagnosis, we use PHPStan Level 9, Rector analysis, OWASP ZAP security scanning, and Laravel Telescope profiling to build a complete picture of the system's current state. We establish a reproducible local development environment and a staging branch before any intervention. The first production change we make is always the deployment pipeline itself, establishing GitHub Actions CI/CD, automated test runs, and rollback capabilities. This ensures that every subsequent change we make to production is reversible if needed. Typically, initial production stabilization occurs within the first two weeks of engagement."
         },
         {
             question: "Do you sign NDAs and take code ownership via contract?",
@@ -22,7 +22,7 @@ const Services = () => {
         },
         {
             question: "What happens if you determine the project cannot be rescued?",
-            answer: "This is the most important question we answer during the Diagnostic phase. If the forensic audit reveals that the cost of remediation exceeds the cost of a properly architected replacement — and this does occur in approximately 15% of audits — we will tell you directly in the written report. The Diagnostic Audit is designed specifically to produce this verdict before you commit to a larger remediation budget. In these cases, we provide a detailed greenfield architecture specification as part of the report, outlining what a correctly built replacement would require in terms of timeline, team composition, and technology choices. You can take that specification to any engineering team — including ours. The audit fee is not contingent on a recommendation to continue with BKX Labs."
+            answer: "This is the most important question we answer during the Diagnostic phase. If the forensic audit reveals that the cost of remediation exceeds the cost of a properly architected replacement, and this does occur in approximately 15% of audits, we will tell you directly in the written report. The Diagnostic Audit is designed specifically to produce this verdict before you commit to a larger remediation budget. In these cases, we provide a detailed greenfield architecture specification as part of the report, outlining what a correctly built replacement would require in terms of timeline, team composition, and technology choices. You can take that specification to any engineering team, including ours. The audit fee is not contingent on a recommendation to continue with BKX Labs."
         }
     ];
 
@@ -49,7 +49,7 @@ const Services = () => {
                     "item": {
                         "@type": "Service",
                         "name": "Triage & Stabilization",
-                        "description": "Emergency patching of production crashes, security vulnerabilities, and broken CI/CD pipelines on Laravel 12 and React 19 codebases — without taking your system offline.",
+                        "description": "Emergency patching of production crashes, security vulnerabilities, and broken CI/CD pipelines on Laravel 12 and React 19 codebases, without taking your system offline.",
                         "provider": { "@type": "Organization", "name": "BKX Labs" }
                     }
                 },
@@ -69,7 +69,7 @@ const Services = () => {
                     "item": {
                         "@type": "Service",
                         "name": "Greenfield Development",
-                        "description": "Net-new application development for clients starting from scratch — built with enterprise-grade architecture decisions that prevent the technical debt patterns BKX Labs routinely rescues.",
+                        "description": "Net-new application development for clients starting from scratch, built with enterprise-grade architecture decisions that prevent the technical debt patterns BKX Labs routinely rescues.",
                         "provider": { "@type": "Organization", "name": "BKX Labs" }
                     }
                 },
@@ -109,7 +109,7 @@ const Services = () => {
             />
             <Hero
                 title="Our Services"
-                subtitle="We specialize in taking broken, stalled, and over-engineered systems and turning them into stable, scalable products. Every engagement is fixed-price and begins with a forensic diagnosis — never with assumptions."
+                subtitle="We specialize in taking broken, stalled, and over-engineered systems and turning them into stable, scalable products. Every engagement is fixed-price and begins with a forensic diagnosis, never with assumptions."
             />
 
             {/* Intro */}
@@ -118,7 +118,7 @@ const Services = () => {
                     <div className="services-intro">
                         <p>
                             Whether your project was abandoned by a previous team, is drowning in technical debt,
-                            or simply needs to be built correctly from the start — we have a structured service
+                            or simply needs to be built correctly from the start, we have a structured service
                             pathway designed for your exact situation. We don't guess; we follow the evidence.
                             Each service below is a discrete, fixed-price engagement with defined inputs,
                             deliverables, and acceptance criteria. There are no hourly billing surprises,
@@ -144,7 +144,7 @@ const Services = () => {
                             Our audit team conducts a forensic review of your codebase, infrastructure, and
                             security posture using a combination of automated static analysis, manual
                             architectural review, and live performance profiling under realistic load conditions.
-                            The output is a written Technical Health Report — a boardroom-ready document that
+                            The output is a written Technical Health Report, a boardroom-ready document that
                             tells you exactly what is broken, why it's broken, the blast radius of each issue,
                             and what a realistic remediation will cost. This report is yours outright.
                             No obligation to continue with BKX Labs.
@@ -222,8 +222,8 @@ const Services = () => {
                         <p className="service-value">
                             We stop the bleeding. Informed by the diagnostic audit's findings, our engineers
                             systematically patch critical production failures, seal active security vulnerabilities,
-                            and establish the foundational engineering practices — reproducible CI/CD pipelines,
-                            production observability, and automated deployment rollbacks — that your system
+                            and establish the foundational engineering practices, such as reproducible CI/CD pipelines,
+                            production observability, and automated deployment rollbacks, that your system
                             should have had from the first sprint. All triage work is executed on a staging
                             branch and requires your explicit sign-off before promotion to the live environment.
                             We do not introduce risk to recover from risk. The guiding constraint is:
@@ -266,7 +266,7 @@ const Services = () => {
                             <div className="service-detail">
                                 <h4>Our Approach</h4>
                                 <p>
-                                    Stabilization is performed live — we do not take your existing system offline
+                                    Stabilization is performed live; we do not take your existing system offline
                                     at any point during the triage phase. All changes go through a staging environment
                                     for validation and are covered by automated integration tests before production
                                     deployment. You are notified, given a detailed change summary, and explicitly
@@ -280,7 +280,7 @@ const Services = () => {
                                 <h4>Business Value</h4>
                                 <p>
                                     For every week a production system operates in an unstable state, the cost
-                                    of remediation compounds — through customer churn, support overhead, and
+                                    of remediation compounds through customer churn, support overhead, and
                                     the opportunity cost of features that cannot be shipped. Triage converts
                                     an adversarial relationship with your codebase into a defensible baseline,
                                     re-opening the development velocity that accumulated technical debt
@@ -305,13 +305,13 @@ const Services = () => {
 
                         <p className="service-value">
                             Stabilization buys you time. Modernization buys you the future. Our retainer model
-                            provides dedicated engineering bandwidth — a fixed team size, fixed sprint scope,
-                            fixed monthly cost — to systematically remove technical debt, refactor critical
+                            provides dedicated engineering bandwidth (a fixed team size, fixed sprint scope,
+                            and fixed monthly cost) to systematically remove technical debt, refactor critical
                             subsystems, and build the new features your business requires, all without pausing
                             operations. We operate in 2-week sprints with a committed deliverable scope per sprint,
                             a working demo at sprint end, and full transparency into the backlog. Every sprint
                             plan is collaboratively defined with your product stakeholders before work begins.
-                            You can cancel with 30 days' notice — no lock-in clauses, no exit penalties.
+                            You can cancel with 30 days' notice. There are no lock-in clauses or exit penalties.
                         </p>
 
                         <div className="service-details-grid">
@@ -365,7 +365,7 @@ const Services = () => {
                                 <h4>Business Value</h4>
                                 <p>
                                     A senior full-stack engineer with relevant rescue experience costs $150,000
-                                    to $220,000 annually in the US market — before benefits, recruitment overhead,
+                                    to $220,000 annually in the US market, before benefits, recruitment overhead,
                                     and the ramp time required to become productive on a complex legacy codebase.
                                     Our retainer model delivers a team of three to five specialists at a fraction
                                     of that cost, with no onboarding curve, management overhead, or equity dilution.
@@ -389,7 +389,7 @@ const Services = () => {
 
                         <p className="service-value">
                             Not everything needs rescuing. If you're starting from scratch, we build it correctly
-                            the first time — with the infrastructure governance, security controls, automated
+                            the first time, with the infrastructure governance, security controls, automated
                             testing discipline, and architectural decision records that prevent the exact problems
                             we spend so much time fixing for other clients. All greenfield projects begin with a
                             documented Architecture Decision Record (ADR) and a written system design specification
@@ -437,9 +437,9 @@ const Services = () => {
                                     All greenfield projects begin with a documented Architecture Decision Record
                                     and a written system design specification reviewed and approved by your team
                                     before development begins. We establish automated CI/CD, test-driven
-                                    development practices, and production observability on day one — not as
+                                    development practices, and production observability on day one, not as
                                     an afterthought. Deliverables are defined in contract. Fixed price, fixed
-                                    timeline. No scope creep by default — change requests follow a formal
+                                    timeline. There is no scope creep by default; change requests follow a formal
                                     written process with clear cost and timeline implications.
                                 </p>
                             </div>
@@ -450,7 +450,7 @@ const Services = () => {
                                     The cost of building software correctly on the first attempt is approximately
                                     one-third the cost of rescuing software that was built incorrectly. Our
                                     greenfield clients benefit from the institutional knowledge we've accumulated
-                                    rescuing over forty failed projects — every architectural anti-pattern we've
+                                    rescuing over forty failed projects. Every architectural anti-pattern we've
                                     seen becomes a guardrail we enforce from your project's first commit.
                                 </p>
                             </div>
@@ -474,9 +474,9 @@ const Services = () => {
                             For product companies with live applications that need consistent, reliable engineering
                             bandwidth without the cost or overhead of full-time hiring. We integrate with your
                             existing processes, attend your standups, work inside your issue tracker, and
-                            deliver predictably — sprint after sprint. A dedicated Lead Engineer and Project
+                            deliver predictably, sprint after sprint. A dedicated Lead Engineer and Project
                             Manager own your engagement end-to-end. You get the reliability of an internal
-                            team with the specialist depth of an external one — and none of the management
+                            team with the specialist depth of an external one, and none of the management
                             overhead, recruiting cost, or equity dilution.
                         </p>
 
@@ -515,7 +515,7 @@ const Services = () => {
                                     Notion, GitHub Issues) and communication channels. Weekly async written
                                     health reports cover what shipped, what is in progress, what is blocked,
                                     and any proactive recommendations from the engineering team. We do not
-                                    wait for you to notice a problem — we report emerging risks before
+                                    wait for you to notice a problem; we report emerging risks before
                                     they become production incidents.
                                 </p>
                             </div>
@@ -526,7 +526,7 @@ const Services = () => {
                                     Product companies that outsource ongoing engineering to a dedicated,
                                     accountable partner consistently report higher sprint velocity, lower
                                     production incident rates, and faster time-to-market for new features
-                                    than equivalent internal teams — primarily because our engineers bring
+                                    than equivalent internal teams, primarily because our engineers bring
                                     accumulated operational experience from dozens of prior engagements
                                     that an internal hire would take years to develop.
                                 </p>
@@ -541,7 +541,7 @@ const Services = () => {
                 <Container>
                     <div className="pricing-faq-header">
                         <HelpCircle size={36} strokeWidth={1.5} className="pricing-faq-icon" />
-                        <span className="accent-label">Pricing & Process — Answered Directly</span>
+                        <span className="accent-label">Pricing & Process: Answered Directly</span>
                         <h2>The Questions Every Enterprise Buyer Asks</h2>
                         <p>
                             High-stakes technical decisions require complete information. These are the questions
@@ -569,7 +569,7 @@ const Services = () => {
                             Not sure which service fits your situation? Every engagement starts with a complimentary
                             15-minute Rescue Strategy Call. We assess your business situation, the state of your
                             current team, and recommend the correct technical starting point with full transparency.
-                            No high-pressure sales process — just a candid, expert assessment of whether your
+                            There is no high-pressure sales process, just a candid, expert assessment of whether your
                             project can be rescued, and at what cost.
                         </p>
                     </div>
@@ -583,7 +583,7 @@ const Services = () => {
                         <h2>Let's Fix What's Broken.</h2>
                         <p>
                             Stop guessing why your application is failing. Book a Strategy Call today to
-                            assess whether your codebase qualifies for our Diagnostic Audit — and walk away
+                            assess whether your codebase qualifies for our Diagnostic Audit, and walk away
                             with a written answer to the question "is this fixable, and what will it cost?"
                         </p>
                         <Link to="/contact" className="btn btn-primary">

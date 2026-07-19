@@ -81,7 +81,7 @@ const Home = () => {
                             "itemOffered": {
                                 "@type": "Service",
                                 "name": "Triage and Stabilization",
-                                "description": "Emergency patching of production crashes, security vulnerabilities, and broken CI/CD pipelines — without taking your system offline."
+                                "description": "Emergency patching of production crashes, security vulnerabilities, and broken CI/CD pipelines, without taking your system offline."
                             }
                         },
                         {
@@ -117,7 +117,7 @@ const Home = () => {
                 "@type": "WebPage",
                 "@id": "https://bkxlabs.com/#webpage",
                 "url": "https://bkxlabs.com/",
-                "name": "BKX Labs — Software Rescue Agency | Laravel & React Project Recovery",
+                "name": "BKX Labs Software Rescue Agency | Laravel & React Project Recovery",
                 "description": "BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects, resolves technical debt, and provides enterprise-grade compliance infrastructure.",
                 "isPartOf": { "@id": "https://bkxlabs.com/#organization" },
                 "breadcrumb": {
@@ -202,7 +202,7 @@ const Home = () => {
                         <p>
                             After recovering over forty high-stakes codebases, we've identified three systemic failure
                             modes that account for the overwhelming majority of stalled, broken, and abandoned projects.
-                            Understanding the root cause — not just the symptoms — is what separates a lasting rescue
+                            Understanding the root cause, not just the symptoms, is what separates a lasting rescue
                             from a temporary patch.
                         </p>
                     </div>
@@ -215,7 +215,7 @@ const Home = () => {
                             <h3>Misaligned Team Composition</h3>
                             <p>
                                 The most common failure pattern is deploying a generalist team on a specialist problem.
-                                A Laravel security vulnerability is not a "senior PHP developer" problem — it is a
+                                A Laravel security vulnerability is not a "senior PHP developer" problem. It is a
                                 security engineering problem that requires a completely different diagnostic lens.
                                 When the team's capability ceiling is lower than the problem's complexity floor,
                                 failure is structurally guaranteed regardless of effort.
@@ -241,7 +241,7 @@ const Home = () => {
                                 completely unrelated subsystems.
                             </p>
                             <ul className="why-fail-symptoms">
-                                <li>No enforced coding standards — PHPStan, ESLint, or equivalent are absent or ignored</li>
+                                <li>No enforced coding standards: PHPStan, ESLint, or equivalent are absent or ignored</li>
                                 <li>Business logic scattered across controllers, models, and frontend components</li>
                                 <li>Zero automated test coverage, making safe refactoring impossible</li>
                             </ul>
@@ -256,7 +256,7 @@ const Home = () => {
                                 Feature requests added without corresponding architectural review create technical debt
                                 at a compounding rate. Each shortcut taken under delivery pressure costs three to five
                                 times more to remediate later. By the time teams recognize the codebase as unmanageable,
-                                the remediation cost has frequently exceeded the original development budget —
+                                the remediation cost has frequently exceeded the original development budget,
                                 yet the business still cannot ship the features that drove the original investment.
                             </p>
                             <ul className="why-fail-symptoms">
@@ -274,13 +274,13 @@ const Home = () => {
                 <Container>
                     <h2 className="text-center section-heading">Everything You Need to Know</h2>
                     <p className="text-center section-subheading">
-                        Explore how we work, what we offer, and who we are — before you commit to a single conversation.
+                        Explore how we work, what we offer, and who we are before you commit to a single conversation.
                     </p>
                     <div className="internal-nav-grid">
                         <a href="/services" className="internal-nav-card" aria-label="View our software rescue services">
                             <span className="internal-nav-icon"><Wrench size={28} strokeWidth={1.5} /></span>
                             <h3>Our Services</h3>
-                            <p>Diagnostic audits, emergency triage, modernization retainers, and greenfield development — structured for your situation.</p>
+                            <p>Diagnostic audits, emergency triage, modernization retainers, and greenfield development, structured for your situation.</p>
                             <span className="internal-nav-link">View Services →</span>
                         </a>
                         <a href="/process" className="internal-nav-card" aria-label="Learn about our rescue process">
@@ -298,7 +298,7 @@ const Home = () => {
                         <a href="/contact" className="internal-nav-card" aria-label="Contact BKX Labs to start your rescue">
                             <span className="internal-nav-icon"><ClipboardList size={28} strokeWidth={1.5} /></span>
                             <h3>Start Your Rescue</h3>
-                            <p>Every engagement starts with a Technical Health Check. Tell us about your situation — no obligation, just clarity.</p>
+                            <p>Every engagement starts with a Technical Health Check. Tell us about your situation: no obligation, just clarity.</p>
                             <span className="internal-nav-link">Get In Touch →</span>
                         </a>
                     </div>
@@ -314,7 +314,7 @@ const Home = () => {
                             <h2>The Rescue Protocol</h2>
                             <p>
                                 We don't believe in "rewriting from scratch." We employ a systematic,
-                                low-risk approach to stabilizing and evolving mission-critical software —
+                                low-risk approach to stabilizing and evolving mission-critical software,
                                 with full auditability at every phase gate.
                             </p>
                             <a href="/process" className="protocol-explore-btn">
@@ -350,7 +350,7 @@ const Home = () => {
                                     <h3>Triage</h3>
                                     <p>
                                         Immediate, high-precision intervention on critical failure points.
-                                        All triage work is performed on a staging branch — never directly in production —
+                                        All triage work is performed on a staging branch, never directly in production,
                                         using a reproducible deployment pipeline (GitHub Actions / Docker / Nginx)
                                         that may not have existed before we arrived. Critical security vulnerabilities
                                         (SQL injection, broken authentication, unvalidated redirect chains) are sealed
@@ -375,7 +375,7 @@ const Home = () => {
                                         any high-risk refactor is attempted. Database restructuring, API versioning,
                                         and third-party integration rewrites are sequenced to maintain zero-downtime
                                         throughout. The definition of "done" for modernization is that your internal
-                                        team can take full ownership without requiring our continued involvement —
+                                        team can take full ownership without requiring our continued involvement,
                                         supported by the architecture documentation, onboarding guides, and
                                         runbooks we deliver at handover.
                                     </p>
@@ -393,7 +393,7 @@ const Home = () => {
                         <span className="accent-label">Compliance Infrastructure</span>
                         <h2>Engineering for Regulated Industries</h2>
                         <p>
-                            Technical debt is not just a development problem — it is a compliance risk. Regulated
+                            Technical debt is not just a development problem, it is a compliance risk. Regulated
                             industries face an accelerating intersection of software quality requirements and
                             legal enforcement timelines. BKX Labs provides the compliance engineering layer
                             that most development agencies are not equipped to deliver.
@@ -405,14 +405,14 @@ const Home = () => {
                             <h3>Why Compliance Requires Engineering Expertise</h3>
                             <p>
                                 The EU AI Act's August 2026 enforcement deadline for high-risk AI systems is not a
-                                legal problem — it is a software architecture problem. Demonstrating conformity
+                                legal problem, it is a software architecture problem. Demonstrating conformity
                                 requires reproducible risk management systems, technical documentation tied to
                                 specific code versions, and human oversight mechanisms built into the application
                                 itself. Lawyers draft the policy; engineers implement the controls.
                             </p>
                             <p>
                                 Similarly, SOC 2 Type II continuous monitoring is not achieved by collecting
-                                screenshots before an audit — it requires automated, API-driven evidence pipelines
+                                screenshots before an audit. It requires automated, API-driven evidence pipelines
                                 that produce cryptographically verifiable control records throughout the entire
                                 observation period. Organizations that attempt SOC 2 without engineering-grade
                                 automation routinely receive qualified (failed) audit opinions.
@@ -420,7 +420,7 @@ const Home = () => {
                             <p>
                                 Post-Quantum Cryptography migration from RSA and ECDH to NIST-standardized
                                 ML-KEM (FIPS 203) and ML-DSA (FIPS 204) is a code-level migration task. The
-                                "Harvest Now, Decrypt Later" threat is already active — adversaries are capturing
+                                "Harvest Now, Decrypt Later" threat is already active; adversaries are capturing
                                 your encrypted traffic today. The migration window is not 2030; it is now.
                             </p>
                             <p>
@@ -444,7 +444,7 @@ const Home = () => {
                                     </div>
                                     <div>
                                         <h4>View All 9 Tools</h4>
-                                        <p>The full BKX Labs compliance and infrastructure tool suite — free, deterministic, and aligned to 2026 regulatory timelines.</p>
+                                        <p>The full BKX Labs compliance and infrastructure tool suite is free, deterministic, and aligned to 2026 regulatory timelines.</p>
                                         <span className="compliance-tool-link">Browse Tools →</span>
                                     </div>
                                 </a>
@@ -492,7 +492,7 @@ const Home = () => {
                             <h3>You Own Everything</h3>
                             <p className="card-text">
                                 Full source code, complete SRS documentation, architecture diagrams, and deployment
-                                guides. No vendor lock-in — you can take our work to any team in the future.
+                                guides. No vendor lock-in; you can take our work to any team in the future.
                             </p>
                         </Card>
                     </div>
@@ -512,8 +512,8 @@ const Home = () => {
                                 infrastructure for regulated industries.
                             </p>
                             <p>
-                                Our deterministic, phase-gated rescue methodology — Diagnostic, Triage, and
-                                Modernization — serves funded startups and enterprise product teams globally. Every
+                                Our deterministic, phase-gated rescue methodology, Diagnostic, Triage, and
+                                Modernization, serves funded startups and enterprise product teams globally. Every
                                 engagement begins with a written Technical Health Report before a single line of
                                 production code is modified.
                             </p>
@@ -533,8 +533,7 @@ const Home = () => {
                                 <span className="accent-label">Free Compliance Tools</span>
                                 <p className="agency-overview-tools-desc">
                                     Access our public tool suite at{' '}
-                                    <a href="/tools" className="agency-tools-link">bkxlabs.com/tools</a>{' '}
-                                    — covering EU AI Act risk classification, Post-Quantum CBOM generation,
+                                    <a href="/tools" className="agency-tools-link">bkxlabs.com/tools</a>, covering EU AI Act risk classification, Post-Quantum CBOM generation,
                                     SOC 2 readiness scoring, and thirteen additional regulatory calculators.
                                 </p>
                             </div>
@@ -553,7 +552,7 @@ const Home = () => {
                         </div>
                         <p className="guarantee-intro">
                             Taking over someone else's failure is a serious responsibility. We back every rescue
-                            engagement with concrete, documented commitments — not verbal assurances.
+                            engagement with concrete, documented commitments, not verbal assurances.
                         </p>
                         <div className="guarantee-points">
                             <div className="g-point">
@@ -567,7 +566,7 @@ const Home = () => {
                                 <CheckCircle size={24} />
                                 <div>
                                     <h4>Zero-Pause Stabilization</h4>
-                                    <p>Triage and stabilization are performed without taking your existing system offline. All changes are validated in a staging environment and require your explicit approval before being promoted to production. Business continuity is not a selling point — it is a non-negotiable constraint on how we operate.</p>
+                                    <p>Triage and stabilization are performed without taking your existing system offline. All changes are validated in a staging environment and require your explicit approval before being promoted to production. Business continuity is not a selling point; it is a non-negotiable constraint on how we operate.</p>
                                 </div>
                             </div>
                             <div className="g-point">
@@ -591,7 +590,7 @@ const Home = () => {
                         </h2>
                         <p>
                             Every rescue starts with a Technical Health Check. You'll walk away with a written
-                            assessment of your system's critical risk surface — no strings attached, no sales call.
+                            assessment of your system's critical risk surface, no strings attached, no sales call.
                             Just an honest answer to the question your board is already asking.
                         </p>
                         <Button variant="primary" href="/contact">

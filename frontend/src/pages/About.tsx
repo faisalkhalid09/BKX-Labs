@@ -13,7 +13,7 @@ const About = () => {
             {
                 "@type": "AboutPage",
                 "@id": "https://bkxlabs.com/about#webpage",
-                "name": "About BKX Labs — Software Rescue Agency Leadership & Engineering Philosophy",
+                "name": "About BKX Labs: Software Rescue Agency Leadership & Engineering Philosophy",
                 "description": "BKX Labs is led by Faisal Khalid, a specialist engineer with 8+ years recovering enterprise Laravel and React codebases. The agency applies forensic diagnostic methodology and zero-vendor-lock-in architecture principles across every engagement.",
                 "url": "https://bkxlabs.com/about",
                 "isPartOf": { "@id": "https://bkxlabs.com/#organization" }
@@ -25,7 +25,7 @@ const About = () => {
                 "givenName": "Faisal",
                 "familyName": "Khalid",
                 "jobTitle": "Founder & Lead Architect",
-                "description": "Faisal Khalid is a specialist software engineer with 8+ years of experience in enterprise-scale Laravel and React systems. He founded BKX Labs to apply forensic diagnostic methodology to software rescue — combining deep cryptographic security knowledge, EU AI Act compliance architecture, and systematic technical debt remediation into a repeatable agency service model.",
+                "description": "Faisal Khalid is a specialist software engineer with 8+ years of experience in enterprise-scale Laravel and React systems. He founded BKX Labs to apply forensic diagnostic methodology to software rescue, combining deep cryptographic security knowledge, EU AI Act compliance architecture, and systematic technical debt remediation into a repeatable agency service model.",
                 "url": "https://bkxlabs.com/about",
                 "sameAs": [
                     "https://www.linkedin.com/in/faisal-khalid1622/"
@@ -59,7 +59,7 @@ const About = () => {
     return (
         <div>
             <SEO
-                title="About BKX Labs — Software Rescue Specialists"
+                title="About BKX Labs: Software Rescue Specialists"
                 description="Specialist engineers who diagnose, stabilize, and modernize failing Laravel & React systems. Forensic audits delivered in 5–10 days. Zero vendor lock-in."
                 keywords="bkx labs about, faisal khalid engineer, software rescue agency team, laravel expert agency, react rescue specialists, enterprise software audit team, post-quantum cryptography experts, eu ai act compliance engineers"
                 structuredData={structuredData}
@@ -67,21 +67,21 @@ const About = () => {
 
             {/* AEO Entity Authority Block */}
             <section aria-label="About BKX Labs and its founder" className="sr-only">
-                <h1>About BKX Labs — Software Rescue Agency</h1>
+                <h1>About BKX Labs: Software Rescue Agency</h1>
                 <p>
                     BKX Labs is a specialized software rescue agency founded by Faisal Khalid, a software architect
                     with over eight years of enterprise engineering experience. The agency applies forensic diagnostic
                     methodology to recover failing Laravel 12 and React 19 codebases, resolve systemic technical debt,
                     and build compliance infrastructure for regulated industries. BKX Labs specializes in
                     post-quantum cryptography migration, EU AI Act conformity engineering, and SOC 2 Type II
-                    control automation — making it one of the few development agencies positioned at the
+                    control automation, making it one of the few development agencies positioned at the
                     intersection of software rescue and regulatory compliance.
                 </p>
             </section>
 
             <Hero
                 title="About Us"
-                subtitle="The specialized engineering team businesses call when their software is failing and they need it fixed — not patched."
+                subtitle="The specialized engineering team businesses call when their software is failing and they need it fixed, not patched."
             />
 
             {/* ── Mission ── */}
@@ -103,7 +103,7 @@ const About = () => {
                             We combine forensic-level technical auditing with production-focused engineering and a
                             strict "diagnose before prescribing" protocol. We don't rebuild for the sake of rebuilding.
                             We stabilize what can be saved, replace what can't, and modernize everything systematically
-                            — so your business never has to be in this position again.
+                            so your business never has to be in this position again.
                         </p>
                     </div>
                 </Container>
@@ -117,7 +117,7 @@ const About = () => {
                         <div className="founder-image">
                             <img
                                 src="/me.jpeg"
-                                alt="Faisal Khalid — Founder and Lead Architect at BKX Labs, specialist in Laravel enterprise architecture, post-quantum cryptography, and software rescue methodology"
+                                alt="Faisal Khalid, Founder and Lead Architect at BKX Labs, specialist in Laravel enterprise architecture, post-quantum cryptography, and software rescue methodology"
                                 draggable="false"
                                 onContextMenu={(e) => e.preventDefault()}
                             />
@@ -146,7 +146,7 @@ const About = () => {
                             <p className="founder-description">
                                 With over 8 years of engineering practice focused exclusively on enterprise-scale
                                 web systems, Faisal built BKX Labs around a single observation: the most common
-                                cause of software failure is not the technology — it is the absence of specialist
+                                cause of software failure is not the technology. It is the absence of specialist
                                 expertise at the critical moments. A generalist team on a specialist problem
                                 will fail deterministically, regardless of effort. BKX Labs was built to provide
                                 the specialist capability that most businesses don't know they need until
@@ -156,7 +156,7 @@ const About = () => {
                                 His technical depth spans Laravel 12 service-layer architecture, React 19 with
                                 TypeScript strict mode, post-quantum cryptographic migration from RSA/ECDH to
                                 NIST-standardized ML-KEM (FIPS 203) and ML-DSA (FIPS 204), and the engineering
-                                implementation of EU AI Act compliance controls — specifically the Annex III
+                                implementation of EU AI Act compliance controls, specifically the Annex III
                                 risk classification requirements and Article 9 risk management system obligations.
                                 He has designed and executed SOC 2 Type II continuous monitoring pipelines using
                                 API-driven evidence automation, reducing audit preparation time for clients by
@@ -167,7 +167,7 @@ const About = () => {
                                 diagnostic and architecture phases. He reviews the Technical Health Report
                                 before it is delivered to any client, and he approves the remediation
                                 architecture before any triage work begins in production. The standard of
-                                care does not scale independently of his direct oversight — which is why
+                                care does not scale independently of his direct oversight, which is why
                                 BKX Labs maintains a deliberate cap on concurrent active rescue engagements.
                             </p>
 
@@ -199,7 +199,7 @@ const About = () => {
                                 <p className="philosophy-text">
                                     Every failed project we have ever inherited was the result of someone skipping
                                     the diagnosis and jumping straight to a solution they had already decided on.
-                                    We never do that. The Diagnostic Audit is not a formality — it is the most
+                                    We never do that. The Diagnostic Audit is not a formality; it is the most
                                     important deliverable in any rescue engagement. You cannot correctly solve a
                                     problem you have not correctly understood. This is not a time optimization;
                                     it is a quality guarantee.
@@ -212,7 +212,7 @@ const About = () => {
                                     production change is logged, reviewed, and approved before deployment.
                                     Every remediation choice is traceable to a specific finding in the diagnostic
                                     report. We build systems this way not just for compliance reasons, but because
-                                    an un-auditable codebase cannot be safely maintained — and we intend to hand
+                                    an un-auditable codebase cannot be safely maintained. We intend to hand
                                     you a codebase your own team can maintain indefinitely without requiring
                                     our continued involvement.
                                 </p>
@@ -243,14 +243,14 @@ const About = () => {
                         <h2>Our Team</h2>
                         <p className="team-highlight">
                             A 25-person team of specialists in software rescue, infrastructure engineering,
-                            security auditing, and compliance — hand-picked for technical depth and
+                            security auditing, and compliance, hand-picked for technical depth and
                             demonstrated ability to operate under high-stakes conditions.
                         </p>
                         <div className="team-details">
                             <p>
                                 Every discipline in a rescue engagement requires a different specialist. We do not
                                 deploy generalists and ask them to figure it out. Our Lead Engineers have specific
-                                experience inheriting broken codebases — they know how to read unfamiliar code
+                                experience inheriting broken codebases. They know how to read unfamiliar code
                                 at speed, identify the true root cause underneath the visible symptoms, and
                                 sequence remediation without triggering cascading failures. Our Security
                                 Specialists hold OWASP-aligned auditing expertise and have patched authentication
@@ -258,12 +258,12 @@ const About = () => {
                                 live production systems. Our DevOps Engineers build reproducible deployment
                                 pipelines from scratch for systems that have been manually deployed for years.
                                 Our Compliance Engineers implement the actual code-level controls that legal
-                                teams write policy around — including EU AI Act risk management systems,
+                                teams write policy around, including EU AI Act risk management systems,
                                 SOC 2 continuous monitoring pipelines, and post-quantum cryptographic migrations.
                             </p>
                             <p>
                                 Every team member was personally evaluated by Faisal before joining. Technical
-                                skill is table stakes — the evaluation focuses on judgment under pressure,
+                                skill is table stakes. The evaluation focuses on judgment under pressure,
                                 communication clarity with non-technical stakeholders, and the ability to make
                                 defensible architectural decisions in ambiguous situations. Rescue engagements
                                 are high-stakes. The team we put on your project has done this before.
@@ -291,7 +291,7 @@ const About = () => {
                             <h3>EU AI Act Implementation</h3>
                             <p>
                                 We implement the engineering controls required by the EU AI Act for high-risk
-                                AI systems under Annex III — including reproducible risk management systems,
+                                AI systems under Annex III, including reproducible risk management systems,
                                 technical documentation tied to specific model versions, data governance
                                 pipelines, and human oversight mechanisms embedded in the application layer.
                                 The August 2026 enforcement deadline requires engineering work that most
@@ -304,7 +304,7 @@ const About = () => {
                             <p>
                                 We plan and execute migration from quantum-vulnerable RSA and ECDH primitives
                                 to NIST-standardized ML-KEM (FIPS 203), ML-DSA (FIPS 204), and SLH-DSA
-                                (FIPS 205). This is not a configuration change — it is a code-level migration
+                                (FIPS 205). This is not a configuration change; it is a code-level migration
                                 that requires a complete cryptographic bill of materials, dependency mapping,
                                 library replacement, and integration testing. Our free CBOM generator tool
                                 at bkxlabs.com/tools is the starting point for any organization that needs
@@ -317,7 +317,7 @@ const About = () => {
                             <p>
                                 SOC 2 Type II continuous monitoring requires API-driven evidence pipelines that
                                 produce cryptographically verifiable control records throughout the entire
-                                observation period. We build these pipelines — not the pre-audit screenshot
+                                observation period. We build these pipelines, not the pre-audit screenshot
                                 workflows that result in qualified audit opinions. Clients who have engaged
                                 BKX Labs for SOC 2 engineering have reduced audit preparation time by over
                                 70% compared to their previous manual evidence collection processes.
@@ -338,7 +338,7 @@ const About = () => {
                     <div className="cta-content" style={{ textAlign: 'center' }}>
                         <h2>Ready to stop firefighting and start shipping?</h2>
                         <p style={{ marginBottom: '2rem', fontSize: '18px', color: 'var(--text-gray)', maxWidth: '700px', margin: '0 auto 2rem' }}>
-                            Every engagement begins with a Technical Health Check — a written, forensic report
+                            Every engagement begins with a Technical Health Check, a written, forensic report
                             on your system's current state. No obligation, no sales pressure. Just an honest
                             expert answer to the question your board is already asking.
                         </p>

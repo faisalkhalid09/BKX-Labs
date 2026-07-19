@@ -32,7 +32,7 @@ const Process = () => {
                 "@type": "HowToStep",
                 "position": 2,
                 "name": "Triage and Emergency Stabilization",
-                "text": "Immediate intervention on Critical and High severity findings identified in the audit. All triage work is executed on an isolated staging branch using a reproducible CI/CD pipeline — never directly in production. Critical security vulnerabilities are sealed within 72 hours. Sentry error tracking and Laravel Horizon queue monitoring are established to give the client real-time production visibility for the first time."
+                "text": "Immediate intervention on Critical and High severity findings identified in the audit. All triage work is executed on an isolated staging branch using a reproducible CI/CD pipeline, never directly in production. Critical security vulnerabilities are sealed within 72 hours. Sentry error tracking and Laravel Horizon queue monitoring are established to give the client real-time production visibility for the first time."
             },
             {
                 "@type": "HowToStep",
@@ -44,7 +44,7 @@ const Process = () => {
                 "@type": "HowToStep",
                 "position": 4,
                 "name": "Weekly Communication and Transparency",
-                "text": "Structured weekly async written updates covering what shipped in the past week, what is in progress, what is blocked, and any proactive recommendations from the engineering team. The dedicated Project Manager is available for synchronous calls at any point. No update is ever 'the team is working on it' — every status report names the specific task, the engineer responsible, and the expected completion date."
+                "text": "Structured weekly async written updates covering what shipped in the past week, what is in progress, what is blocked, and any proactive recommendations from the engineering team. The dedicated Project Manager is available for synchronous calls at any point. No update is ever 'the team is working on it;' every status report names the specific task, the engineer responsible, and the expected completion date."
             },
             {
                 "@type": "HowToStep",
@@ -58,14 +58,14 @@ const Process = () => {
     return (
         <div>
             <SEO
-                title="5-Phase Software Rescue Process — BKX Labs"
+                title="5-Phase Software Rescue Process: BKX Labs"
                 description="Forensic audit in 5–10 days, emergency triage in 72 hrs, then weekly sprints to full handover. Fixed-price, zero-downtime. Written report before any code changes."
                 keywords="software rescue protocol, project recovery process, laravel codebase audit process, react modernization approach, technical debt remediation steps, how to rescue a failing project, software rescue methodology, enterprise code handover process"
                 structuredData={structuredData}
             />
             <Hero
                 title="The Rescue Protocol"
-                subtitle="A structured, auditable, phase-gated process for taking over failing software, stabilizing it, and bringing it to production — with complete written transparency at every stage."
+                subtitle="A structured, auditable, phase-gated process for taking over failing software, stabilizing it, and bringing it to production with complete written transparency at every stage."
             />
 
             {/* PM Introduction */}
@@ -80,7 +80,7 @@ const Process = () => {
                             From the moment you engage BKX Labs, you are assigned a <strong>dedicated Lead Engineer</strong> and
                             a <strong>dedicated Project Manager</strong>. The Lead Engineer owns every technical decision
                             and is accountable for the quality of the diagnostic report, triage interventions, and
-                            modernization architecture. The PM owns your communication — meeting cadence, status
+                            modernization architecture. The PM owns your communication: meeting cadence, status
                             reports, change requests, and escalations. You always know exactly who to call,
                             and you always get a straight answer. Neither role rotates mid-engagement.
                         </p>
@@ -100,7 +100,7 @@ const Process = () => {
                         <p className="step-description">
                             We do not write a single line of remediation code until we understand the full scope
                             of the problem. Our forensic audit team spends 5 to 10 business days on read-only
-                            access to your codebase, production logs, database schema, and infrastructure —
+                            access to your codebase, production logs, database schema, and infrastructure,
                             using a combination of automated static analysis and manual architectural review.
                             The output is a written Technical Health Report: every issue classified by severity
                             (Critical / High / Medium / Low), with an individual effort and cost estimate for
@@ -150,16 +150,16 @@ const Process = () => {
                         </div>
                         <p className="step-description">
                             Informed by the audit report's severity rankings, our engineers immediately address the
-                            critical failure points — crashes, active security vulnerabilities, broken deployment
-                            pipelines, and data integrity risks — without taking your system offline at any point.
+                            critical failure points including crashes, active security vulnerabilities, broken deployment
+                            pipelines, and data integrity risks, without taking your system offline at any point.
                             All triage work is executed on a dedicated staging branch with a reproducible Docker
                             and GitHub Actions pipeline that may not have existed before we arrived. Critical
                             security vulnerabilities (SQL injection, broken authentication, SSRF, exposed credentials)
                             are sealed within the first 72 hours of triage engagement. Every change is committed,
                             reviewed, tested in staging, and requires your explicit written approval before
                             promotion to production. A Sentry error-tracking integration and Laravel Horizon
-                            queue monitoring dashboard are established so you have real-time production visibility
-                            — in many cases, for the first time in the project's history.
+                            queue monitoring dashboard are established so you have real-time production visibility,
+                            in many cases for the first time in the project's history.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -177,7 +177,7 @@ const Process = () => {
                             <div className="detail-column deliverables">
                                 <h4>What You Receive</h4>
                                 <ul>
-                                    <li>Stabilized production environment — no active crashes</li>
+                                    <li>Stabilized production environment: no active crashes</li>
                                     <li>Functional CI/CD pipeline with automated rollback capability</li>
                                     <li>Critical security vulnerabilities patched and verified</li>
                                     <li>Sentry error monitoring dashboard with alert thresholds</li>
@@ -201,14 +201,14 @@ const Process = () => {
                         </div>
                         <p className="step-description">
                             With production stability restored, development proceeds in clearly defined 2-week sprints.
-                            Each sprint has a fixed, collaboratively agreed scope — committed in writing before
-                            any code is written — and ends with a working demo you can test against agreed
+                            Each sprint has a fixed, collaboratively agreed scope, committed in writing before
+                            any code is written, and ends with a working demo you can test against agreed
                             acceptance criteria. Technical debt is not removed all at once; it is sequenced
                             by risk and business impact. PestPHP 3 test suites are established before any
                             high-risk refactoring is attempted, creating a regression safety net that makes
                             the architectural evolution provably safe rather than optimistically safe.
                             Legacy patterns are migrated to Laravel 12 service-layer architecture, React 19
-                            with TypeScript 5 strict mode, and Tailwind CSS 4 — component by component,
+                            with TypeScript 5 strict mode, and Tailwind CSS 4, component by component,
                             sprint by sprint, with zero-downtime throughout.
                         </p>
                         <div className="step-details">
@@ -257,7 +257,7 @@ const Process = () => {
                             named and the mitigation in place), and any proactive recommendations from the
                             engineering team based on what they observed during the week. You are never told
                             "the team is working on it." Every status item names a person, a task,
-                            and a date. Synchronous calls are available on request at any time —
+                            and a date. Synchronous calls are available on request at any time,
                             but most clients find the async written format gives them more information
                             with less time cost.
                         </p>
@@ -299,7 +299,7 @@ const Process = () => {
                             <h2>Handover & Long-Term Self-Sufficiency</h2>
                         </div>
                         <p className="step-description">
-                            The definition of "done" at BKX Labs is not deployment — it is operational
+                            The definition of "done" at BKX Labs is not deployment; it is operational
                             self-sufficiency. The handover phase begins two sprints before the final
                             delivery date and is structured to ensure your internal team can take
                             full ownership of the system without requiring our continued involvement.
@@ -308,7 +308,7 @@ const Process = () => {
                             and deployment runbooks for every environment. A 60-day post-handover support
                             period is included at no additional charge: during this period, any production
                             issues that arise from our work are resolved by us at priority. The engagement
-                            closes when you tell us you're confident — not when we decide we're done.
+                            closes when you tell us you're confident, not when we decide we're done.
                         </p>
                         <div className="step-details">
                             <div className="detail-column">
@@ -347,7 +347,7 @@ const Process = () => {
                         </div>
                         <h2>Quality Assurance at Every Phase</h2>
                         <p>
-                            Testing is not a phase that happens at the end — it is a constraint applied at
+                            Testing is not a phase that happens at the end; it is a constraint applied at
                             every step. No remediation code ships without a corresponding automated test.
                             No high-risk refactor is attempted without a regression safety net already
                             in place. Every production deployment is validated in staging first, with an
@@ -398,7 +398,7 @@ const Process = () => {
                             <div className="milestone">
                                 <div className="milestone-percent">3</div>
                                 <h4>Modernization Retainer</h4>
-                                <p>Fixed monthly fee. Sprint scope agreed before each cycle. Cancel with 30 days' notice — no exit penalties.</p>
+                                <p>Fixed monthly fee. Sprint scope agreed before each cycle. Cancel with 30 days' notice with no exit penalties.</p>
                             </div>
                         </div>
                         <p className="payment-note">
