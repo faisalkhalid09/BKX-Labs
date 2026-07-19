@@ -3,6 +3,12 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import SEO from '../components/ui/SEO';
 
+const privacyNav = privacySections.map((section, index) => ({
+    id: `privacy-${index + 1}`,
+    label: section.title,
+    index: index + 1,
+}));
+
 const privacySections = [
     {
         title: 'Information We Collect',
@@ -98,49 +104,58 @@ const PrivacyPolicy = () => {
             <Hero 
                 title="Privacy Policy"
                 subtitle="Last updated: July 2026"
-                ctaText="Download Policy"
-                ctaLink="#"
             />
             <Section>
                 <Container>
-                    <div className="mx-auto max-w-4xl px-4 py-8">
+                    <div id="privacy-content" className="mx-auto max-w-6xl px-4 py-8">
                         <div className="mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm print:hidden">
-                            <button
-                                type="button"
-                                onClick={handleDownload}
-                                className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-                            >
-                                Download Text
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => window.print()}
-                                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
-                            >
-                                Print / Save PDF
-                            </button>
+                            <button type="button" onClick={handleDownload} className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800">Download Text</button>
+                            <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50">Print / Save PDF</button>
                             <span className="text-xs font-medium text-slate-500">Compact privacy summary for reading or saving.</span>
                         </div>
 
-                        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-                            <div className="mb-6 border-b border-slate-100 pb-5">
-                                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">BKX Labs Legal</p>
-                                <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Privacy Policy</h2>
-                                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">This policy explains what we collect, why we collect it, how we share it, how long we keep it, and what rights users have.</p>
+                        <div className="grid gap-6 lg:grid-cols-[1fr_250px]">
+                            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+                                <div className="mb-5 rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:p-5">
+                                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-400">BKX Labs Legal</p>
+                                    <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">Privacy Policy</h2>
+                                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">This policy explains what we collect, why we collect it, how we share it, how long we keep it, and what rights users have. The visual style stays compact and easy to scan.</p>
+                                </div>
+
+                                <div className="space-y-3">
+                                    {privacySections.map((section, index) => (
+                                        <section key={section.title} id={privacyNav[index].id} className="rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:p-5 scroll-mt-24">
+                                            <div className="flex items-start gap-3">
+                                                <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xs font-black text-white">{privacyNav[index].index}</span>
+                                                <div className="min-w-0">
+                                                    <h3 className="text-sm font-black uppercase tracking-[0.16em] text-slate-900">{section.title}</h3>
+                                                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                                                        {section.body.map((paragraph) => (
+                                                            <p key={paragraph}>{paragraph}</p>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="space-y-4">
-                                {privacySections.map((section) => (
-                                    <section key={section.title} className="rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:p-5">
-                                        <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-900">{section.title}</h3>
-                                        <div className="mt-3 space-y-2 text-sm leading-relaxed text-slate-700">
-                                            {section.body.map((paragraph) => (
-                                                <p key={paragraph}>{paragraph}</p>
-                                            ))}
-                                        </div>
-                                    </section>
-                                ))}
-                            </div>
+                            <aside className="lg:sticky lg:top-24 h-fit rounded-3xl border border-slate-200 bg-white p-5 shadow-sm print:hidden">
+                                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-400">On This Page</p>
+                                <div className="mt-4 space-y-2">
+                                    {privacyNav.map((item) => (
+                                        <a key={item.id} href={`#${item.id}`} className="flex items-center gap-3 rounded-2xl border border-slate-100 px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-200 hover:bg-slate-50">
+                                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-black text-slate-700">{item.index}</span>
+                                            <span className="line-clamp-2">{item.label}</span>
+                                        </a>
+                                    ))}
+                                </div>
+                                <div className="mt-5 rounded-2xl bg-slate-900 p-4 text-white">
+                                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-slate-300">Quick note</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-slate-100">Server logs are retained for 30 days and tool inputs are processed locally in the browser.</p>
+                                </div>
+                            </aside>
                         </div>
                     </div>
                 </Container>
