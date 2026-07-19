@@ -111,28 +111,28 @@ const TermsOfService = () => {
             <Section>
                 <Container>
                     <div id="terms-content" className="mx-auto max-w-6xl px-4 py-8">
-                        <div className="mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm print:hidden">
-                            <button type="button" onClick={handleDownload} className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800">Download Text</button>
+                        <div className="mb-5 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm print:hidden">
+                            <button type="button" onClick={handleDownload} className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800">Download Text</button>
                             <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50">Print / Save PDF</button>
                             <span className="text-xs font-medium text-slate-500">Compact legal summary for reading or saving.</span>
                         </div>
 
-                        <div className="grid gap-6 lg:grid-cols-[1fr_250px]">
+                        <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
                             <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
                                 <div className="mb-5 rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:p-5">
-                                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-400">BKX Labs Legal</p>
-                                    <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">Terms of Service</h2>
-                                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">These terms cover website use, software rescue services, digital products, ownership, payment, and legal limits. The layout is kept compact so the text is easier to scan without feeling oversized.</p>
+                                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[var(--primary)]">BKX Labs Legal</p>
+                                    <h2 className="mt-2 text-2xl font-black tracking-tight text-[var(--primary-dark)] sm:text-3xl">Terms of Service</h2>
+                                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--text-gray)]">These terms cover website use, software rescue services, digital products, ownership, payment, and legal limits. The layout follows the site theme: white surfaces, slate text, blue accents, and compact cards.</p>
                                 </div>
 
                                 <div className="space-y-3">
                                     {termsSections.map((section, index) => (
-                                        <section key={section.title} id={termsNav[index].id} className="rounded-2xl border border-slate-100 bg-slate-50 p-4 sm:p-5 scroll-mt-24">
+                                        <section key={section.title} id={termsNav[index].id} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm scroll-mt-24">
                                             <div className="flex items-start gap-3">
-                                                <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xs font-black text-white">{termsNav[index].index}</span>
+                                                <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-black text-white">{termsNav[index].index}</span>
                                                 <div className="min-w-0">
-                                                    <h3 className="text-sm font-black uppercase tracking-[0.16em] text-slate-900">{section.title}</h3>
-                                                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-700">
+                                                    <h3 className="text-sm font-black uppercase tracking-[0.16em] text-[var(--primary-dark)]">{section.title}</h3>
+                                                    <div className="mt-2 space-y-2 text-sm leading-relaxed text-[var(--text-gray)]">
                                                         {section.body.map((paragraph) => (
                                                             <p key={paragraph}>{paragraph}</p>
                                                         ))}
@@ -145,16 +145,16 @@ const TermsOfService = () => {
                             </div>
 
                             <aside className="lg:sticky lg:top-24 h-fit rounded-3xl border border-slate-200 bg-white p-5 shadow-sm print:hidden">
-                                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-400">On This Page</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[var(--primary)]">On This Page</p>
                                 <div className="mt-4 space-y-2">
                                     {termsNav.map((item) => (
-                                        <a key={item.id} href={`#${item.id}`} className="flex items-center gap-3 rounded-2xl border border-slate-100 px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-200 hover:bg-slate-50">
-                                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-black text-slate-700">{item.index}</span>
+                                        <a key={item.id} href={`#${item.id}`} className="flex items-center gap-3 rounded-2xl border border-slate-200 px-3 py-2 text-sm text-[var(--text-dark)] transition-colors hover:border-[var(--accent)] hover:bg-slate-50">
+                                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-black text-[var(--primary-dark)]">{item.index}</span>
                                             <span className="line-clamp-2">{item.label}</span>
                                         </a>
                                     ))}
                                 </div>
-                                <div className="mt-5 rounded-2xl bg-slate-900 p-4 text-white">
+                                <div className="mt-5 rounded-2xl bg-[var(--primary-dark)] p-4 text-white shadow-sm">
                                     <p className="text-[11px] font-black uppercase tracking-[0.22em] text-slate-300">Quick note</p>
                                     <p className="mt-2 text-sm leading-relaxed text-slate-100">BKX Labs owns the platform and written work unless a separate agreement says otherwise.</p>
                                 </div>
