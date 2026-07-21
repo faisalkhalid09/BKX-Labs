@@ -524,9 +524,8 @@ const Home = () => {
                                 <ul className="agency-expertise-list">
                                     <li>Laravel 12 &amp; React 19 Recovery</li>
                                     <li>TypeScript &amp; Architecture Modernization</li>
-                                    <li>Post-Quantum Cryptography Readiness</li>
-                                    <li>EU AI Act Compliance Engineering</li>
-                                    <li>SOC 2 Type II Audit Preparation</li>
+                                    <li>Post-Quantum Cryptography Migration</li>
+                                    <li>Zero-Knowledge Proof Infrastructure</li>
                                 </ul>
                             </div>
                             <div className="agency-overview-meta">
@@ -534,7 +533,7 @@ const Home = () => {
                                 <p className="agency-overview-tools-desc">
                                     Access our public tool suite at{' '}
                                     <a href="/tools" className="agency-tools-link">bkxlabs.com/tools</a>, covering EU AI Act risk classification, Post-Quantum CBOM generation,
-                                    SOC 2 readiness scoring, and thirteen additional regulatory calculators.
+                                    SOC 2 readiness scoring, and eight additional compliance and infrastructure tools.
                                 </p>
                             </div>
                         </div>

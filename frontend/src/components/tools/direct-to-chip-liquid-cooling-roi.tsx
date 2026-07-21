@@ -190,49 +190,6 @@ export function DirectToChipLiquidCoolingRoi() {
         </div>
       </div>
 
-      <article className="tu-prose">
-        <h2>Liquid Cooling ROI Guide (2026 Edition)</h2>
-
-        <h3>Why Air Cooling Hits a Hard Wall at Modern GPU Densities</h3>
-        <p>
-          Legacy air-cooled racks top out around 20kW of IT load before airflow physics
-          makes further density impractical without exotic (and expensive) containment.
-          Next-generation AI accelerators like NVIDIA's Blackwell platform draw well
-          over 120kW per rack at full deployment, which means air cooling isn't a
-          cost-optimization question for these workloads — it's a hard physical ceiling
-          that forces a cooling architecture change regardless of budget.
-        </p>
-
-        <h3>PUE Improvement Is Where the Real Savings Compound</h3>
-        <p>
-          Power Usage Effectiveness — the ratio of total facility power to IT power —
-          typically improves from around 1.5 with air cooling to roughly 1.15 with
-          direct-to-chip liquid cooling. That difference means substantially more of
-          every dollar spent on power goes to compute rather than to fans and chillers,
-          and the savings scale with utilization: the busier the cluster, the faster
-          the efficiency gain pays for the retrofit.
-        </p>
-
-        <h3>Payback Periods Depend Heavily on Local Energy Costs</h3>
-        <p>
-          A retrofit that pays back in under two years in a high-electricity-cost region
-          can take considerably longer somewhere with cheap power, even with identical
-          hardware and utilization. Grid carbon intensity also varies by region — U.S.
-          and EU averages differ meaningfully — which affects both the emissions case
-          and, increasingly, the regulatory case for the upgrade where carbon reporting
-          is mandatory.
-        </p>
-
-        <h3>Water Usage Is the Tradeoff Liquid Cooling Doesn't Eliminate</h3>
-        <p>
-          Direct-to-chip systems reduce energy waste but introduce water consumption
-          and water-loop maintenance that air-cooled facilities don't have. Facilities
-          in water-stressed regions should weigh this explicitly rather than treating
-          liquid cooling as a strictly net-positive sustainability upgrade — the energy
-          savings are real, but they come with a different resource tradeoff, not the
-          absence of one.
-        </p>
-      </article>
 
     </div>
   );

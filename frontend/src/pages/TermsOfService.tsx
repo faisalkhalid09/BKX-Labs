@@ -99,7 +99,11 @@ const TermsOfService = () => {
     };
 
     return (
-        <div>
+        <div className="bg-[var(--secondary)] min-h-screen relative overflow-hidden">
+            {/* Background glowing orbs */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--primary)] rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[var(--accent)] rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse delay-700"></div>
+
             <SEO 
                 title="Terms of Service"
                 description="BKX Labs Terms of Service. Read our rules, tool usage guidelines, and governing law."
@@ -108,49 +112,73 @@ const TermsOfService = () => {
                 title="Terms of Service"
                 subtitle="Last updated: July 2026"
             />
-            <Section>
+            <Section className="relative z-10">
                 <Container>
-                    <div id="terms-content" className="mx-auto max-w-4xl px-4 py-10 lg:py-14">
-                        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm print:hidden sm:flex-row sm:items-center sm:justify-between">
+                    <div id="terms-content" className="mx-auto max-w-4xl px-4 py-10 lg:py-14 animate-fade-in">
+                        {/* Actions Banner */}
+                        <div className="mb-10 flex flex-col gap-4 glass-panel px-6 py-5 sm:flex-row sm:items-center sm:justify-between hover:shadow-[var(--glow)] transition-all duration-500 print:hidden">
                             <div>
-                                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[var(--primary)]">BKX Labs Legal</p>
-                                <p className="mt-1 text-sm text-[var(--text-gray)]">Read online, print, or download the text version.</p>
+                                <p className="text-[12px] font-black uppercase tracking-[0.25em] bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">BKX Labs Legal</p>
+                                <p className="mt-1 text-sm font-medium text-[var(--text-gray)]">Read online, print, or download the text version.</p>
                             </div>
-                            <div className="flex flex-wrap gap-2">
-                                <button type="button" onClick={handleDownload} className="rounded-full bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800">Download Text</button>
-                                <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50">Print / Save PDF</button>
+                            <div className="flex flex-wrap gap-3">
+                                <button type="button" onClick={handleDownload} className="btn btn-primary px-6 py-2.5 text-sm !rounded-full shadow-lg hover:shadow-[var(--glow)] hover:-translate-y-1 transition-all duration-300">
+                                    <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0l-4-4m4 4V4" /></svg>
+                                    Download Text
+                                </button>
+                                <button type="button" onClick={() => window.print()} className="btn btn-secondary px-6 py-2.5 text-sm !rounded-full hover:-translate-y-1 transition-all duration-300">
+                                    <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                                    Print / Save PDF
+                                </button>
                             </div>
                         </div>
 
-                        <div className="rounded-3xl border border-slate-200 bg-white px-5 py-8 shadow-sm sm:px-8 sm:py-10">
-                            <div className="border-b border-slate-100 pb-6">
-                                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[var(--primary)]">Legal Notice</p>
-                                <h2 className="mt-2 text-3xl font-black tracking-tight text-[var(--primary-dark)] sm:text-4xl">Terms of Service</h2>
-                                <p className="mt-3 max-w-3xl text-base leading-relaxed text-[var(--text-gray)]">These terms cover website use, software rescue services, digital products, ownership, payment, and legal limits. The page is intentionally simple and readable, like a standard legal policy page on a major website.</p>
+                        {/* Main Content Card */}
+                        <div className="glass-panel overflow-hidden border border-white/60 bg-white/60 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-500">
+                            <div className="bg-gradient-to-r from-slate-50 to-slate-100/50 px-6 py-8 sm:px-10 sm:py-12 border-b border-slate-200/60 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[var(--primary)] to-transparent opacity-5 rounded-bl-full"></div>
+                                <div className="relative z-10">
+                                    <p className="text-[12px] font-black uppercase tracking-[0.25em] text-[var(--accent)] mb-2">Legal Notice</p>
+                                    <h2 className="text-3xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-dark)] to-[var(--primary)] sm:text-5xl mb-4">Terms of Service</h2>
+                                    <p className="max-w-3xl text-[1.05rem] leading-relaxed text-[var(--text-gray)]">These terms cover website use, software rescue services, digital products, ownership, payment, and legal limits. Please read them carefully before using our platform.</p>
+                                </div>
                             </div>
 
-                            <div className="mt-6 flex flex-wrap gap-2 print:hidden">
-                                {termsNav.map((item) => (
-                                    <a key={item.id} href={`#${item.id}`} className="rounded-full border border-slate-200 px-3.5 py-2 text-sm font-medium text-[var(--text-dark)] transition-colors hover:border-[var(--primary)] hover:bg-slate-50 hover:text-[var(--primary-dark)]">
-                                        {item.index}. {item.label}
-                                    </a>
-                                ))}
-                            </div>
+                            <div className="px-6 py-8 sm:px-10">
+                                {/* Navigation Pills */}
+                                <div className="mb-10 flex flex-wrap gap-3 print:hidden">
+                                    {termsNav.map((item) => (
+                                        <a key={item.id} href={`#${item.id}`} className="group relative rounded-full px-4 py-2 text-sm font-semibold text-[var(--text-gray)] bg-slate-100/80 border border-slate-200/50 transition-all duration-300 hover:bg-[var(--primary)] hover:text-white hover:border-[var(--primary)] hover:shadow-md hover:-translate-y-0.5 overflow-hidden">
+                                            <span className="relative z-10">
+                                                <span className="opacity-70 mr-1.5 group-hover:opacity-100 group-hover:text-cyan-200">{item.index}.</span>
+                                                {item.label}
+                                            </span>
+                                        </a>
+                                    ))}
+                                </div>
 
-                            <div className="mt-8 space-y-10">
-                                {termsSections.map((section, index) => (
-                                    <section key={section.title} id={termsNav[index].id} className="scroll-mt-24">
-                                        <div className="flex items-center gap-3">
-                                            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-black text-white">{termsNav[index].index}</span>
-                                            <h3 className="text-lg font-black tracking-tight text-[var(--primary-dark)] sm:text-xl">{section.title}</h3>
-                                        </div>
-                                        <div className="mt-4 space-y-4 pl-12 sm:pl-14 text-sm leading-7 text-[var(--text-gray)] sm:text-[15px]">
-                                            {section.body.map((paragraph) => (
-                                                <p key={paragraph}>{paragraph}</p>
-                                            ))}
-                                        </div>
-                                    </section>
-                                ))}
+                                {/* Content Sections */}
+                                <div className="space-y-12">
+                                    {termsSections.map((section, index) => (
+                                        <section key={section.title} id={termsNav[index].id} className="scroll-mt-32 group">
+                                            <div className="flex items-start gap-4 sm:gap-6">
+                                                <div className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-lg font-black text-white shadow-md group-hover:shadow-[var(--glow)] group-hover:scale-110 transition-all duration-300 transform-gpu">
+                                                    {termsNav[index].index}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h3 className="text-xl font-black tracking-tight text-[var(--primary-dark)] sm:text-2xl mb-4 group-hover:text-[var(--primary)] transition-colors duration-300 border-b border-slate-100 pb-3">
+                                                        {section.title}
+                                                    </h3>
+                                                    <div className="space-y-4 text-[15px] sm:text-base leading-relaxed text-[var(--text-gray)]">
+                                                        {section.body.map((paragraph) => (
+                                                            <p key={paragraph} className="mb-0">{paragraph}</p>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
