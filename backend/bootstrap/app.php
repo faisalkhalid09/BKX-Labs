@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Add CORS & Security
         $middleware->append(\App\Http\Middleware\HandleCors::class);
-        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+        // $middleware->append(\App\Http\Middleware\SecurityHeaders::class); // Disabled: Handled at Nginx level
 
         // CSRF Configuration
         $middleware->validateCsrfTokens(except: [
