@@ -37,22 +37,26 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     const scriptId = 'cf-turnstile-script';
     let script = document.getElementById(scriptId) as HTMLScriptElement;
 
+    const handleLoad = () => {
+      setIsScriptLoaded(true);
+    };
+
     if (!script) {
       script = document.createElement('script');
       script.id = scriptId;
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+      // Use explicit render instead of implicit onload callback
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
       script.async = true;
       script.defer = true;
       document.head.appendChild(script);
     }
 
-    window.onloadTurnstileCallback = () => {
-      setIsScriptLoaded(true);
-    };
+    script.addEventListener('load', handleLoad);
 
     return () => {
-      // Don't remove script on unmount in case other components need it.
-      // Do NOT delete the callback either, because in Strict Mode it might unmount/remount before script loads!
+      if (script) {
+        script.removeEventListener('load', handleLoad);
+      }
     };
   }, []);
 
