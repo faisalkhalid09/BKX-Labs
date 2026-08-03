@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TurnstileWidget from '../components/ui/TurnstileWidget';
 import './BookingPage.css';
 
 interface Slot {
@@ -30,6 +31,7 @@ const BookingPage: React.FC = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
   const [timezone, setTimezone] = useState<string>('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -110,6 +112,11 @@ const BookingPage: React.FC = () => {
       return;
     }
 
+    if (!turnstileToken) {
+      setVerificationError('Please complete the CAPTCHA to prove you are human.');
+      return;
+    }
+
     setVerificationError('');
     setVerificationMessage('');
     setCodeSending(true);
@@ -119,7 +126,10 @@ const BookingPage: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email: formData.email }),
+        body: JSON.stringify({ 
+          email: formData.email,
+          cf_turnstile_token: turnstileToken
+        }),
       });
 
       const result: { status?: string; message?: string } = await response.json();
@@ -334,11 +344,16 @@ const BookingPage: React.FC = () => {
                   <div className="email-verify-card">
                     <div className="email-verify-top">
                       <p>Verify your email before booking.</p>
+                      <TurnstileWidget 
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken('')}
+                        onError={() => setTurnstileToken('')}
+                      />
                       <button
                         type="button"
                         className="inline-verify-btn"
                         onClick={sendVerificationCode}
-                        disabled={codeSending}
+                        disabled={codeSending || !turnstileToken}
                       >
                         {codeSending ? 'Sending...' : 'Send Code'}
                       </button>

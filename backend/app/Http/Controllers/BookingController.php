@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Http;
 
 class BookingController extends Controller
 {
@@ -27,7 +28,24 @@ class BookingController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|max:255',
+            'cf_turnstile_token' => 'required|string',
+        ], [
+            'cf_turnstile_token.required' => 'Please complete the CAPTCHA.'
         ]);
+
+        // Verify Cloudflare Turnstile CAPTCHA
+        $turnstileResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'response' => $request->cf_turnstile_token,
+            'remoteip' => $request->ip()
+        ]);
+
+        if (!$turnstileResponse->json('success')) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'CAPTCHA verification failed. Please try again.',
+            ], 422);
+        }
 
         $email = strtolower(trim($validated['email']));
         $ip    = $request->ip();

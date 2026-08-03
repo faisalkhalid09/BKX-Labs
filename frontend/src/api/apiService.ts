@@ -24,7 +24,7 @@ export const apiService = {
     },
 
     // Submit contact form
-    submitContact: async (data: { name: string; email: string; message: string }) => {
+    submitContact: async (data: { name: string; email: string; message: string; cf_turnstile_token: string }) => {
         try {
             const response = await apiClient.post('/contact', data);
             return response.data;

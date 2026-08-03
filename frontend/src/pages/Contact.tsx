@@ -7,6 +7,7 @@ import Section from '../components/layout/Section';
 import Button from '../components/ui/Button';
 import { Mail } from 'lucide-react';
 import SEO from '../components/ui/SEO';
+import TurnstileWidget from '../components/ui/TurnstileWidget';
 import './Contact.css';
 import apiService from '../api/apiService';
 
@@ -21,13 +22,22 @@ const Contact = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [turnstileToken, setTurnstileToken] = useState<string>('');
 
     const onSubmit = async (data: ContactFormData) => {
+        if (!turnstileToken) {
+            setSubmitStatus('error');
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitStatus('idle');
 
         try {
-            await apiService.submitContact(data);
+            await apiService.submitContact({
+                ...data,
+                cf_turnstile_token: turnstileToken
+            });
             setSubmitStatus('success');
             reset();
         } catch (error) {
@@ -147,7 +157,13 @@ const Contact = () => {
                                     {errors.agreeToTerms && <span className="error-message">{errors.agreeToTerms.message}</span>}
                                 </div>
 
-                                <Button type="submit" variant="primary" disabled={isSubmitting}>
+                                <TurnstileWidget 
+                                    onSuccess={(token) => setTurnstileToken(token)}
+                                    onExpire={() => setTurnstileToken('')}
+                                    onError={() => setTurnstileToken('')}
+                                />
+
+                                <Button type="submit" variant="primary" disabled={isSubmitting || !turnstileToken}>
                                     {isSubmitting ? 'Sending...' : 'Send Message'}
                                 </Button>
 

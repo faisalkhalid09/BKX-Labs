@@ -10,6 +10,7 @@ use App\Exports\ContactsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use App\Mail\ContactFormSubmitted;
 use App\Mail\ContactFormAutoReply;
 
@@ -21,12 +22,29 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:5000',
+            'cf_turnstile_token' => 'required|string',
+        ], [
+            'cf_turnstile_token.required' => 'Please complete the CAPTCHA.'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Verify Cloudflare Turnstile CAPTCHA
+        $turnstileResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'response' => $request->cf_turnstile_token,
+            'remoteip' => $request->ip()
+        ]);
+
+        if (!$turnstileResponse->json('success')) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['cf_turnstile_token' => ['CAPTCHA verification failed. Please try again.']]
             ], 422);
         }
 
