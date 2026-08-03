@@ -84,70 +84,72 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="container">
-                <div className="navbar-content">
-                    <Link to="/" className="logo">
-                        <img
-                            src="/brand-logo.png"
-                            alt="BKX Labs - Enterprise Software Development Company"
-                            className="logo-img"
-                        />
-                    </Link>
+        <>
+            <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+                <div className="container">
+                    <div className="navbar-content">
+                        <Link to="/" className="logo">
+                            <img
+                                src="/brand-logo.png"
+                                alt="BKX Labs - Enterprise Software Development Company"
+                                className="logo-img"
+                            />
+                        </Link>
 
-                    {/* Desktop Navigation */}
-                    {!location.pathname.startsWith('/restricted-portal') && (
-                        <ul className="nav-links desktop-only">
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/services">Services</Link></li>
-                            <li><Link to="/process">Process</Link></li>
-                            <li><Link to="/case-study">Case Study</Link></li>
-                            <li><Link to="/about">About</Link></li>
-                            <li>
-                                <a
-                                    href={storeUrl}
-                                    className="nav-store-badge"
+                        {/* Desktop Navigation */}
+                        {!location.pathname.startsWith('/restricted-portal') && (
+                            <ul className="nav-links desktop-only">
+                                <li><Link to="/">Home</Link></li>
+                                <li><Link to="/services">Services</Link></li>
+                                <li><Link to="/process">Process</Link></li>
+                                <li><Link to="/case-study">Case Study</Link></li>
+                                <li><Link to="/about">About</Link></li>
+                                <li>
+                                    <a
+                                        href={storeUrl}
+                                        className="nav-store-badge"
+                                    >
+                                        Store
+                                    </a>
+                                </li>
+                                <li
+                                    ref={contactMenuRef}
+                                    className="contact-dropdown"
+                                    onMouseEnter={openContactMenu}
+                                    onMouseLeave={scheduleCloseContactMenu}
                                 >
-                                    Store
-                                </a>
-                            </li>
-                            <li
-                                ref={contactMenuRef}
-                                className="contact-dropdown"
-                                onMouseEnter={openContactMenu}
-                                onMouseLeave={scheduleCloseContactMenu}
-                            >
-                                <button
-                                    type="button"
-                                    className="nav-cta nav-contact-trigger"
-                                    aria-expanded={isContactMenuOpen}
-                                    aria-haspopup="true"
-                                    onClick={() => {
-                                        clearCloseTimer();
-                                        setIsContactMenuOpen((prev) => !prev);
-                                    }}
-                                >
-                                    Contact Us
-                                </button>
+                                    <button
+                                        type="button"
+                                        className="nav-cta nav-contact-trigger"
+                                        aria-expanded={isContactMenuOpen}
+                                        aria-haspopup="true"
+                                        onClick={() => {
+                                            clearCloseTimer();
+                                            setIsContactMenuOpen((prev) => !prev);
+                                        }}
+                                    >
+                                        Contact Us
+                                    </button>
 
-                                <div className={`contact-dropdown-menu ${isContactMenuOpen ? 'open' : ''}`}>
-                                    <Link to="/schedule" className="contact-dropdown-option">Schedule a Call</Link>
-                                    <Link to="/contact" className="contact-dropdown-option secondary">Contact Page</Link>
-                                </div>
-                            </li>
-                        </ul>
-                    )}
+                                    <div className={`contact-dropdown-menu ${isContactMenuOpen ? 'open' : ''}`}>
+                                        <Link to="/schedule" className="contact-dropdown-option">Schedule a Call</Link>
+                                        <Link to="/contact" className="contact-dropdown-option secondary">Contact Page</Link>
+                                    </div>
+                                </li>
+                            </ul>
+                        )}
 
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        className="hamburger"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            className="hamburger"
+                            onClick={() => setIsOpen(true)}
+                            aria-label="Open menu"
+                        >
+                            <Menu size={24} />
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </nav>
 
             {/* Mobile Navigation Drawer */}
             <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen}>
@@ -166,7 +168,7 @@ const Navbar = () => {
                             />
                         </Link>
                         <button
-                            className="hamburger"
+                            className="hamburger close-btn"
                             onClick={() => setIsOpen(false)}
                             aria-label="Close menu"
                             style={{ color: '#ffffff' }}
@@ -179,13 +181,13 @@ const Navbar = () => {
                     <ul className="mobile-nav-links">
                         {!location.pathname.startsWith('/restricted-portal') && (
                             <>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/services">Services</Link></li>
-                                <li><Link to="/process">Process</Link></li>
-                                <li><Link to="/case-study">Case Study</Link></li>
-                                <li><Link to="/about">About</Link></li>
+                                <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
+                                <li><Link to="/services" onClick={() => setIsOpen(false)}>Services</Link></li>
+                                <li><Link to="/process" onClick={() => setIsOpen(false)}>Process</Link></li>
+                                <li><Link to="/case-study" onClick={() => setIsOpen(false)}>Case Study</Link></li>
+                                <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
                                 <li>
-                                    <a href={storeUrl} className="nav-store-badge mobile">
+                                    <a href={storeUrl} className="nav-store-badge mobile" onClick={() => setIsOpen(false)}>
                                         Store
                                     </a>
                                 </li>
@@ -195,15 +197,15 @@ const Navbar = () => {
 
                                 {/* CTA Buttons pinned to bottom */}
                                 <li className="mobile-cta-group">
-                                    <Link to="/schedule" className="btn btn-secondary">Schedule a Call</Link>
-                                    <Link to="/contact" className="btn btn-primary">Contact Us</Link>
+                                    <Link to="/schedule" className="btn btn-secondary" onClick={() => setIsOpen(false)}>Schedule a Call</Link>
+                                    <Link to="/contact" className="btn btn-primary" onClick={() => setIsOpen(false)}>Contact Us</Link>
                                 </li>
                             </>
                         )}
                     </ul>
                 </div>
             </div>
-        </nav>
+        </>
     );
 };
 
