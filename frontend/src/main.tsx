@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot, hydrateRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
@@ -17,8 +17,4 @@ const app = (
   </StrictMode>
 )
 
-if (rootElement.childElementCount > 0) {
-  hydrateRoot(rootElement, app)
-} else {
-  createRoot(rootElement).render(app)
-}
+createRoot(rootElement).render(app)
