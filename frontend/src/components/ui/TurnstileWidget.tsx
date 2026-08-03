@@ -27,6 +27,16 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   const widgetIdRef = useRef<string | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
+  const onSuccessRef = useRef(onSuccess);
+  const onErrorRef = useRef(onError);
+  const onExpireRef = useRef(onExpire);
+
+  useEffect(() => {
+    onSuccessRef.current = onSuccess;
+    onErrorRef.current = onError;
+    onExpireRef.current = onExpire;
+  }, [onSuccess, onError, onExpire]);
+
   // Load the script dynamically
   useEffect(() => {
     if (window.turnstile) {
@@ -74,13 +84,13 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: siteKey,
       callback: (token: string) => {
-        onSuccess(token);
+        onSuccessRef.current(token);
       },
       'error-callback': () => {
-        if (onError) onError();
+        if (onErrorRef.current) onErrorRef.current();
       },
       'expired-callback': () => {
-        if (onExpire) onExpire();
+        if (onExpireRef.current) onExpireRef.current();
       },
       theme: 'light', // or 'dark', 'auto'
     });
@@ -91,7 +101,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         widgetIdRef.current = null;
       }
     };
-  }, [isScriptLoaded, onSuccess, onError, onExpire]);
+  }, [isScriptLoaded]); // REMOVED callbacks from dependency array!
 
   return <div ref={containerRef} className="cf-turnstile-container" style={{ margin: '1rem 0' }} />;
 };
