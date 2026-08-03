@@ -51,9 +51,8 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     };
 
     return () => {
-      // Don't remove script on unmount in case other components need it,
-      // but clean up the callback
-      delete window.onloadTurnstileCallback;
+      // Don't remove script on unmount in case other components need it.
+      // Do NOT delete the callback either, because in Strict Mode it might unmount/remount before script loads!
     };
   }, []);
 
