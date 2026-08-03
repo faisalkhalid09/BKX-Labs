@@ -149,9 +149,33 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Navigation Content */}
-            <div className={`mobile-menu ${isOpen ? 'active' : ''}`}>
+            {/* Mobile Navigation Drawer */}
+            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen}>
                 <div className="container">
+
+                    {/* ── Drawer header bar with gradient + logo + close ── */}
+                    <div className="mobile-menu-header">
+                        <Link to="/" className="logo" onClick={() => setIsOpen(false)}>
+                            <img
+                                src="/brand-logo-white.png"
+                                alt="BKX Labs"
+                                className="logo-img"
+                                onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).src = '/brand-logo.png';
+                                }}
+                            />
+                        </Link>
+                        <button
+                            className="hamburger"
+                            onClick={() => setIsOpen(false)}
+                            aria-label="Close menu"
+                            style={{ color: '#ffffff' }}
+                        >
+                            <X size={24} />
+                        </button>
+                    </div>
+
+                    {/* ── Nav links ── */}
                     <ul className="mobile-nav-links">
                         {!location.pathname.startsWith('/restricted-portal') && (
                             <>
@@ -161,15 +185,19 @@ const Navbar = () => {
                                 <li><Link to="/case-study">Case Study</Link></li>
                                 <li><Link to="/about">About</Link></li>
                                 <li>
-                                    <a
-                                        href={storeUrl}
-                                        className="nav-store-badge mobile"
-                                    >
+                                    <a href={storeUrl} className="nav-store-badge mobile">
                                         Store
                                     </a>
                                 </li>
-                                <li><Link to="/schedule" className="btn btn-secondary w-full">Schedule a Call</Link></li>
-                                <li><Link to="/contact" className="btn btn-primary w-full">Contact Us</Link></li>
+
+                                {/* Divider */}
+                                <hr className="mobile-divider" />
+
+                                {/* CTA Buttons pinned to bottom */}
+                                <li className="mobile-cta-group">
+                                    <Link to="/schedule" className="btn btn-secondary">Schedule a Call</Link>
+                                    <Link to="/contact" className="btn btn-primary">Contact Us</Link>
+                                </li>
                             </>
                         )}
                     </ul>

@@ -2,7 +2,7 @@
     background: transparent;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 999;
     transition: all 0.3s ease;
     border-bottom: 1px solid transparent;
 }
@@ -287,7 +287,7 @@
     border: 1px solid var(--border-light);
 }
 
-/* Hamburger Menu */
+/* ── Hamburger Button ─────────────────────────────────── */
 .hamburger {
     display: none;
     background: none;
@@ -295,72 +295,201 @@
     cursor: pointer;
     color: var(--text-dark);
     padding: 0.5rem;
-    transition: color 0.3s ease;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger:hover {
     color: var(--accent);
+    background: rgba(30, 58, 138, 0.06);
 }
 
-/* Mobile Menu Drawer */
+/* ── Mobile Menu Drawer ───────────────────────────────── */
 .mobile-menu {
     position: fixed;
-    top: 72px;
-    /* Approx header height */
+    top: 0;
     left: 0;
     width: 100%;
-    height: 0;
-    background: white;
-    overflow: hidden;
-    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-    opacity: 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+    height: 100dvh;
+    background: #ffffff;
+    transform: translateX(100%);
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobile-menu.active {
-    height: calc(100vh - 72px);
-    opacity: 1;
-    border-top: 1px solid var(--border-light);
+    transform: translateX(0);
+    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
 }
 
-.mobile-nav-links {
-    list-style: none;
-    padding: 2rem 1rem;
+/* ── Drawer Inner Layout ──────────────────────────────── */
+.mobile-menu .container {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    text-align: center;
+    height: 100%;
+    padding: 0;
 }
 
-.mobile-nav-links a {
-    font-size: 1.25rem;
+/* ── Drawer Top Bar (logo + close area) ──────────────── */
+.mobile-menu .mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+    flex-shrink: 0;
+}
+
+/* ── Nav Links List ───────────────────────────────────── */
+.mobile-nav-links {
+    list-style: none;
+    padding: 1.5rem 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0;
+    flex: 1;
+}
+
+/* Plain nav links — pill-row style */
+.mobile-nav-links > li > a:not(.btn):not(.nav-store-badge) {
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
     font-weight: 600;
-    color: var(--text-dark);
-    display: block;
+    color: #1e293b;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.15s ease;
+    letter-spacing: -0.01em;
 }
 
-.mobile-nav-links .btn {
-    margin-top: 1rem;
+.mobile-nav-links > li > a:not(.btn):not(.nav-store-badge):hover,
+.mobile-nav-links > li > a:not(.btn):not(.nav-store-badge):active {
+    background: rgba(37, 99, 235, 0.08);
+    color: #2563eb;
+    transform: translateX(4px);
+}
+
+/* Section divider before CTA buttons */
+.mobile-nav-links .mobile-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30, 58, 138, 0.15), transparent);
+    margin: 0.75rem 0;
+    border: none;
+}
+
+/* Store — outlined pill */
+.mobile-nav-links .nav-store-badge.mobile {
     width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.5rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    min-height: 50px;
+    border-radius: 12px !important;
+    border: 1.5px solid rgba(30, 58, 138, 0.35) !important;
+    color: #1e3a8a !important;
+    background: transparent;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    animation: none;
 }
 
+.mobile-nav-links .nav-store-badge.mobile:hover {
+    background: rgba(30, 58, 138, 0.06);
+    border-color: rgba(30, 58, 138, 0.65) !important;
+}
+
+/* CTA Buttons container */
+.mobile-nav-links .mobile-cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.25rem;
+    margin-top: auto;
+    padding-bottom: 2rem;
+}
+
+/* Schedule a Call — ghost / secondary */
+.mobile-nav-links .btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.9rem 1.2rem !important;
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    text-decoration: none;
+    background: #ffffff;
+    color: #1e3a8a !important;
+    border: 1.5px solid rgba(30, 58, 138, 0.3);
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    letter-spacing: -0.01em;
+}
+
+.mobile-nav-links .btn-secondary:hover {
+    background: rgba(30, 58, 138, 0.05);
+    border-color: rgba(30, 58, 138, 0.55);
+    transform: translateY(-1px);
+}
+
+/* Contact Us — gradient CTA */
 .mobile-nav-links .btn-primary {
-    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem 1.2rem !important;
+    min-height: 54px;
+    border-radius: 14px;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    text-decoration: none;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    color: #ffffff !important;
+    border: none;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    letter-spacing: -0.01em;
 }
 
-.mobile-nav-links .nav-store-badge {
-    color: var(--text-dark) !important;
+.mobile-nav-links .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.45);
 }
 
-/* Responsive Breakpoints */
+.mobile-nav-links .btn-primary:active,
+.mobile-nav-links .btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Strip underline animation from mobile links */
+.mobile-nav-links a::after {
+    display: none !important;
+}
+
+/* ── Responsive Breakpoints ───────────────────────────── */
 @media (max-width: 768px) {
     .desktop-only {
         display: none;
     }
 
     .hamburger {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .navbar-content {
@@ -368,7 +497,7 @@
     }
 
     .logo-img {
-        height: 24px;
+        height: 26px;
     }
 }
 
@@ -376,11 +505,13 @@
 @media (max-width: 350px) {
     .logo-img {
         height: 22px;
-        /* Prevent overlap on tiny screens */
     }
 
     .hamburger {
         padding: 0.25rem;
-        /* Tighter touch target area */
     }
-}
+
+    .mobile-nav-links {
+        padding: 1.25rem 1rem 1rem;
+    }
+}
