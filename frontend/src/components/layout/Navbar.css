@@ -343,7 +343,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.1rem 1.25rem;
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+    background: linear-gradient(315deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
     flex-shrink: 0;
 }
 
