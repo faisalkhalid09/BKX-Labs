@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\RateLimiter;
 
 class BookingController extends Controller
 {
@@ -29,33 +30,59 @@ class BookingController extends Controller
         ]);
 
         $email = strtolower(trim($validated['email']));
-        $now = now();
+        $ip    = $request->ip();
+        $now   = now();
 
-        $verification = BookingEmailVerification::firstOrNew(['email' => $email]);
-        if ($verification->last_sent_at && $verification->last_sent_at->gt($now->copy()->subSeconds(45))) {
+        // --- IP-level abuse guard (5 OTP sends per IP per 15 minutes) ---
+        $ipKey = 'otp_ip:' . md5($ip);
+        $ipHits = Cache::get($ipKey, 0);
+        if ($ipHits >= 5) {
+            Log::warning('OTP IP abuse blocked', ['ip' => $ip, 'email' => $email]);
             return response()->json([
-                'status' => 'error',
-                'message' => 'Please wait a few seconds before requesting another code.',
+                'status'  => 'error',
+                'message' => 'Too many requests from your location. Please try again later.',
+            ], 429);
+        }
+        Cache::put($ipKey, $ipHits + 1, now()->addMinutes(15));
+
+        // --- Per-email daily cap (max 10 OTPs per email per day) ---
+        $dailyKey = 'otp_daily:' . md5($email) . ':' . now()->format('Ymd');
+        $dailyHits = Cache::get($dailyKey, 0);
+        if ($dailyHits >= 10) {
+            Log::warning('OTP daily email cap reached', ['email' => $email, 'ip' => $ip]);
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Maximum verification attempts reached for this email. Please try again tomorrow.',
+            ], 429);
+        }
+        Cache::put($dailyKey, $dailyHits + 1, now()->endOfDay());
+
+        // --- Per-email cooldown (60 seconds between sends) ---
+        $verification = BookingEmailVerification::firstOrNew(['email' => $email]);
+        if ($verification->last_sent_at && $verification->last_sent_at->gt($now->copy()->subSeconds(60))) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Please wait at least 60 seconds before requesting another code.',
             ], 429);
         }
 
         $code = (string) random_int(100000, 999999);
 
         $verification->fill([
-            'code_hash' => Hash::make($code),
-            'code_expires_at' => $now->copy()->addMinutes(10),
-            'verified_at' => null,
+            'code_hash'          => Hash::make($code),
+            'code_expires_at'    => $now->copy()->addMinutes(10),
+            'verified_at'        => null,
             'session_token_hash' => null,
             'session_expires_at' => null,
-            'attempts' => 0,
-            'last_sent_at' => $now,
+            'attempts'           => 0,
+            'last_sent_at'       => $now,
         ]);
         $verification->save();
 
         Mail::to($email)->send(new BookingEmailVerificationCode($code));
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Verification code sent to your email.',
         ]);
     }

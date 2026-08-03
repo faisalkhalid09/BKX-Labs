@@ -15,20 +15,23 @@ Route::get('/test', function () {
     ]);
 });
 
-Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track']);
+Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track'])->middleware('throttle:60,1');
 
-Route::post('/contact', [ContactController::class, 'submit']);
+// Contact form — 5 submissions per IP per 10 minutes
+Route::post('/contact', [ContactController::class, 'submit'])->middleware('throttle:5,10');
+
 Route::post('/webhooks/calendar', [App\Http\Controllers\GoogleCalendarWebhookController::class, 'handle']);
 
 // Google OAuth Authorization
 Route::get('/google/auth', [App\Http\Controllers\GoogleAuthController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [App\Http\Controllers\GoogleAuthController::class, 'handleGoogleCallback']);
 
-// Custom Booking Routes
+// Booking Routes — strict IP-based rate limiting to stop OTP bombing bots
+// send-code: max 3 requests per IP per 15 minutes (also has per-email DB cooldown inside controller)
 Route::get('/booking/slots', [App\Http\Controllers\BookingController::class, 'getAvailableSlots']);
-Route::post('/booking/email/send-code', [App\Http\Controllers\BookingController::class, 'sendEmailVerificationCode']);
-Route::post('/booking/email/verify-code', [App\Http\Controllers\BookingController::class, 'verifyEmailCode']);
-Route::post('/booking/create', [App\Http\Controllers\BookingController::class, 'createBooking']);
+Route::post('/booking/email/send-code', [App\Http\Controllers\BookingController::class, 'sendEmailVerificationCode'])->middleware('throttle:3,15');
+Route::post('/booking/email/verify-code', [App\Http\Controllers\BookingController::class, 'verifyEmailCode'])->middleware('throttle:10,15');
+Route::post('/booking/create', [App\Http\Controllers\BookingController::class, 'createBooking'])->middleware('throttle:5,10');
 Route::get('/booking/success/{token}', [App\Http\Controllers\BookingController::class, 'getBookingSuccess']);
 // Route::get('/rezgo-demo/prices', [RezgoDemoController::class, 'getPrices']);
 

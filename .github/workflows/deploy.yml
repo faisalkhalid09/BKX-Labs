@@ -1,0 +1,55 @@
+﻿name: Deploy to BKX Labs VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: SSH Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout code ──────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Deploy via SSH ─────────────────────────────────────────
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host:     ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key:      ${{ secrets.VPS_SSH_KEY }}
+          port:     ${{ secrets.VPS_PORT }}
+          script: |
+            set -e
+
+            echo "=== Pulling latest code ==="
+            cd /var/www/BKX-Labs
+            git pull origin main
+
+            echo "=== Backend: installing dependencies ==="
+            cd /var/www/BKX-Labs/backend
+            composer install --no-interaction --optimize-autoloader --no-dev
+
+            echo "=== Backend: clearing + warming caches ==="
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan route:cache
+            php artisan config:cache
+            php artisan view:cache
+
+            echo "=== Backend: running migrations ==="
+            php artisan migrate --force
+
+            echo "=== Frontend: installing + building ==="
+            cd /var/www/BKX-Labs/frontend
+            npm ci --omit=dev
+            npm run build
+
+            echo "=== Reloading services ==="
+            sudo systemctl reload php8.3-fpm
+            sudo nginx -t && sudo systemctl reload nginx
+
+            echo "=== Deploy complete ==="

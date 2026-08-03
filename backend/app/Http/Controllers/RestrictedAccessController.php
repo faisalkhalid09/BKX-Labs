@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\ReceiptTemplate;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ClientReceipt;
@@ -33,12 +34,12 @@ class RestrictedAccessController extends Controller
 
             return response()->json(['message' => 'Invalid credentials.'], 401);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Server Error detected',
+            Log::error('Restricted login error', [
                 'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ], 500);
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ]);
+            return response()->json(['message' => 'Server error. Please try again.'], 500);
         }
     }
 
