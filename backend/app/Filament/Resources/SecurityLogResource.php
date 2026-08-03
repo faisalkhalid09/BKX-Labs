@@ -15,7 +15,7 @@ class SecurityLogResource extends Resource
 {
     protected static ?string $model = SecurityLog::class;
 
-    protected static string|\UnitEnum|null $navigationIcon = 'heroicon-o-shield-exclamation';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shield-exclamation';
     protected static string|\UnitEnum|null $navigationGroup = 'System';
     protected static ?int $navigationSort = 3;
 
