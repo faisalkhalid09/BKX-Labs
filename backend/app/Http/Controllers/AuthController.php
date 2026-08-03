@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -23,7 +25,28 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email'    => ['required', 'email:rfc'],
             'password' => ['required'],
+            'cf_turnstile_token' => ['required', 'string'],
+        ], [
+            'cf_turnstile_token.required' => 'Please complete the CAPTCHA.'
         ]);
+
+        // Verify Cloudflare Turnstile CAPTCHA
+        $turnstileResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'response' => $request->cf_turnstile_token,
+            'remoteip' => $request->ip()
+        ]);
+
+        if (!$turnstileResponse->json('success')) {
+            \App\Models\SecurityLog::create([
+                'ip_address' => $request->ip(),
+                'endpoint' => '/login',
+                'method' => 'POST',
+                'payload' => json_encode($request->except('password')),
+                'threat_type' => 'Failed CAPTCHA (Login)'
+            ]);
+            return back()->withErrors(['cf_turnstile_token' => 'CAPTCHA verification failed. Please try again.'])->onlyInput('email');
+        }
 
         if (RateLimiter::tooManyAttempts('otp.generate:' . $request->ip() . '|' . $request->input('email'), 3)) {
             return back()->withErrors(['email' => 'Too many attempts. Please try again in 5 minutes.'])->onlyInput('email');
@@ -68,7 +91,28 @@ class AuthController extends Controller
             'email'                 => ['required', 'email:rfc', 'unique:users'],
             'password'              => ['required', 'min:8', 'confirmed'],
             'terms'                 => ['accepted'],
+            'cf_turnstile_token'    => ['required', 'string'],
+        ], [
+            'cf_turnstile_token.required' => 'Please complete the CAPTCHA.'
         ]);
+
+        // Verify Cloudflare Turnstile CAPTCHA
+        $turnstileResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'response' => $request->cf_turnstile_token,
+            'remoteip' => $request->ip()
+        ]);
+
+        if (!$turnstileResponse->json('success')) {
+            \App\Models\SecurityLog::create([
+                'ip_address' => $request->ip(),
+                'endpoint' => '/register',
+                'method' => 'POST',
+                'payload' => json_encode($request->except(['password', 'password_confirmation'])),
+                'threat_type' => 'Failed CAPTCHA (Register)'
+            ]);
+            return back()->withErrors(['cf_turnstile_token' => 'CAPTCHA verification failed. Please try again.'])->onlyInput('name', 'email');
+        }
 
         if (RateLimiter::tooManyAttempts('otp.generate:' . $request->ip() . '|' . $request->input('email'), 3)) {
             return back()->withErrors(['email' => 'Too many attempts. Please try again in 5 minutes.'])->onlyInput('name', 'email');

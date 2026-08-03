@@ -41,6 +41,13 @@ class BookingController extends Controller
         ]);
 
         if (!$turnstileResponse->json('success')) {
+            \App\Models\SecurityLog::create([
+                'ip_address' => $request->ip(),
+                'endpoint' => '/api/booking/email/send-code',
+                'method' => 'POST',
+                'payload' => json_encode($request->except('cf_turnstile_token')),
+                'threat_type' => 'Failed CAPTCHA (Booking OTP)'
+            ]);
             return response()->json([
                 'status'  => 'error',
                 'message' => 'CAPTCHA verification failed. Please try again.',
@@ -55,6 +62,13 @@ class BookingController extends Controller
         $ipKey = 'otp_ip:' . md5($ip);
         $ipHits = Cache::get($ipKey, 0);
         if ($ipHits >= 5) {
+            \App\Models\SecurityLog::create([
+                'ip_address' => $request->ip(),
+                'endpoint' => '/api/booking/email/send-code',
+                'method' => 'POST',
+                'payload' => json_encode(['email' => $email]),
+                'threat_type' => 'OTP IP Abuse'
+            ]);
             Log::warning('OTP IP abuse blocked', ['ip' => $ip, 'email' => $email]);
             return response()->json([
                 'status'  => 'error',

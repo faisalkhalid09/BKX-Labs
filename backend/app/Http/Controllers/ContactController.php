@@ -42,6 +42,13 @@ class ContactController extends Controller
         ]);
 
         if (!$turnstileResponse->json('success')) {
+            \App\Models\SecurityLog::create([
+                'ip_address' => $request->ip(),
+                'endpoint' => '/api/contact',
+                'method' => 'POST',
+                'payload' => json_encode($request->except('cf_turnstile_token')),
+                'threat_type' => 'Failed CAPTCHA (Contact Form)'
+            ]);
             return response()->json([
                 'success' => false,
                 'errors' => ['cf_turnstile_token' => ['CAPTCHA verification failed. Please try again.']]

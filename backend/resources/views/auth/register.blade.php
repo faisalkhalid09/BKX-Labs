@@ -163,6 +163,15 @@
                     @enderror
                 </div>
 
+                <!-- Cloudflare Turnstile -->
+                <div class="pt-2">
+                    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                    <div class="cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
+                    @error('cf_turnstile_token')
+                        <p class="text-error text-xs sm:text-sm mt-1.5 font-bold">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
