@@ -119,3 +119,4 @@ const AppointmentSuccess: React.FC = () => {
 };
 
 export default AppointmentSuccess;
+

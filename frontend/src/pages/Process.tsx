@@ -60,7 +60,7 @@ const Process = () => {
             <SEO
                 title="How We Rescue Failing Software Projects — Our Process"
                 description="Our software rescue process: forensic codebase audit in 5–10 days, emergency triage in 72 hours, then fixed-price weekly sprints to full handover. No surprise costs. Full documentation at every stage."
-                keywords="how to rescue a software project, software rescue process, codebase audit timeline, how long does a codebase audit take, software project recovery steps, laravel rescue process, react project recovery"
+                keywords="how to rescue a software project, software rescue process, codebase audit timeline, how long does a codebase audit take, software project recovery steps, laravel rescue process, react project recovery, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
 
@@ -413,3 +413,4 @@ const Process = () => {
 };
 
 export default Process;
+

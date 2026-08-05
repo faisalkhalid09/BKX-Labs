@@ -104,7 +104,7 @@ const Services = () => {
             <SEO
                 title="Codebase Audit & Software Development Services"
                 description="Laravel and React software development services: diagnostic codebase audit ($3,500–$8,000), emergency triage, legacy software modernization, and custom development. Fixed-price engagements. Written report before any code changes."
-                keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service"
+                keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
             <Hero
@@ -124,6 +124,12 @@ const Services = () => {
                             deliverables, and acceptance criteria. There are no hourly billing surprises,
                             no scope ambiguity, and no lock-in beyond the current phase.
                         </p>
+                        <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                            <Link to="/codebase-audit" className="btn btn-secondary">Codebase Audits</Link>
+                            <Link to="/technical-debt-remediation" className="btn btn-secondary">Technical Debt Remediation</Link>
+                            <Link to="/hire-laravel-developer" className="btn btn-secondary">Hire Laravel Developers</Link>
+                            <Link to="/hire-react-developer" className="btn btn-secondary">Hire React Developers</Link>
+                        </div>
                     </div>
                 </Container>
             </Section>
@@ -597,3 +603,4 @@ const Services = () => {
 };
 
 export default Services;
+

@@ -135,7 +135,7 @@ const Home = () => {
             <SEO
                 title="Software Development Agency | Laravel & React Engineering"
                 description="BKX Labs is a specialist software development agency for Laravel and React projects. Codebase audits, emergency triage, technical debt remediation, and greenfield development. Fixed-price engagements. International team."
-                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation, software engineering company, hire laravel developer, hire react developer"
+                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation, software engineering company, hire laravel developer, hire react developer, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
 
@@ -604,3 +604,4 @@ const Home = () => {
 };
 
 export default Home;
+

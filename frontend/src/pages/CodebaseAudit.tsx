@@ -63,7 +63,7 @@ const CodebaseAudit = () => {
             <SEO
                 title="Codebase Audit Service | Laravel & React | From $3,500"
                 description="Professional codebase audit for Laravel and React applications. Fixed-price ($3,500–$8,000). Delivered in 5–10 business days. Written Technical Health Report with severity-ranked issues and per-item cost estimates."
-                keywords="codebase audit service, code audit service, laravel codebase audit, react codebase audit, software code audit, code review service, technical codebase review, software audit, codebase review cost"
+                keywords="codebase audit service, code audit service, laravel codebase audit, react codebase audit, software code audit, code review service, technical codebase review, software audit, codebase review cost, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
 
@@ -177,3 +177,4 @@ const CodebaseAudit = () => {
 };
 
 export default CodebaseAudit;
+

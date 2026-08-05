@@ -65,7 +65,7 @@ const Contact = () => {
             <SEO
                 title="Start Your Software Rescue | Book a Diagnostic Audit"
                 description="Stop the bleeding. Get a forensic audit of your failing codebase and a fixed-price recovery roadmap. Book your Rescue Strategy Call today."
-                keywords="hire rescue agency, book codebase audit, recover stalled project, emergency software help, software triage call"
+                keywords="hire rescue agency, book codebase audit, recover stalled project, emergency software help, software triage call, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
             <Hero
@@ -188,3 +188,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

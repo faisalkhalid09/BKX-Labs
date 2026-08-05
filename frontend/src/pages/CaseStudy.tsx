@@ -39,7 +39,7 @@ const CaseStudy = () => {
             <SEO
                 title="Software Rescue Portfolio | Real Project Recovery Results"
                 description="Forensic audits and rescue execution for international EdTech and Enterprise DMS platforms. See how we stabilized failing codebases and delivered production results."
-                keywords="software rescue portfolio, project recovery success stories, edtech development rescue, laravel elasticsearch results, enterprise software portfolio, fix broken codebase"
+                keywords="software rescue portfolio, project recovery success stories, edtech development rescue, laravel elasticsearch results, enterprise software portfolio, fix broken codebase, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 ogType="article"
                 structuredData={structuredData}
             />
@@ -368,3 +368,4 @@ const CaseStudy = () => {
 };
 
 export default CaseStudy;
+

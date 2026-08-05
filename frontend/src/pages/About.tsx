@@ -61,7 +61,7 @@ const About = () => {
             <SEO
                 title="About BKX Labs — Software Development Agency | Laravel & React Specialists"
                 description="BKX Labs is a specialist software development agency led by Faisal Khalid. We build, rescue, and modernize Laravel and React applications for startups and enterprise teams globally."
-                keywords="software development agency, software engineering agency, laravel development company, react development agency, about bkx labs, faisal khalid software engineer, specialist software agency"
+                keywords="software development agency, software engineering agency, laravel development company, react development agency, about bkx labs, faisal khalid software engineer, specialist software agency, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
 
@@ -354,3 +354,4 @@ const About = () => {
 };
 
 export default About;
+

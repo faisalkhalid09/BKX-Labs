@@ -8,6 +8,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isContactMenuOpen, setIsContactMenuOpen] = useState(false);
+    const [isLogoHovered, setIsLogoHovered] = useState(false);
     const contactMenuRef = useRef<HTMLLIElement | null>(null);
     const closeTimerRef = useRef<number | null>(null);
     const location = useLocation();
@@ -88,12 +89,19 @@ const Navbar = () => {
             <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="container">
                     <div className="navbar-content">
-                        <Link to="/" className="logo">
-                            <img
-                                src="/brand-logo.png"
-                                alt="BKX Labs - Enterprise Software Development Company"
-                                className="logo-img"
-                            />
+                        <Link to="/" className="logo" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
+                            <div className={`logo-flip-container ${isLogoHovered ? 'flipped' : ''}`}>
+                                <img
+                                    src="/brand-logo.png"
+                                    alt="BKX Labs - Enterprise Software Development Company"
+                                    className="logo-img logo-front"
+                                />
+                                <img
+                                    src="/logo-hover.svg"
+                                    alt="BKX Labs"
+                                    className="logo-img logo-back"
+                                />
+                            </div>
                         </Link>
 
                         {/* Desktop Navigation */}

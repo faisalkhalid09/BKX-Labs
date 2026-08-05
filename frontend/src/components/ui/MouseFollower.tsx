@@ -77,10 +77,21 @@ const MouseFollower = () => {
       const ringPosition = ringPositionRef.current;
       const dotPosition = dotPositionRef.current;
 
-      ringPosition.x += (targetX - ringPosition.x) * 0.12;
-      ringPosition.y += (targetY - ringPosition.y) * 0.12;
+      ringPosition.x += (targetX - ringPosition.x) * 0.25;
+      ringPosition.y += (targetY - ringPosition.y) * 0.25;
       dotPosition.x += (targetX - dotPosition.x) * 0.35;
       dotPosition.y += (targetY - dotPosition.y) * 0.35;
+
+      const distanceX = Math.abs(ringPosition.x - dotPosition.x);
+      const distanceY = Math.abs(ringPosition.y - dotPosition.y);
+      const maxDistance = 80;
+
+      if (distanceX > maxDistance) {
+        ringPosition.x = dotPosition.x + (ringPosition.x > dotPosition.x ? maxDistance : -maxDistance);
+      }
+      if (distanceY > maxDistance) {
+        ringPosition.y = dotPosition.y + (ringPosition.y > dotPosition.y ? maxDistance : -maxDistance);
+      }
 
       if (ringRef.current && dotRef.current && visibleRef.current) {
         ringRef.current.style.transform = `translate3d(${ringPosition.x}px, ${ringPosition.y}px, 0) translate(-50%, -50%)`;
