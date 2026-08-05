@@ -50,7 +50,7 @@ const MouseFollower = () => {
       updateVisibility();
     };
 
-    const handlePointerLeave = () => {
+    const handleWindowBlur = () => {
       visibleRef.current = false;
       document.body.classList.remove('main-site-cursor-active');
 
@@ -60,8 +60,16 @@ const MouseFollower = () => {
       }
     };
 
-    const handleWindowBlur = () => {
-      handlePointerLeave();
+    const handleWindowFocus = () => {
+      if (mediaQuery.matches) {
+        visibleRef.current = true;
+        document.body.classList.add('main-site-cursor-active');
+
+        if (ringRef.current && dotRef.current) {
+          ringRef.current.style.opacity = '1';
+          dotRef.current.style.opacity = '1';
+        }
+      }
     };
 
     const tick = () => {
@@ -87,8 +95,8 @@ const MouseFollower = () => {
     if (mediaQuery.matches) {
       window.addEventListener('pointermove', handlePointerMove, { passive: true });
       window.addEventListener('pointerenter', handlePointerEnter, { passive: true });
-      window.addEventListener('pointerleave', handlePointerLeave);
       window.addEventListener('blur', handleWindowBlur);
+      window.addEventListener('focus', handleWindowFocus);
       frameRef.current = window.requestAnimationFrame(tick);
     }
 
@@ -98,8 +106,8 @@ const MouseFollower = () => {
       if (mediaQuery.matches) {
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
         window.addEventListener('pointerenter', handlePointerEnter, { passive: true });
-        window.addEventListener('pointerleave', handlePointerLeave);
         window.addEventListener('blur', handleWindowBlur);
+        window.addEventListener('focus', handleWindowFocus);
 
         if (frameRef.current === null) {
           frameRef.current = window.requestAnimationFrame(tick);
@@ -107,8 +115,8 @@ const MouseFollower = () => {
       } else {
         window.removeEventListener('pointermove', handlePointerMove);
         window.removeEventListener('pointerenter', handlePointerEnter);
-        window.removeEventListener('pointerleave', handlePointerLeave);
         window.removeEventListener('blur', handleWindowBlur);
+        window.removeEventListener('focus', handleWindowFocus);
 
         if (frameRef.current !== null) {
           window.cancelAnimationFrame(frameRef.current);
@@ -123,8 +131,8 @@ const MouseFollower = () => {
       mediaQuery.removeEventListener('change', handleMediaChange);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerenter', handlePointerEnter);
-      window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
 
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);

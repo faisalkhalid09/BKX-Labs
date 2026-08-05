@@ -143,8 +143,8 @@ const Home = () => {
 
             {/* Hero Section */}
             <Hero
-                title="Software Development Agency — Laravel & React Engineering"
-                subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits. 25-person specialist team."
+                title="Software Development Agency Laravel & React Engineering"
+                subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits."
                 ctaText="Request a Technical Health Check"
                 ctaLink="/contact"
             />

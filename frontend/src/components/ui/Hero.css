@@ -1,6 +1,6 @@
 .hero {
     background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
-    padding: 9rem 0 8rem;
+    padding: 7rem 0 6rem;
     /* Increased top padding to account for fixed navbar */
     text-align: center;
     position: relative;
@@ -66,7 +66,7 @@
 
 @media (max-width: 1024px) {
     .hero {
-        padding: 8rem 0 6rem;
+        padding: 6rem 0 4rem;
     }
 
     .hero-content h1 {
@@ -76,7 +76,7 @@
 
 @media (max-width: 768px) {
     .hero {
-        padding: 7rem 0 5rem;
+        padding: 5rem 0 3rem;
     }
 
     .hero-content h1 {
