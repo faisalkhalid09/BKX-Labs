@@ -1,14 +1,15 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface SectionProps {
     children: ReactNode;
     className?: string;
     id?: string;
+    style?: CSSProperties;
 }
 
-const Section = ({ children, className = '', id }: SectionProps) => {
+const Section = ({ children, className = '', id, style }: SectionProps) => {
     return (
-        <section className={`section ${className}`} id={id}>
+        <section className={`section ${className}`} id={id} style={style}>
             {children}
         </section>
     );

@@ -4,7 +4,7 @@ import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import Button from '../components/ui/Button';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, AlertTriangle, TrendingUp, Clock, DollarSign } from 'lucide-react';
+import { ArrowRight, AlertTriangle, TrendingUp, Clock, DollarSign } from 'lucide-react';
 
 const TechnicalDebtRemediation = () => {
     const faqItems = [
