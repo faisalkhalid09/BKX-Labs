@@ -52,14 +52,14 @@ const TechnicalDebtRemediation = () => {
     return (
         <div>
             <SEO
-                title="Technical Debt Remediation Service — Fix Code Debt"
+                title="Technical Debt Remediation Service | Fix Code Debt"
                 description="Specialist technical debt remediation for Laravel and React applications. Forensic codebase audit, severity-ranked issue list, and systematic sprint-based remediation. Fixed-price engagements. Written report before any code changes."
                 keywords="technical debt remediation, fix technical debt, technical debt consulting, code refactoring service, code debt remediation, legacy code modernization, reduce technical debt, software code debt"
                 structuredData={structuredData}
             />
 
             <Hero
-                title="Technical Debt Remediation — Fix Your Codebase"
+                title="Technical Debt Remediation | Fix Your Codebase"
                 subtitle="BKX Labs provides specialist technical debt remediation for Laravel and React applications. We audit your codebase, quantify every debt item by severity and business impact, and systematically eliminate it through sprint-based fixed-price work."
                 ctaText="Get a Codebase Audit"
                 ctaLink="/codebase-audit"

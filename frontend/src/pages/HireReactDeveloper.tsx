@@ -53,14 +53,14 @@ const HireReactDeveloper = () => {
     return (
         <div>
             <SEO
-                title="Hire a React Developer — React Development Agency"
+                title="Hire a React Developer | React Development Agency"
                 description="Hire specialist React developers from BKX Labs. React 19 codebase audits, emergency rescue, TypeScript migration, performance optimization, and greenfield development. Fixed-price. NDA included."
                 keywords="hire react developer, react development company, react developer for hire, react development agency, react engineer, react 19 developer, react codebase audit, react typescript developer"
                 structuredData={structuredData}
             />
 
             <Hero
-                title="Hire a React Developer — Specialist Agency"
+                title="Hire a React Developer | Specialist Agency"
                 subtitle="BKX Labs is a dedicated React development agency. We audit broken React applications, rescue stalled projects, migrate to React 19 and TypeScript strict mode, and build new frontend systems from scratch. Fixed-price. Full IP ownership."
                 ctaText="Get a Free Scope Call"
                 ctaLink="/contact"

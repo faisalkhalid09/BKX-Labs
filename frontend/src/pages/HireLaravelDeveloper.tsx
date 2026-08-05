@@ -63,14 +63,14 @@ const HireLaravelDeveloper = () => {
     return (
         <div>
             <SEO
-                title="Hire a Laravel Developer — Laravel Development Agency"
+                title="Hire a Laravel Developer | Laravel Development Agency"
                 description="Hire specialist Laravel developers from BKX Labs. Fixed-price Laravel codebase audits ($3,500–$8,000), emergency rescue, modernization retainers, and greenfield builds. NDA + full IP ownership."
                 keywords="hire laravel developer, laravel development company, laravel developer for hire, laravel development agency, laravel engineer, laravel 12 developer, laravel project rescue, laravel codebase audit"
                 structuredData={structuredData}
             />
 
             <Hero
-                title="Hire a Laravel Developer — Specialist Agency"
+                title="Hire a Laravel Developer | Specialist Agency"
                 subtitle="BKX Labs is a dedicated Laravel development agency. We audit broken Laravel applications, rescue stalled projects, modernize legacy systems to Laravel 12, and build new applications from scratch. Fixed-price. Full IP ownership. NDA included."
                 ctaText="Get a Free Scope Call"
                 ctaLink="/contact"

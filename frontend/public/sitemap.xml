@@ -77,20 +77,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- ── Individual Case Studies ── -->
-  <url>
-    <loc>https://bkxlabs.com/case-studies/edtech-platform-rescue</loc>
-    <lastmod>2026-08-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://bkxlabs.com/case-studies/document-management-system</loc>
-    <lastmod>2026-08-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- ── Tools Hub ── -->
   <url>
     <loc>https://bkxlabs.com/tools</loc>

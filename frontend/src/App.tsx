@@ -22,8 +22,6 @@ import HireLaravelDeveloper from './pages/HireLaravelDeveloper';
 import HireReactDeveloper from './pages/HireReactDeveloper';
 import TechnicalDebtRemediation from './pages/TechnicalDebtRemediation';
 import CodebaseAudit from './pages/CodebaseAudit';
-import CaseStudyEdtech from './pages/CaseStudyEdtech';
-import CaseStudyDMS from './pages/CaseStudyDMS';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
@@ -74,8 +72,6 @@ function App() {
           <Route path="/hire-react-developer" element={<HireReactDeveloper />} />
           <Route path="/technical-debt-remediation" element={<TechnicalDebtRemediation />} />
           <Route path="/codebase-audit" element={<CodebaseAudit />} />
-          <Route path="/case-studies/edtech-platform-rescue" element={<CaseStudyEdtech />} />
-          <Route path="/case-studies/document-management-system" element={<CaseStudyDMS />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />

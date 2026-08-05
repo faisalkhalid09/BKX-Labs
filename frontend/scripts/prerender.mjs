@@ -14,8 +14,6 @@ const ROUTES = [
   '/about',
   '/process',
   '/case-study',
-  '/case-studies/edtech-platform-rescue',
-  '/case-studies/document-management-system',
   '/contact',
   '/privacy-policy',
   '/tos',

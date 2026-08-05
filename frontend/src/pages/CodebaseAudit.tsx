@@ -61,14 +61,14 @@ const CodebaseAudit = () => {
     return (
         <div>
             <SEO
-                title="Codebase Audit Service — Laravel & React | From $3,500"
+                title="Codebase Audit Service | Laravel & React | From $3,500"
                 description="Professional codebase audit for Laravel and React applications. Fixed-price ($3,500–$8,000). Delivered in 5–10 business days. Written Technical Health Report with severity-ranked issues and per-item cost estimates."
                 keywords="codebase audit service, code audit service, laravel codebase audit, react codebase audit, software code audit, code review service, technical codebase review, software audit, codebase review cost"
                 structuredData={structuredData}
             />
 
             <Hero
-                title="Codebase Audit Service — Laravel & React"
+                title="Codebase Audit Service | Laravel & React"
                 subtitle="A forensic review of your codebase, security posture, and infrastructure. Delivered in 5–10 business days as a written Technical Health Report with severity-ranked issues and per-item cost estimates. Fixed-price from $3,500."
                 ctaText="Request an Audit"
                 ctaLink="/contact"
