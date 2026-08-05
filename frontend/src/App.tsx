@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import MouseFollower from './components/ui/MouseFollower';
+import SmoothScroll from './components/ui/SmoothScroll';
 import { ToolsLayoutWrapper } from './components/layout/ToolsLayout';
 import Home from './pages/Home';
 import Services from './pages/Services';
@@ -57,6 +58,7 @@ function App() {
     <>
       <ScrollToTop />
       <MouseFollower />
+      <SmoothScroll />
       <Navbar />
       <main>
         <Routes>
