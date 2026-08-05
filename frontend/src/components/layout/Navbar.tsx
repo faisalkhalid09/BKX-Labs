@@ -94,12 +94,12 @@ const Navbar = () => {
                                 <img
                                     src="/brand-logo.png"
                                     alt="BKX Labs - Enterprise Software Development Company"
-                                    className="logo-img logo-front"
+                                    className="logo-front"
                                 />
                                 <img
-                                    src="/logo-hover.svg"
+                                    src="/logo-header.png"
                                     alt="BKX Labs"
-                                    className="logo-img logo-back"
+                                    className="logo-back"
                                 />
                             </div>
                         </Link>
