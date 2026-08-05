@@ -45,14 +45,15 @@
 }
 .logo-flip-container {
     position: relative;
-    display: inline-grid;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     perspective: 1000px;
     transform-style: preserve-3d;
     transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    width: fit-content;
+    width: clamp(150px, 17vw, 200px);
     height: 38px;
+    transform-origin: center center;
 }
 
 .navbar.scrolled .logo-flip-container {
@@ -65,10 +66,12 @@
 
 .logo-front,
 .logo-back {
-    grid-area: 1 / 1;
+    position: absolute;
+    inset: 0;
+    margin: auto;
     height: 100%;
-    width: auto;
-    max-width: none;
+    width: 100%;
+    max-width: 100%;
     object-fit: contain;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
