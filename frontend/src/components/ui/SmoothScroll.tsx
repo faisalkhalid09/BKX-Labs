@@ -5,6 +5,12 @@ const SmoothScroll = () => {
   const targetY = useRef(window.scrollY);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: fine) and (hover: hover) and (min-width: 1024px)');
+
+    if (!mediaQuery.matches) {
+      return;
+    }
+
     const handleWheel = (event: WheelEvent) => {
       event.preventDefault();
       

@@ -32,7 +32,14 @@ const Home = () => {
                 "@type": ["Organization", "ProfessionalService"],
                 "@id": "https://bkxlabs.com/#organization",
                 "name": "BKX Labs",
-                "alternateName": "BKX Labs Software Rescue Agency",
+                "alternateName": [
+                    "BKX Labs Software Rescue Agency",
+                    "BinKhalid Labs",
+                    "BK Labs",
+                    "Box Labs",
+                    "BX Labs",
+                    "B Labs"
+                ],
                 "url": "https://bkxlabs.com/",
                 "logo": {
                     "@type": "ImageObject",
