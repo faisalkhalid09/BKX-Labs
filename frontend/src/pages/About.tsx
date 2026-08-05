@@ -59,11 +59,12 @@ const About = () => {
     return (
         <div>
             <SEO
-                title="About BKX Labs: Software Rescue Specialists"
-                description="Specialist engineers who diagnose, stabilize, and modernize failing Laravel & React systems. Forensic audits delivered in 5–10 days. Zero vendor lock-in."
-                keywords="bkx labs about, faisal khalid engineer, software rescue agency team, laravel expert agency, react rescue specialists, enterprise software audit team, post-quantum cryptography experts, eu ai act compliance engineers"
+                title="About BKX Labs — Software Development Agency | Laravel & React Specialists"
+                description="BKX Labs is a specialist software development agency led by Faisal Khalid. We build, rescue, and modernize Laravel and React applications for startups and enterprise teams globally."
+                keywords="software development agency, software engineering agency, laravel development company, react development agency, about bkx labs, faisal khalid software engineer, specialist software agency"
                 structuredData={structuredData}
             />
+
 
             {/* AEO Entity Authority Block */}
             <section aria-label="About BKX Labs and its founder" className="sr-only">

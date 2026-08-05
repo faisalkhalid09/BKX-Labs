@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import MouseFollower from './components/ui/MouseFollower';
 import { ToolsLayoutWrapper } from './components/layout/ToolsLayout';
 import Home from './pages/Home';
 import Services from './pages/Services';
@@ -16,6 +17,12 @@ import RezgoDemo from './pages/RezgoDemo';
 import ToolsIndex from './pages/ToolsIndex';
 import ToolDetail from './pages/ToolDetail';
 import GlossaryTermPage from './pages/glossary/[term]';
+import HireLaravelDeveloper from './pages/HireLaravelDeveloper';
+import HireReactDeveloper from './pages/HireReactDeveloper';
+import TechnicalDebtRemediation from './pages/TechnicalDebtRemediation';
+import CodebaseAudit from './pages/CodebaseAudit';
+import CaseStudyEdtech from './pages/CaseStudyEdtech';
+import CaseStudyDMS from './pages/CaseStudyDMS';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
@@ -49,6 +56,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <MouseFollower />
       <Navbar />
       <main>
         <Routes>
@@ -59,8 +67,13 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/TOS" element={<TermsOfService />} />
           <Route path="/tos" element={<TermsOfService />} />
+          <Route path="/hire-laravel-developer" element={<HireLaravelDeveloper />} />
+          <Route path="/hire-react-developer" element={<HireReactDeveloper />} />
+          <Route path="/technical-debt-remediation" element={<TechnicalDebtRemediation />} />
+          <Route path="/codebase-audit" element={<CodebaseAudit />} />
+          <Route path="/case-studies/edtech-platform-rescue" element={<CaseStudyEdtech />} />
+          <Route path="/case-studies/document-management-system" element={<CaseStudyDMS />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />

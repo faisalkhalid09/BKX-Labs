@@ -14,10 +14,15 @@ const ROUTES = [
   '/about',
   '/process',
   '/case-study',
+  '/case-studies/edtech-platform-rescue',
+  '/case-studies/document-management-system',
   '/contact',
   '/privacy-policy',
-  '/TOS',
   '/tos',
+  '/hire-laravel-developer',
+  '/hire-react-developer',
+  '/technical-debt-remediation',
+  '/codebase-audit',
   '/tools',
   '/tools/post-quantum-cbom-generator',
   '/tools/nvidia-blackwell-pue-estimator',
@@ -57,8 +62,18 @@ async function prerender() {
         timeout: 30000,
       })
 
-      await page.waitForSelector('#root > *', { timeout: 10000 })
-        .catch(() => console.warn(`  ⚠ No #root child found for ${route}`))
+      // Wait until React + react-helmet-async have injected the real <title>
+      // (not just the generic loading-state 'BKX Labs' fallback)
+      await page.waitForFunction(
+        () => {
+          const t = document.title;
+          return t && t !== 'BKX Labs' && t.length > 10;
+        },
+        { timeout: 12000 }
+      ).catch(() => console.warn(`  ⚠ Title not updated for ${route} — check SEO component`))
+
+      // Extra buffer so all JSON-LD <script> tags written by Helmet are captured
+      await new Promise(r => setTimeout(r, 1000))
 
       const html = await page.content()
 

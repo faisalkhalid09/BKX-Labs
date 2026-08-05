@@ -102,9 +102,9 @@ const Services = () => {
     return (
         <div>
             <SEO
-                title="Software Recovery & Technical Debt Refactoring Services"
-                description="Enterprise-grade recovery for failing web applications. Forensic codebase audits, emergency triage on Laravel 12 and React 19 codebases, and long-term modernization retainers. Fixed-price engagements. Written diagnostic report before any code is changed."
-                keywords="stalled project recovery, rescue failing software, technical debt services, enterprise code audit, hire rescue engineers, laravel 12 recovery, react 19 audit, codebase takeover, software project rescue cost, how to rescue a failing laravel project"
+                title="Codebase Audit & Software Development Services"
+                description="Laravel and React software development services: diagnostic codebase audit ($3,500–$8,000), emergency triage, legacy software modernization, and custom development. Fixed-price engagements. Written report before any code changes."
+                keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service"
                 structuredData={structuredData}
             />
             <Hero

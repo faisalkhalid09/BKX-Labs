@@ -133,9 +133,9 @@ const Home = () => {
     return (
         <div>
             <SEO
-                title="Software Project Rescue Agency | Stalled App Recovery & Audit"
-                description="BKX Labs is the engineering team you call when your software is failing. We rescue stalled Laravel apps, audit enterprise React codebases, and fix technical debt nightmares. Specialized rescue methodology, 25-person specialist team."
-                keywords="software project rescue agency, stalled laravel app recovery, technical debt refactoring, enterprise react codebase audit, rescue failing web applications, project takeover specialists, laravel 12 rescue, react 19 codebase audit, compliance engineering agency"
+                title="Software Development Agency | Laravel & React Engineering"
+                description="BKX Labs is a specialist software development agency for Laravel and React projects. Codebase audits, emergency triage, technical debt remediation, and greenfield development. Fixed-price engagements. International team."
+                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation, software engineering company, hire laravel developer, hire react developer"
                 structuredData={structuredData}
             />
 
@@ -143,11 +143,12 @@ const Home = () => {
 
             {/* Hero Section */}
             <Hero
-                title="Don't Let Bad Code Kill Your Business."
-                subtitle="Startups and enterprises lose millions on failed agency transitions and accumulated technical debt. Our specialized engineering team takes over broken codebases, stabilizes your infrastructure, and delivers what others couldn't."
+                title="Software Development Agency — Laravel & React Engineering"
+                subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits. 25-person specialist team."
                 ctaText="Request a Technical Health Check"
                 ctaLink="/contact"
             />
+
 
             {/* The Problem Statement */}
             <Section className="problem-section">

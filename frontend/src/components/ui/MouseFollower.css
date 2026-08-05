@@ -1,0 +1,38 @@
+.mouse-follower {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.mouse-follower-ring,
+.mouse-follower-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 9999px;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  will-change: transform, opacity;
+  transition: opacity 0.2s ease;
+}
+
+.mouse-follower-ring {
+  width: 3rem;
+  height: 3rem;
+  border: 1.5px solid rgba(30, 58, 138, 0.35);
+  background: rgba(30, 58, 138, 0.08);
+}
+
+.mouse-follower-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--primary);
+  box-shadow: 0 0 0 6px rgba(30, 58, 138, 0.08);
+}
+
+@media (max-width: 1023px), (pointer: coarse), (hover: none) {
+  .mouse-follower {
+    display: none;
+  }
+}

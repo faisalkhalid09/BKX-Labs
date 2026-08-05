@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
@@ -8,119 +8,79 @@ interface SEOProps {
     ogImage?: string;
     ogType?: 'website' | 'article';
     canonical?: string;
-    structuredData?: object;
+    structuredData?: object | object[];
 }
 
 const SEO = ({
     title,
     description,
-    keywords = 'software development, web applications, mobile apps, MVP development, UI/UX design, Laravel, React, enterprise software',
+    keywords,
     ogImage = 'https://bkxlabs.com/brand-logo.png',
     ogType = 'website',
     canonical,
-    structuredData
+    structuredData,
 }: SEOProps) => {
     const location = useLocation();
-    
-    // Use VITE_APP_URL if defined, fallback to production domain
+
     const baseUrl = import.meta.env.VITE_APP_URL || 'https://bkxlabs.com';
-    const fullUrl = canonical || `${baseUrl}${location.pathname.replace(/\/$/, '') || '/'}`;
+    const fullUrl = canonical || `${baseUrl}${location.pathname || '/'}`;
     const fullTitle = `${title} | BKX Labs`;
 
-    useEffect(() => {
-        // Update document title
-        document.title = fullTitle;
-
-        // Update or create meta tags
-        const updateMetaTag = (name: string, content: string, isProperty = false) => {
-            const attribute = isProperty ? 'property' : 'name';
-            let element = document.querySelector(`meta[${attribute}="${name}"]`);
-
-            if (!element) {
-                element = document.createElement('meta');
-                element.setAttribute(attribute, name);
-                document.head.appendChild(element);
-            }
-
-            element.setAttribute('content', content);
-        };
-
-        // Standard meta tags
-        updateMetaTag('description', description);
-        updateMetaTag('keywords', keywords);
-
-        // Open Graph tags
-        updateMetaTag('og:title', fullTitle, true);
-        updateMetaTag('og:description', description, true);
-        updateMetaTag('og:url', fullUrl, true);
-        updateMetaTag('og:type', ogType, true);
-        updateMetaTag('og:image', ogImage, true);
-        updateMetaTag('og:site_name', 'BKX Labs', true);
-
-        // Twitter Card tags
-        updateMetaTag('twitter:card', 'summary_large_image');
-        updateMetaTag('twitter:title', fullTitle);
-        updateMetaTag('twitter:description', description);
-        updateMetaTag('twitter:image', ogImage);
-
-        // Canonical URL
-        let canonicalLink = document.querySelector('link[rel="canonical"]');
-        if (!canonicalLink) {
-            canonicalLink = document.createElement('link');
-            canonicalLink.setAttribute('rel', 'canonical');
-            document.head.appendChild(canonicalLink);
+    // Breadcrumb schema — generated from the current path
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const breadcrumbSchema = pathSegments.length > 0
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+                ...pathSegments.map((segment, index) => ({
+                    '@type': 'ListItem',
+                    position: index + 2,
+                    name: segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' '),
+                    item: `${baseUrl}/${pathSegments.slice(0, index + 1).join('/')}`,
+                })),
+            ],
         }
-        canonicalLink.setAttribute('href', fullUrl);
+        : null;
 
-        // Structured Data (JSON-LD)
-        // We handle multiple potential script tags and ensure our page-specific one is unique
-        if (structuredData) {
-            const scriptId = 'json-ld-page-specific';
-            let scriptTag = document.getElementById(scriptId);
-            if (!scriptTag) {
-                scriptTag = document.createElement('script');
-                scriptTag.id = scriptId;
-                scriptTag.setAttribute('type', 'application/ld+json');
-                document.head.appendChild(scriptTag);
-            }
-            scriptTag.textContent = JSON.stringify(structuredData);
-        }
+    return (
+        <Helmet>
+            <title>{fullTitle}</title>
+            <meta name="description" content={description} />
+            {keywords && <meta name="keywords" content={keywords} />}
+            <link rel="canonical" href={fullUrl} />
 
-        // Add Breadcrumb Schema
-        const pathSegments = location.pathname.split('/').filter(Boolean);
-        if (pathSegments.length > 0) {
-            const breadcrumbId = 'json-ld-breadcrumb';
-            let breadcrumbScript = document.getElementById(breadcrumbId);
-            if (!breadcrumbScript) {
-                breadcrumbScript = document.createElement('script');
-                breadcrumbScript.id = breadcrumbId;
-                breadcrumbScript.setAttribute('type', 'application/ld+json');
-                document.head.appendChild(breadcrumbScript);
-            }
+            {/* Open Graph */}
+            <meta property="og:title" content={fullTitle} />
+            <meta property="og:description" content={description} />
+            <meta property="og:url" content={fullUrl} />
+            <meta property="og:type" content={ogType} />
+            <meta property="og:image" content={ogImage} />
+            <meta property="og:site_name" content="BKX Labs" />
 
-            const breadcrumbData = {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "name": "Home",
-                        "item": baseUrl
-                    },
-                    ...pathSegments.map((segment, index) => ({
-                        "@type": "ListItem",
-                        "position": index + 2,
-                        "name": segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' '),
-                        "item": `${baseUrl}/${pathSegments.slice(0, index + 1).join('/')}`
-                    }))
-                ]
-            };
-            breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
-        }
-    }, [location.pathname, fullUrl, fullTitle, description, keywords, ogImage, ogType, structuredData, baseUrl]);
+            {/* Twitter Card */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={fullTitle} />
+            <meta name="twitter:description" content={description} />
+            <meta name="twitter:image" content={ogImage} />
 
-    return null; // This component doesn't render anything
+            {/* Page-specific structured data */}
+            {structuredData && (
+                <script type="application/ld+json">
+                    {JSON.stringify(structuredData)}
+                </script>
+            )}
+
+            {/* Breadcrumb structured data */}
+            {breadcrumbSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbSchema)}
+                </script>
+            )}
+        </Helmet>
+    );
 };
 
 export default SEO;
+

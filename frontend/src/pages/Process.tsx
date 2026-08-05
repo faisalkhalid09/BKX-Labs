@@ -58,11 +58,12 @@ const Process = () => {
     return (
         <div>
             <SEO
-                title="5-Phase Software Rescue Process: BKX Labs"
-                description="Forensic audit in 5–10 days, emergency triage in 72 hrs, then weekly sprints to full handover. Fixed-price, zero-downtime. Written report before any code changes."
-                keywords="software rescue protocol, project recovery process, laravel codebase audit process, react modernization approach, technical debt remediation steps, how to rescue a failing project, software rescue methodology, enterprise code handover process"
+                title="How We Rescue Failing Software Projects — Our Process"
+                description="Our software rescue process: forensic codebase audit in 5–10 days, emergency triage in 72 hours, then fixed-price weekly sprints to full handover. No surprise costs. Full documentation at every stage."
+                keywords="how to rescue a software project, software rescue process, codebase audit timeline, how long does a codebase audit take, software project recovery steps, laravel rescue process, react project recovery"
                 structuredData={structuredData}
             />
+
             <Hero
                 title="The Rescue Protocol"
                 subtitle="A structured, auditable, phase-gated process for taking over failing software, stabilizing it, and bringing it to production with complete written transparency at every stage."

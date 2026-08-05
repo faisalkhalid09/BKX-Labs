@@ -62,6 +62,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.main-site-cursor-active,
+body.main-site-cursor-active * {
+  cursor: none;
+}
+
+body.main-site-cursor-active input,
+body.main-site-cursor-active textarea,
+body.main-site-cursor-active select,
+body.main-site-cursor-active button,
+body.main-site-cursor-active a,
+body.main-site-cursor-active [role='button'],
+body.main-site-cursor-active [contenteditable='true'] {
+  cursor: none;
+}
+
 /* Typography Enhancements */
 h1,
 h2,
