@@ -8,11 +8,49 @@ const MouseFollower = () => {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const ringPositionRef = useRef({ x: 0, y: 0 });
-  const dotPositionRef = useRef({ x: 0, y: 0 });
-  const frameRef = useRef<number | null>(null);
-  const visibleRef = useRef(false);
+  const isWhiteThemeRef = useRef(false);
+  const lastMousePos = useRef({ x: 0, y: 0 });
 
+  const detectBackgroundColor = (x: number, y: number) => {
+    try {
+      let element = document.elementFromPoint(x, y);
+      while (element) {
+        const computedStyle = window.getComputedStyle(element);
+        const bgColor = computedStyle.backgroundColor;
+        const match = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        
+        if (match) {
+          const [, r, g, b, a] = match;
+          // If the element has a non-transparent background
+          if (a !== '0') {
+            const rNum = Number(r);
+            const gNum = Number(g);
+            const bNum = Number(b);
+            // If it's a bright/white color, return false (don't use white cursor, use blue)
+            if (rNum > 230 && gNum > 230 && bNum > 230) {
+              return false;
+            }
+            // If it's a colored/dark background, return true (use white cursor)
+            return true;
+          }
+        }
+        // If transparent, check the parent element
+        element = element.parentElement;
+      }
+      return false; // Default to page background (assumed white)
+    } catch (e) {
+      return false;
+    }
+  };
 
+  const updateCursorColor = (x: number, y: number) => {
+    if (!visibleRef.current) return;
+    const shouldBeWhite = detectBackgroundColor(x, y);
+    if (shouldBeWhite !== isWhiteThemeRef.current) {
+      isWhiteThemeRef.current = shouldBeWhite;
+      document.body.classList.toggle('cursor-white-mode', shouldBeWhite);
+    }
+  };
   useEffect(() => {
     const mediaQuery = window.matchMedia(DESKTOP_QUERY);
 
@@ -44,6 +82,12 @@ const MouseFollower = () => {
 
     const handlePointerMove = (event: PointerEvent) => {
       moveTo(event.clientX, event.clientY);
+      lastMousePos.current = { x: event.clientX, y: event.clientY };
+      updateCursorColor(event.clientX, event.clientY);
+    };
+
+    const handleScroll = () => {
+      updateCursorColor(lastMousePos.current.x, lastMousePos.current.y);
     };
 
     const handlePointerEnter = (event: PointerEvent) => {
@@ -109,6 +153,7 @@ const MouseFollower = () => {
       window.addEventListener('pointerenter', handlePointerEnter, { passive: true });
       window.addEventListener('blur', handleWindowBlur);
       window.addEventListener('focus', handleWindowFocus);
+      window.addEventListener('scroll', handleScroll, { passive: true });
       frameRef.current = window.requestAnimationFrame(tick);
     }
 
@@ -120,6 +165,7 @@ const MouseFollower = () => {
         window.addEventListener('pointerenter', handlePointerEnter, { passive: true });
         window.addEventListener('blur', handleWindowBlur);
         window.addEventListener('focus', handleWindowFocus);
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         if (frameRef.current === null) {
           frameRef.current = window.requestAnimationFrame(tick);
@@ -129,6 +175,7 @@ const MouseFollower = () => {
         window.removeEventListener('pointerenter', handlePointerEnter);
         window.removeEventListener('blur', handleWindowBlur);
         window.removeEventListener('focus', handleWindowFocus);
+        window.removeEventListener('scroll', handleScroll);
 
         if (frameRef.current !== null) {
           window.cancelAnimationFrame(frameRef.current);
@@ -145,6 +192,7 @@ const MouseFollower = () => {
       window.removeEventListener('pointerenter', handlePointerEnter);
       window.removeEventListener('blur', handleWindowBlur);
       window.removeEventListener('focus', handleWindowFocus);
+      window.removeEventListener('scroll', handleScroll);
 
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);
