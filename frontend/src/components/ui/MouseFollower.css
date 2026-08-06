@@ -18,14 +18,14 @@
 }
 
 .mouse-follower-ring {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: transparent;
   backdrop-filter: url(#cursor-color-map);
   -webkit-backdrop-filter: url(#cursor-color-map);
-  -webkit-clip-path: path("M 32,0 A 32,32 0 1,1 32,64 A 32,32 0 1,1 32,0 M 32,3 A 29,29 0 1,0 32,61 A 29,29 0 1,0 32,3");
-  clip-path: path("M 32,0 A 32,32 0 1,1 32,64 A 32,32 0 1,1 32,0 M 32,3 A 29,29 0 1,0 32,61 A 29,29 0 1,0 32,3");
+  -webkit-clip-path: path("M 24,0 A 24,24 0 1,1 24,48 A 24,24 0 1,1 24,0 M 24,2 A 22,22 0 1,0 24,46 A 22,22 0 1,0 24,2");
+  clip-path: path("M 24,0 A 24,24 0 1,1 24,48 A 24,24 0 1,1 24,0 M 24,2 A 22,22 0 1,0 24,46 A 22,22 0 1,0 24,2");
 }
 
 .mouse-follower-dot {
