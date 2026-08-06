@@ -134,15 +134,18 @@
     color: #ffffff;
 }
 
-/* Secondary option — dark with white text */
+/* Secondary option — white background with blue text and border */
 .contact-dropdown-option.secondary {
-    background: #1e293b;
-    color: #ffffff;
+    background: #ffffff;
+    color: var(--primary, #1e3a8a);
+    border: 1.5px solid var(--primary, #1e3a8a);
+    transition: none;
 }
 
 .contact-dropdown-option.secondary:hover {
-    background: #0f172a;
-    color: #ffffff;
+    background: #ffffff;
+    color: var(--primary, #1e3a8a);
+    border-color: var(--primary, #1e3a8a);
 }
 
 /* Desktop Navigation */
@@ -205,7 +208,10 @@
 }
 
 .nav-cta:hover {
-    box-shadow: 0 6px 18px rgba(30, 58, 138, 0.35);
+    background: rgba(30, 58, 138, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(30, 58, 138, 0.3);
     color: white !important;
     border-color: transparent;
 }

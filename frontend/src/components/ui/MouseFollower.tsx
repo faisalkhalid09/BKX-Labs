@@ -11,6 +11,33 @@ const MouseFollower = () => {
   const dotPositionRef = useRef({ x: 0, y: 0 });
   const frameRef = useRef<number | null>(null);
   const visibleRef = useRef(false);
+  const isWhiteThemeRef = useRef(false);
+
+  const detectBackgroundColor = (x: number, y: number) => {
+    try {
+      const element = document.elementFromPoint(x, y);
+      if (!element) return false;
+      
+      const computedStyle = window.getComputedStyle(element);
+      const bgColor = computedStyle.backgroundColor;
+      
+      // Parse rgb/rgba color
+      const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (!rgbMatch) return false;
+      
+      const [, r, g, b] = rgbMatch.map(Number);
+      
+      // Check if background is similar to primary blue (#1e3a8a = rgb(30, 58, 138))
+      const hueDistance = Math.sqrt(
+        Math.pow(r - 30, 2) + Math.pow(g - 58, 2) + Math.pow(b - 138, 2)
+      );
+      
+      // If close to primary blue, return true
+      return hueDistance < 120;
+    } catch (e) {
+      return false;
+    }
+  };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(DESKTOP_QUERY);
@@ -43,6 +70,13 @@ const MouseFollower = () => {
 
     const handlePointerMove = (event: PointerEvent) => {
       moveTo(event.clientX, event.clientY);
+      
+      // Detect background color and update cursor styling
+      const shouldBeWhite = detectBackgroundColor(event.clientX, event.clientY);
+      if (shouldBeWhite !== isWhiteThemeRef.current) {
+        isWhiteThemeRef.current = shouldBeWhite;
+        document.body.classList.toggle('cursor-white-mode', shouldBeWhite);
+      }
     };
 
     const handlePointerEnter = (event: PointerEvent) => {

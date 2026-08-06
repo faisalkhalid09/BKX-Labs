@@ -31,6 +31,17 @@
   box-shadow: 0 0 0 6px rgba(30, 58, 138, 0.08);
 }
 
+/* White mode when over blue background */
+body.cursor-white-mode .mouse-follower-ring {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.cursor-white-mode .mouse-follower-dot {
+  background: #ffffff;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.15);
+}
+
 @media (max-width: 1023px), (pointer: coarse), (hover: none) {
   .mouse-follower {
     display: none;

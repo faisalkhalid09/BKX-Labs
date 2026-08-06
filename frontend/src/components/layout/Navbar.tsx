@@ -141,7 +141,7 @@ const Navbar = () => {
 
                                     <div className={`contact-dropdown-menu ${isContactMenuOpen ? 'open' : ''}`}>
                                         <Link to="/schedule" className="contact-dropdown-option">Schedule a Call</Link>
-                                        <Link to="/contact" className="contact-dropdown-option secondary">Contact Page</Link>
+                                        <Link to="/contact" className="contact-dropdown-option secondary">Contact Us</Link>
                                     </div>
                                 </li>
                             </ul>
