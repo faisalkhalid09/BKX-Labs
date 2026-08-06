@@ -134,15 +134,15 @@
     color: #ffffff;
 }
 
-/* Secondary option — plain, no fill */
+/* Secondary option — dark with white text */
 .contact-dropdown-option.secondary {
-    background: transparent;
-    color: var(--text-dark, #0f172a);
+    background: #1e293b;
+    color: #ffffff;
 }
 
 .contact-dropdown-option.secondary:hover {
-    background: rgba(30, 58, 138, 0.06);
-    color: var(--primary, #2563eb);
+    background: #0f172a;
+    color: #ffffff;
 }
 
 /* Desktop Navigation */

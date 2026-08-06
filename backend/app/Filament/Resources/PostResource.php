@@ -33,7 +33,10 @@ class PostResource extends Resource
 
     protected static ?string $slug = 'blog-posts';
 
-    protected static ?string $navigationGroup = 'Content';
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content';
+    }
 
     public static function form(Schema $schema): Schema
     {
