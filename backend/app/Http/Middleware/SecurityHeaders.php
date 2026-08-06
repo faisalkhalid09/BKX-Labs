@@ -25,7 +25,7 @@ class SecurityHeaders
              "script-src 'self' 'unsafe-inline' 'unsafe-eval' {$safepayHosts} https://accounts.google.com; " .
                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " .
                "font-src 'self' https://fonts.gstatic.com data:; " .
-             "img-src 'self' data: https://lh3.googleusercontent.com {$safepayHosts} https://ui-avatars.com; " .
+             "img-src 'self' data: blob: https://lh3.googleusercontent.com {$safepayHosts} https://ui-avatars.com; " .
              "frame-src {$safepayHosts} https://accounts.google.com; " .
              "connect-src 'self' {$safepayHosts};";
         $response->headers->set('Content-Security-Policy', $csp);
