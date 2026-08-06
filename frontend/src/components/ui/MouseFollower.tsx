@@ -8,6 +8,9 @@ const MouseFollower = () => {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const ringPositionRef = useRef({ x: 0, y: 0 });
+  const dotPositionRef = useRef({ x: 0, y: 0 });
+  const frameRef = useRef<number | null>(null);
+  const visibleRef = useRef(false);
   const isWhiteThemeRef = useRef(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
 
