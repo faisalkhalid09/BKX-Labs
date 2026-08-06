@@ -20,27 +20,20 @@
 .mouse-follower-ring {
   width: 3rem;
   height: 3rem;
-  border: 1.5px solid rgba(30, 58, 138, 0.35);
-  background: rgba(30, 58, 138, 0.08);
+  border: 1.5px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  mix-blend-mode: difference;
 }
 
 .mouse-follower-dot {
   width: 0.625rem;
   height: 0.625rem;
-  background: var(--primary);
-  box-shadow: 0 0 0 6px rgba(30, 58, 138, 0.08);
+  background: #fff;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.1);
+  mix-blend-mode: difference;
 }
 
-/* White mode when over blue background */
-body.cursor-white-mode .mouse-follower-ring {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-body.cursor-white-mode .mouse-follower-dot {
-  background: #ffffff;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.15);
-}
+/* White mode handled natively by mix-blend-mode: difference */
 
 @media (max-width: 1023px), (pointer: coarse), (hover: none) {
   .mouse-follower {

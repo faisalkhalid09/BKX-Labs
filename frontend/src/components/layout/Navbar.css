@@ -123,7 +123,7 @@
     align-items: center;
     padding: 0.8rem 1rem;
     border-radius: 12px;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 600;
     background: var(--primary, #2563eb);
     transition: background 0.2s ease;
@@ -131,20 +131,20 @@
 
 .contact-dropdown-option:hover {
     background: #1d4ed8;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 /* Secondary option — white background with blue text and border */
 .contact-dropdown-option.secondary {
     background: #ffffff;
-    color: var(--primary, #1e3a8a);
+    color: var(--primary, #1e3a8a) !important;
     border: 1.5px solid var(--primary, #1e3a8a);
     transition: none;
 }
 
 .contact-dropdown-option.secondary:hover {
     background: #ffffff;
-    color: var(--primary, #1e3a8a);
+    color: var(--primary, #1e3a8a) !important;
     border-color: var(--primary, #1e3a8a);
 }
 
