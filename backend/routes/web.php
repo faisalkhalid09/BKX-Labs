@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Dynamic XML Sitemap
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
+
 // Google Auth Routes
 Route::get('/login/google/redirect', [\App\Http\Controllers\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
 Route::get('/login/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
