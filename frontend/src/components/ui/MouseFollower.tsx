@@ -77,8 +77,8 @@ const MouseFollower = () => {
       const ringPosition = ringPositionRef.current;
       const dotPosition = dotPositionRef.current;
 
-      ringPosition.x += (targetX - ringPosition.x) * 0.25;
-      ringPosition.y += (targetY - ringPosition.y) * 0.25;
+      ringPosition.x += (targetX - ringPosition.x) * 0.15;
+      ringPosition.y += (targetY - ringPosition.y) * 0.15;
       dotPosition.x += (targetX - dotPosition.x) * 0.35;
       dotPosition.y += (targetY - dotPosition.y) * 0.35;
 
