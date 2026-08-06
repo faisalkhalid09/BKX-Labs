@@ -5,6 +5,9 @@ const DESKTOP_QUERY = '(pointer: fine) and (hover: hover) and (min-width: 1024px
 
 const MouseFollower = () => {
   const ringRef = useRef<HTMLDivElement | null>(null);
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const ringPositionRef = useRef({ x: 0, y: 0 });
   const dotPositionRef = useRef({ x: 0, y: 0 });
   const frameRef = useRef<number | null>(null);
   const visibleRef = useRef(false);
