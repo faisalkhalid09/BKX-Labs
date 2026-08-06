@@ -167,19 +167,16 @@ const Navbar = () => {
                     <div className="mobile-menu-header">
                         <Link to="/" className="logo" onClick={() => setIsOpen(false)}>
                             <img
-                                src="/brand-logo-white.png"
+                                src="/brand-logo.png"
                                 alt="BKX Labs"
                                 className="logo-img"
-                                onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).src = '/brand-logo.png';
-                                }}
                             />
                         </Link>
                         <button
                             className="hamburger close-btn"
                             onClick={() => setIsOpen(false)}
                             aria-label="Close menu"
-                            style={{ color: '#ffffff' }}
+                            style={{ color: '#1e293b' }}
                         >
                             <X size={24} />
                         </button>
