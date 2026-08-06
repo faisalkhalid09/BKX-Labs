@@ -19,6 +19,16 @@ interface Post {
     published_at: string;
 }
 
+interface PostSummary {
+    id: number;
+    title: string;
+    slug: string;
+    excerpt: string;
+    cover_image: string | null;
+    reading_time_mins: number | null;
+    published_at: string;
+}
+
 function formatDate(dateStr: string): string {
     return new Date(dateStr).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -31,29 +41,40 @@ export default function BlogPost() {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const [post, setPost] = useState<Post | null>(null);
+    const [latestPosts, setLatestPosts] = useState<PostSummary[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!slug) return;
         setLoading(true);
-        fetch(`${API_URL}/posts/${slug}`)
-            .then((res) => {
+        
+        Promise.all([
+            fetch(`${API_URL}/posts/${slug}`).then((res) => {
                 if (res.status === 404) {
                     navigate('/blog', { replace: true });
                     return null;
                 }
                 if (!res.ok) throw new Error('Failed to fetch post');
                 return res.json();
+            }),
+            fetch(`${API_URL}/posts`).then((res) => {
+                if (!res.ok) throw new Error('Failed to fetch posts');
+                return res.json();
             })
-            .then((json) => {
-                if (json) {
-                    setPost(json.data);
-                }
-                setLoading(false);
-            })
-            .catch(() => {
-                navigate('/blog', { replace: true });
-            });
+        ])
+        .then(([postJson, postsJson]) => {
+            if (postJson) {
+                setPost(postJson.data);
+            }
+            if (postsJson && postsJson.data) {
+                const filtered = postsJson.data.filter((p: PostSummary) => p.slug !== slug);
+                setLatestPosts(filtered.slice(0, 5));
+            }
+            setLoading(false);
+        })
+        .catch(() => {
+            navigate('/blog', { replace: true });
+        });
     }, [slug, navigate]);
 
     if (loading) {
@@ -102,51 +123,83 @@ export default function BlogPost() {
             )}
 
             <Container>
-                <article className="blog-post-article">
-                    {/* Breadcrumb */}
-                    <nav className="blog-post-breadcrumb" aria-label="Breadcrumb">
-                        <Link to="/">Home</Link>
-                        <span aria-hidden>›</span>
-                        <Link to="/blog">Blog</Link>
-                        <span aria-hidden>›</span>
-                        <span>{post.title}</span>
-                    </nav>
+                <div className="blog-post-layout">
+                    {/* Main Content Column */}
+                    <article className="blog-post-article">
+                        {/* Breadcrumb */}
+                        <nav className="blog-post-breadcrumb" aria-label="Breadcrumb">
+                            <Link to="/">Home</Link>
+                            <span aria-hidden>›</span>
+                            <Link to="/blog">Blog</Link>
+                            <span aria-hidden>›</span>
+                            <span>{post.title}</span>
+                        </nav>
 
-                    {/* Header */}
-                    <header className="blog-post-header">
-                        <h1>{post.title}</h1>
-                        <div className="blog-post-meta">
-                            {post.published_at && (
-                                <time dateTime={post.published_at}>
-                                    {formatDate(post.published_at)}
-                                </time>
-                            )}
+                        {/* Header */}
+                        <header className="blog-post-header">
+                            <h1>{post.title}</h1>
+                            <div className="blog-post-meta">
+                                {post.published_at && (
+                                    <time dateTime={post.published_at}>
+                                        {formatDate(post.published_at)}
+                                    </time>
+                                )}
 
+                            </div>
+                        </header>
+
+                        {/* Body */}
+                        <div
+                            className="blog-post-body"
+                            dangerouslySetInnerHTML={{ __html: post.body }}
+                        />
+
+                        {/* CTA */}
+                        <div className="blog-post-cta">
+                            <h3>Does your codebase need a professional review?</h3>
+                            <p>
+                                BKX Labs provides fixed-price codebase audits for Laravel and
+                                React applications. Written Technical Health Report delivered in
+                                5-10 business days.
+                            </p>
+                            <Link to="/codebase-audit" className="btn btn-primary">
+                                Learn About Our Codebase Audit
+                            </Link>
+                            <Link to="/blog" className="blog-post-back">
+                                ← Back to all articles
+                            </Link>
                         </div>
-                    </header>
+                    </article>
 
-                    {/* Body */}
-                    <div
-                        className="blog-post-body"
-                        dangerouslySetInnerHTML={{ __html: post.body }}
-                    />
-
-                    {/* CTA */}
-                    <div className="blog-post-cta">
-                        <h3>Does your codebase need a professional review?</h3>
-                        <p>
-                            BKX Labs provides fixed-price codebase audits for Laravel and
-                            React applications. Written Technical Health Report delivered in
-                            5-10 business days.
-                        </p>
-                        <Link to="/codebase-audit" className="btn btn-primary">
-                            Learn About Our Codebase Audit
-                        </Link>
-                        <Link to="/blog" className="blog-post-back">
-                            ← Back to all articles
-                        </Link>
-                    </div>
-                </article>
+                    {/* Right Sidebar Column */}
+                    <aside className="blog-post-sidebar">
+                        <div className="blog-sidebar-widget">
+                            <h3>Latest Articles</h3>
+                            <div className="blog-sidebar-articles">
+                                {latestPosts.map((latest) => (
+                                    <div key={latest.id} className="blog-sidebar-card">
+                                        {latest.cover_image && (
+                                            <Link to={`/blog/${latest.slug}`} className="sidebar-card-image-wrapper">
+                                                <img src={latest.cover_image} alt={latest.title} className="sidebar-card-image" loading="lazy" />
+                                            </Link>
+                                        )}
+                                        <div className="sidebar-card-content">
+                                            <h4>
+                                                <Link to={`/blog/${latest.slug}`}>{latest.title}</Link>
+                                            </h4>
+                                            {latest.published_at && (
+                                                <time dateTime={latest.published_at}>{formatDate(latest.published_at)}</time>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                                {latestPosts.length === 0 && (
+                                    <p className="sidebar-no-articles">No more articles found.</p>
+                                )}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </Container>
         </div>
     );
