@@ -20,6 +20,8 @@ Route::get('/test', function () {
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{slug}', [PostController::class, 'show']);
 
+Route::get('/sitemap', [App\Http\Controllers\SitemapController::class, 'index']);
+
 
 
 Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track'])->middleware('throttle:60,1');
