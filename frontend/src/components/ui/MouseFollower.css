@@ -14,32 +14,32 @@
   opacity: 0;
   transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
   will-change: transform, opacity;
-  transition: opacity 0.2s ease;
-}
-
 .mouse-follower-ring {
   width: 3rem;
   height: 3rem;
-  border: 1.5px solid rgba(30, 58, 138, 0.35);
-  background: rgba(30, 58, 138, 0.08);
+  border-radius: 50%;
+  background: rgba(30, 58, 138, 0.08); /* The subtle tint */
+}
+
+.mouse-follower-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  backdrop-filter: url(#cursor-color-map);
+  -webkit-backdrop-filter: url(#cursor-color-map);
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 1.5px), black calc(50% - 1.5px));
+  mask: radial-gradient(circle, transparent calc(50% - 1.5px), black calc(50% - 1.5px));
 }
 
 .mouse-follower-dot {
   width: 0.625rem;
   height: 0.625rem;
-  background: var(--primary);
+  border-radius: 50%;
+  background: transparent;
   box-shadow: 0 0 0 6px rgba(30, 58, 138, 0.08);
-}
-
-/* White mode when over blue background */
-body.cursor-white-mode .mouse-follower-ring {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-body.cursor-white-mode .mouse-follower-dot {
-  background: #ffffff;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.15);
+  backdrop-filter: url(#cursor-color-map);
+  -webkit-backdrop-filter: url(#cursor-color-map);
 }
 
 @media (max-width: 1023px), (pointer: coarse), (hover: none) {
