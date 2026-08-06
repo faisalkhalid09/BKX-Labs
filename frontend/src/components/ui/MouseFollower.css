@@ -18,21 +18,14 @@
 }
 
 .mouse-follower-ring {
-  width: 4rem;
-  height: 4rem;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: transparent;
-  -webkit-mask-image: radial-gradient(circle, transparent calc(50% - 2px), black calc(50% - 2px));
-  mask-image: radial-gradient(circle, transparent calc(50% - 2px), black calc(50% - 2px));
-}
-
-.mouse-follower-ring::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
   backdrop-filter: url(#cursor-color-map);
   -webkit-backdrop-filter: url(#cursor-color-map);
+  -webkit-clip-path: path("M 32,0 A 32,32 0 1,1 32,64 A 32,32 0 1,1 32,0 M 32,3 A 29,29 0 1,0 32,61 A 29,29 0 1,0 32,3");
+  clip-path: path("M 32,0 A 32,32 0 1,1 32,64 A 32,32 0 1,1 32,0 M 32,3 A 29,29 0 1,0 32,61 A 29,29 0 1,0 32,3");
 }
 
 .mouse-follower-dot {
