@@ -18,10 +18,12 @@
 }
 
 .mouse-follower-ring {
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   background: transparent;
+  -webkit-mask-image: radial-gradient(circle, transparent calc(50% - 2px), black calc(50% - 2px));
+  mask-image: radial-gradient(circle, transparent calc(50% - 2px), black calc(50% - 2px));
 }
 
 .mouse-follower-ring::before {
@@ -31,8 +33,6 @@
   border-radius: 50%;
   backdrop-filter: url(#cursor-color-map);
   -webkit-backdrop-filter: url(#cursor-color-map);
-  -webkit-mask: radial-gradient(circle, transparent calc(50% - 1.5px), black calc(50% - 1.5px));
-  mask: radial-gradient(circle, transparent calc(50% - 1.5px), black calc(50% - 1.5px));
 }
 
 .mouse-follower-dot {
