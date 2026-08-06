@@ -121,10 +121,7 @@ export default function BlogPost() {
                                     {formatDate(post.published_at)}
                                 </time>
                             )}
-                            {post.reading_time_mins && (
-                                <span>{post.reading_time_mins} min read</span>
-                            )}
-                            <span>By Faisal Khalid</span>
+
                         </div>
                     </header>
 

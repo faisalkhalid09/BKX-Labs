@@ -125,9 +125,7 @@ export default function Blog() {
                                                     {formatDate(post.published_at)}
                                                 </time>
                                             )}
-                                            {post.reading_time_mins && (
-                                                <span>{post.reading_time_mins} min read</span>
-                                            )}
+
                                         </div>
                                         <h2 className="blog-card-title">
                                             <Link to={`/blog/${post.slug}`}>{post.title}</Link>
