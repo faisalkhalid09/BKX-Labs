@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GPUPricingController;
 use App\Http\Controllers\BlackwellPUEController;
+use App\Http\Controllers\PostController;
 // use App\Http\Controllers\Api\RezgoDemoController;
 
 Route::get('/test', function () {
@@ -14,6 +15,12 @@ Route::get('/test', function () {
         'timestamp' => now()
     ]);
 });
+
+// Blog posts — public, no auth required
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{slug}', [PostController::class, 'show']);
+
+
 
 Route::post('/website/track', [App\Http\Controllers\WebsiteTrafficController::class, 'track'])->middleware('throttle:60,1');
 

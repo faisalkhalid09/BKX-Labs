@@ -77,6 +77,14 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- ── Blog ── -->
+  <url>
+    <loc>https://bkxlabs.com/blog</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- ── Tools Hub ── -->
   <url>
     <loc>https://bkxlabs.com/tools</loc>

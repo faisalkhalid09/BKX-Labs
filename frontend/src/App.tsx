@@ -21,6 +21,8 @@ import HireLaravelDeveloper from './pages/HireLaravelDeveloper';
 import HireReactDeveloper from './pages/HireReactDeveloper';
 import TechnicalDebtRemediation from './pages/TechnicalDebtRemediation';
 import CodebaseAudit from './pages/CodebaseAudit';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 import ScrollToTop from './components/ui/ScrollToTop';
 import { trackPageView } from './api/analytics';
@@ -70,6 +72,8 @@ function App() {
           <Route path="/hire-react-developer" element={<HireReactDeveloper />} />
           <Route path="/technical-debt-remediation" element={<TechnicalDebtRemediation />} />
           <Route path="/codebase-audit" element={<CodebaseAudit />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
