@@ -117,24 +117,32 @@
     pointer-events: auto;
 }
 
+/* Primary option — solid blue */
 .contact-dropdown-option {
     display: flex;
     align-items: center;
     padding: 0.8rem 1rem;
     border-radius: 12px;
-    color: var(--text-dark);
+    color: #ffffff;
     font-weight: 600;
-    background: transparent;
-    transition: background 0.2s ease, color 0.2s ease;
+    background: var(--primary, #2563eb);
+    transition: background 0.2s ease;
 }
 
 .contact-dropdown-option:hover {
-    background: rgba(30, 58, 138, 0.06);
-    color: var(--primary);
+    background: #1d4ed8;
+    color: #ffffff;
 }
 
+/* Secondary option — plain, no fill */
 .contact-dropdown-option.secondary {
-    background: rgba(248, 250, 252, 0.9);
+    background: transparent;
+    color: var(--text-dark, #0f172a);
+}
+
+.contact-dropdown-option.secondary:hover {
+    background: rgba(30, 58, 138, 0.06);
+    color: var(--primary, #2563eb);
 }
 
 /* Desktop Navigation */
@@ -197,10 +205,9 @@
 }
 
 .nav-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
-    color: var(--text-dark) !important;
-    border-color: rgba(30, 58, 138, 0.25);
+    box-shadow: 0 6px 18px rgba(30, 58, 138, 0.35);
+    color: white !important;
+    border-color: transparent;
 }
 
 .contact-dropdown-option::after {
