@@ -110,9 +110,12 @@ export default function BlogPost() {
     return (
         <div>
             <SEO
-                title={`${post.meta_title || post.title} | BKX Labs`}
+                title={post.meta_title || post.title}
                 description={post.meta_description || post.excerpt}
                 structuredData={structuredData}
+                ogType="article"
+                ogImage={post.cover_image || undefined}
+                canonical={`https://bkxlabs.com/blog/${post.slug}`}
             />
 
             {/* Cover image */}

@@ -184,15 +184,21 @@ const Hero = ({ title, subtitle, ctaText, ctaLink, children }: HeroProps) => {
             }
         };
 
-        heroDiv.addEventListener('mousemove', handleMouseMove);
-        heroDiv.addEventListener('mouseleave', handleMouseLeave);
-        window.addEventListener('scroll', handleScroll);
+        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+        if (!isMobile) {
+            heroDiv.addEventListener('mousemove', handleMouseMove);
+            heroDiv.addEventListener('mouseleave', handleMouseLeave);
+            window.addEventListener('scroll', handleScroll);
+        }
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
-            heroDiv.removeEventListener('mousemove', handleMouseMove);
-            heroDiv.removeEventListener('mouseleave', handleMouseLeave);
-            window.removeEventListener('scroll', handleScroll);
+            if (!isMobile) {
+                heroDiv.removeEventListener('mousemove', handleMouseMove);
+                heroDiv.removeEventListener('mouseleave', handleMouseLeave);
+                window.removeEventListener('scroll', handleScroll);
+            }
             if (rafId !== null) cancelAnimationFrame(rafId);
         };
     }, []);

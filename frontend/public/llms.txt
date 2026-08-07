@@ -1,0 +1,21 @@
+# BKX Labs
+
+> BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects, resolves technical debt, and provides enterprise-grade compliance infrastructure.
+
+We offer diagnostic audits, emergency triage, modernization retainers, and compliance engineering for regulated industries.
+
+## Links
+
+- [Official Website](https://bkxlabs.com/)
+- [Services](https://bkxlabs.com/services)
+- [Rescue Process](https://bkxlabs.com/process)
+- [Compliance Tools](https://bkxlabs.com/tools)
+- [Contact Us](https://bkxlabs.com/contact)
+
+## Compliance Tools
+
+We provide free public tools for developers and compliance teams:
+- EU AI Act Risk Level Classifier
+- Post-Quantum Cryptography CBOM Generator
+- SOC 2 Type II Readiness Score
+- HIPAA Cloud Compliance Auditor
