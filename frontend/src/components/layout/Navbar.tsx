@@ -9,9 +9,16 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isContactMenuOpen, setIsContactMenuOpen] = useState(false);
     const [isLogoHovered, setIsLogoHovered] = useState(false);
+    const [isMobileState, setIsMobileState] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
     const contactMenuRef = useRef<HTMLLIElement | null>(null);
     const closeTimerRef = useRef<number | null>(null);
     const location = useLocation();
+
+    useEffect(() => {
+        const handleResize = () => setIsMobileState(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
     // Derive store URL from environment variable or API URL
     const storeUrl = import.meta.env.VITE_STORE_URL || (import.meta.env.VITE_API_URL || '').replace('/api', '') + '/store';
@@ -90,17 +97,19 @@ const Navbar = () => {
                 <div className="container">
                     <div className="navbar-content">
                         <Link to="/" className="logo" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
-                            <div className={`logo-flip-container ${isLogoHovered ? 'flipped' : ''}`}>
+                            <div className={`logo-flip-container ${isLogoHovered && !isMobileState ? 'flipped' : ''}`}>
                                 <img
                                     src="/brand-logo.png"
                                     alt="BKX Labs - Enterprise Software Development Company"
                                     className="logo-front"
                                 />
-                                <img
-                                    src="/brand-logo.png"
-                                    alt="BKX Labs"
-                                    className="logo-back"
-                                />
+                                {!isMobileState && (
+                                    <img
+                                        src="/logo-header.png"
+                                        alt="BKX Labs"
+                                        className="logo-back"
+                                    />
+                                )}
                             </div>
                         </Link>
 
