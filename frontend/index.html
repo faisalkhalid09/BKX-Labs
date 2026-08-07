@@ -119,21 +119,12 @@
     }
   </script>
 
-  <style>
-    @keyframes bkxSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  </style>
+
 
 </head>
 
 <body>
-  <div id="root">
-    <div style="min-height:100svh;display:flex;align-items:center;justify-content:center;background:#ffffff;">
-      <img src="/logo-header.png" alt="Loading..." style="height:48px;width:48px;animation:bkxSpin 1.2s linear infinite;" fetchpriority="high" />
-    </div>
-  </div>
+  <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 
   <!-- Google AdSense — injected only when browser is idle, never during initial load -->
