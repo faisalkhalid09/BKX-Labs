@@ -102,12 +102,16 @@ const Navbar = () => {
                                     src="/brand-logo.png"
                                     alt="BKX Labs - Enterprise Software Development Company"
                                     className="logo-front"
+                                    width="500"
+                                    height="117"
                                 />
                                 {!isMobileState && (
                                     <img
                                         src="/logo-header.png"
                                         alt="BKX Labs"
                                         className="logo-back"
+                                        width="500"
+                                        height="500"
                                     />
                                 )}
                             </div>
@@ -169,7 +173,7 @@ const Navbar = () => {
             </nav>
 
             {/* Mobile Navigation Drawer */}
-            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen} {...(!isOpen ? { inert: "true" } as any : {})}>
+            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen} inert={!isOpen ? true : undefined}>
                 <div className="container">
 
                     {/* ── Drawer header bar with gradient + logo + close ── */}
@@ -179,6 +183,8 @@ const Navbar = () => {
                                 src="/brand-logo.png"
                                 alt="BKX Labs"
                                 className="logo-img"
+                                width="500"
+                                height="117"
                             />
                         </Link>
                         <button

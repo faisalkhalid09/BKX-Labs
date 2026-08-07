@@ -109,12 +109,13 @@ export default function Blog() {
                             {posts.map((post) => (
                                 <article key={post.id} className="blog-card">
                                     {post.cover_image && (
-                                        <Link to={`/blog/${post.slug}`} className="blog-card-image-link" tabIndex={-1} aria-hidden>
+                                        <Link to={`/blog/${post.slug}`} className="blog-card-image-link" tabIndex={-1}>
                                             <img
                                                 src={post.cover_image}
                                                 alt={post.title}
                                                 className="blog-card-image"
                                                 loading="lazy"
+                                                aria-hidden="true"
                                             />
                                         </Link>
                                     )}
