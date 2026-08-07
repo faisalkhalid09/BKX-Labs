@@ -174,7 +174,7 @@ h3 {
     margin-top: 0.25rem;
 }
 
-.g-point h4 {
+.g-point h3 {
     color: white;
     margin-bottom: 0.5rem;
     font-size: 18px;
@@ -517,7 +517,7 @@ h3 {
 .internal-nav-link {
     font-size: 13px;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--primary);
     margin-top: 0.5rem;
 }
 
@@ -553,7 +553,7 @@ h3 {
 ───────────────────────────────────────────── */
 .accent-label {
     display: inline-block;
-    color: var(--accent);
+    color: var(--primary);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.25em;
@@ -756,7 +756,7 @@ h3 {
     color: var(--accent);
 }
 
-.compliance-tool-card--all h4 {
+.compliance-tool-card--all h3 {
     color: #ffffff;
 }
 
@@ -765,7 +765,7 @@ h3 {
 }
 
 .compliance-tool-card--all .compliance-tool-link {
-    color: var(--accent);
+    color: #22d3ee;
 }
 
 .compliance-tool-icon {
@@ -774,7 +774,7 @@ h3 {
     margin-top: 0.2rem;
 }
 
-.compliance-tool-card h4 {
+.compliance-tool-card h3 {
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--primary-dark);
@@ -903,7 +903,7 @@ h3 {
 }
 
 .agency-tools-link {
-    color: var(--accent);
+    color: var(--primary);
     font-weight: 700;
     text-decoration: none;
     border-bottom: 1px solid transparent;
@@ -911,7 +911,7 @@ h3 {
 }
 
 .agency-tools-link:hover {
-    border-color: var(--accent);
+    border-color: var(--primary);
 }
 
 @media (max-width: 1024px) {

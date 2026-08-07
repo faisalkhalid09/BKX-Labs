@@ -338,7 +338,7 @@ const Home = () => {
                             <div className="protocol-step">
                                 <div className="step-number">01</div>
                                 <div className="step-content">
-                                    <h3>Diagnostic</h3>
+                                    <h3>No Black-Box Engineering</h3>
                                     <p>
                                         A forensic deep-dive into your codebase, infrastructure, and architecture.
                                         Our engineers use static analysis tooling (PHPStan Level 9, ESLint strict,
@@ -451,7 +451,7 @@ const Home = () => {
                                         <Cpu size={24} strokeWidth={1.5} />
                                     </div>
                                     <div>
-                                        <h4>View All 9 Tools</h4>
+                                        <h3>View All 9 Tools</h3>
                                         <p>The full BKX Labs compliance and infrastructure tool suite is free, deterministic, and aligned to 2026 regulatory timelines.</p>
                                         <span className="compliance-tool-link">Browse Tools →</span>
                                     </div>
@@ -565,21 +565,21 @@ const Home = () => {
                             <div className="g-point">
                                 <CheckCircle size={24} />
                                 <div>
-                                    <h4>Written Diagnostic Report</h4>
+                                    <h3>Written Diagnostic Report</h3>
                                     <p>Before we start any work, you receive a complete written health report detailing every critical, high, and medium severity issue with individual remediation cost and time estimates. No surprises about what needs to be fixed or why. This document is yours regardless of whether you proceed.</p>
                                 </div>
                             </div>
                             <div className="g-point">
                                 <CheckCircle size={24} />
                                 <div>
-                                    <h4>Zero-Pause Stabilization</h4>
+                                    <h3>Zero-Pause Stabilization</h3>
                                     <p>Triage and stabilization are performed without taking your existing system offline. All changes are validated in a staging environment and require your explicit approval before being promoted to production. Business continuity is not a selling point; it is a non-negotiable constraint on how we operate.</p>
                                 </div>
                             </div>
                             <div className="g-point">
                                 <CheckCircle size={24} />
                                 <div>
-                                    <h4>60-Day Post-Handover Support</h4>
+                                    <h3>60-Day Post-Handover Support</h3>
                                     <p>We stay engaged for 60 days post-delivery at no additional charge to monitor production stability, address any edge cases that surface under real-world load, and ensure your internal team has full operational ownership. The engagement is not complete until your team is self-sufficient.</p>
                                 </div>
                             </div>

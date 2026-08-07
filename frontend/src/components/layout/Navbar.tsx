@@ -99,7 +99,7 @@ const Navbar = () => {
                         <Link to="/" className="logo" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
                             <div className={`logo-flip-container ${isLogoHovered && !isMobileState ? 'flipped' : ''}`}>
                                 <img
-                                    src="/brand-logo.png"
+                                    src="/brand-logo.png?v=2"
                                     alt="BKX Labs - Enterprise Software Development Company"
                                     className="logo-front"
                                     width="500"
@@ -107,7 +107,7 @@ const Navbar = () => {
                                 />
                                 {!isMobileState && (
                                     <img
-                                        src="/logo-header.png"
+                                        src="/logo-header.png?v=2"
                                         alt="BKX Labs"
                                         className="logo-back"
                                         width="500"
@@ -173,14 +173,14 @@ const Navbar = () => {
             </nav>
 
             {/* Mobile Navigation Drawer */}
-            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen} inert={!isOpen ? true : undefined}>
+            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} inert={!isOpen ? true : undefined}>
                 <div className="container">
 
                     {/* ── Drawer header bar with gradient + logo + close ── */}
                     <div className="mobile-menu-header">
                         <Link to="/" className="logo" onClick={() => setIsOpen(false)}>
                             <img
-                                src="/brand-logo.png"
+                                src="/brand-logo.png?v=2"
                                 alt="BKX Labs"
                                 className="logo-img"
                                 width="500"

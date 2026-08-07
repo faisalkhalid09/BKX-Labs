@@ -27,7 +27,7 @@ const Footer = () => {
                     </div>
 
                     <div className="footer-section">
-                        <h4>Quick Links</h4>
+                        <h3>Quick Links</h3>
                         <ul className="footer-links">
                             <li><Link to="/services">Services</Link></li>
                             <li><Link to="/process">Process</Link></li>
@@ -40,7 +40,7 @@ const Footer = () => {
                     </div>
 
                     <div className="footer-section">
-                        <h4>Specialized Services</h4>
+                        <h3>Specialized Services</h3>
                         <ul className="footer-links">
                             <li><Link to="/hire-laravel-developer">Hire Laravel Developer</Link></li>
                             <li><Link to="/hire-react-developer">Hire React Developer</Link></li>
@@ -50,7 +50,7 @@ const Footer = () => {
                     </div>
 
                     <div className="footer-section">
-                        <h4>Contact</h4>
+                        <h3>Contact</h3>
                         <div className="footer-contact">
                             <Mail size={18} />
                             <a href="mailto:contact@bkxlabs.com">contact@bkxlabs.com</a>
