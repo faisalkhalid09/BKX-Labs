@@ -97,7 +97,7 @@ const Navbar = () => {
                                     className="logo-front"
                                 />
                                 <img
-                                    src="/logo-header.png"
+                                    src="/brand-logo.png"
                                     alt="BKX Labs"
                                     className="logo-back"
                                 />
@@ -160,7 +160,7 @@ const Navbar = () => {
             </nav>
 
             {/* Mobile Navigation Drawer */}
-            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen}>
+            <div className={`mobile-menu ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen} {...(!isOpen ? { inert: "true" } as any : {})}>
                 <div className="container">
 
                     {/* ── Drawer header bar with gradient + logo + close ── */}
