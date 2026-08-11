@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
@@ -10,6 +10,40 @@ import './Services.css';
 const Services = () => {
     const [openFaq, setOpenFaq] = useState<number | null>(0);
     const [hoveredStep, setHoveredStep] = useState<number>(-1);
+
+    // Scroll-triggered number fill-wipe
+    useEffect(() => {
+        const rows = document.querySelectorAll<HTMLElement>('.svc-row');
+        const obs: IntersectionObserver[] = [];
+        rows.forEach((row) => {
+            const io = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        row.classList.add('is-visible');
+                        io.unobserve(row);
+                    }
+                },
+                { threshold: 0.22 }
+            );
+            io.observe(row);
+            obs.push(io);
+        });
+        return () => obs.forEach((io) => io.disconnect());
+    }, []);
+
+    // Cursor-parallax on number — direct DOM write, zero re-renders
+    const handleRowMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const dx = ((e.clientX - rect.left) / rect.width - 0.5) * 18;
+        const dy = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
+        e.currentTarget.style.setProperty('--nx', `${dx.toFixed(1)}px`);
+        e.currentTarget.style.setProperty('--ny', `${dy.toFixed(1)}px`);
+    };
+    const handleRowMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.currentTarget.style.setProperty('--nx', '0px');
+        e.currentTarget.style.setProperty('--ny', '0px');
+    };
+
 
     const faqItems = [
         {
@@ -187,10 +221,13 @@ const Services = () => {
                 <Container>
 
                     {/* Phase 1: Diagnostic Codebase Audit */}
-                    <div className="svc-row">
+                    <div className="svc-row" onMouseMove={handleRowMouseMove} onMouseLeave={handleRowMouseLeave}>
                         <div className="svc-row-left">
                             <div className="svc-number-wrap">
-                                <span className="svc-number">01</span>
+                                <div className="svc-num-layers">
+                                    <span className="svc-number svc-number-base">01</span>
+                                    <span className="svc-number svc-number-fill" aria-hidden="true">01</span>
+                                </div>
                                 <div className="svc-title-group">
                                     <div className="svc-icon">
                                         <Search size={22} strokeWidth={1.5} />
@@ -256,10 +293,13 @@ const Services = () => {
                     <hr className="svc-divider" />
 
                     {/* Phase 2: Triage & Stabilization */}
-                    <div className="svc-row">
+                    <div className="svc-row" onMouseMove={handleRowMouseMove} onMouseLeave={handleRowMouseLeave}>
                         <div className="svc-row-left">
                             <div className="svc-number-wrap">
-                                <span className="svc-number">02</span>
+                                <div className="svc-num-layers">
+                                    <span className="svc-number svc-number-base">02</span>
+                                    <span className="svc-number svc-number-fill" aria-hidden="true">02</span>
+                                </div>
                                 <div className="svc-title-group">
                                     <div className="svc-icon">
                                         <Wrench size={22} strokeWidth={1.5} />
@@ -327,10 +367,13 @@ const Services = () => {
                     <hr className="svc-divider" />
 
                     {/* Phase 3: Modernization Retainer */}
-                    <div className="svc-row">
+                    <div className="svc-row" onMouseMove={handleRowMouseMove} onMouseLeave={handleRowMouseLeave}>
                         <div className="svc-row-left">
                             <div className="svc-number-wrap">
-                                <span className="svc-number">03</span>
+                                <div className="svc-num-layers">
+                                    <span className="svc-number svc-number-base">03</span>
+                                    <span className="svc-number svc-number-fill" aria-hidden="true">03</span>
+                                </div>
                                 <div className="svc-title-group">
                                     <div className="svc-icon">
                                         <TrendingUp size={22} strokeWidth={1.5} />
@@ -397,10 +440,13 @@ const Services = () => {
                     <hr className="svc-divider" />
 
                     {/* Greenfield Development */}
-                    <div className="svc-row">
+                    <div className="svc-row" onMouseMove={handleRowMouseMove} onMouseLeave={handleRowMouseLeave}>
                         <div className="svc-row-left">
                             <div className="svc-number-wrap">
-                                <span className="svc-number">04</span>
+                                <div className="svc-num-layers">
+                                    <span className="svc-number svc-number-base">04</span>
+                                    <span className="svc-number svc-number-fill" aria-hidden="true">04</span>
+                                </div>
                                 <div className="svc-title-group">
                                     <div className="svc-icon">
                                         <Hammer size={22} strokeWidth={1.5} />
@@ -468,10 +514,13 @@ const Services = () => {
                     <hr className="svc-divider" />
 
                     {/* Ongoing Engineering Support */}
-                    <div className="svc-row">
+                    <div className="svc-row" onMouseMove={handleRowMouseMove} onMouseLeave={handleRowMouseLeave}>
                         <div className="svc-row-left">
                             <div className="svc-number-wrap">
-                                <span className="svc-number">05</span>
+                                <div className="svc-num-layers">
+                                    <span className="svc-number svc-number-base">05</span>
+                                    <span className="svc-number svc-number-fill" aria-hidden="true">05</span>
+                                </div>
                                 <div className="svc-title-group">
                                     <div className="svc-icon">
                                         <Headphones size={22} strokeWidth={1.5} />

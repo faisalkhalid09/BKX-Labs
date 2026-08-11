@@ -200,6 +200,9 @@
     gap: 5rem;
     align-items: start;
     padding: 4.5rem 0;
+    /* Cursor parallax custom props — set via JS */
+    --nx: 0px;
+    --ny: 0px;
 }
 
 .svc-divider {
@@ -216,9 +219,22 @@
 
 .svc-number-wrap {
     margin-bottom: 1.75rem;
+    /* The number layers ride on this via CSS var */
+    will-change: transform;
 }
 
-.svc-number {
+/* Two-layer number container */
+.svc-num-layers {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    transform: translate(var(--nx), var(--ny));
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+}
+
+/* Base layer — always muted */
+.svc-number-base {
     display: block;
     font-family: var(--font-heading);
     font-size: 5rem;
@@ -226,8 +242,31 @@
     line-height: 1;
     color: var(--border-light);
     letter-spacing: -0.05em;
-    margin-bottom: 0.5rem;
     user-select: none;
+}
+
+/* Fill layer — primary color, clipped, wipes up on scroll */
+.svc-number-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--primary);
+    letter-spacing: -0.05em;
+    user-select: none;
+    /* Start fully clipped from the bottom — nothing visible */
+    clip-path: inset(100% 0 0 0);
+    transition: none;
+}
+
+/* When .svc-row.is-visible: wipe upward */
+.svc-row.is-visible .svc-number-fill {
+    clip-path: inset(0% 0 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
 }
 
 .svc-title-group {
