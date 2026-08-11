@@ -614,26 +614,19 @@
         display: none;
     }
 
-    /* Bubbles scroll horizontally */
+    /* Remove horizontal scroll so rings aren't clipped */
     .proc-bubbles-outer {
-        overflow-x: auto;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        padding: 0 1rem;
-    }
-
-    .proc-bubbles-outer::-webkit-scrollbar {
-        display: none;
+        padding: 1rem 0 0 0; /* padding top for ring */
     }
 
     .proc-bubbles {
-        min-width: 560px;
+        width: 100%;
         padding-bottom: 0.5rem;
     }
 
     .proc-track-line {
-        left: calc(1rem + 34px);
-        right: calc(1rem + 34px);
+        left: 28px;
+        right: 28px;
     }
 
     /* Panel */
@@ -701,20 +694,29 @@
     }
 
     .proc-bubble-wrap {
-        min-width: 70px;
+        min-width: 0;
+        gap: 0.35rem;
     }
 
     .proc-bubble {
-        width: 56px;
-        height: 56px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .proc-bubble svg {
+        width: 18px;
+        height: 18px;
     }
 
     .proc-track-line {
-        top: 28px; /* half of 56px */
+        top: 24px; /* half of 48px */
+        left: 24px;
+        right: 24px;
     }
 
     .proc-bubble-label {
-        font-size: 0.65rem;
-        max-width: 66px;
+        font-size: 0.55rem;
+        max-width: 50px;
+        letter-spacing: -0.02em;
     }
 }
