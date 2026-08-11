@@ -26,15 +26,15 @@
     margin-bottom: 1rem;
 }
 
-.svc-intro-heading {
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    font-weight: 800;
-    color: var(--primary);
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin: 0;
-    max-width: 18ch;
+.svc-intro-subtext {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-gray);
+    margin: 0.5rem 0 0 0;
+    max-width: 28ch;
+    font-style: italic;
 }
+
 
 .svc-intro-body {
     font-size: 1.05rem;
@@ -44,6 +44,136 @@
     max-width: 60ch;
 }
 
+/* ─── Interactive Process Flow ─── */
+.svc-flow-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border-light);
+    padding: 3rem 0 1rem 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.svc-flow-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+.svc-flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.svc-flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    cursor: default;
+    border-radius: 10px;
+    transition: background 0.25s ease;
+    min-width: 130px;
+    position: relative;
+}
+
+.svc-flow-step:hover {
+    background: var(--secondary);
+}
+
+/* Icon ring */
+.svc-flow-icon-ring {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c0cfe8;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.svc-flow-step.active .svc-flow-icon-ring {
+    border-color: var(--primary);
+    color: white;
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Step number */
+.svc-flow-num {
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #c0cfe8;
+    transition: color 0.3s ease;
+}
+
+.svc-flow-step.active .svc-flow-num {
+    color: var(--accent);
+}
+
+/* Step label */
+.svc-flow-label {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+.svc-flow-step.active .svc-flow-label {
+    color: var(--text-dark);
+}
+
+/* Step descriptor */
+.svc-flow-desc {
+    font-size: 0.7rem;
+    color: #c0cfe8;
+    text-align: center;
+    line-height: 1.4;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, color 0.3s ease;
+}
+
+.svc-flow-step.active .svc-flow-desc {
+    max-height: 40px;
+    opacity: 1;
+    color: var(--text-gray);
+}
+
+/* Arrow */
+.svc-flow-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 0.25rem;
+    flex-shrink: 0;
+    padding-bottom: 1.5rem; /* offset to align with icon center before desc appears */
+}
+
+.svc-arrow-line,
+.svc-arrow-head {
+    stroke: #dde3ed;
+    transition: stroke 0.3s ease;
+}
+
+.svc-flow-arrow.active .svc-arrow-line,
+.svc-flow-arrow.active .svc-arrow-head {
+    stroke: var(--accent);
+}
+
+
+/* Quicklinks */
 .svc-quicklinks {
     display: flex;
     flex-wrap: wrap;
@@ -56,27 +186,12 @@
     width: auto;
 }
 
-/* Process Flow Diagram */
-.svc-flow-diagram {
-    border-top: 1px solid var(--border-light);
-    padding: 3rem 0 0 0;
-}
-
-.svc-flow-img {
-    width: 100%;
-    max-width: 960px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-    opacity: 0.92;
-}
-
 /* ─── Service List Section ─── */
 .svc-list-section {
     background: white;
     padding-top: 5rem;
 }
+
 
 /* Each Service Row */
 .svc-row {
@@ -429,8 +544,14 @@
         gap: 2rem;
     }
 
-    .svc-intro-heading {
-        max-width: none;
+    .svc-flow-wrap {
+        justify-content: flex-start;
+        padding-left: 0;
+    }
+
+    .svc-flow-step {
+        min-width: 110px;
+        padding: 1rem 1rem;
     }
 
     .svc-row {
@@ -463,8 +584,27 @@
         padding: 0.5rem 1rem;
     }
 
-    .svc-flow-diagram {
-        padding-top: 2rem;
+    .svc-flow-wrap {
+        gap: 0;
+        padding: 2rem 0 0.5rem 0;
+    }
+
+    .svc-flow-step {
+        min-width: 90px;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .svc-flow-icon-ring {
+        width: 42px;
+        height: 42px;
+    }
+
+    .svc-flow-label {
+        font-size: 0.72rem;
+    }
+
+    .svc-flow-arrow svg {
+        width: 28px;
     }
 
     .svc-list-section {

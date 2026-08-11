@@ -9,6 +9,7 @@ import './Services.css';
 
 const Services = () => {
     const [openFaq, setOpenFaq] = useState<number | null>(0);
+    const [hoveredStep, setHoveredStep] = useState<number>(-1);
 
     const faqItems = [
         {
@@ -123,7 +124,7 @@ const Services = () => {
                     <div className="svc-intro-grid">
                         <div className="svc-intro-left">
                             <span className="svc-label">How We Work</span>
-                            <h2 className="svc-intro-heading">Structured service pathways. No guesswork.</h2>
+                            <p className="svc-intro-subtext">Every engagement is a discrete, fixed-price phase with defined inputs, deliverables, and acceptance criteria.</p>
                         </div>
                         <div className="svc-intro-right">
                             <p className="svc-intro-body">
@@ -142,17 +143,42 @@ const Services = () => {
                         </div>
                     </div>
 
-                    {/* Process flow diagram */}
-                    <div className="svc-flow-diagram">
-                        <img
-                            src="/services-flow.png"
-                            alt="BKX Labs rescue process: Diagnostic Audit, Triage and Stabilization, Modernization, Ongoing Support"
-                            className="svc-flow-img"
-                            loading="lazy"
-                            width="1200"
-                            height="300"
-                        />
-                    </div>
+                    {/* Interactive Process Flow */}
+                    {(() => {
+                        const steps = [
+                            { num: '01', icon: <Search size={26} strokeWidth={1.5} />, label: 'Diagnostic Audit', desc: 'Forensic codebase review' },
+                            { num: '02', icon: <Wrench size={26} strokeWidth={1.5} />, label: 'Triage & Stabilization', desc: 'Critical failure patching' },
+                            { num: '03', icon: <TrendingUp size={26} strokeWidth={1.5} />, label: 'Modernization', desc: 'Systematic stack evolution' },
+                            { num: '04', icon: <Headphones size={26} strokeWidth={1.5} />, label: 'Ongoing Support', desc: 'Sustained engineering reliability' },
+                        ];
+                        return (
+                            <div className="svc-flow-wrap" onMouseLeave={() => setHoveredStep(-1)}>
+                                {steps.map((step, i) => (
+                                    <div key={i} className="svc-flow-row">
+                                        <div
+                                            className={`svc-flow-step${hoveredStep >= i ? ' active' : ''}`}
+                                            onMouseEnter={() => setHoveredStep(i)}
+                                        >
+                                            <div className="svc-flow-icon-ring">
+                                                {step.icon}
+                                            </div>
+                                            <span className="svc-flow-num">{step.num}</span>
+                                            <span className="svc-flow-label">{step.label}</span>
+                                            <span className="svc-flow-desc">{step.desc}</span>
+                                        </div>
+                                        {i < steps.length - 1 && (
+                                            <div className={`svc-flow-arrow${hoveredStep > i ? ' active' : ''}`}>
+                                                <svg width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <line x1="0" y1="8" x2="32" y2="8" strokeWidth="1.5" className="svc-arrow-line" />
+                                                    <polyline points="26,2 36,8 26,14" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="svc-arrow-head" />
+                                                </svg>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })()}
                 </Container>
             </Section>
 
