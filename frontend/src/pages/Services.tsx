@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import { Link } from 'react-router-dom';
-import { Search, Wrench, TrendingUp, Hammer, Headphones, ArrowRight, HelpCircle } from 'lucide-react';
+import { Search, Wrench, TrendingUp, Hammer, Headphones, ArrowRight, ChevronDown } from 'lucide-react';
 import SEO from '../components/ui/SEO';
 import './Services.css';
 
 const Services = () => {
+    const [openFaq, setOpenFaq] = useState<number | null>(0);
+
     const faqItems = [
         {
             question: "How much does a codebase rescue cost?",
@@ -107,89 +110,113 @@ const Services = () => {
                 keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
+
+            {/* Hero — untouched */}
             <Hero
                 title="Our Services"
                 subtitle="We specialize in taking broken, stalled, and over-engineered systems and turning them into stable, scalable products. Every engagement is fixed-price and begins with a forensic diagnosis, never with assumptions."
             />
 
             {/* Intro */}
-            <Section>
+            <Section className="svc-intro-section">
                 <Container>
-                    <div className="services-intro">
-                        <p>
-                            Whether your project was abandoned by a previous team, is drowning in technical debt,
-                            or simply needs to be built correctly from the start, we have a structured service
-                            pathway designed for your exact situation. We don't guess; we follow the evidence.
-                            Each service below is a discrete, fixed-price engagement with defined inputs,
-                            deliverables, and acceptance criteria. There are no hourly billing surprises,
-                            no scope ambiguity, and no lock-in beyond the current phase.
-                        </p>
-                        <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                            <Link to="/codebase-audit" className="btn btn-secondary">Codebase Audits</Link>
-                            <Link to="/technical-debt-remediation" className="btn btn-secondary">Technical Debt Remediation</Link>
-                            <Link to="/hire-laravel-developer" className="btn btn-secondary">Hire Laravel Developers</Link>
-                            <Link to="/hire-react-developer" className="btn btn-secondary">Hire React Developers</Link>
+                    <div className="svc-intro-grid">
+                        <div className="svc-intro-left">
+                            <span className="svc-label">How We Work</span>
+                            <h2 className="svc-intro-heading">Structured service pathways. No guesswork.</h2>
                         </div>
+                        <div className="svc-intro-right">
+                            <p className="svc-intro-body">
+                                Whether your project was abandoned by a previous team, is drowning in technical debt,
+                                or simply needs to be built correctly from the start, we have a structured service
+                                pathway designed for your exact situation. Each service is a discrete, fixed-price
+                                engagement with defined inputs, deliverables, and acceptance criteria. No hourly
+                                billing surprises, no scope ambiguity, no lock-in beyond the current phase.
+                            </p>
+                            <div className="svc-quicklinks">
+                                <Link to="/codebase-audit" className="btn btn-secondary">Codebase Audits</Link>
+                                <Link to="/technical-debt-remediation" className="btn btn-secondary">Technical Debt Remediation</Link>
+                                <Link to="/hire-laravel-developer" className="btn btn-secondary">Hire Laravel Developers</Link>
+                                <Link to="/hire-react-developer" className="btn btn-secondary">Hire React Developers</Link>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Process flow diagram */}
+                    <div className="svc-flow-diagram">
+                        <img
+                            src="/services-flow.png"
+                            alt="BKX Labs rescue process: Diagnostic Audit, Triage and Stabilization, Modernization, Ongoing Support"
+                            className="svc-flow-img"
+                            loading="lazy"
+                            width="1200"
+                            height="300"
+                        />
                     </div>
                 </Container>
             </Section>
 
-            {/* Service 1: Diagnostic Audit */}
-            <Section className="service-section">
+            {/* ── Service Sections ── */}
+            <Section className="svc-list-section">
                 <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Search size={40} strokeWidth={1.5} />
+
+                    {/* Phase 1: Diagnostic Codebase Audit */}
+                    <div className="svc-row">
+                        <div className="svc-row-left">
+                            <div className="svc-number-wrap">
+                                <span className="svc-number">01</span>
+                                <div className="svc-title-group">
+                                    <div className="svc-icon">
+                                        <Search size={22} strokeWidth={1.5} />
+                                    </div>
+                                    <h2 className="svc-title">Phase 1: Diagnostic Codebase Audit</h2>
+                                </div>
                             </div>
-                            <h2>Phase 1: Diagnostic Codebase Audit</h2>
+                            <p className="svc-body">
+                                Before a single line of code is changed, we need to understand the full picture.
+                                Our audit team conducts a forensic review of your codebase, infrastructure, and
+                                security posture using a combination of automated static analysis, manual
+                                architectural review, and live performance profiling under realistic load conditions.
+                                The output is a written Technical Health Report: a boardroom-ready document that
+                                tells you exactly what is broken, why it's broken, the blast radius of each issue,
+                                and what a realistic remediation will cost. This report is yours outright.
+                                No obligation to continue with BKX Labs.
+                            </p>
+                            <blockquote className="svc-insight">
+                                This engagement converts your largest technical liability into a quantified risk
+                                register, allowing your CFO and board to evaluate remediation cost versus inaction
+                                with precision rather than conjecture.
+                            </blockquote>
                         </div>
-
-                        <p className="service-value">
-                            Before a single line of code is changed, we need to understand the full picture.
-                            Our audit team conducts a forensic review of your codebase, infrastructure, and
-                            security posture using a combination of automated static analysis, manual
-                            architectural review, and live performance profiling under realistic load conditions.
-                            The output is a written Technical Health Report, a boardroom-ready document that
-                            tells you exactly what is broken, why it's broken, the blast radius of each issue,
-                            and what a realistic remediation will cost. This report is yours outright.
-                            No obligation to continue with BKX Labs.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Examine</h4>
-                                <ul>
-                                    <li>Code quality, structure & architectural pattern compliance</li>
-                                    <li>Security vulnerabilities & exposed attack surfaces (OWASP Top 10)</li>
-                                    <li>Database schema design, indexing strategy & query performance</li>
-                                    <li>Deployment pipelines, CI/CD configuration & server hardening</li>
-                                    <li>Third-party dependency risks, version drift & EOL exposure</li>
-                                    <li>Authentication & authorization logic correctness</li>
+                        <div className="svc-row-right">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What We Examine</h4>
+                                <ul className="svc-detail-list">
+                                    <li>Code quality, structure &amp; architectural pattern compliance</li>
+                                    <li>Security vulnerabilities &amp; exposed attack surfaces (OWASP Top 10)</li>
+                                    <li>Database schema design, indexing strategy &amp; query performance</li>
+                                    <li>Deployment pipelines, CI/CD configuration &amp; server hardening</li>
+                                    <li>Third-party dependency risks, version drift &amp; EOL exposure</li>
+                                    <li>Authentication &amp; authorization logic correctness</li>
                                     <li>Automated test coverage depth and reliability</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Audit Tooling & Methods</h4>
-                                <div className="tech-tags">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Audit Tooling</h4>
+                                <div className="svc-tech-tags">
                                     <span>PHPStan Level 9</span>
                                     <span>OWASP ZAP</span>
                                     <span>Rector</span>
                                     <span>ESLint Strict</span>
-                                    <span>Dependency Scanning</span>
                                     <span>Load Testing (k6)</span>
                                     <span>DB Query Profiling</span>
-                                    <span>CI/CD Inspection</span>
-                                    <span>Architecture Mapping</span>
-                                    <span>Log Analysis</span>
                                     <span>Telescope Profiling</span>
+                                    <span>Architecture Mapping</span>
                                 </div>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>What You Receive</h4>
-                                <ul>
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What You Receive</h4>
+                                <ul className="svc-detail-list">
                                     <li>Full written Technical Health Report (PDF + source)</li>
                                     <li>Severity-ranked issue list (Critical / High / Medium / Low)</li>
                                     <li>Per-issue remediation effort and cost estimate</li>
@@ -197,62 +224,54 @@ const Services = () => {
                                     <li>Executive summary suitable for board or investor review</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Business Value</h4>
-                                <p>
-                                    This engagement converts your largest technical liability into a
-                                    quantified risk register, allowing your CFO and board to evaluate
-                                    remediation cost versus the cost of inaction with precision rather
-                                    than conjecture. Most clients recoup the audit fee in the first
-                                    sprint of remediation by avoiding the missteps that incorrect
-                                    diagnosis would have caused.
-                                </p>
-                            </div>
                         </div>
                     </div>
-                </Container>
-            </Section>
 
-            {/* Service 2: Triage & Stabilization */}
-            <Section className="service-section alt">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Wrench size={40} strokeWidth={1.5} />
+                    <hr className="svc-divider" />
+
+                    {/* Phase 2: Triage & Stabilization */}
+                    <div className="svc-row">
+                        <div className="svc-row-left">
+                            <div className="svc-number-wrap">
+                                <span className="svc-number">02</span>
+                                <div className="svc-title-group">
+                                    <div className="svc-icon">
+                                        <Wrench size={22} strokeWidth={1.5} />
+                                    </div>
+                                    <h2 className="svc-title">Phase 2: Triage &amp; Stabilization</h2>
+                                </div>
                             </div>
-                            <h2>Phase 2: Triage & Stabilization</h2>
+                            <p className="svc-body">
+                                We stop the bleeding. Informed by the diagnostic audit's findings, our engineers
+                                systematically patch critical production failures, seal active security vulnerabilities,
+                                and establish the foundational engineering practices, such as reproducible CI/CD pipelines,
+                                production observability, and automated deployment rollbacks, that your system
+                                should have had from the first sprint. All triage work is executed on a staging
+                                branch and requires your explicit sign-off before promotion to the live environment.
+                                Your system must be more stable at the end of every week than it was at the beginning.
+                            </p>
+                            <blockquote className="svc-insight">
+                                For every week a production system operates in an unstable state, the cost of
+                                remediation compounds through customer churn, support overhead, and the opportunity
+                                cost of features that cannot be shipped.
+                            </blockquote>
                         </div>
-
-                        <p className="service-value">
-                            We stop the bleeding. Informed by the diagnostic audit's findings, our engineers
-                            systematically patch critical production failures, seal active security vulnerabilities,
-                            and establish the foundational engineering practices, such as reproducible CI/CD pipelines,
-                            production observability, and automated deployment rollbacks, that your system
-                            should have had from the first sprint. All triage work is executed on a staging
-                            branch and requires your explicit sign-off before promotion to the live environment.
-                            We do not introduce risk to recover from risk. The guiding constraint is:
-                            your system must be more stable at the end of every week than it was at the beginning.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Fix</h4>
-                                <ul>
-                                    <li>Server crashes, memory leaks & unhandled fatal exceptions</li>
+                        <div className="svc-row-right">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What We Fix</h4>
+                                <ul className="svc-detail-list">
+                                    <li>Server crashes, memory leaks &amp; unhandled fatal exceptions</li>
                                     <li>Security holes: SQL injection, XSS, auth bypasses, SSRF</li>
                                     <li>Broken or absent CI/CD deployment pipelines</li>
-                                    <li>Data integrity issues & corrupted application state</li>
+                                    <li>Data integrity issues &amp; corrupted application state</li>
                                     <li>N+1 query patterns causing database timeout cascades</li>
-                                    <li>Missing rate limiting, CSRF protection & input sanitization</li>
-                                    <li>Environment configuration leakage & credential exposure</li>
+                                    <li>Missing rate limiting, CSRF protection &amp; input sanitization</li>
+                                    <li>Environment configuration leakage &amp; credential exposure</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Technology Stack</h4>
-                                <div className="tech-tags">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Technology Stack</h4>
+                                <div className="svc-tech-tags">
                                     <span>Laravel 12</span>
                                     <span>React 19</span>
                                     <span>Node.js</span>
@@ -261,248 +280,209 @@ const Services = () => {
                                     <span>Redis 7</span>
                                     <span>Docker</span>
                                     <span>GitHub Actions</span>
-                                    <span>AWS / DigitalOcean</span>
-                                    <span>Nginx</span>
-                                    <span>Laravel Sanctum</span>
                                     <span>Sentry</span>
                                     <span>Laravel Horizon</span>
+                                    <span>Nginx</span>
                                 </div>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
-                                    Stabilization is performed live; we do not take your existing system offline
-                                    at any point during the triage phase. All changes go through a staging environment
-                                    for validation and are covered by automated integration tests before production
-                                    deployment. You are notified, given a detailed change summary, and explicitly
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Our Approach</h4>
+                                <p className="svc-detail-body">
+                                    Stabilization is performed live; we do not take your existing system offline at
+                                    any point. All changes go through a staging environment for validation and are
+                                    covered by automated integration tests before production deployment. You explicitly
                                     approve every critical change before it ships. A production observability stack
-                                    (Sentry error tracking, uptime monitoring, Laravel Horizon queue dashboard)
-                                    is established so you have real-time system visibility throughout the engagement.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Business Value</h4>
-                                <p>
-                                    For every week a production system operates in an unstable state, the cost
-                                    of remediation compounds through customer churn, support overhead, and
-                                    the opportunity cost of features that cannot be shipped. Triage converts
-                                    an adversarial relationship with your codebase into a defensible baseline,
-                                    re-opening the development velocity that accumulated technical debt
-                                    has been silently destroying.
+                                    (Sentry, uptime monitoring, Laravel Horizon) is established on day one.
                                 </p>
                             </div>
                         </div>
                     </div>
-                </Container>
-            </Section>
 
-            {/* Service 3: Modernization Retainer */}
-            <Section className="service-section">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <TrendingUp size={40} strokeWidth={1.5} />
+                    <hr className="svc-divider" />
+
+                    {/* Phase 3: Modernization Retainer */}
+                    <div className="svc-row">
+                        <div className="svc-row-left">
+                            <div className="svc-number-wrap">
+                                <span className="svc-number">03</span>
+                                <div className="svc-title-group">
+                                    <div className="svc-icon">
+                                        <TrendingUp size={22} strokeWidth={1.5} />
+                                    </div>
+                                    <h2 className="svc-title">Phase 3: Modernization Retainer</h2>
+                                </div>
                             </div>
-                            <h2>Phase 3: Modernization Retainer</h2>
+                            <p className="svc-body">
+                                Stabilization buys you time. Modernization buys you the future. Our retainer model
+                                provides dedicated engineering bandwidth with a fixed team size, fixed sprint scope,
+                                and fixed monthly cost to systematically remove technical debt, refactor critical
+                                subsystems, and build the new features your business requires, all without pausing
+                                operations. We operate in 2-week sprints with a committed deliverable scope per
+                                sprint, a working demo at sprint end, and full transparency into the backlog.
+                                You can cancel with 30 days' notice. No lock-in clauses, no exit penalties.
+                            </p>
+                            <blockquote className="svc-insight">
+                                A senior full-stack engineer with relevant rescue experience costs $150,000 to
+                                $220,000 annually in the US market. Our retainer delivers a team of three to five
+                                specialists at a fraction of that cost, with no onboarding curve or equity dilution.
+                            </blockquote>
                         </div>
-
-                        <p className="service-value">
-                            Stabilization buys you time. Modernization buys you the future. Our retainer model
-                            provides dedicated engineering bandwidth (a fixed team size, fixed sprint scope,
-                            and fixed monthly cost) to systematically remove technical debt, refactor critical
-                            subsystems, and build the new features your business requires, all without pausing
-                            operations. We operate in 2-week sprints with a committed deliverable scope per sprint,
-                            a working demo at sprint end, and full transparency into the backlog. Every sprint
-                            plan is collaboratively defined with your product stakeholders before work begins.
-                            You can cancel with 30 days' notice. There are no lock-in clauses or exit penalties.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Deliver</h4>
-                                <ul>
+                        <div className="svc-row-right">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What We Deliver</h4>
+                                <ul className="svc-detail-list">
                                     <li>Systematic legacy-to-modern stack migration (Laravel 12, React 19)</li>
                                     <li>TypeScript 5 strict mode adoption across frontend codebases</li>
                                     <li>PestPHP 3 test suite establishment prior to high-risk refactors</li>
                                     <li>New feature development on clean, domain-isolated architecture</li>
-                                    <li>Database restructuring, migration scripting & performance tuning</li>
+                                    <li>Database restructuring, migration scripting &amp; performance tuning</li>
                                     <li>Mobile app development (Flutter / React Native)</li>
-                                    <li>API redesign, versioning & third-party integration rewrites</li>
+                                    <li>API redesign, versioning &amp; third-party integration rewrites</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Retainer Stack</h4>
-                                <div className="tech-tags">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Retainer Stack</h4>
+                                <div className="svc-tech-tags">
                                     <span>Laravel 12</span>
                                     <span>React 19</span>
                                     <span>Next.js 15</span>
                                     <span>Vue.js 3</span>
                                     <span>TypeScript 5</span>
-                                    <span>Tailwind CSS 4</span>
                                     <span>PestPHP 3</span>
-                                    <span>Node.js</span>
                                     <span>Flutter</span>
                                     <span>AWS</span>
                                     <span>PostgreSQL</span>
-                                    <span>Redis 7</span>
-                                    <span>Docker</span>
                                     <span>Kubernetes</span>
                                 </div>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Our Approach</h4>
+                                <p className="svc-detail-body">
                                     Retainers operate in 2-week sprints with a fixed deliverable scope agreed
                                     collaboratively before each sprint begins. You receive a written sprint plan,
-                                    a mid-sprint status update, and a working demo or pull request review at
-                                    sprint end. The backlog is managed in a shared project management workspace
-                                    with full visibility into every task, its status, and the engineer responsible.
-                                    Weekly async written updates summarize progress, blockers, and the sprint ahead.
-                                    There are no surprise billing events.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Business Value</h4>
-                                <p>
-                                    A senior full-stack engineer with relevant rescue experience costs $150,000
-                                    to $220,000 annually in the US market, before benefits, recruitment overhead,
-                                    and the ramp time required to become productive on a complex legacy codebase.
-                                    Our retainer model delivers a team of three to five specialists at a fraction
-                                    of that cost, with no onboarding curve, management overhead, or equity dilution.
+                                    a mid-sprint status update, and a working demo at sprint end. The backlog
+                                    is managed in a shared project management workspace with full visibility
+                                    into every task, its status, and the engineer responsible.
                                 </p>
                             </div>
                         </div>
                     </div>
-                </Container>
-            </Section>
 
-            {/* Service 4: Greenfield Development */}
-            <Section className="service-section alt">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Hammer size={40} strokeWidth={1.5} />
+                    <hr className="svc-divider" />
+
+                    {/* Greenfield Development */}
+                    <div className="svc-row">
+                        <div className="svc-row-left">
+                            <div className="svc-number-wrap">
+                                <span className="svc-number">04</span>
+                                <div className="svc-title-group">
+                                    <div className="svc-icon">
+                                        <Hammer size={22} strokeWidth={1.5} />
+                                    </div>
+                                    <h2 className="svc-title">Greenfield Development</h2>
+                                </div>
                             </div>
-                            <h2>Greenfield Development</h2>
+                            <p className="svc-body">
+                                Not everything needs rescuing. If you're starting from scratch, we build it correctly
+                                the first time, with the infrastructure governance, security controls, automated
+                                testing discipline, and architectural decision records that prevent the exact problems
+                                we spend so much time fixing for other clients. All greenfield projects begin with a
+                                documented Architecture Decision Record and a written system design specification
+                                before a line of code is written. Fixed-price, fixed-timeline. Zero scope-creep clauses.
+                            </p>
+                            <blockquote className="svc-insight">
+                                The cost of building software correctly on the first attempt is approximately
+                                one-third the cost of rescuing software that was built incorrectly. Every
+                                anti-pattern we've seen becomes a guardrail we enforce from your project's first commit.
+                            </blockquote>
                         </div>
-
-                        <p className="service-value">
-                            Not everything needs rescuing. If you're starting from scratch, we build it correctly
-                            the first time, with the infrastructure governance, security controls, automated
-                            testing discipline, and architectural decision records that prevent the exact problems
-                            we spend so much time fixing for other clients. All greenfield projects begin with a
-                            documented Architecture Decision Record (ADR) and a written system design specification
-                            before a line of code is written. We deliver enterprise-grade MVPs on fixed-price,
-                            fixed-timeline contracts with zero scope-creep clauses and no hourly billing surprises.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What We Build</h4>
-                                <ul>
-                                    <li>SaaS products & multi-tenant web applications</li>
-                                    <li>Cross-platform mobile apps (iOS & Android via Flutter)</li>
-                                    <li>Internal workflow automation & admin dashboards</li>
-                                    <li>Customer-facing portals & self-service platforms</li>
+                        <div className="svc-row-right">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What We Build</h4>
+                                <ul className="svc-detail-list">
+                                    <li>SaaS products &amp; multi-tenant web applications</li>
+                                    <li>Cross-platform mobile apps (iOS &amp; Android via Flutter)</li>
+                                    <li>Internal workflow automation &amp; admin dashboards</li>
+                                    <li>Customer-facing portals &amp; self-service platforms</li>
                                     <li>MVP products for investor validation with production-grade architecture</li>
                                     <li>Compliance-ready applications for regulated industries</li>
                                     <li>AI-integrated products with EU AI Act conformity documentation</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Technology Stack</h4>
-                                <div className="tech-tags">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Technology Stack</h4>
+                                <div className="svc-tech-tags">
                                     <span>React 19</span>
                                     <span>Next.js 15</span>
                                     <span>TypeScript 5</span>
-                                    <span>Tailwind CSS 4</span>
                                     <span>Vue.js 3</span>
                                     <span>Laravel 12</span>
                                     <span>Node.js</span>
                                     <span>Python 3.12</span>
                                     <span>Flutter</span>
                                     <span>PostgreSQL</span>
-                                    <span>Redis 7</span>
                                     <span>AWS</span>
                                     <span>Docker</span>
-                                    <span>PestPHP 3</span>
                                 </div>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Our Approach</h4>
+                                <p className="svc-detail-body">
                                     All greenfield projects begin with a documented Architecture Decision Record
-                                    and a written system design specification reviewed and approved by your team
-                                    before development begins. We establish automated CI/CD, test-driven
-                                    development practices, and production observability on day one, not as
-                                    an afterthought. Deliverables are defined in contract. Fixed price, fixed
-                                    timeline. There is no scope creep by default; change requests follow a formal
-                                    written process with clear cost and timeline implications.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Business Value</h4>
-                                <p>
-                                    The cost of building software correctly on the first attempt is approximately
-                                    one-third the cost of rescuing software that was built incorrectly. Our
-                                    greenfield clients benefit from the institutional knowledge we've accumulated
-                                    rescuing over forty failed projects. Every architectural anti-pattern we've
-                                    seen becomes a guardrail we enforce from your project's first commit.
+                                    reviewed and approved by your team before development begins. We establish
+                                    automated CI/CD, test-driven development practices, and production observability
+                                    on day one. Deliverables are defined in contract. Fixed price, fixed timeline.
+                                    Change requests follow a formal written process with clear cost and timeline
+                                    implications.
                                 </p>
                             </div>
                         </div>
                     </div>
-                </Container>
-            </Section>
 
-            {/* Service 5: Ongoing Support */}
-            <Section className="service-section">
-                <Container>
-                    <div className="service-block">
-                        <div className="service-header">
-                            <div className="service-icon-wrapper">
-                                <Headphones size={40} strokeWidth={1.5} />
+                    <hr className="svc-divider" />
+
+                    {/* Ongoing Engineering Support */}
+                    <div className="svc-row">
+                        <div className="svc-row-left">
+                            <div className="svc-number-wrap">
+                                <span className="svc-number">05</span>
+                                <div className="svc-title-group">
+                                    <div className="svc-icon">
+                                        <Headphones size={22} strokeWidth={1.5} />
+                                    </div>
+                                    <h2 className="svc-title">Ongoing Engineering Support</h2>
+                                </div>
                             </div>
-                            <h2>Ongoing Engineering Support</h2>
+                            <p className="svc-body">
+                                For product companies with live applications that need consistent, reliable engineering
+                                bandwidth without the cost or overhead of full-time hiring. We integrate with your
+                                existing processes, attend your standups, work inside your issue tracker, and
+                                deliver predictably, sprint after sprint. A dedicated Lead Engineer and Project
+                                Manager own your engagement end-to-end. You get the reliability of an internal
+                                team with the specialist depth of an external one.
+                            </p>
+                            <blockquote className="svc-insight">
+                                Product companies that outsource ongoing engineering to a dedicated, accountable
+                                partner consistently report higher sprint velocity, lower production incident rates,
+                                and faster time-to-market than equivalent internal teams.
+                            </blockquote>
                         </div>
-
-                        <p className="service-value">
-                            For product companies with live applications that need consistent, reliable engineering
-                            bandwidth without the cost or overhead of full-time hiring. We integrate with your
-                            existing processes, attend your standups, work inside your issue tracker, and
-                            deliver predictably, sprint after sprint. A dedicated Lead Engineer and Project
-                            Manager own your engagement end-to-end. You get the reliability of an internal
-                            team with the specialist depth of an external one, and none of the management
-                            overhead, recruiting cost, or equity dilution.
-                        </p>
-
-                        <div className="service-details-grid">
-                            <div className="service-detail">
-                                <h4>What's Included</h4>
-                                <ul>
+                        <div className="svc-row-right">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">What's Included</h4>
+                                <ul className="svc-detail-list">
                                     <li>Dedicated engineering hours per month (defined in contract)</li>
-                                    <li>Bug triage, root-cause analysis & production fixes</li>
-                                    <li>Security patches & dependency version management</li>
-                                    <li>Feature enhancements & product iteration sprints</li>
-                                    <li>Proactive performance optimization & capacity planning</li>
-                                    <li>Weekly written health reports & sprint retrospectives</li>
+                                    <li>Bug triage, root-cause analysis &amp; production fixes</li>
+                                    <li>Security patches &amp; dependency version management</li>
+                                    <li>Feature enhancements &amp; product iteration sprints</li>
+                                    <li>Proactive performance optimization &amp; capacity planning</li>
+                                    <li>Weekly written health reports &amp; sprint retrospectives</li>
                                     <li>On-call response for Priority 1 production incidents</li>
                                 </ul>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Support Models</h4>
-                                <div className="tech-tags">
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Support Models</h4>
+                                <div className="svc-tech-tags">
                                     <span>Monthly Retainer</span>
                                     <span>Dedicated Squad</span>
                                     <span>Priority 1 SLA</span>
@@ -512,89 +492,88 @@ const Services = () => {
                                     <span>Team Extension</span>
                                 </div>
                             </div>
-
-                            <div className="service-detail">
-                                <h4>Our Approach</h4>
-                                <p>
-                                    A dedicated Lead Engineer and PM own your engagement with no rotation.
-                                    We operate inside your chosen project management tooling (Linear, Jira,
-                                    Notion, GitHub Issues) and communication channels. Weekly async written
-                                    health reports cover what shipped, what is in progress, what is blocked,
-                                    and any proactive recommendations from the engineering team. We do not
-                                    wait for you to notice a problem; we report emerging risks before
-                                    they become production incidents.
-                                </p>
-                            </div>
-
-                            <div className="service-detail best-for">
-                                <h4>Business Value</h4>
-                                <p>
-                                    Product companies that outsource ongoing engineering to a dedicated,
-                                    accountable partner consistently report higher sprint velocity, lower
-                                    production incident rates, and faster time-to-market for new features
-                                    than equivalent internal teams, primarily because our engineers bring
-                                    accumulated operational experience from dozens of prior engagements
-                                    that an internal hire would take years to develop.
+                            <div className="svc-detail-block">
+                                <h4 className="svc-detail-label">Our Approach</h4>
+                                <p className="svc-detail-body">
+                                    A dedicated Lead Engineer and PM own your engagement with no rotation. We operate
+                                    inside your chosen project management tooling (Linear, Jira, Notion, GitHub Issues)
+                                    and communication channels. Weekly async written health reports cover what shipped,
+                                    what is in progress, what is blocked, and any proactive recommendations. We do
+                                    not wait for you to notice a problem; we report emerging risks before they become
+                                    production incidents.
                                 </p>
                             </div>
                         </div>
                     </div>
+
                 </Container>
             </Section>
 
-            {/* ── NEW: Pricing FAQ Section (FAQPage schema target) ── */}
-            <Section className="pricing-faq-section">
+            {/* FAQ Accordion */}
+            <Section className="svc-faq-section">
                 <Container>
-                    <div className="pricing-faq-header">
-                        <HelpCircle size={36} strokeWidth={1.5} className="pricing-faq-icon" />
-                        <span className="accent-label">Pricing & Process: Answered Directly</span>
-                        <h2>The Questions Every Enterprise Buyer Asks</h2>
-                        <p>
+                    <div className="svc-faq-header">
+                        <span className="svc-label">Pricing &amp; Process</span>
+                        <h2 className="svc-faq-title">The Questions Every Enterprise Buyer Asks</h2>
+                        <p className="svc-faq-subtitle">
                             High-stakes technical decisions require complete information. These are the questions
-                            that matter most to CFOs, CTOs, and procurement teams evaluating a rescue engagement.
-                            We answer them without deflection.
+                            that matter most to CFOs, CTOs, and procurement teams. We answer them without deflection.
                         </p>
                     </div>
-
-                    <div className="pricing-faq-grid">
+                    <div className="svc-faq-list">
                         {faqItems.map((item, index) => (
-                            <div className="faq-item" key={index}>
-                                <h4>{item.question}</h4>
-                                <p>{item.answer}</p>
+                            <div
+                                key={index}
+                                className={`svc-faq-item${openFaq === index ? ' open' : ''}`}
+                            >
+                                <button
+                                    className="svc-faq-q"
+                                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                                    aria-expanded={openFaq === index}
+                                >
+                                    <span>{item.question}</span>
+                                    <ChevronDown size={20} className="svc-faq-chevron" aria-hidden="true" />
+                                </button>
+                                <div className="svc-faq-a">
+                                    <p>{item.answer}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </Container>
             </Section>
 
-            {/* Strategy Call closer */}
-            <Section>
+            {/* Strategy Call nudge */}
+            <Section className="svc-nudge-section">
                 <Container>
-                    <div className="services-intro">
-                        <p>
-                            Not sure which service fits your situation? Every engagement starts with a complimentary
-                            15-minute Rescue Strategy Call. We assess your business situation, the state of your
-                            current team, and recommend the correct technical starting point with full transparency.
-                            There is no high-pressure sales process, just a candid, expert assessment of whether your
-                            project can be rescued, and at what cost.
-                        </p>
-                    </div>
+                    <p className="svc-nudge-text">
+                        Not sure which service fits your situation? Every engagement starts with a complimentary
+                        15-minute Rescue Strategy Call. We assess your business situation, the state of your
+                        current team, and recommend the correct technical starting point with full transparency.
+                        No high-pressure sales process, just a candid, expert assessment of whether your
+                        project can be rescued, and at what cost.
+                    </p>
                 </Container>
             </Section>
 
             {/* CTA Section */}
-            <Section className="services-cta">
+            <Section className="svc-cta-section">
                 <Container>
-                    <div className="cta-content">
-                        <h2>Let's Fix What's Broken.</h2>
-                        <p>
+                    <div className="svc-cta-inner">
+                        <h2 className="svc-cta-title">Let's Fix What's Broken.</h2>
+                        <p className="svc-cta-body">
                             Stop guessing why your application is failing. Book a Strategy Call today to
                             assess whether your codebase qualifies for our Diagnostic Audit, and walk away
                             with a written answer to the question "is this fixable, and what will it cost?"
                         </p>
-                        <Link to="/contact" className="btn btn-primary">
-                            Book a Rescue Strategy Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
-                        </Link>
+                        <div className="svc-cta-actions">
+                            <Link to="/contact" className="btn btn-primary">
+                                Book a Rescue Strategy Call <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                            </Link>
+                            <Link to="/process" className="svc-cta-secondary-link">
+                                See how our process works
+                            </Link>
+                        </div>
                     </div>
                 </Container>
             </Section>
@@ -603,4 +582,3 @@ const Services = () => {
 };
 
 export default Services;
-
