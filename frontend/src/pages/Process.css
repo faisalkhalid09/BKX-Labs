@@ -709,7 +709,7 @@
     }
 
     .proc-track-line {
-        top: 24px; /* half of 48px */
+        top: calc(1rem + 24px); /* padding-top + half of 48px */
         left: 24px;
         right: 24px;
     }
