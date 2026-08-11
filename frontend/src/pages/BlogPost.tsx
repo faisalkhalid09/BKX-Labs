@@ -68,7 +68,7 @@ export default function BlogPost() {
             }
             if (postsJson && postsJson.data) {
                 const filtered = postsJson.data.filter((p: PostSummary) => p.slug !== slug);
-                setLatestPosts(filtered.slice(0, 5));
+                setLatestPosts(filtered.slice(0, 4));
             }
             setLoading(false);
         })
@@ -200,6 +200,13 @@ export default function BlogPost() {
                                     <p className="sidebar-no-articles">No more articles found.</p>
                                 )}
                             </div>
+                            {latestPosts.length > 0 && (
+                                <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+                                    <Link to="/blog" className="btn btn-secondary" style={{ padding: '0.75rem 2rem' }}>
+                                        See More Articles
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </aside>
                 </div>
