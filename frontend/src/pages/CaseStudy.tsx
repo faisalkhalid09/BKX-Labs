@@ -7,31 +7,31 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './CaseStudy.css';
 
-const STACK_CATEGORIES = [
+const SOLAR_SYSTEMS = [
     {
-        title: 'Backend',
-        items: ['Laravel 11', 'PHP 8.3', 'Node.js', 'Python', 'Livewire'],
+        title: 'Web Development',
+        rings: [
+            { size: 170, duration: 25, dir: 'normal', counterDir: 'reverse', items: ['React 18', 'Laravel 11', 'Node.js'] },
+            { size: 270, duration: 35, dir: 'reverse', counterDir: 'normal', items: ['Vue.js 3', 'TypeScript', 'Next.js', 'PHP 8.3'] },
+            { size: 370, duration: 45, dir: 'normal', counterDir: 'reverse', items: ['Python', 'Livewire', 'Inertia.js', 'TailwindCSS'] }
+        ]
     },
     {
-        title: 'Frontend',
-        items: ['React 18', 'Vue.js 3', 'TypeScript', 'Next.js', 'Inertia.js'],
+        title: 'App Development',
+        rings: [
+            { size: 170, duration: 25, dir: 'reverse', counterDir: 'normal', items: ['Flutter', 'React Native'] },
+            { size: 270, duration: 35, dir: 'normal', counterDir: 'reverse', items: ['Swift', 'Kotlin', 'Dart'] },
+            { size: 370, duration: 45, dir: 'reverse', counterDir: 'normal', items: ['Firebase', 'SQLite', 'Realm', 'CoreData'] }
+        ]
     },
     {
-        title: 'Database',
-        items: ['PostgreSQL', 'MySQL 8', 'Redis', 'Elasticsearch', 'TimescaleDB'],
-    },
-    {
-        title: 'Infrastructure',
-        items: ['AWS', 'Docker', 'GitHub Actions', 'Nginx', 'DigitalOcean'],
-    },
-    {
-        title: 'Testing and QA',
-        items: ['PestPHP', 'k6', 'OWASP ZAP', 'PHPStan Level 9', 'Sentry'],
-    },
-    {
-        title: 'Integrations',
-        items: ['Stripe', 'Twilio', 'SendGrid', 'Firebase', 'OIDC / LDAP'],
-    },
+        title: 'Infrastructure & Data',
+        rings: [
+            { size: 170, duration: 25, dir: 'normal', counterDir: 'reverse', items: ['AWS', 'Docker', 'PostgreSQL'] },
+            { size: 270, duration: 35, dir: 'reverse', counterDir: 'normal', items: ['MySQL 8', 'Redis', 'Nginx', 'GitHub Actions'] },
+            { size: 370, duration: 45, dir: 'normal', counterDir: 'reverse', items: ['Elasticsearch', 'Stripe', 'Twilio', 'SendGrid'] }
+        ]
+    }
 ];
 
 const CATEGORIES = ['All', 'Rescue & Audit', 'Greenfield', 'Integrations & APIs'];
@@ -477,7 +477,7 @@ const CaseStudy = () => {
                 </Container>
             </div>
 
-            {/* Tech Stack */}
+            {/* Tech Stack - Solar System Architecture */}
             <section className="cs-techstack-section">
                 <Container>
                     <div className="cs-techstack-header">
@@ -488,15 +488,51 @@ const CaseStudy = () => {
                             for reliability, maintainability, and long-term cost of ownership — not trend.
                         </p>
                     </div>
-                    <div className="cs-techstack-grid">
-                        {STACK_CATEGORIES.map(cat => (
-                            <div key={cat.title} className="cs-techstack-cat">
-                                <h4 className="cs-techstack-cat-title">{cat.title}</h4>
-                                <ul className="cs-techstack-cat-items">
-                                    {cat.items.map(item => (
-                                        <li key={item}>{item}</li>
+                    
+                    <div className="cs-solar-grid">
+                        {SOLAR_SYSTEMS.map((sys, sysIndex) => (
+                            <div key={sys.title} className="cs-solar-group">
+                                <h4 className="cs-solar-title">{sys.title}</h4>
+                                <div className="cs-solar-system">
+                                    <div className="cs-solar-sun">
+                                        <img src="/logo-header.png" alt="BKX Labs Center" />
+                                    </div>
+                                    {sys.rings.map((ring, ringIndex) => (
+                                        <div 
+                                            key={ringIndex} 
+                                            className="cs-solar-orbit"
+                                            style={{ 
+                                                '--size': `${ring.size}px`, 
+                                                '--duration': `${ring.duration}s`, 
+                                                '--dir': ring.dir 
+                                            } as React.CSSProperties}
+                                        >
+                                            {ring.items.map((tech, techIndex) => {
+                                                const angle = (360 / ring.items.length) * techIndex;
+                                                return (
+                                                    <div 
+                                                        key={tech} 
+                                                        className="cs-solar-planet-positioner"
+                                                        style={{ 
+                                                            '--angle': `${angle}deg`,
+                                                            '--size': `${ring.size}px`
+                                                        } as React.CSSProperties}
+                                                    >
+                                                        <div 
+                                                            className="cs-solar-planet-counter-rotator"
+                                                            style={{ 
+                                                                '--duration': `${ring.duration}s`, 
+                                                                '--counter-dir': ring.counterDir 
+                                                            } as React.CSSProperties}
+                                                        >
+                                                            {tech}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         ))}
                     </div>

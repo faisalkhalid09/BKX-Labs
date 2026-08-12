@@ -405,6 +405,7 @@
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
     padding: 5rem 0;
+    overflow: hidden;
 }
 
 .cs-techstack-header {
@@ -430,56 +431,109 @@
     text-align: center;
 }
 
-.cs-techstack-grid {
+/* ─── Solar System Tech Stack ─── */
+.cs-solar-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    border-top: 1px solid var(--border-light);
-    border-left: 1px solid var(--border-light);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding-bottom: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.cs-techstack-cat {
-    border-right: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
-    padding: 1.75rem 1.5rem;
+.cs-solar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.cs-techstack-cat-title {
+.cs-solar-title {
     font-family: var(--font-heading);
-    font-size: 0.68rem;
+    font-size: 0.8rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.13em;
     color: var(--accent);
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
+    text-align: center;
 }
 
-.cs-techstack-cat-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-}
-
-.cs-techstack-cat-items li {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-gray);
-    line-height: 1.4;
-    padding-left: 0.75rem;
+.cs-solar-system {
     position: relative;
+    width: 370px;
+    height: 370px;
 }
 
-.cs-techstack-cat-items li::before {
-    content: '';
+.cs-solar-sun {
     position: absolute;
-    left: 0;
-    top: 0.52em;
-    width: 3px;
-    height: 3px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: 65px;
+    background: white;
     border-radius: 50%;
-    background: var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(10, 36, 114, 0.08);
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cs-solar-sun img {
+    max-width: 45px;
+    max-height: 45px;
+    object-fit: contain;
+}
+
+.cs-solar-system:hover .cs-solar-sun {
+    transform: translate(-50%, -50%) scale(1.18);
+}
+
+.cs-solar-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--size);
+    height: var(--size);
+    margin-left: calc(var(--size) / -2);
+    margin-top: calc(var(--size) / -2);
+    border: 1px dashed rgba(10, 36, 114, 0.15);
+    border-radius: 50%;
+    animation: cs-spin var(--duration) linear infinite var(--dir, normal);
+}
+
+.cs-solar-system:hover .cs-solar-orbit {
+    animation-play-state: paused;
+}
+
+@keyframes cs-spin {
+    100% { transform: rotate(360deg); }
+}
+
+.cs-solar-planet-positioner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--size) / -2)) rotate(calc(var(--angle) * -1));
+}
+
+.cs-solar-planet-counter-rotator {
+    animation: cs-spin var(--duration) linear infinite var(--counter-dir, reverse);
+    background: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    border: 1px solid rgba(10, 36, 114, 0.12);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.cs-solar-system:hover .cs-solar-planet-counter-rotator {
+    animation-play-state: paused;
 }
 
 /* ─── Ink Blot Stats Section ─── */
@@ -609,8 +663,9 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .cs-techstack-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .cs-solar-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem 2rem;
     }
 }
 
@@ -619,8 +674,14 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .cs-techstack-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .cs-solar-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .cs-solar-system {
+        transform: scale(0.85);
+        margin: -20px 0;
     }
 
     .cs-tile {
@@ -666,6 +727,11 @@
 @media (max-width: 540px) {
     .cs-wave-word {
         font-size: 1.1rem;
+    }
+
+    .cs-solar-system {
+        transform: scale(0.7);
+        margin: -40px 0;
     }
 
     .cs-grid {
