@@ -7,6 +7,33 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './CaseStudy.css';
 
+const STACK_CATEGORIES = [
+    {
+        title: 'Backend',
+        items: ['Laravel 11', 'PHP 8.3', 'Node.js', 'Python', 'Livewire'],
+    },
+    {
+        title: 'Frontend',
+        items: ['React 18', 'Vue.js 3', 'TypeScript', 'Next.js', 'Inertia.js'],
+    },
+    {
+        title: 'Database',
+        items: ['PostgreSQL', 'MySQL 8', 'Redis', 'Elasticsearch', 'TimescaleDB'],
+    },
+    {
+        title: 'Infrastructure',
+        items: ['AWS', 'Docker', 'GitHub Actions', 'Nginx', 'DigitalOcean'],
+    },
+    {
+        title: 'Testing and QA',
+        items: ['PestPHP', 'k6', 'OWASP ZAP', 'PHPStan Level 9', 'Sentry'],
+    },
+    {
+        title: 'Integrations',
+        items: ['Stripe', 'Twilio', 'SendGrid', 'Firebase', 'OIDC / LDAP'],
+    },
+];
+
 const CATEGORIES = ['All', 'Rescue & Audit', 'Greenfield', 'Integrations & APIs'];
 
 interface Project {
@@ -26,7 +53,7 @@ interface Project {
 const projects: Project[] = [
     {
         id: 1, num: '001', name: 'Class Moalimy', category: 'Rescue & Audit',
-        industry: 'EdTech Platform', region: 'Saudi Arabia', year: '2023',
+        industry: 'EdTech Platform', region: 'Saudi Arabia', year: '2025',
         challenge: 'Inherited a 20% complete codebase abandoned by a prior team. Exposed AWS credentials, no role-based access control, a missing authentication flow, and an unnormalized database schema throughout.',
         solution: 'Phase-gated audit and recovery. Rotated all credentials on day one, rebuilt RBAC with four roles, restructured the database schema, and delivered the remaining 80% of the platform in production-grade Laravel and React.',
         outcome: ['100% of the project delivered on schedule', '40% reduction in AWS infrastructure cost', 'Average response time under 200ms', 'Zero security incidents post-launch'],
@@ -34,7 +61,7 @@ const projects: Project[] = [
     },
     {
         id: 2, num: '002', name: 'LocaGed', category: 'Rescue & Audit',
-        industry: 'Document Management', region: 'Multi-language', year: '2023',
+        industry: 'Document Management', region: 'Multi-language', year: '2025',
         challenge: '35% complete enterprise DMS stalled for over 6 months. Non-functional OCR integration, MySQL-based search producing 10-second query times, no RTL language support, and memory leaks in document processing workers.',
         solution: 'Rebuilt the document processing pipeline on Redis queues, migrated search to Elasticsearch with custom Arabic analyzers, and rebuilt the OCR pipeline using Tesseract with image preprocessing stages.',
         outcome: ['Search 100x faster — from 10 seconds to under 100ms', 'OCR accuracy from 65% to 94%', '5,000+ documents processed daily', '99.9% uptime since launch'],
@@ -42,7 +69,7 @@ const projects: Project[] = [
     },
     {
         id: 3, num: '003', name: 'PulseHR', category: 'Rescue & Audit',
-        industry: 'HR SaaS', region: 'Europe', year: '2024',
+        industry: 'HR SaaS', region: 'Europe', year: '2025',
         challenge: '60% complete HR management SaaS with a broken payroll calculation engine and no audit trail. The CI/CD pipeline was non-functional, blocking all production deployments for three months.',
         solution: 'Fixed the payroll engine with comprehensive PestPHP test coverage on all calculation paths, rebuilt the CI/CD pipeline from scratch, implemented an immutable audit log, and completed all remaining features.',
         outcome: ['Zero payroll calculation errors since go-live', 'Full CI/CD pipeline with automated rollback', 'Audit trail on 100% of write operations', 'Delivered to production in three weeks'],
@@ -50,7 +77,7 @@ const projects: Project[] = [
     },
     {
         id: 4, num: '004', name: 'BuildTrack Pro', category: 'Rescue & Audit',
-        industry: 'Construction SaaS', region: 'UAE', year: '2024',
+        industry: 'Construction SaaS', region: 'UAE', year: '2025',
         challenge: 'Construction project management system with multiple critical security vulnerabilities: SQL injection endpoints, unauthenticated API routes, and plaintext credential storage in the database.',
         solution: 'Full security audit using PHPStan Level 9 and OWASP ZAP, sealed all injection vulnerabilities, migrated to bcrypt credential storage, and added API authentication middleware across all routes.',
         outcome: ['All OWASP Top 10 vulnerabilities resolved', 'API authentication on 100% of routes', 'Security report delivered to client board', 'Zero incidents in 12 months post-rescue'],
@@ -58,7 +85,7 @@ const projects: Project[] = [
     },
     {
         id: 5, num: '005', name: 'MedVault', category: 'Rescue & Audit',
-        industry: 'Healthcare Records', region: 'UK', year: '2023',
+        industry: 'Healthcare Records', region: 'UK', year: '2025',
         challenge: 'Healthcare records platform storing patient health information without encryption, no access logging, broken session management, and a missing patient consent tracking system required for GDPR compliance.',
         solution: 'Implemented field-level encryption for all PHI using AWS KMS, rebuilt session management with proper expiry, added a full consent management module, and established access logs for every record read.',
         outcome: ['Full GDPR compliance achieved', 'Field-level encryption on all patient data', 'Consent tracking on 100% of records', 'Access audit log retained for 7 years'],
@@ -66,7 +93,7 @@ const projects: Project[] = [
     },
     {
         id: 6, num: '006', name: 'ClearLedger', category: 'Rescue & Audit',
-        industry: 'FinTech Accounting', region: 'Singapore', year: '2024',
+        industry: 'FinTech Accounting', region: 'Singapore', year: '2026',
         challenge: 'Accounting SaaS with double-entry ledger inconsistencies caused by a race condition in concurrent transaction processing. Financial reports produced incorrect balances under load.',
         solution: 'Identified the race condition through k6 load testing, implemented database-level locking and idempotency keys on all financial transactions, and rebuilt the reporting engine on a read replica.',
         outcome: ['Zero ledger inconsistencies under full concurrent load', 'Idempotency on 100% of transactions', 'Report generation time down 85%', 'Passed external financial audit'],
@@ -74,7 +101,7 @@ const projects: Project[] = [
     },
     {
         id: 7, num: '007', name: 'LexCore', category: 'Rescue & Audit',
-        industry: 'Legal Workflow', region: 'Canada', year: '2024',
+        industry: 'Legal Workflow', region: 'Canada', year: '2026',
         challenge: 'Legal document management platform with severe N+1 query problems causing page loads exceeding 30 seconds. The system was unusable in production for firms managing more than 500 documents.',
         solution: 'Profiled all queries with Laravel Telescope, eliminated N+1 patterns through eager loading, introduced a Redis caching layer on all hot reads, and optimized all missing database indexes.',
         outcome: ['Average page load under 400ms', 'Query count reduced by 93%', 'Supports 50,000+ documents without degradation', 'Zero performance complaints post-rescue'],
@@ -82,7 +109,7 @@ const projects: Project[] = [
     },
     {
         id: 8, num: '008', name: 'FleetOps', category: 'Rescue & Audit',
-        industry: 'Logistics', region: 'Pakistan', year: '2023',
+        industry: 'Logistics', region: 'Pakistan', year: '2026',
         challenge: 'Fleet management platform with a synchronous job processing architecture causing HTTP timeouts during vehicle tracking updates. Queue workers were crashing silently with no monitoring in place.',
         solution: 'Migrated all heavy operations to Laravel Horizon queues, added Sentry monitoring with automatic worker restart on crash, and implemented retry logic with exponential backoff on all queued jobs.',
         outcome: ['Zero HTTP timeouts on tracking endpoints', 'Worker crash rate reduced to zero', '10,000+ vehicles tracked in real time', 'Job failure rate under 0.01%'],
@@ -90,7 +117,7 @@ const projects: Project[] = [
     },
     {
         id: 9, num: '009', name: 'StoreBridge', category: 'Rescue & Audit',
-        industry: 'E-commerce Integration', region: 'Germany', year: '2024',
+        industry: 'E-commerce Integration', region: 'Germany', year: '2026',
         challenge: 'E-commerce sync layer connecting Shopify, WooCommerce, and a custom ERP. The abandoned codebase had partial implementations of all three connectors with no shared abstraction and no error handling.',
         solution: 'Designed a unified connector interface, completed all three integrations with circuit breaker patterns and retry queues, and implemented a reconciliation job to catch missed sync events.',
         outcome: ['Three connectors live in production', 'Order sync latency under 5 seconds', 'Reconciliation catches 100% of missed events', 'Zero data loss incidents since launch'],
@@ -98,7 +125,7 @@ const projects: Project[] = [
     },
     {
         id: 10, num: '010', name: 'NomadDesk', category: 'Rescue & Audit',
-        industry: 'Remote Work SaaS', region: 'Netherlands', year: '2024',
+        industry: 'Remote Work SaaS', region: 'Netherlands', year: '2026',
         challenge: 'Remote workspace booking platform with a broken multi-tenant authentication system. Tenant data was leaking across sessions, creating an active GDPR-critical security incident risk.',
         solution: 'Immediate isolation of tenant data via database-level row policies, rebuilt authentication with proper tenant scoping, and added automated tests asserting tenant isolation on all data access paths.',
         outcome: ['Tenant isolation verified on 100% of data access paths', 'Zero cross-tenant data leaks', 'Rebuilt auth system passed third-party penetration test', 'Emergency rescue completed in 48 hours'],
@@ -106,7 +133,7 @@ const projects: Project[] = [
     },
     {
         id: 11, num: '011', name: 'PortalGov', category: 'Rescue & Audit',
-        industry: 'Government Portal', region: 'Middle East', year: '2023',
+        industry: 'Government Portal', region: 'Middle East', year: '2025',
         challenge: 'Citizen-facing government portal that failed a security audit from the national cybersecurity authority. Sixteen critical and high-severity findings required resolution before the public go-live date.',
         solution: 'Systematic remediation of all 16 findings within a fixed government timeline, including XSS sanitization, CSRF protection, broken object-level authorization fixes, and rate limiting on public endpoints.',
         outcome: ['All 16 critical and high findings resolved', 'Passed national cybersecurity authority audit on second review', 'On-time public go-live met', '50,000+ citizens registered in first month'],
@@ -114,7 +141,7 @@ const projects: Project[] = [
     },
     {
         id: 12, num: '012', name: 'AcadeLink', category: 'Rescue & Audit',
-        industry: 'University LMS', region: 'Africa', year: '2024',
+        industry: 'University LMS', region: 'Africa', year: '2026',
         challenge: 'University learning management system 45% complete after 14 months of development. The gradebook engine had fundamental design flaws making weighted grade calculations impossible to implement correctly.',
         solution: 'Rewrote the gradebook as a standalone, fully tested calculation engine supporting weighted categories, curves, and extra credit. Completed the remaining 55% of the platform over 8 two-week sprints.',
         outcome: ['100% of the platform delivered on schedule', 'Gradebook supports 12 grading models', '3,000+ students active at launch', 'Zero calculation errors reported in first full semester'],
@@ -122,7 +149,7 @@ const projects: Project[] = [
     },
     {
         id: 13, num: '013', name: 'Rezgo Booking', category: 'Greenfield',
-        industry: 'Tourism and Activities', region: 'North America', year: '2024',
+        industry: 'Tourism and Activities', region: 'North America', year: '2026',
         challenge: 'Tour operator needed a custom booking engine integrating real-time availability from 12 distinct activity providers. No off-the-shelf solution could handle the provider-specific availability rules engine.',
         solution: 'Built a provider-agnostic booking engine with a rule-based availability resolver, real-time inventory reservation with pessimistic locking, and a multi-currency checkout powered by Stripe Payment Intents.',
         outcome: ['12 providers integrated at launch', 'Booking confirmation under 800ms', '99.95% availability SLA met', '35% revenue increase in first quarter post-launch'],
@@ -130,7 +157,7 @@ const projects: Project[] = [
     },
     {
         id: 14, num: '014', name: 'InvoiceFlow', category: 'Greenfield',
-        industry: 'Invoicing SaaS', region: 'Global', year: '2023',
+        industry: 'Invoicing SaaS', region: 'Global', year: '2026',
         challenge: 'Sole trader and small business invoicing tool needed to handle recurring billing, multi-currency, PDF generation, and tax rule calculation across 40 tax jurisdictions from the first day of launch.',
         solution: 'Built on Laravel with a tax rule engine reading from a configurable JSON schema per jurisdiction, Gotenberg for PDF generation, Stripe Billing for recurring invoices, and a React frontend.',
         outcome: ['40 tax jurisdictions supported at launch', '100% automated recurring billing', 'PDF generation under 800ms', '2,000 invoices sent in first month'],
@@ -138,7 +165,7 @@ const projects: Project[] = [
     },
     {
         id: 15, num: '015', name: 'GrainWatch', category: 'Greenfield',
-        industry: 'AgriTech IoT', region: 'South Asia', year: '2024',
+        industry: 'AgriTech IoT', region: 'South Asia', year: '2026',
         challenge: 'Agricultural cooperative needed real-time monitoring of grain storage conditions across 200 silos. Sensor data arriving at 15-second intervals needed to be visualized, alerted on, and stored efficiently at scale.',
         solution: 'Built a time-series ingestion pipeline processing 200 sensors at 4 readings per minute, with a WebSocket push layer for real-time dashboard updates and configurable alert thresholds per silo.',
         outcome: ['200 silos monitored in real time', 'Alert latency under 3 seconds', '18 months of historical data retained', 'Three spoilage incidents prevented in first season'],
@@ -146,7 +173,7 @@ const projects: Project[] = [
     },
     {
         id: 16, num: '016', name: 'EventHQ', category: 'Greenfield',
-        industry: 'Event Management', region: 'UK', year: '2024',
+        industry: 'Event Management', region: 'UK', year: '2026',
         challenge: 'Event organizer needed a white-label ticketing platform that could handle flash sales with concurrent seat reservation without overselling or double-booking under high demand.',
         solution: 'Implemented seat reservation with Redis atomic operations and a 10-minute hold period, Stripe Payment Intents for concurrent checkout safety, and a QR code admission scanning system.',
         outcome: ['Zero overselling incidents across 40+ events', 'Handles 500 concurrent checkouts', 'QR admission scanning under 200ms', '10,000+ tickets sold in first three months'],
@@ -154,7 +181,7 @@ const projects: Project[] = [
     },
     {
         id: 17, num: '017', name: 'ShiftSync', category: 'Greenfield',
-        industry: 'Hospitality SaaS', region: 'Australia', year: '2023',
+        industry: 'Hospitality SaaS', region: 'Australia', year: '2025',
         challenge: 'Hospitality group needed staff scheduling software handling complex availability rules, award rate calculations, and shift swap approvals across 12 venues simultaneously.',
         solution: 'Built a constraint-based schedule builder with availability conflict detection, an award rate calculator for 8 employment categories, and a real-time shift swap approval workflow via Pusher.',
         outcome: ['12 venues live at launch', 'Award rate accuracy verified by external payroll auditor', 'Scheduling time reduced by 70%', '400+ staff active on the platform'],
@@ -162,7 +189,7 @@ const projects: Project[] = [
     },
     {
         id: 18, num: '018', name: 'PayBridge', category: 'Integrations & APIs',
-        industry: 'Payment Unification', region: 'Global', year: '2024',
+        industry: 'Payment Unification', region: 'Global', year: '2026',
         challenge: 'Enterprise retailer had four separate payment gateways with no unified transaction record, no automated reconciliation, and no central refund management — all handled manually.',
         solution: 'Built a payment unification layer with a single transaction model abstracted over all four gateways, automated daily reconciliation against gateway statements, and a unified refund API.',
         outcome: ['Four gateways unified under one API', 'Daily reconciliation fully automated', 'Refund processing time reduced 85%', 'Single transaction record for all payment methods'],
@@ -170,7 +197,7 @@ const projects: Project[] = [
     },
     {
         id: 19, num: '019', name: 'DataPipe', category: 'Integrations & APIs',
-        industry: 'Data Integration', region: 'Europe', year: '2023',
+        industry: 'Data Integration', region: 'Europe', year: '2025',
         challenge: 'Manufacturing company had six legacy systems built across 15 years with no shared data model. Manual CSV exports were the only integration method, consuming 40+ hours of staff time per week.',
         solution: 'Built a bidirectional ETL pipeline with a canonical data model, field-level transformation mappings per system, change-data-capture from the ERP, and a full reconciliation audit trail.',
         outcome: ['Six systems integrated without code changes to any legacy system', 'Data latency under 60 seconds', 'Zero manual CSV exports since go-live', '100% audit trail on all data flows'],
@@ -178,7 +205,7 @@ const projects: Project[] = [
     },
     {
         id: 20, num: '020', name: 'NotifyNet', category: 'Integrations & APIs',
-        industry: 'Notification Service', region: 'Global', year: '2024',
+        industry: 'Notification Service', region: 'Global', year: '2026',
         challenge: 'SaaS company had notification logic scattered across six microservices, each with its own provider integration, leading to duplicate sends, missing deliveries, and no central delivery reporting.',
         solution: 'Extracted all notification logic into a dedicated microservice with provider abstraction over SendGrid, Twilio, and Firebase, idempotency on all sends, and a delivery status webhook aggregator.',
         outcome: ['100% of notifications routed through one service', 'Zero duplicate sends since launch', 'Delivery tracking on 100% of notifications', 'Provider failover in under 2 seconds'],
@@ -186,7 +213,7 @@ const projects: Project[] = [
     },
     {
         id: 21, num: '021', name: 'AuthProxy', category: 'Integrations & APIs',
-        industry: 'Enterprise SSO', region: 'Germany', year: '2023',
+        industry: 'Enterprise SSO', region: 'Germany', year: '2026',
         challenge: 'Enterprise client had 11 internal tools each with a separate user database and login system. Password sprawl and the absence of central deprovisioning was a documented security and compliance risk.',
         solution: 'Implemented an OIDC-compliant SSO middleware layer, migrated all 11 tools to delegate authentication, and built a central user lifecycle API for provisioning and instant deprovisioning.',
         outcome: ['11 tools unified under single sign-on', 'Deprovisioning propagates in under 30 seconds', 'Passed ISO 27001 access control audit', 'User management time reduced by 90%'],
@@ -194,7 +221,7 @@ const projects: Project[] = [
     },
     {
         id: 22, num: '022', name: 'SyncCore', category: 'Integrations & APIs',
-        industry: 'ERP Synchronization', region: 'UAE', year: '2024',
+        industry: 'ERP Synchronization', region: 'UAE', year: '2026',
         challenge: 'Retail chain running three ERP systems across regions had inventory desync causing overselling, ghost stock, and manual correction cycles consuming 40+ hours per week across three teams.',
         solution: 'Built a real-time inventory synchronization layer with conflict resolution rules, a master-of-record hierarchy per product category, and automated daily variance reporting with alerting.',
         outcome: ['Inventory accuracy above 99.8%', 'Overselling incidents eliminated completely', '40 hours per week of manual correction removed', 'Real-time sync maintained across all three ERPs'],
@@ -202,7 +229,7 @@ const projects: Project[] = [
     },
 ];
 
-const WAVE_WORDS = ['22 Projects', '12 Rescues', '5 Greenfield Builds', '5 API Integrations', '100% Under NDA'];
+const WAVE_WORDS = ['50+ Projects', 'Rescue and Audit', 'Greenfield Builds', 'API Integrations', '100% Under NDA'];
 
 const CaseStudy = () => {
     const structuredData = {
@@ -428,7 +455,7 @@ const CaseStudy = () => {
                 <Container>
                     <div className="cs-stats-grid">
                         <div className="cs-stat">
-                            <span className="cs-stat-value">22</span>
+                            <span className="cs-stat-value">50+</span>
                             <span className="cs-stat-label">Projects completed</span>
                         </div>
                         <div className="cs-stat-rule" aria-hidden="true" />
@@ -449,6 +476,32 @@ const CaseStudy = () => {
                     </div>
                 </Container>
             </div>
+
+            {/* Tech Stack */}
+            <section className="cs-techstack-section">
+                <Container>
+                    <div className="cs-techstack-header">
+                        <span className="cs-label">Technology Stack</span>
+                        <h2 className="cs-techstack-title">Tools we use across every engagement</h2>
+                        <p className="cs-techstack-sub">
+                            From legacy rescue to greenfield builds, every technology we use is chosen
+                            for reliability, maintainability, and long-term cost of ownership — not trend.
+                        </p>
+                    </div>
+                    <div className="cs-techstack-grid">
+                        {STACK_CATEGORIES.map(cat => (
+                            <div key={cat.title} className="cs-techstack-cat">
+                                <h4 className="cs-techstack-cat-title">{cat.title}</h4>
+                                <ul className="cs-techstack-cat-items">
+                                    {cat.items.map(item => (
+                                        <li key={item}>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </Container>
+            </section>
 
             {/* CTA */}
             <Section className="cs-cta-section">
