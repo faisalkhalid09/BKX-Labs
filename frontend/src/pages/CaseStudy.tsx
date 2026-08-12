@@ -11,13 +11,13 @@ const SOLAR_SYSTEMS = [
     {
         title: 'Web Development',
         rings: [
-            { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
+            { size: 300, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
                 { name: 'React', icon: 'https://skillicons.dev/icons?i=react' },
                 { name: 'Laravel', icon: 'https://skillicons.dev/icons?i=laravel' },
                 { name: 'Node.js', icon: 'https://skillicons.dev/icons?i=nodejs' },
                 { name: 'Vue.js', icon: 'https://skillicons.dev/icons?i=vue' }
             ]},
-            { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
+            { size: 550, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
                 { name: 'TypeScript', icon: 'https://skillicons.dev/icons?i=ts' },
                 { name: 'Next.js', icon: 'https://skillicons.dev/icons?i=nextjs' },
                 { name: 'PHP', icon: 'https://skillicons.dev/icons?i=php' },
@@ -25,60 +25,66 @@ const SOLAR_SYSTEMS = [
                 { name: 'Django', icon: 'https://skillicons.dev/icons?i=django' },
                 { name: 'Ruby on Rails', icon: 'https://skillicons.dev/icons?i=rails' }
             ]},
-            { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
+            { size: 800, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
                 { name: 'Go', icon: 'https://skillicons.dev/icons?i=go' },
                 { name: 'TailwindCSS', icon: 'https://skillicons.dev/icons?i=tailwind' },
                 { name: 'Svelte', icon: 'https://skillicons.dev/icons?i=svelte' },
                 { name: 'Angular', icon: 'https://skillicons.dev/icons?i=angular' },
                 { name: 'Rust', icon: 'https://skillicons.dev/icons?i=rust' },
-                { name: 'Express', icon: 'https://skillicons.dev/icons?i=express' }
+                { name: 'Express', icon: 'https://skillicons.dev/icons?i=express' },
+                { name: 'C++', icon: 'https://skillicons.dev/icons?i=cpp' },
+                { name: 'NestJS', icon: 'https://skillicons.dev/icons?i=nestjs' }
             ]}
         ]
     },
     {
         title: 'App Development',
         rings: [
-            { size: 280, duration: 35, dir: 'reverse', counterDir: 'normal', items: [
+            { size: 300, duration: 35, dir: 'reverse', counterDir: 'normal', items: [
                 { name: 'Flutter', icon: 'https://skillicons.dev/icons?i=flutter' },
                 { name: 'React Native', icon: 'https://skillicons.dev/icons?i=react' },
                 { name: 'Swift', icon: 'https://skillicons.dev/icons?i=swift' }
             ]},
-            { size: 440, duration: 45, dir: 'normal', counterDir: 'reverse', items: [
+            { size: 550, duration: 45, dir: 'normal', counterDir: 'reverse', items: [
                 { name: 'Kotlin', icon: 'https://skillicons.dev/icons?i=kotlin' },
                 { name: 'Dart', icon: 'https://skillicons.dev/icons?i=dart' },
                 { name: 'Java', icon: 'https://skillicons.dev/icons?i=java' },
                 { name: 'Android', icon: 'https://skillicons.dev/icons?i=androidstudio' }
             ]},
-            { size: 600, duration: 55, dir: 'reverse', counterDir: 'normal', items: [
+            { size: 800, duration: 55, dir: 'reverse', counterDir: 'normal', items: [
                 { name: 'Firebase', icon: 'https://skillicons.dev/icons?i=firebase' },
                 { name: 'SQLite', icon: 'https://skillicons.dev/icons?i=sqlite' },
                 { name: 'Supabase', icon: 'https://skillicons.dev/icons?i=supabase' },
-                { name: 'Apple iOS', icon: 'https://skillicons.dev/icons?i=apple' }
+                { name: 'Apple iOS', icon: 'https://skillicons.dev/icons?i=apple' },
+                { name: 'C#', icon: 'https://skillicons.dev/icons?i=cs' },
+                { name: '.NET', icon: 'https://skillicons.dev/icons?i=dotnet' }
             ]}
         ]
     },
     {
         title: 'Infrastructure & Data',
         rings: [
-            { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
+            { size: 300, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
                 { name: 'AWS', icon: 'https://skillicons.dev/icons?i=aws' },
                 { name: 'Docker', icon: 'https://skillicons.dev/icons?i=docker' },
                 { name: 'PostgreSQL', icon: 'https://skillicons.dev/icons?i=postgresql' },
                 { name: 'MySQL', icon: 'https://skillicons.dev/icons?i=mysql' }
             ]},
-            { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
+            { size: 550, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
                 { name: 'Redis', icon: 'https://skillicons.dev/icons?i=redis' },
                 { name: 'Nginx', icon: 'https://skillicons.dev/icons?i=nginx' },
                 { name: 'GitHub Actions', icon: 'https://skillicons.dev/icons?i=githubactions' },
                 { name: 'Kubernetes', icon: 'https://skillicons.dev/icons?i=kubernetes' },
                 { name: 'GCP', icon: 'https://skillicons.dev/icons?i=gcp' }
             ]},
-            { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
+            { size: 800, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
                 { name: 'MongoDB', icon: 'https://skillicons.dev/icons?i=mongodb' },
                 { name: 'Elasticsearch', icon: 'https://skillicons.dev/icons?i=elasticsearch' },
                 { name: 'Azure', icon: 'https://skillicons.dev/icons?i=azure' },
                 { name: 'Jenkins', icon: 'https://skillicons.dev/icons?i=jenkins' },
-                { name: 'Linux', icon: 'https://skillicons.dev/icons?i=linux' }
+                { name: 'Linux', icon: 'https://skillicons.dev/icons?i=linux' },
+                { name: 'Apache', icon: 'https://skillicons.dev/icons?i=apache' },
+                { name: 'Ubuntu', icon: 'https://skillicons.dev/icons?i=ubuntu' }
             ]}
         ]
     }
@@ -419,79 +425,80 @@ const CaseStudy = () => {
                     {/* Tile grid */}
                     <div className="cs-grid" role="list">
                         {filteredProjects.map(project => (
-                            <div
-                                key={project.id}
-                                role="listitem"
-                                className={`cs-tile${activeProjectId === project.id ? ' active' : ''}`}
-                                onClick={() => handleTileClick(project.id)}
-                                tabIndex={0}
-                                aria-expanded={activeProjectId === project.id}
-                                onKeyDown={e => e.key === 'Enter' && handleTileClick(project.id)}
-                            >
-                                <div className="cs-tile-top">
-                                    <span className="cs-tile-num">{project.num}</span>
-                                    <span className="cs-tile-nda">NDA</span>
+                            <React.Fragment key={project.id}>
+                                <div
+                                    role="listitem"
+                                    className={`cs-tile${activeProjectId === project.id ? ' active' : ''}`}
+                                    onClick={() => handleTileClick(project.id)}
+                                    tabIndex={0}
+                                    aria-expanded={activeProjectId === project.id}
+                                    onKeyDown={e => e.key === 'Enter' && handleTileClick(project.id)}
+                                >
+                                    <div className="cs-tile-top">
+                                        <span className="cs-tile-num">{project.num}</span>
+                                        <span className="cs-tile-nda">NDA</span>
+                                    </div>
+                                    <div className="cs-tile-name">
+                                        <h3>{project.name}</h3>
+                                    </div>
+                                    <div className="cs-tile-bottom">
+                                        <span className="cs-tile-industry">{project.industry}</span>
+                                        <span className="cs-tile-year">{project.year}</span>
+                                    </div>
                                 </div>
-                                <div className="cs-tile-name">
-                                    <h3>{project.name}</h3>
-                                </div>
-                                <div className="cs-tile-bottom">
-                                    <span className="cs-tile-industry">{project.industry}</span>
-                                    <span className="cs-tile-year">{project.year}</span>
-                                </div>
-                            </div>
+
+                                {/* Expandable drawer inline */}
+                                {activeProjectId === project.id && activeProject && (
+                                    <div className="cs-drawer" ref={drawerRef} style={{ gridColumn: '1 / -1' }}>
+                                        <div className="cs-drawer-header">
+                                            <div>
+                                                <h2 className="cs-drawer-title">{activeProject.name}</h2>
+                                                <span className="cs-drawer-meta">
+                                                    {activeProject.industry} · {activeProject.region} · {activeProject.year}
+                                                </span>
+                                            </div>
+                                            <button
+                                                className="cs-drawer-close"
+                                                onClick={() => setActiveProjectId(null)}
+                                                aria-label="Close project detail"
+                                            >
+                                                Close ×
+                                            </button>
+                                        </div>
+
+                                        <p className="cs-drawer-nda">
+                                            This project is under a mutual NDA. The following reflects scope, approach,
+                                            and outcome only. Client identity and specific system details are withheld.
+                                        </p>
+
+                                        <div className="cs-drawer-cols">
+                                            <div className="cs-drawer-col">
+                                                <span className="cs-label">The Challenge</span>
+                                                <p className="cs-drawer-body">{activeProject.challenge}</p>
+                                            </div>
+                                            <div className="cs-drawer-col">
+                                                <span className="cs-label">The Solution</span>
+                                                <p className="cs-drawer-body">{activeProject.solution}</p>
+                                            </div>
+                                            <div className="cs-drawer-col">
+                                                <span className="cs-label">Outcomes</span>
+                                                <ul className="cs-drawer-outcomes">
+                                                    {activeProject.outcome.map((o, i) => (
+                                                        <li key={i}>{o}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div className="cs-drawer-stack">
+                                            <span className="cs-label">Technology Stack</span>
+                                            <p className="cs-stack-text">{activeProject.stack}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </React.Fragment>
                         ))}
                     </div>
-
-                    {/* Expandable drawer */}
-                    {activeProject && (
-                        <div className="cs-drawer" ref={drawerRef} key={activeProjectId}>
-                            <div className="cs-drawer-header">
-                                <div>
-                                    <h2 className="cs-drawer-title">{activeProject.name}</h2>
-                                    <span className="cs-drawer-meta">
-                                        {activeProject.industry} · {activeProject.region} · {activeProject.year}
-                                    </span>
-                                </div>
-                                <button
-                                    className="cs-drawer-close"
-                                    onClick={() => setActiveProjectId(null)}
-                                    aria-label="Close project detail"
-                                >
-                                    Close <X size={13} strokeWidth={1.5} />
-                                </button>
-                            </div>
-
-                            <p className="cs-drawer-nda">
-                                This project is under a mutual NDA. The following reflects scope, approach,
-                                and outcome only. Client identity and specific system details are withheld.
-                            </p>
-
-                            <div className="cs-drawer-cols">
-                                <div className="cs-drawer-col">
-                                    <span className="cs-label">The Challenge</span>
-                                    <p className="cs-drawer-body">{activeProject.challenge}</p>
-                                </div>
-                                <div className="cs-drawer-col">
-                                    <span className="cs-label">The Solution</span>
-                                    <p className="cs-drawer-body">{activeProject.solution}</p>
-                                </div>
-                                <div className="cs-drawer-col">
-                                    <span className="cs-label">Outcomes</span>
-                                    <ul className="cs-drawer-outcomes">
-                                        {activeProject.outcome.map((o, i) => (
-                                            <li key={i}>{o}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className="cs-drawer-stack">
-                                <span className="cs-label">Technology Stack</span>
-                                <p className="cs-stack-text">{activeProject.stack}</p>
-                            </div>
-                        </div>
-                    )}
                 </Container>
             </div>
 
