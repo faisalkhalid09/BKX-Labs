@@ -370,7 +370,7 @@ const CaseStudy = () => {
             {/* Hero — unchanged */}
             <Hero
                 title="Success Stories"
-                subtitle="Real projects. Complex challenges. Proven results."
+                subtitle="Complex challenges. Scalable solutions. Proven results."
             />
 
             {/* Wave header — Dynamic Element 1 */}
