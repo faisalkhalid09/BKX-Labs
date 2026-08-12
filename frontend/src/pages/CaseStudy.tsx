@@ -11,25 +11,64 @@ const SOLAR_SYSTEMS = [
     {
         title: 'Web Development',
         rings: [
-            { size: 170, duration: 25, dir: 'normal', counterDir: 'reverse', items: ['React 18', 'Laravel 11', 'Node.js'] },
-            { size: 270, duration: 35, dir: 'reverse', counterDir: 'normal', items: ['Vue.js 3', 'TypeScript', 'Next.js', 'PHP 8.3'] },
-            { size: 370, duration: 45, dir: 'normal', counterDir: 'reverse', items: ['Python', 'Livewire', 'Inertia.js', 'TailwindCSS'] }
+            { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
+                { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
+                { name: 'Laravel', icon: 'https://cdn.simpleicons.org/laravel/FF2D20' },
+                { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' }
+            ]},
+            { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
+                { name: 'Vue.js', icon: 'https://cdn.simpleicons.org/vuedotjs/4FC08D' },
+                { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
+                { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/000000' },
+                { name: 'PHP', icon: 'https://cdn.simpleicons.org/php/777BB4' }
+            ]},
+            { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
+                { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB' },
+                { name: 'Livewire', icon: 'https://cdn.simpleicons.org/livewire/4E56A6' },
+                { name: 'TailwindCSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
+                { name: 'Svelte', icon: 'https://cdn.simpleicons.org/svelte/FF3E00' }
+            ]}
         ]
     },
     {
         title: 'App Development',
         rings: [
-            { size: 170, duration: 25, dir: 'reverse', counterDir: 'normal', items: ['Flutter', 'React Native'] },
-            { size: 270, duration: 35, dir: 'normal', counterDir: 'reverse', items: ['Swift', 'Kotlin', 'Dart'] },
-            { size: 370, duration: 45, dir: 'reverse', counterDir: 'normal', items: ['Firebase', 'SQLite', 'Realm', 'CoreData'] }
+            { size: 280, duration: 35, dir: 'reverse', counterDir: 'normal', items: [
+                { name: 'Flutter', icon: 'https://cdn.simpleicons.org/flutter/02569B' },
+                { name: 'React Native', icon: 'https://cdn.simpleicons.org/react/61DAFB' }
+            ]},
+            { size: 440, duration: 45, dir: 'normal', counterDir: 'reverse', items: [
+                { name: 'Swift', icon: 'https://cdn.simpleicons.org/swift/F05138' },
+                { name: 'Kotlin', icon: 'https://cdn.simpleicons.org/kotlin/7F52FF' },
+                { name: 'Dart', icon: 'https://cdn.simpleicons.org/dart/0175C2' }
+            ]},
+            { size: 600, duration: 55, dir: 'reverse', counterDir: 'normal', items: [
+                { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
+                { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57' },
+                { name: 'Realm', icon: 'https://cdn.simpleicons.org/realm/39477F' }
+            ]}
         ]
     },
     {
         title: 'Infrastructure & Data',
         rings: [
-            { size: 170, duration: 25, dir: 'normal', counterDir: 'reverse', items: ['AWS', 'Docker', 'PostgreSQL'] },
-            { size: 270, duration: 35, dir: 'reverse', counterDir: 'normal', items: ['MySQL 8', 'Redis', 'Nginx', 'GitHub Actions'] },
-            { size: 370, duration: 45, dir: 'normal', counterDir: 'reverse', items: ['Elasticsearch', 'Stripe', 'Twilio', 'SendGrid'] }
+            { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
+                { name: 'AWS', icon: 'https://cdn.simpleicons.org/amazonaws/232F3E' },
+                { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
+                { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1' }
+            ]},
+            { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
+                { name: 'MySQL', icon: 'https://cdn.simpleicons.org/mysql/4479A1' },
+                { name: 'Redis', icon: 'https://cdn.simpleicons.org/redis/FF4438' },
+                { name: 'Nginx', icon: 'https://cdn.simpleicons.org/nginx/009639' },
+                { name: 'GitHub Actions', icon: 'https://cdn.simpleicons.org/githubactions/2088FF' }
+            ]},
+            { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
+                { name: 'Elasticsearch', icon: 'https://cdn.simpleicons.org/elasticsearch/005571' },
+                { name: 'Stripe', icon: 'https://cdn.simpleicons.org/stripe/008CDD' },
+                { name: 'Twilio', icon: 'https://cdn.simpleicons.org/twilio/F22F46' },
+                { name: 'SendGrid', icon: 'https://cdn.simpleicons.org/sendgrid/009DD9' }
+            ]}
         ]
     }
 ];
@@ -511,7 +550,7 @@ const CaseStudy = () => {
                                                 const angle = (360 / ring.items.length) * techIndex;
                                                 return (
                                                     <div 
-                                                        key={tech} 
+                                                        key={tech.name} 
                                                         className="cs-solar-planet-positioner"
                                                         style={{ 
                                                             '--angle': `${angle}deg`,
@@ -525,7 +564,8 @@ const CaseStudy = () => {
                                                                 '--counter-dir': ring.counterDir 
                                                             } as React.CSSProperties}
                                                         >
-                                                            {tech}
+                                                            <img src={tech.icon} alt={tech.name} className="cs-tech-icon" />
+                                                            <span>{tech.name}</span>
                                                         </div>
                                                     </div>
                                                 );

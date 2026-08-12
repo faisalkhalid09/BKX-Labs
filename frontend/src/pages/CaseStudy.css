@@ -434,10 +434,11 @@
 /* ─── Solar System Tech Stack ─── */
 .cs-solar-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-    padding-bottom: 2rem;
-    max-width: 1200px;
+    grid-template-columns: 1fr; /* Stack vertically */
+    gap: 8rem; /* Large gap between the stacked systems */
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -460,8 +461,9 @@
 
 .cs-solar-system {
     position: relative;
-    width: 370px;
-    height: 370px;
+    width: 600px; /* Increased size for the outer ring */
+    height: 600px;
+    margin: 0 auto;
 }
 
 .cs-solar-sun {
@@ -487,7 +489,8 @@
     object-fit: contain;
 }
 
-.cs-solar-system:hover .cs-solar-sun {
+/* Center logo only bounces when directly hovered */
+.cs-solar-sun:hover {
     transform: translate(-50%, -50%) scale(1.18);
 }
 
@@ -499,12 +502,17 @@
     height: var(--size);
     margin-left: calc(var(--size) / -2);
     margin-top: calc(var(--size) / -2);
-    border: 1px dashed rgba(10, 36, 114, 0.15);
+    border: 1px dashed rgba(10, 36, 114, 0.2);
     border-radius: 50%;
     animation: cs-spin var(--duration) linear infinite var(--dir, normal);
+    pointer-events: none; /* Prevents outer ring bounding boxes from blocking inner rings */
 }
 
-.cs-solar-system:hover .cs-solar-orbit {
+/* Pause ONLY the specific ring that contains the hovered planet */
+.cs-solar-orbit:has(.cs-solar-planet-counter-rotator:hover) {
+    animation-play-state: paused;
+}
+.cs-solar-orbit:has(.cs-solar-planet-counter-rotator:hover) .cs-solar-planet-counter-rotator {
     animation-play-state: paused;
 }
 
@@ -522,18 +530,25 @@
 .cs-solar-planet-counter-rotator {
     animation: cs-spin var(--duration) linear infinite var(--counter-dir, reverse);
     background: white;
-    padding: 0.25rem 0.6rem;
-    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
     border: 1px solid rgba(10, 36, 114, 0.12);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--primary);
     white-space: nowrap;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    pointer-events: auto; /* Re-enable pointer events for planets */
+    cursor: default;
 }
 
-.cs-solar-system:hover .cs-solar-planet-counter-rotator {
-    animation-play-state: paused;
+.cs-tech-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
 }
 
 /* ─── Ink Blot Stats Section ─── */
@@ -662,11 +677,6 @@
     .cs-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-
-    .cs-solar-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 4rem 2rem;
-    }
 }
 
 @media (max-width: 768px) {
@@ -675,13 +685,12 @@
     }
 
     .cs-solar-grid {
-        grid-template-columns: 1fr;
-        gap: 4rem;
+        gap: 5rem;
     }
 
     .cs-solar-system {
-        transform: scale(0.85);
-        margin: -20px 0;
+        transform: scale(0.9);
+        margin: -30px auto;
     }
 
     .cs-tile {
@@ -730,8 +739,8 @@
     }
 
     .cs-solar-system {
-        transform: scale(0.7);
-        margin: -40px 0;
+        transform: scale(0.55);
+        margin: -130px auto;
     }
 
     .cs-grid {
