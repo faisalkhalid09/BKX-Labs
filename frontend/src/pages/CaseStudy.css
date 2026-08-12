@@ -461,10 +461,10 @@
 
 .cs-solar-system {
     position: relative;
-    width: 800px; /* Increased size to accommodate new outer rings */
+    width: 800px;
     height: 800px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin: 0 -400px; /* Forces layout width to 0 for perfect flex centering */
+    transform-origin: center center;
 }
 
 .cs-solar-sun {
@@ -690,8 +690,8 @@
     }
 
     .cs-solar-system {
-        transform: translateX(-50%) scale(0.65);
-        margin: -120px 0;
+        transform: scale(0.65);
+        margin: -140px -400px;
     }
 
     .cs-tile {
@@ -740,8 +740,8 @@
     }
 
     .cs-solar-system {
-        transform: translateX(-50%) scale(0.38);
-        margin: -240px 0;
+        transform: scale(0.38);
+        margin: -248px -400px;
     }
 
     .cs-grid {
