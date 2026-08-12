@@ -12,21 +12,26 @@ const SOLAR_SYSTEMS = [
         title: 'Web Development',
         rings: [
             { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
-                { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
-                { name: 'Laravel', icon: 'https://cdn.simpleicons.org/laravel/FF2D20' },
-                { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' }
+                { name: 'React', icon: 'https://skillicons.dev/icons?i=react' },
+                { name: 'Laravel', icon: 'https://skillicons.dev/icons?i=laravel' },
+                { name: 'Node.js', icon: 'https://skillicons.dev/icons?i=nodejs' },
+                { name: 'Vue.js', icon: 'https://skillicons.dev/icons?i=vue' }
             ]},
             { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
-                { name: 'Vue.js', icon: 'https://cdn.simpleicons.org/vuedotjs/4FC08D' },
-                { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
-                { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/000000' },
-                { name: 'PHP', icon: 'https://cdn.simpleicons.org/php/777BB4' }
+                { name: 'TypeScript', icon: 'https://skillicons.dev/icons?i=ts' },
+                { name: 'Next.js', icon: 'https://skillicons.dev/icons?i=nextjs' },
+                { name: 'PHP', icon: 'https://skillicons.dev/icons?i=php' },
+                { name: 'Python', icon: 'https://skillicons.dev/icons?i=python' },
+                { name: 'Django', icon: 'https://skillicons.dev/icons?i=django' },
+                { name: 'Ruby on Rails', icon: 'https://skillicons.dev/icons?i=rails' }
             ]},
             { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
-                { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB' },
-                { name: 'Livewire', icon: 'https://cdn.simpleicons.org/livewire/4E56A6' },
-                { name: 'TailwindCSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
-                { name: 'Svelte', icon: 'https://cdn.simpleicons.org/svelte/FF3E00' }
+                { name: 'Go', icon: 'https://skillicons.dev/icons?i=go' },
+                { name: 'TailwindCSS', icon: 'https://skillicons.dev/icons?i=tailwind' },
+                { name: 'Svelte', icon: 'https://skillicons.dev/icons?i=svelte' },
+                { name: 'Angular', icon: 'https://skillicons.dev/icons?i=angular' },
+                { name: 'Rust', icon: 'https://skillicons.dev/icons?i=rust' },
+                { name: 'Express', icon: 'https://skillicons.dev/icons?i=express' }
             ]}
         ]
     },
@@ -34,18 +39,21 @@ const SOLAR_SYSTEMS = [
         title: 'App Development',
         rings: [
             { size: 280, duration: 35, dir: 'reverse', counterDir: 'normal', items: [
-                { name: 'Flutter', icon: 'https://cdn.simpleicons.org/flutter/02569B' },
-                { name: 'React Native', icon: 'https://cdn.simpleicons.org/react/61DAFB' }
+                { name: 'Flutter', icon: 'https://skillicons.dev/icons?i=flutter' },
+                { name: 'React Native', icon: 'https://skillicons.dev/icons?i=react' },
+                { name: 'Swift', icon: 'https://skillicons.dev/icons?i=swift' }
             ]},
             { size: 440, duration: 45, dir: 'normal', counterDir: 'reverse', items: [
-                { name: 'Swift', icon: 'https://cdn.simpleicons.org/swift/F05138' },
-                { name: 'Kotlin', icon: 'https://cdn.simpleicons.org/kotlin/7F52FF' },
-                { name: 'Dart', icon: 'https://cdn.simpleicons.org/dart/0175C2' }
+                { name: 'Kotlin', icon: 'https://skillicons.dev/icons?i=kotlin' },
+                { name: 'Dart', icon: 'https://skillicons.dev/icons?i=dart' },
+                { name: 'Java', icon: 'https://skillicons.dev/icons?i=java' },
+                { name: 'Android', icon: 'https://skillicons.dev/icons?i=androidstudio' }
             ]},
             { size: 600, duration: 55, dir: 'reverse', counterDir: 'normal', items: [
-                { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
-                { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57' },
-                { name: 'Realm', icon: 'https://cdn.simpleicons.org/realm/39477F' }
+                { name: 'Firebase', icon: 'https://skillicons.dev/icons?i=firebase' },
+                { name: 'SQLite', icon: 'https://skillicons.dev/icons?i=sqlite' },
+                { name: 'Supabase', icon: 'https://skillicons.dev/icons?i=supabase' },
+                { name: 'Apple iOS', icon: 'https://skillicons.dev/icons?i=apple' }
             ]}
         ]
     },
@@ -53,21 +61,24 @@ const SOLAR_SYSTEMS = [
         title: 'Infrastructure & Data',
         rings: [
             { size: 280, duration: 35, dir: 'normal', counterDir: 'reverse', items: [
-                { name: 'AWS', icon: 'https://cdn.simpleicons.org/amazonaws/232F3E' },
-                { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
-                { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1' }
+                { name: 'AWS', icon: 'https://skillicons.dev/icons?i=aws' },
+                { name: 'Docker', icon: 'https://skillicons.dev/icons?i=docker' },
+                { name: 'PostgreSQL', icon: 'https://skillicons.dev/icons?i=postgresql' },
+                { name: 'MySQL', icon: 'https://skillicons.dev/icons?i=mysql' }
             ]},
             { size: 440, duration: 45, dir: 'reverse', counterDir: 'normal', items: [
-                { name: 'MySQL', icon: 'https://cdn.simpleicons.org/mysql/4479A1' },
-                { name: 'Redis', icon: 'https://cdn.simpleicons.org/redis/FF4438' },
-                { name: 'Nginx', icon: 'https://cdn.simpleicons.org/nginx/009639' },
-                { name: 'GitHub Actions', icon: 'https://cdn.simpleicons.org/githubactions/2088FF' }
+                { name: 'Redis', icon: 'https://skillicons.dev/icons?i=redis' },
+                { name: 'Nginx', icon: 'https://skillicons.dev/icons?i=nginx' },
+                { name: 'GitHub Actions', icon: 'https://skillicons.dev/icons?i=githubactions' },
+                { name: 'Kubernetes', icon: 'https://skillicons.dev/icons?i=kubernetes' },
+                { name: 'GCP', icon: 'https://skillicons.dev/icons?i=gcp' }
             ]},
             { size: 600, duration: 55, dir: 'normal', counterDir: 'reverse', items: [
-                { name: 'Elasticsearch', icon: 'https://cdn.simpleicons.org/elasticsearch/005571' },
-                { name: 'Stripe', icon: 'https://cdn.simpleicons.org/stripe/008CDD' },
-                { name: 'Twilio', icon: 'https://cdn.simpleicons.org/twilio/F22F46' },
-                { name: 'SendGrid', icon: 'https://cdn.simpleicons.org/sendgrid/009DD9' }
+                { name: 'MongoDB', icon: 'https://skillicons.dev/icons?i=mongodb' },
+                { name: 'Elasticsearch', icon: 'https://skillicons.dev/icons?i=elasticsearch' },
+                { name: 'Azure', icon: 'https://skillicons.dev/icons?i=azure' },
+                { name: 'Jenkins', icon: 'https://skillicons.dev/icons?i=jenkins' },
+                { name: 'Linux', icon: 'https://skillicons.dev/icons?i=linux' }
             ]}
         ]
     }
@@ -564,7 +575,12 @@ const CaseStudy = () => {
                                                                 '--counter-dir': ring.counterDir 
                                                             } as React.CSSProperties}
                                                         >
-                                                            <img src={tech.icon} alt={tech.name} className="cs-tech-icon" />
+                                                            <img 
+                                                                src={tech.icon} 
+                                                                alt={tech.name} 
+                                                                className="cs-tech-icon"
+                                                                onError={(e) => { e.currentTarget.style.display = 'none'; }} 
+                                                            />
                                                             <span>{tech.name}</span>
                                                         </div>
                                                     </div>
