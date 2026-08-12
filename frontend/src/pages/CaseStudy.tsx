@@ -490,7 +490,7 @@ const CaseStudy = () => {
                     </div>
                     
                     <div className="cs-solar-grid">
-                        {SOLAR_SYSTEMS.map((sys, sysIndex) => (
+                        {SOLAR_SYSTEMS.map(sys => (
                             <div key={sys.title} className="cs-solar-group">
                                 <h4 className="cs-solar-title">{sys.title}</h4>
                                 <div className="cs-solar-system">
