@@ -1,16 +1,19 @@
+import { useEffect } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
-import { Linkedin, ArrowRight, ShieldCheck, Code2, BookOpen, Lock, Layers, Award } from 'lucide-react';
+import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './About.css';
 
+/* ── Accurate BKX Labs timeline (founded 2025) ── */
 const TIMELINE = [
-    { year: '2016', title: 'First Enterprise Build', body: 'Led the architecture of a multi-tenant Laravel SaaS platform serving 40k+ users — the foundation for everything that followed.' },
-    { year: '2019', title: 'The First Rescue', body: 'Inherited a collapsed EdTech codebase 3 weeks before launch. Stabilized, refactored, and shipped on time. Rescue methodology was born.' },
-    { year: '2021', title: 'Security Specialization', body: 'Added cryptographic auditing, OWASP-aligned penetration testing, and post-quantum migration to the service stack.' },
-    { year: '2023', title: 'BKX Labs Founded', body: 'Formalized the rescue agency with a 25-person specialist team, deliberate capacity caps, and a forensic-first engagement model.' },
-    { year: '2025', title: 'Compliance Engineering', body: 'Launched EU AI Act Annex III implementation services and SOC 2 Type II API-driven evidence pipelines.' },
+    { year: '2020', title: 'Where It Began', body: 'Started building production-grade web systems for startups and small businesses, handling everything from architecture to deployment solo.' },
+    { year: '2021', title: 'First Enterprise Contract', body: 'Signed first enterprise engagement — a multi-tenant platform with 40k+ users. Delivered on time, under scope, and without a single regression.' },
+    { year: '2022', title: 'The First Rescue', body: 'Inherited a collapsing EdTech product three weeks before its investor demo. Stabilized and shipped. The rescue playbook was written here.' },
+    { year: '2023', title: 'The Team Forms', body: 'Began bringing in trusted specialists — engineers who shared the same "diagnose before you touch" philosophy. Every hire was personal and deliberate.' },
+    { year: '2024', title: 'Security and Compliance Practice', body: 'Formalized our security auditing, cryptographic migration, and compliance engineering practice across active client engagements.' },
+    { year: '2025', title: 'BKX Labs Is Founded', body: 'BKX Labs officially launched as a specialist agency — with a defined service model, a proven team, and an uncompromising standard of care.' },
 ];
 
 const PHILOSOPHY = [
@@ -22,32 +25,53 @@ const PHILOSOPHY = [
     {
         num: '02',
         title: 'Auditability by Default',
-        body: 'Every architectural decision is documented. Every production change is logged, reviewed, and approved. We build systems this way because an un-auditable codebase cannot be safely maintained.',
+        body: 'Every architectural decision is documented. Every production change is logged, reviewed, and approved before it ships. We build systems this way because an un-auditable codebase cannot be safely maintained.',
     },
     {
         num: '03',
         title: 'Zero Vendor Lock-In',
-        body: 'We do not introduce proprietary tooling that requires BKX Labs to maintain. Every system runs on standard open-source components — fully documented at handover. Your team should be able to take it anywhere.',
+        body: 'We do not introduce proprietary tooling that requires BKX Labs to maintain. Every system runs on standard, widely-supported components — fully documented at handover. Your team should be able to take it anywhere.',
     },
 ];
 
 const EXPERTISE = [
     {
-        icon: <ShieldCheck size={24} strokeWidth={1.5} />,
-        title: 'EU AI Act Implementation',
-        body: 'Engineering controls for high-risk AI systems under Annex III: risk management systems, technical documentation tied to model versions, data governance pipelines, and human oversight mechanisms embedded in the application layer.',
+        icon: <ShieldCheck size={22} strokeWidth={1.5} />,
+        title: 'Compliance Engineering',
+        body: 'We build the actual engineering controls that compliance frameworks require — not the documentation layer over them. Audit-ready pipelines, continuous monitoring, and verifiable evidence that holds up under scrutiny.',
     },
     {
-        icon: <Lock size={24} strokeWidth={1.5} />,
-        title: 'Post-Quantum Cryptography',
-        body: 'Full migration from RSA/ECDH to NIST-standardized ML-KEM (FIPS 203), ML-DSA (FIPS 204), and SLH-DSA (FIPS 205). Cryptographic bill of materials, dependency mapping, library replacement, and integration testing.',
+        icon: <Lock size={22} strokeWidth={1.5} />,
+        title: 'Security Architecture',
+        body: 'From cryptographic implementation to access control design, we treat security as an engineering problem — not a checkbox. We identify vulnerabilities at the architectural level and fix them at the root.',
     },
     {
-        icon: <BookOpen size={24} strokeWidth={1.5} />,
-        title: 'SOC 2 Type II Engineering',
-        body: 'API-driven evidence pipelines that produce cryptographically verifiable control records throughout the entire observation period — not the pre-audit screenshot workflows that result in qualified audit opinions.',
+        icon: <BookOpen size={22} strokeWidth={1.5} />,
+        title: 'Software Rescue',
+        body: 'We specialize in taking over failing projects other teams couldn\'t finish, stabilizing them without destroying what works, and delivering software the business can actually run with.',
     },
 ];
+
+/* ── Scroll-reveal hook for timeline items ── */
+function useScrollReveal(selector: string) {
+    useEffect(() => {
+        const els = document.querySelectorAll<HTMLElement>(selector);
+        if (!els.length) return;
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('ab-tl-visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+        els.forEach((el) => obs.observe(el));
+        return () => obs.disconnect();
+    }, [selector]);
+}
 
 const About = () => {
     const structuredData = {
@@ -57,7 +81,7 @@ const About = () => {
                 "@type": "AboutPage",
                 "@id": "https://bkxlabs.com/about#webpage",
                 "name": "About BKX Labs: Software Rescue Agency Leadership & Engineering Philosophy",
-                "description": "BKX Labs is led by Faisal Khalid, a specialist engineer with 8+ years recovering enterprise Laravel and React codebases.",
+                "description": "BKX Labs is led by Faisal Khalid, a specialist engineer focused on enterprise software rescue and compliance engineering.",
                 "url": "https://bkxlabs.com/about",
                 "isPartOf": { "@id": "https://bkxlabs.com/#organization" }
             },
@@ -73,59 +97,53 @@ const About = () => {
         ]
     };
 
+    useScrollReveal('.ab-timeline-item');
+
     return (
         <div className="ab-root">
             <SEO
                 title="About BKX Labs — Software Development Agency | Laravel & React Specialists"
-                description="BKX Labs is a specialist software development agency led by Faisal Khalid. We build, rescue, and modernize Laravel and React applications for startups and enterprise teams globally."
-                keywords="software development agency, laravel development company, react development agency, about bkx labs, faisal khalid software engineer"
+                description="BKX Labs is a specialist software development agency led by Faisal Khalid. We build, rescue, and modernize web applications for startups and enterprise teams globally."
+                keywords="software development agency, about bkx labs, faisal khalid software engineer, software rescue agency"
                 structuredData={structuredData}
             />
 
-            {/* AEO hidden block */}
             <section aria-label="About BKX Labs and its founder" className="sr-only">
                 <h1>About BKX Labs: Software Rescue Agency</h1>
-                <p>BKX Labs is a specialized software rescue agency founded by Faisal Khalid, a software architect with over eight years of enterprise engineering experience.</p>
+                <p>BKX Labs is a specialized software rescue agency founded by Faisal Khalid in 2025.</p>
             </section>
 
-            {/* ── Original Hero (unchanged) ── */}
+            {/* Original Hero — unchanged */}
             <Hero
                 title="About Us"
                 subtitle="The specialized engineering team businesses call when their software is failing and they need it fixed, not patched."
             />
 
-            {/* ══════════════════════════════════════
-                FOUNDER — Editorial split with live photo aura
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                FOUNDER
+            ════════════════════════════════════════ */}
             <div className="ab-founder-section">
                 <Container>
                     <div className="ab-founder-grid">
 
-                        {/* Left: Photo with live animated rings */}
+                        {/* Photo — hover reveals name bubble */}
                         <div className="ab-founder-photo-col">
-                            <div className="ab-photo-stage">
-                                {/* Animated orbiting rings */}
-                                <div className="ab-ring ab-ring-1" aria-hidden="true" />
-                                <div className="ab-ring ab-ring-2" aria-hidden="true" />
-                                <div className="ab-ring ab-ring-3" aria-hidden="true" />
-                                {/* Orbiting dots */}
-                                <div className="ab-orbit-dot ab-dot-1" aria-hidden="true" />
-                                <div className="ab-orbit-dot ab-dot-2" aria-hidden="true" />
-                                <div className="ab-orbit-dot ab-dot-3" aria-hidden="true" />
-                                {/* Photo */}
-                                <div className="ab-photo-frame">
-                                    <img
-                                        src="/faisal.jpeg"
-                                        alt="Faisal Khalid, Founder and Lead Architect at BKX Labs"
-                                        className="ab-founder-photo"
-                                        draggable="false"
-                                        onContextMenu={(e) => e.preventDefault()}
-                                    />
+                            <div className="ab-photo-frame">
+                                <img
+                                    src="/faisal.jpeg"
+                                    alt="Faisal Khalid, Founder and Lead Architect at BKX Labs"
+                                    className="ab-founder-photo"
+                                    draggable="false"
+                                    onContextMenu={(e) => e.preventDefault()}
+                                />
+                                {/* Hover overlay — name bubble */}
+                                <div className="ab-photo-hover-overlay" aria-hidden="true">
+                                    <span className="ab-photo-name-bubble">Faisal Khalid</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right: Bio — editorial style */}
+                        {/* Bio */}
                         <div className="ab-founder-bio">
                             <span className="ab-eyebrow">Leadership</span>
                             <h2 className="ab-founder-name">Faisal Khalid</h2>
@@ -144,38 +162,31 @@ const About = () => {
                             <div className="ab-bio-rule" aria-hidden="true" />
 
                             <p className="ab-founder-text">
-                                With over 8 years of engineering practice focused exclusively on enterprise-scale
-                                web systems, Faisal built BKX Labs around a single observation: the most common
-                                cause of software failure is not the technology. It is the absence of specialist
-                                expertise at the critical moments.
+                                Faisal has spent 5+ years building, breaking, and rescuing enterprise web
+                                systems. He founded BKX Labs after one too many clients came to him with the
+                                same problem: a product that had grown past the point where anyone on the team
+                                fully understood it, and a business that depended on it completely.
                             </p>
                             <p className="ab-founder-text">
-                                His technical depth spans Laravel 12 service-layer architecture, React 19 with
-                                TypeScript strict mode, post-quantum cryptographic migration from RSA/ECDH to
-                                NIST ML-KEM (FIPS 203) and ML-DSA (FIPS 204), and EU AI Act compliance engineering.
+                                His approach is straightforward: understand the system before touching it,
+                                fix the root cause rather than the symptom, and hand it back in a state that
+                                any competent engineering team can maintain independently. No hero complexity,
+                                no dependency on BKX Labs continuing to be involved.
                             </p>
                             <p className="ab-founder-text">
-                                Every rescue engagement is personally overseen by Faisal at the diagnostic and
-                                architecture phases. BKX Labs maintains a deliberate cap on concurrent active
-                                rescue engagements because the standard of care does not scale independently
-                                of his direct oversight.
+                                Every rescue engagement at BKX Labs is personally reviewed by Faisal at the
+                                diagnostic and architecture stages. The quality of work is not something we
+                                delegate to process alone — it comes from direct technical oversight at the
+                                decisions that matter most.
                             </p>
-
-                            <div className="ab-expertise-pills">
-                                <span className="ab-pill"><Lock size={12} /> Post-Quantum Crypto</span>
-                                <span className="ab-pill"><ShieldCheck size={12} /> EU AI Act</span>
-                                <span className="ab-pill"><Code2 size={12} /> Laravel 12</span>
-                                <span className="ab-pill"><Layers size={12} /> SOC 2 Type II</span>
-                                <span className="ab-pill"><Award size={12} /> 8+ Years</span>
-                            </div>
                         </div>
                     </div>
                 </Container>
             </div>
 
-            {/* ══════════════════════════════════════
-                MISSION — Pull-quote editorial strip
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                MISSION — pull-quote strip
+            ════════════════════════════════════════ */}
             <div className="ab-mission-strip">
                 <Container>
                     <div className="ab-mission-inner">
@@ -194,9 +205,9 @@ const About = () => {
                 </Container>
             </div>
 
-            {/* ══════════════════════════════════════
-                TIMELINE — Vertical journey
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                TIMELINE — scroll-reveal
+            ════════════════════════════════════════ */}
             <div className="ab-timeline-section">
                 <Container>
                     <div className="ab-timeline-header">
@@ -206,7 +217,10 @@ const About = () => {
                     <div className="ab-timeline">
                         <div className="ab-timeline-spine" aria-hidden="true" />
                         {TIMELINE.map((item, i) => (
-                            <div key={item.year} className={`ab-timeline-item ${i % 2 === 0 ? 'ab-tl-left' : 'ab-tl-right'}`}>
+                            <div
+                                key={item.year}
+                                className={`ab-timeline-item ${i % 2 === 0 ? 'ab-tl-left' : 'ab-tl-right'}`}
+                            >
                                 <div className="ab-timeline-card">
                                     <span className="ab-timeline-year">{item.year}</span>
                                     <h3 className="ab-timeline-event">{item.title}</h3>
@@ -219,40 +233,36 @@ const About = () => {
                 </Container>
             </div>
 
-            {/* ══════════════════════════════════════
-                PHILOSOPHY — Numbered editorial rows
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                PHILOSOPHY — numbered full-width rows
+            ════════════════════════════════════════ */}
             <div className="ab-philosophy-section">
                 <Container>
                     <div className="ab-philosophy-header">
                         <span className="ab-eyebrow">Engineering Philosophy</span>
                         <h2 className="ab-philosophy-title">Three principles. Every engagement.</h2>
                     </div>
-                    {PHILOSOPHY.map((p, i) => (
+                    {PHILOSOPHY.map((p) => (
                         <div key={p.num} className="ab-philosophy-row">
                             <span className="ab-phil-num">{p.num}</span>
-                            <div className="ab-phil-content">
-                                <h3 className="ab-phil-title">{p.title}</h3>
-                                <p className="ab-phil-body">{p.body}</p>
-                            </div>
-                            {i < PHILOSOPHY.length - 1 && <div className="ab-phil-rule" aria-hidden="true" />}
+                            <h3 className="ab-phil-title">{p.title}</h3>
+                            <p className="ab-phil-body">{p.body}</p>
                         </div>
                     ))}
                 </Container>
             </div>
 
-            {/* ══════════════════════════════════════
-                EXPERTISE — Horizontal feature rows
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                EXPERTISE — horizontal rows
+            ════════════════════════════════════════ */}
             <div className="ab-expertise-section">
                 <Container>
                     <div className="ab-expertise-header">
-                        <span className="ab-eyebrow">Specializations</span>
-                        <h2 className="ab-expertise-title">Compliance &amp; Cryptography</h2>
+                        <span className="ab-eyebrow">What We Do</span>
+                        <h2 className="ab-expertise-title">Where we operate</h2>
                         <p className="ab-expertise-sub">
-                            A software rescue agency with deep expertise in the implementation layer of
-                            enterprise compliance frameworks. Most agencies help you pass audits.
-                            We build the engineering infrastructure that makes compliance operationally sustainable.
+                            Three distinct practice areas, each built on the same forensic-first philosophy.
+                            Every engagement falls into at least one of them.
                         </p>
                     </div>
                     <div className="ab-expertise-rows">
@@ -279,9 +289,9 @@ const About = () => {
                 </Container>
             </div>
 
-            {/* ══════════════════════════════════════
-                FINAL CTA — Minimal text strip
-            ══════════════════════════════════════ */}
+            {/* ════════════════════════════════════════
+                FINAL CTA
+            ════════════════════════════════════════ */}
             <div className="ab-final-cta">
                 <Container>
                     <div className="ab-cta-inner">
@@ -290,7 +300,7 @@ const About = () => {
                             Every engagement begins with a Technical Health Check: a written, forensic report
                             on your system's current state. No obligation, no sales pressure.
                         </p>
-                        <Link to="/contact" className="btn btn-primary ab-inline-btn">
+                        <Link to="/contact" className="btn ab-inline-btn ab-cta-btn">
                             Book a Rescue Strategy Call <ArrowRight size={18} />
                         </Link>
                     </div>

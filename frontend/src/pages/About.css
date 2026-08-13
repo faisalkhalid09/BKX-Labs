@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
-   About Page — Editorial Redesign
-   No gradients on sections. No card hovers.
+   About Page — Editorial Design System
+   Rules: No section gradients. No card hovers.
    Clean typographic hierarchy.
 ═══════════════════════════════════════════ */
 
@@ -8,7 +8,6 @@
     font-family: var(--font-body);
 }
 
-/* ── Eyebrow label ── */
 .ab-eyebrow {
     display: inline-block;
     font-size: 0.68rem;
@@ -24,9 +23,9 @@
     text-align: center;
 }
 
-/* ══════════════════════════════════════
-   FOUNDER SECTION
-══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   FOUNDER
+════════════════════════════════════════ */
 .ab-founder-section {
     background: white;
     padding: 6rem 0 5rem;
@@ -35,129 +34,29 @@
 
 .ab-founder-grid {
     display: grid;
-    grid-template-columns: 400px 1fr;
+    grid-template-columns: 380px 1fr;
     gap: 6rem;
     align-items: center;
     max-width: 1100px;
     margin: 0 auto;
 }
 
-/* ── Photo Stage with live animated rings ── */
+/* ── Photo frame — clean, no rings ── */
 .ab-founder-photo-col {
     display: flex;
     justify-content: center;
 }
 
-.ab-photo-stage {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Concentric rings — each rotates at a different speed and direction */
-.ab-ring {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.ab-ring-1 {
-    inset: -18px;
-    border: 1.5px dashed rgba(0, 163, 255, 0.35);
-    animation: ab-spin-cw 14s linear infinite;
-}
-
-.ab-ring-2 {
-    inset: -42px;
-    border: 1px solid rgba(10, 36, 114, 0.12);
-    animation: ab-spin-ccw 22s linear infinite;
-}
-
-.ab-ring-3 {
-    inset: -70px;
-    border: 1px dashed rgba(0, 163, 255, 0.1);
-    animation: ab-spin-cw 36s linear infinite;
-}
-
-@keyframes ab-spin-cw {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-
-@keyframes ab-spin-ccw {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(-360deg); }
-}
-
-/* Orbiting dots that travel on the rings */
-.ab-orbit-dot {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    pointer-events: none;
-    transform-origin: center center;
-}
-
-.ab-dot-1 {
-    background: var(--accent);
-    top: calc(50% - 4px);
-    left: calc(50% - 4px);
-    animation: ab-orbit-1 14s linear infinite;
-    box-shadow: 0 0 8px rgba(0, 163, 255, 0.8);
-}
-
-.ab-dot-2 {
-    background: var(--primary);
-    width: 6px;
-    height: 6px;
-    top: calc(50% - 3px);
-    left: calc(50% - 3px);
-    animation: ab-orbit-2 22s linear infinite;
-    opacity: 0.6;
-}
-
-.ab-dot-3 {
-    background: var(--accent);
-    width: 5px;
-    height: 5px;
-    top: calc(50% - 2.5px);
-    left: calc(50% - 2.5px);
-    animation: ab-orbit-3 36s linear infinite;
-    opacity: 0.4;
-}
-
-/* Each dot orbits at the same radius as its corresponding ring */
-@keyframes ab-orbit-1 {
-    from { transform: rotate(0deg) translateX(178px) rotate(0deg); }   /* ring-1: half of 320+18*2 */
-    to   { transform: rotate(360deg) translateX(178px) rotate(-360deg); }
-}
-
-@keyframes ab-orbit-2 {
-    from { transform: rotate(90deg) translateX(202px) rotate(-90deg); }  /* ring-2: 178+24 */
-    to   { transform: rotate(-270deg) translateX(202px) rotate(270deg); }
-}
-
-@keyframes ab-orbit-3 {
-    from { transform: rotate(210deg) translateX(230px) rotate(-210deg); } /* ring-3: 178+52 */
-    to   { transform: rotate(570deg) translateX(230px) rotate(-570deg); }
-}
-
-/* Photo frame */
 .ab-photo-frame {
     position: relative;
-    width: 280px;
-    height: 340px;
+    width: 300px;
+    height: 370px;
     border-radius: 18px;
     overflow: hidden;
     box-shadow:
-        0 0 0 1px rgba(0, 163, 255, 0.2),
-        0 20px 60px rgba(10, 36, 114, 0.14),
-        0 0 40px rgba(0, 163, 255, 0.08);
-    z-index: 2;
+        0 1px 3px rgba(10, 36, 114, 0.08),
+        0 16px 48px rgba(10, 36, 114, 0.12);
+    cursor: pointer;
 }
 
 .ab-founder-photo {
@@ -168,6 +67,52 @@
     user-select: none;
     -webkit-user-drag: none;
     display: block;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.45s ease;
+}
+
+/* Hover overlay — full-cover frosted layer with name bubble */
+.ab-photo-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 36, 114, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.ab-photo-frame:hover .ab-photo-hover-overlay {
+    opacity: 1;
+}
+
+.ab-photo-frame:hover .ab-founder-photo {
+    transform: scale(1.04);
+    filter: brightness(0.85);
+}
+
+/* The name bubble inside the overlay */
+.ab-photo-name-bubble {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 999px;
+    padding: 0.65rem 1.75rem;
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    transform: translateY(10px);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ab-photo-frame:hover .ab-photo-name-bubble {
+    transform: translateY(0);
 }
 
 /* ── Bio column ── */
@@ -207,7 +152,7 @@
 .ab-linkedin:hover { opacity: 0.7; }
 
 .ab-bio-rule {
-    width: 48px;
+    width: 40px;
     height: 2px;
     background: var(--accent);
     margin-bottom: 1.5rem;
@@ -222,38 +167,9 @@
     text-align: left;
 }
 
-/* Expertise pills */
-.ab-expertise-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.75rem;
-}
-
-.ab-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    border: 1px solid var(--border-light);
-    border-radius: 4px;
-    padding: 0.3rem 0.8rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--primary-dark);
-    letter-spacing: 0.01em;
-    transition: border-color 0.2s ease;
-}
-
-.ab-pill:hover { border-color: var(--accent); }
-
-.ab-pill svg {
-    color: var(--accent);
-    flex-shrink: 0;
-}
-
-/* ══════════════════════════════════════
-   MISSION PULL-QUOTE STRIP
-══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   MISSION — pull-quote
+════════════════════════════════════════ */
 .ab-mission-strip {
     background: var(--secondary);
     padding: 5.5rem 0;
@@ -282,15 +198,13 @@
     font-size: 1rem;
     line-height: 1.8;
     color: var(--text-gray);
-    margin: 0;
+    margin: 0 auto;
     max-width: 60ch;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-/* ══════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   TIMELINE — scroll-reveal alternating
+════════════════════════════════════════ */
 .ab-timeline-section {
     background: white;
     padding: 6rem 0;
@@ -313,7 +227,7 @@
     position: relative;
     max-width: 860px;
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 1rem 0 2rem;
 }
 
 .ab-timeline-spine {
@@ -326,26 +240,37 @@
     transform: translateX(-50%);
 }
 
+/* ── Scroll-reveal initial state ── */
 .ab-timeline-item {
     position: relative;
     width: 44%;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ab-tl-left {
     left: 0;
     text-align: right;
     padding-right: 3rem;
+    transform: translateX(-40px);
 }
 
 .ab-tl-right {
     left: 56%;
     text-align: left;
     padding-left: 3rem;
+    transform: translateX(40px);
+}
+
+/* ── Revealed state (added by IntersectionObserver) ── */
+.ab-tl-visible {
+    opacity: 1;
+    transform: translateX(0) !important;
 }
 
 .ab-timeline-card {
-    padding: 1.5rem 0;
+    padding: 0.25rem 0;
 }
 
 .ab-timeline-year {
@@ -364,6 +289,7 @@
     color: var(--primary-dark);
     margin-bottom: 0.5rem;
     text-align: inherit;
+    line-height: 1.3;
 }
 
 .ab-timeline-body {
@@ -376,7 +302,7 @@
 
 .ab-timeline-dot {
     position: absolute;
-    top: 1.75rem;
+    top: 0.5rem;
     width: 11px;
     height: 11px;
     border-radius: 50%;
@@ -393,9 +319,9 @@
     left: -5.5px;
 }
 
-/* ══════════════════════════════════════
-   PHILOSOPHY — Numbered rows
-══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   PHILOSOPHY — 3-column full-width rows
+════════════════════════════════════════ */
 .ab-philosophy-section {
     background: var(--secondary);
     padding: 6rem 0;
@@ -403,7 +329,7 @@
 }
 
 .ab-philosophy-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
 }
 
 .ab-philosophy-title {
@@ -414,60 +340,65 @@
     letter-spacing: -0.03em;
 }
 
+/* ── 3 columns: number | title | body ── */
 .ab-philosophy-row {
-    position: relative;
     display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 2rem;
-    padding: 2.5rem 0;
+    grid-template-columns: 80px 1fr 1.8fr;
+    gap: 2.5rem;
+    padding: 2.25rem 0;
     border-top: 1px solid var(--border-light);
+    align-items: start;
+    transition: background 0.2s ease;
 }
 
 .ab-philosophy-row:last-of-type {
     border-bottom: 1px solid var(--border-light);
 }
 
-.ab-phil-rule {
-    display: none; /* border-top on rows replaces this */
+.ab-philosophy-row:hover {
+    background: rgba(10, 36, 114, 0.02);
+    margin: 0 -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .ab-phil-num {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 900;
     color: var(--border-light);
     letter-spacing: -0.04em;
     line-height: 1;
-    padding-top: 0.2rem;
+    padding-top: 0.1rem;
     transition: color 0.25s ease;
+    user-select: none;
 }
 
 .ab-philosophy-row:hover .ab-phil-num {
     color: var(--accent);
 }
 
-.ab-phil-content {
-    max-width: 780px;
-}
-
 .ab-phil-title {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--primary-dark);
-    margin-bottom: 0.65rem;
+    padding-top: 0.15rem;
+    line-height: 1.4;
+    text-align: left;
 }
 
 .ab-phil-body {
-    font-size: 0.95rem;
+    font-size: 0.93rem;
     line-height: 1.8;
     color: var(--text-gray);
     margin: 0;
     max-width: none;
+    text-align: left;
 }
 
-/* ══════════════════════════════════════
-   EXPERTISE — Horizontal rows
-══════════════════════════════════════ */
+/* ════════════════════════════════════════
+   EXPERTISE — horizontal rows
+════════════════════════════════════════ */
 .ab-expertise-section {
     background: white;
     padding: 6rem 0;
@@ -484,7 +415,7 @@
     font-weight: 900;
     color: var(--primary-dark);
     letter-spacing: -0.03em;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 
 .ab-expertise-sub {
@@ -492,7 +423,6 @@
     line-height: 1.8;
     color: var(--text-gray);
     margin: 0;
-    max-width: 60ch;
 }
 
 .ab-expertise-rows {
@@ -501,30 +431,30 @@
 
 .ab-expertise-row {
     display: grid;
-    grid-template-columns: 64px 1fr 40px;
+    grid-template-columns: 56px 1fr 32px;
     gap: 2rem;
-    padding: 2rem 0;
+    padding: 1.75rem 0;
     border-bottom: 1px solid var(--border-light);
     align-items: start;
-    transition: background 0.2s ease;
+    transition: padding 0.2s ease, background 0.2s ease;
     cursor: default;
 }
 
 .ab-expertise-row:hover {
     background: var(--secondary);
-    margin: 0 -2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin: 0 -1.25rem;
 }
 
 .ab-expertise-icon-col {
-    padding-top: 0.15rem;
+    padding-top: 0.1rem;
 }
 
 .ab-expertise-icon {
     color: var(--accent);
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border: 1px solid var(--border-light);
     border-radius: 10px;
     display: flex;
@@ -532,17 +462,22 @@
     justify-content: center;
     background: white;
     flex-shrink: 0;
+    transition: border-color 0.2s ease;
+}
+
+.ab-expertise-row:hover .ab-expertise-icon {
+    border-color: rgba(0, 163, 255, 0.35);
 }
 
 .ab-expertise-text-col {
-    max-width: 720px;
+    max-width: none;
 }
 
 .ab-expertise-row-title {
     font-size: 1rem;
     font-weight: 700;
     color: var(--primary-dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.45rem;
     text-align: left;
 }
 
@@ -551,7 +486,6 @@
     line-height: 1.75;
     color: var(--text-gray);
     margin: 0;
-    max-width: none;
     text-align: left;
 }
 
@@ -576,16 +510,16 @@
     gap: 0.5rem;
 }
 
-/* ══════════════════════════════════════
+/* ════════════════════════════════════════
    FINAL CTA
-══════════════════════════════════════ */
+════════════════════════════════════════ */
 .ab-final-cta {
     background: var(--primary-dark);
     padding: 6rem 0;
 }
 
 .ab-cta-inner {
-    max-width: 640px;
+    max-width: 600px;
     text-align: center;
     margin: 0 auto;
 }
@@ -604,64 +538,58 @@
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.65);
     margin-bottom: 2.25rem;
-    max-width: none;
 }
 
-.ab-cta-inner .ab-inline-btn {
+.ab-cta-btn {
     background: white !important;
     color: var(--primary) !important;
 }
 
-.ab-cta-inner .ab-inline-btn:hover {
+.ab-cta-btn:hover {
     box-shadow: 0 8px 30px rgba(0,0,0,0.25) !important;
     transform: translateY(-2px);
 }
 
-/* ══════════════════════════════════════
+/* ════════════════════════════════════════
    RESPONSIVE
-══════════════════════════════════════ */
+════════════════════════════════════════ */
 @media (max-width: 1024px) {
     .ab-founder-grid {
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 280px 1fr;
         gap: 4rem;
     }
 
-    .ab-photo-stage {
-        width: 260px;
-        height: 260px;
+    .ab-photo-frame {
+        width: 250px;
+        height: 310px;
     }
 
-    .ab-photo-frame {
-        width: 230px;
-        height: 280px;
+    .ab-philosophy-row {
+        grid-template-columns: 60px 1fr 1.4fr;
+        gap: 1.75rem;
     }
 }
 
 @media (max-width: 768px) {
     .ab-founder-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
     }
 
     .ab-founder-photo-col {
         justify-content: center;
     }
 
-    .ab-photo-stage {
-        width: 240px;
-        height: 240px;
-    }
-
     .ab-photo-frame {
-        width: 200px;
-        height: 250px;
+        width: 230px;
+        height: 285px;
     }
 
     .ab-founder-name {
         font-size: 2rem;
     }
 
-    /* Timeline collapses to left-rail */
+    /* Timeline: collapse to single left rail */
     .ab-timeline-spine {
         left: 1rem;
     }
@@ -669,15 +597,20 @@
     .ab-timeline-item {
         width: 100%;
         left: 0 !important;
-        text-align: left;
         padding-left: 2.75rem;
         padding-right: 0;
+        text-align: left;
     }
 
     .ab-tl-left {
         text-align: left;
         padding-right: 0;
         padding-left: 2.75rem;
+        transform: translateX(-25px);
+    }
+
+    .ab-tl-right {
+        transform: translateX(25px);
     }
 
     .ab-tl-left .ab-timeline-dot {
@@ -694,17 +627,30 @@
         text-align: left;
     }
 
+    /* Philosophy: collapse to 2-col */
     .ab-philosophy-row {
-        grid-template-columns: 50px 1fr;
+        grid-template-columns: 48px 1fr;
         gap: 1rem;
     }
 
-    .ab-phil-num {
-        font-size: 1.8rem;
+    .ab-phil-body {
+        grid-column: 2;
+        margin-top: -0.25rem;
     }
 
+    .ab-phil-num {
+        font-size: 1.6rem;
+    }
+
+    .ab-philosophy-row:hover {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Expertise: 2-col without arrow */
     .ab-expertise-row {
-        grid-template-columns: 44px 1fr;
+        grid-template-columns: 42px 1fr;
     }
 
     .ab-expertise-row:hover {
@@ -725,7 +671,16 @@
     .ab-philosophy-section,
     .ab-expertise-section,
     .ab-final-cta {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .ab-philosophy-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .ab-phil-num {
+        font-size: 1.2rem;
     }
 }
