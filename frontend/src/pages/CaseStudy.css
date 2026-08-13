@@ -690,8 +690,23 @@
     }
 
     .cs-solar-system {
-        transform: scale(0.65);
-        margin: -140px -400px;
+        transform: scale(0.75);
+        margin: -100px -400px;
+    }
+
+    .cs-solar-planet-counter-rotator {
+        padding: 0.6rem;
+        border-radius: 50%;
+        gap: 0;
+    }
+
+    .cs-solar-planet-counter-rotator span {
+        display: none;
+    }
+
+    .cs-tech-icon {
+        width: 18px;
+        height: 18px;
     }
 
     .cs-tile {
@@ -740,8 +755,8 @@
     }
 
     .cs-solar-system {
-        transform: scale(0.38);
-        margin: -248px -400px;
+        transform: scale(0.45);
+        margin: -220px -400px;
     }
 
     .cs-grid {
