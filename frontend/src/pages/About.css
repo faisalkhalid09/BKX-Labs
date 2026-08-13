@@ -67,52 +67,63 @@
     user-select: none;
     -webkit-user-drag: none;
     display: block;
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.45s ease;
 }
 
-/* Hover overlay — full-cover frosted layer with name bubble */
-.ab-photo-hover-overlay {
+/* ── Cursor-following pill — no image blur/dim at all ── */
+.ab-cursor-pill {
     position: absolute;
-    inset: 0;
-    background: rgba(10, 36, 114, 0.55);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-}
-
-.ab-photo-frame:hover .ab-photo-hover-overlay {
-    opacity: 1;
-}
-
-.ab-photo-frame:hover .ab-founder-photo {
-    transform: scale(1.04);
-    filter: brightness(0.85);
-}
-
-/* The name bubble inside the overlay */
-.ab-photo-name-bubble {
-    display: inline-block;
-    background: transparent;
-    border: 2px solid white;
-    border-radius: 999px;
-    padding: 0.65rem 1.75rem;
+    background: var(--primary);
     color: white;
     font-family: var(--font-heading);
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     white-space: nowrap;
-    transform: translateY(10px);
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(10, 36, 114, 0.35);
 }
 
-.ab-photo-frame:hover .ab-photo-name-bubble {
-    transform: translateY(0);
+.ab-cursor-pill--on {
+    opacity: 1;
+}
+
+/* ── Professional nameplate badge fixed at bottom of photo ── */
+.ab-photo-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 36, 114, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0.8rem 1.1rem;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.ab-photo-badge-role {
+    display: block;
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+}
+
+.ab-photo-badge-org {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
 }
 
 /* ── Bio column ── */

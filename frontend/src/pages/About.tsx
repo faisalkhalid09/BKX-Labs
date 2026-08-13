@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock } from 'lucide-react';
@@ -74,6 +74,16 @@ function useScrollReveal(selector: string) {
 }
 
 const About = () => {
+    /* ── Cursor-following pill on photo ── */
+    const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
+
+    const handlePhotoMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setCursor({ x: e.clientX - rect.left, y: e.clientY - rect.top, visible: true });
+    };
+
+    const handlePhotoLeave = () => setCursor(prev => ({ ...prev, visible: false }));
+
     const structuredData = {
         "@context": "https://schema.org",
         "@graph": [
@@ -126,9 +136,13 @@ const About = () => {
                 <Container>
                     <div className="ab-founder-grid">
 
-                        {/* Photo — hover reveals name bubble */}
+                        {/* Photo with cursor-following pill + professional badge */}
                         <div className="ab-founder-photo-col">
-                            <div className="ab-photo-frame">
+                            <div
+                                className="ab-photo-frame"
+                                onMouseMove={handlePhotoMove}
+                                onMouseLeave={handlePhotoLeave}
+                            >
                                 <img
                                     src="/faisal.jpeg"
                                     alt="Faisal Khalid, Founder and Lead Architect at BKX Labs"
@@ -136,9 +150,18 @@ const About = () => {
                                     draggable="false"
                                     onContextMenu={(e) => e.preventDefault()}
                                 />
-                                {/* Hover overlay — name bubble */}
-                                <div className="ab-photo-hover-overlay" aria-hidden="true">
-                                    <span className="ab-photo-name-bubble">Faisal Khalid</span>
+                                {/* Cursor-following pill — only appears under the pointer */}
+                                <div
+                                    className={`ab-cursor-pill${cursor.visible ? ' ab-cursor-pill--on' : ''}`}
+                                    style={{ left: cursor.x, top: cursor.y }}
+                                    aria-hidden="true"
+                                >
+                                    Faisal Khalid
+                                </div>
+                                {/* Professional nameplate badge at bottom */}
+                                <div className="ab-photo-badge" aria-hidden="true">
+                                    <span className="ab-photo-badge-role">Founder &amp; Lead Architect</span>
+                                    <span className="ab-photo-badge-org">BKX Labs · Est. 2025</span>
                                 </div>
                             </div>
                         </div>
