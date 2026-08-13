@@ -472,8 +472,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 65px;
-    height: 65px;
+    width: 95px; /* Increased from 65px */
+    height: 95px;
     background: white;
     border-radius: 50%;
     display: flex;
@@ -485,8 +485,8 @@
 }
 
 .cs-solar-sun img {
-    max-width: 45px;
-    max-height: 45px;
+    max-width: 65px; /* Increased from 45px */
+    max-height: 65px;
     object-fit: contain;
 }
 
@@ -547,9 +547,10 @@
 }
 
 .cs-tech-icon {
-    width: 14px;
-    height: 14px;
+    width: 22px; /* Increased from 14px */
+    height: 22px;
     object-fit: contain;
+    flex-shrink: 0; /* Prevents disappearing in flex containers */
 }
 
 /* ─── Ink Blot Stats Section ─── */
@@ -695,7 +696,7 @@
     }
 
     .cs-solar-planet-counter-rotator {
-        padding: 0.6rem;
+        padding: 0.75rem; /* Larger hit area */
         border-radius: 50%;
         gap: 0;
     }
@@ -705,8 +706,19 @@
     }
 
     .cs-tech-icon {
-        width: 18px;
-        height: 18px;
+        width: 32px; /* Much larger on mobile */
+        height: 32px;
+        display: block;
+    }
+
+    .cs-solar-sun {
+        width: 130px; /* Massive center logo relative to scaled system */
+        height: 130px;
+    }
+
+    .cs-solar-sun img {
+        max-width: 90px;
+        max-height: 90px;
     }
 
     .cs-tile {
