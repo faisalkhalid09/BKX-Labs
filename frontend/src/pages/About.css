@@ -59,7 +59,11 @@
         0 0 0 6px var(--accent),
         0 24px 48px rgba(10, 36, 114, 0.25);
     /* Hide default cursor so only the pill pointer shows */
-    cursor: none;
+    cursor: none !important;
+}
+
+.ab-photo-frame * {
+    cursor: none !important;
 }
 
 .ab-founder-photo {
@@ -99,46 +103,7 @@
     opacity: 1;
 }
 
-/* ── Leader floating badge ── */
-.ab-leader-badge {
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    background: white;
-    color: var(--primary-dark);
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(10, 36, 114, 0.15);
-    border: 2px solid var(--border-light);
-    z-index: 5;
-    pointer-events: none;
-}
 
-.ab-leader-badge-inner {
-    display: flex;
-    flex-direction: column;
-}
-
-.ab-leader-badge-num {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    font-weight: 900;
-    color: var(--accent);
-    line-height: 1;
-}
-
-.ab-leader-badge-text {
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 0.25rem;
-}
 
 /* ── Bio column ── */
 .ab-founder-bio {

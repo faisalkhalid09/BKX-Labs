@@ -158,13 +158,6 @@ const About = () => {
                                 >
                                     Faisal Khalid
                                 </div>
-                                {/* Leader badge */}
-                                <div className="ab-leader-badge" aria-hidden="true">
-                                    <div className="ab-leader-badge-inner">
-                                        <span className="ab-leader-badge-num">5+</span>
-                                        <span className="ab-leader-badge-text">Years Excellence</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
