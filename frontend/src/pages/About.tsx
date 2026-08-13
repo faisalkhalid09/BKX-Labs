@@ -34,23 +34,45 @@ const PHILOSOPHY = [
     },
 ];
 
-const EXPERTISE = [
+const PRIORITY_TOOLS = [
     {
         icon: <ShieldCheck size={22} strokeWidth={1.5} />,
-        title: 'Compliance Engineering',
-        body: 'We build the actual engineering controls that compliance frameworks require — not the documentation layer over them. Audit-ready pipelines, continuous monitoring, and verifiable evidence that holds up under scrutiny.',
-    },
-    {
-        icon: <Lock size={22} strokeWidth={1.5} />,
-        title: 'Security Architecture',
-        body: 'From cryptographic implementation to access control design, we treat security as an engineering problem — not a checkbox. We identify vulnerabilities at the architectural level and fix them at the root.',
+        title: 'Post-Quantum CBOM Generator',
+        body: 'Identify quantum-vulnerable cryptographic dependencies in seconds; no manual inventory audit required.',
+        slug: '/tools/post-quantum-cbom-generator',
     },
     {
         icon: <BookOpen size={22} strokeWidth={1.5} />,
-        title: 'Software Rescue',
-        body: 'We specialize in taking over failing projects other teams couldn\'t finish, stabilizing them without destroying what works, and delivering software the business can actually run with.',
+        title: 'NVIDIA Blackwell PUE Estimator',
+        body: 'Get instant PUE and annual energy cost forecasts for Blackwell deployments without manual infrastructure design.',
+        slug: '/tools/nvidia-blackwell-pue-estimator',
+    },
+    {
+        icon: <Lock size={22} strokeWidth={1.5} />,
+        title: 'AI Prompt Privacy Auditor',
+        body: 'Instantly identify PII leaks in prompts before sending to ChatGPT, Claude, or other AI services.',
+        slug: '/tools/ai-prompt-privacy-auditor',
+    },
+    {
+        icon: <ShieldCheck size={22} strokeWidth={1.5} />,
+        title: 'ADMT Proportionality Scorer',
+        body: 'Score proportionality of worker monitoring in minutes; defensible assessment reduces litigation risk.',
+        slug: '/tools/admt-proportionality-scorer',
+    },
+    {
+        icon: <BookOpen size={22} strokeWidth={1.5} />,
+        title: 'NIST FIPS 203 Migration Timeline Planner',
+        body: 'Get a realistic 6-phase migration roadmap (discovery to cutover) in one calculation.',
+        slug: '/tools/nist-fips-203-migration-timeline-planner',
+    },
+    {
+        icon: <Lock size={22} strokeWidth={1.5} />,
+        title: 'Direct-to-Chip Liquid Cooling ROI Tool',
+        body: 'Decide if liquid cooling is financially justified for your racks in one comparison.',
+        slug: '/tools/direct-to-chip-liquid-cooling-roi',
     },
 ];
+
 
 /* ── Scroll-reveal hook for timeline items ── */
 function useScrollReveal(selector: string) {
@@ -262,38 +284,57 @@ const About = () => {
             </div>
 
             {/* ════════════════════════════════════════
-                EXPERTISE — horizontal rows
+                TOOLS — horizontal rows
             ════════════════════════════════════════ */}
             <div className="ab-expertise-section">
                 <Container>
                     <div className="ab-expertise-header">
-                        <span className="ab-eyebrow">What We Do</span>
-                        <h2 className="ab-expertise-title">Where we operate</h2>
+                        <span className="ab-eyebrow">Utility Tool Suite</span>
+                        <h2 className="ab-expertise-title">Priority Tools</h2>
                         <p className="ab-expertise-sub">
-                            Three distinct practice areas, each built on the same forensic-first philosophy.
-                            Every engagement falls into at least one of them.
+                            Search-ready, fast-loading tools designed for technical decisions that need immediate answers. Free compliance, security, and infrastructure utilities.
                         </p>
                     </div>
                     <div className="ab-expertise-rows">
-                        {EXPERTISE.map((e) => (
-                            <div key={e.title} className="ab-expertise-row">
+                        {PRIORITY_TOOLS.map((tool) => (
+                            <Link key={tool.title} to={tool.slug} className="ab-expertise-row" style={{ textDecoration: 'none' }}>
                                 <div className="ab-expertise-icon-col">
-                                    <div className="ab-expertise-icon">{e.icon}</div>
+                                    <div className="ab-expertise-icon">{tool.icon}</div>
                                 </div>
                                 <div className="ab-expertise-text-col">
-                                    <h3 className="ab-expertise-row-title">{e.title}</h3>
-                                    <p className="ab-expertise-row-body">{e.body}</p>
+                                    <h3 className="ab-expertise-row-title">{tool.title}</h3>
+                                    <p className="ab-expertise-row-body">{tool.body}</p>
                                 </div>
                                 <div className="ab-expertise-arrow">
                                     <ArrowRight size={20} strokeWidth={1.5} />
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <div className="ab-expertise-cta">
                         <Link to="/tools" className="btn btn-primary ab-inline-btn">
-                            Access Free Compliance Tools <ArrowRight size={16} />
+                            View All Tools <ArrowRight size={16} />
                         </Link>
+                    </div>
+                </Container>
+            </div>
+
+            {/* ════════════════════════════════════════
+                BLOG — new section
+            ════════════════════════════════════════ */}
+            <div className="ab-mission-strip ab-blog-strip">
+                <Container>
+                    <div className="ab-mission-inner">
+                        <span className="ab-eyebrow ab-eyebrow-center">Technical Insights</span>
+                        <h2 className="ab-blog-title" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 4vw, 2.5rem)', color: 'var(--primary-dark)', fontWeight: 900, marginBottom: '1.5rem' }}>The BKX Labs Blog</h2>
+                        <p className="ab-mission-body">
+                            We regularly publish deep dives on software architecture, compliance engineering, and rescuing legacy systems. No fluff, just practical engineering insights from production environments.
+                        </p>
+                        <div style={{ marginTop: '2.5rem' }}>
+                            <a href="https://bkxlabs.com/blog" className="btn btn-primary ab-inline-btn" target="_blank" rel="noopener noreferrer">
+                                Read the Blog <ArrowRight size={16} />
+                            </a>
+                        </div>
                     </div>
                 </Container>
             </div>
