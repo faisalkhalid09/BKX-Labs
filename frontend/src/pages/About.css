@@ -62,6 +62,12 @@
     cursor: none !important;
 }
 
+/* Hide the global MouseFollower component when hovering the photo frame */
+body:has(.ab-photo-frame:hover) .mouse-follower {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 .ab-photo-frame * {
     cursor: none !important;
 }
@@ -103,6 +109,12 @@
     opacity: 1;
 }
 
+/* Disable the hover pill on devices without a mouse (touchscreens) */
+@media (hover: none) {
+    .ab-cursor-pill {
+        display: none !important;
+    }
+}
 
 
 /* ── Bio column ── */
