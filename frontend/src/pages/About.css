@@ -27,7 +27,7 @@
    FOUNDER
 ════════════════════════════════════════ */
 .ab-founder-section {
-    background: white;
+    background: linear-gradient(to bottom, var(--secondary) 0%, #ffffff 65%);
     padding: 6rem 0 5rem;
     border-bottom: 1px solid var(--border-light);
 }
