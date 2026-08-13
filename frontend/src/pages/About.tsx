@@ -112,7 +112,7 @@ const About = () => {
     return (
         <div className="ab-root">
             <SEO
-                title="About BKX Labs — Software Development Agency | Laravel & React Specialists"
+                title="About Us"
                 description="BKX Labs is a specialist software development agency led by Faisal Khalid. We build, rescue, and modernize web applications for startups and enterprise teams globally."
                 keywords="software development agency, about bkx labs, faisal khalid software engineer, software rescue agency"
                 structuredData={structuredData}
@@ -158,10 +158,12 @@ const About = () => {
                                 >
                                     Faisal Khalid
                                 </div>
-                                {/* Professional nameplate badge at bottom */}
-                                <div className="ab-photo-badge" aria-hidden="true">
-                                    <span className="ab-photo-badge-role">Founder &amp; Lead Architect</span>
-                                    <span className="ab-photo-badge-org">BKX Labs · Est. 2025</span>
+                                {/* Leader badge */}
+                                <div className="ab-leader-badge" aria-hidden="true">
+                                    <div className="ab-leader-badge-inner">
+                                        <span className="ab-leader-badge-num">5+</span>
+                                        <span className="ab-leader-badge-text">Years Excellence</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -185,22 +187,13 @@ const About = () => {
                             <div className="ab-bio-rule" aria-hidden="true" />
 
                             <p className="ab-founder-text">
-                                Faisal has spent 5+ years building, breaking, and rescuing enterprise web
-                                systems. He founded BKX Labs after one too many clients came to him with the
-                                same problem: a product that had grown past the point where anyone on the team
-                                fully understood it, and a business that depended on it completely.
+                                Faisal Khalid is the Founder and Lead Architect at BKX Labs, bringing over five years of active experience in engineering, auditing, and rescuing enterprise web systems. Specializing in high performance architectures utilizing Laravel, React, PHP, Node.js, and the broader MERN stack, Faisal established BKX Labs to resolve critical infrastructure bottlenecks for businesses paralyzed by undocumented or overgrown legacy products.
                             </p>
                             <p className="ab-founder-text">
-                                His approach is straightforward: understand the system before touching it,
-                                fix the root cause rather than the symptom, and hand it back in a state that
-                                any competent engineering team can maintain independently. No hero complexity,
-                                no dependency on BKX Labs continuing to be involved.
+                                His engineering methodology prioritizes systemic stability over superficial fixes. Before executing code modifications, Faisal mandates comprehensive system diagnostics to identify root architectural flaws rather than merely patching surface symptoms. His core directive is to deliver clean, maintainable systems free of unnecessary complexity, ensuring any competent engineering department can manage the infrastructure independently post deployment.
                             </p>
                             <p className="ab-founder-text">
-                                Every rescue engagement at BKX Labs is personally reviewed by Faisal at the
-                                diagnostic and architecture stages. The quality of work is not something we
-                                delegate to process alone — it comes from direct technical oversight at the
-                                decisions that matter most.
+                                At BKX Labs, Faisal maintains direct technical oversight on all rescue engagements. By personally reviewing both the diagnostic and architecture stages, he guarantees that all foundational decisions are grounded in strict engineering principles. Faisal is concurrently finalizing his Bachelor of Science in Computer Science at UET Lahore, reinforcing his practical enterprise experience with rigorous formal academic fundamentals.
                             </p>
                         </div>
                     </div>

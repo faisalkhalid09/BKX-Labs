@@ -52,11 +52,14 @@
     width: 300px;
     height: 370px;
     border-radius: 18px;
-    overflow: hidden;
-    box-shadow:
-        0 1px 3px rgba(10, 36, 114, 0.08),
-        0 16px 48px rgba(10, 36, 114, 0.12);
-    cursor: pointer;
+    overflow: visible;
+    /* Outline over outline with lower shadow */
+    box-shadow: 
+        0 0 0 4px white,
+        0 0 0 6px var(--accent),
+        0 24px 48px rgba(10, 36, 114, 0.25);
+    /* Hide default cursor so only the pill pointer shows */
+    cursor: none;
 }
 
 .ab-founder-photo {
@@ -67,12 +70,15 @@
     user-select: none;
     -webkit-user-drag: none;
     display: block;
+    border-radius: 18px;
 }
+
+
 
 /* ── Cursor-following pill — no image blur/dim at all ── */
 .ab-cursor-pill {
     position: absolute;
-    background: var(--primary);
+    background: var(--primary-dark);
     color: white;
     font-family: var(--font-heading);
     font-size: 0.85rem;
@@ -93,37 +99,45 @@
     opacity: 1;
 }
 
-/* ── Professional nameplate badge fixed at bottom of photo ── */
-.ab-photo-badge {
+/* ── Leader floating badge ── */
+.ab-leader-badge {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(10, 36, 114, 0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 0.8rem 1.1rem;
+    bottom: -20px;
+    right: -20px;
+    background: white;
+    color: var(--primary-dark);
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(10, 36, 114, 0.15);
+    border: 2px solid var(--border-light);
+    z-index: 5;
     pointer-events: none;
+}
+
+.ab-leader-badge-inner {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
 }
 
-.ab-photo-badge-role {
-    display: block;
-    color: white;
-    font-size: 0.82rem;
+.ab-leader-badge-num {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+}
+
+.ab-leader-badge-text {
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.2;
-}
-
-.ab-photo-badge-org {
-    display: block;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
 }
 
 /* ── Bio column ── */
