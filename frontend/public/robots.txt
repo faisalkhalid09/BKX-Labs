@@ -24,3 +24,19 @@ Disallow: /*?*ref=
 
 # Sitemap
 Sitemap: https://bkxlabs.com/sitemap.xml
+
+# Allow AI Search & Assistant Crawlers (AEO)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
