@@ -135,8 +135,8 @@ const Process = () => {
         <div>
             <SEO
                 title="How We Rescue Failing Software Projects - Our Process"
-                description="Our software rescue process: forensic codebase audit in 5-10 days, emergency triage in 72 hours, then fixed-price weekly sprints to full handover. No surprise costs."
-                keywords="how to rescue a software project, software rescue process, codebase audit timeline, laravel rescue process, react project recovery, bkx labs process"
+                description="Our software rescue process: forensic codebase audit, emergency triage, then fixed-price weekly sprints to full handover. No surprise costs."
+                keywords="how to rescue a software project, software rescue process, codebase audit timeline, laravel rescue process, react project recovery, agile software rescue, technical audit process, software modernization roadmap, bkx labs process"
                 structuredData={structuredData}
             />
 

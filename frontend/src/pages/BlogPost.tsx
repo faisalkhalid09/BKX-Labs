@@ -112,6 +112,7 @@ export default function BlogPost() {
             <SEO
                 title={post.meta_title || post.title}
                 description={post.meta_description || post.excerpt}
+                keywords={`${post.title.toLowerCase().split(' ').filter(w => w.length > 3).join(', ')}, laravel development, react agency, software engineering, bkx labs`}
                 structuredData={structuredData}
                 ogType="article"
                 ogImage={post.cover_image || undefined}

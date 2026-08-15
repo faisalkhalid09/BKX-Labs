@@ -141,8 +141,8 @@ const Services = () => {
         <div>
             <SEO
                 title="Codebase Audit & Software Development Services"
-                description="Laravel and React software development services: diagnostic codebase audit ($3,500–$8,000), emergency triage, legacy software modernization, and custom development. Fixed-price engagements. Written report before any code changes."
-                keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service, binkhalid labs, bk labs, box labs, bx labs, b labs"
+                description="Laravel and React software development services: diagnostic codebase audit, emergency triage, legacy software modernization, and custom development. Fixed-price engagements. Written report before any code changes."
+                keywords="codebase audit service, laravel development services, react development services, technical debt remediation, legacy software modernization, software code review, laravel codebase audit, react codebase audit, code review service, codebase modernization, scaling react apps, laravel performance tuning, react native development, enterprise application development, binkhalid labs, bk labs, box labs, bx labs, b labs"
                 structuredData={structuredData}
             />
 
