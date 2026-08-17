@@ -553,7 +553,7 @@ const Services = () => {
                                     <li>Feature enhancements &amp; product iteration sprints</li>
                                     <li>Proactive performance optimization &amp; capacity planning</li>
                                     <li>Weekly written health reports &amp; sprint retrospectives</li>
-                                    <li>On-call response for Priority 1 production incidents</li>
+                                    <li>Business-day response for Priority 1 production incidents</li>
                                 </ul>
                             </div>
                             <div className="svc-detail-block">
@@ -561,8 +561,8 @@ const Services = () => {
                                 <div className="svc-tech-tags">
                                     <span>Monthly Retainer</span>
                                     <span>Dedicated Squad</span>
-                                    <span>Priority 1 SLA</span>
-                                    <span>24/7 Monitoring</span>
+                                    <span>Priority 1 SLA (Working Days)</span>
+                                    <span>Business-Day Monitoring</span>
                                     <span>Sprint-Based</span>
                                     <span>Staff Augmentation</span>
                                     <span>Team Extension</span>

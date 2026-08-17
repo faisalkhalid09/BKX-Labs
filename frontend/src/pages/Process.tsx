@@ -64,7 +64,7 @@ const phases = [
             'Proactive risk section in every weekly report',
             'Sprint plan document before each sprint begins',
             'Escalation path with named contacts at every level',
-            'Priority 1 incident response with a 1-hour SLA',
+            'Priority 1 incident response with a 1-hour SLA on working days',
         ],
     },
     {
