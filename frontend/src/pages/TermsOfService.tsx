@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import SEO from '../components/ui/SEO';
 import { 
     FileText, ShieldCheck, Download, Printer, Layers, 
     DollarSign, Code, CheckCircle, AlertTriangle, 
-    Lock, Scale, ChevronRight, Mail, HelpCircle
+    Lock, Scale, Mail
 } from 'lucide-react';
 
 interface SubSection {
