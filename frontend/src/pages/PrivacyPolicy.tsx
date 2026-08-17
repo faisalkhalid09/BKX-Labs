@@ -6,7 +6,7 @@ import SEO from '../components/ui/SEO';
 import { 
     Shield, Lock, Download, Printer, Database, 
     Server, Globe, CheckCircle, EyeOff, 
-    ChevronRight, Mail, HelpCircle, FileCheck
+    ChevronRight, Mail, FileCheck
 } from 'lucide-react';
 
 interface SubSection {
