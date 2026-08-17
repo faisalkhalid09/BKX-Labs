@@ -15,8 +15,8 @@ const phases = [
         num: '01',
         label: 'Diagnostic Audit',
         Icon: Search,
-        tagline: '5-10 business days. Fixed price. Yours unconditionally.',
-        text: 'We spend 5 to 10 business days on read-only access. No code changes until we understand the full picture. You receive a written Technical Health Report with every issue ranked by severity and cost. It is yours regardless of whether the engagement continues.',
+        tagline: '5-10 business days. Fixed price starting at $1,500. Paid upfront.',
+        text: 'This is a fixed-price, paid engagement. You are paying for an objective engineering blueprint, not a sales pitch. We spend 5 to 10 business days on read-only access. No code changes until we understand the full picture. You receive a written Technical Health Report with every issue ranked by severity and cost. It is yours regardless of whether the engagement continues.',
         deliverables: [
             'Written Technical Health Report (PDF + source)',
             'Severity-ranked issue list with per-item cost estimates',
@@ -69,16 +69,16 @@ const phases = [
     },
     {
         num: '05',
-        label: 'Handover',
+        label: 'Handover & Warranty',
         Icon: Rocket,
-        tagline: 'Done means self-sufficiency, not just deployment.',
-        text: 'Done means operational self-sufficiency, not just deployment. Your team receives full source code, architecture records, deployment runbooks, and a 60-day post-handover support period at no additional charge. We close when you confirm you are confident.',
+        tagline: 'Done means self-sufficiency and verified deliverables.',
+        text: 'Done means operational self-sufficiency, not just deployment. Your team receives full source code, architecture records, deployment runbooks, and a 30-day Code Defect Warranty covering direct regressions against agreed SOW acceptance criteria. We close when you confirm you are confident.',
         deliverables: [
             'Complete source code with full commit history',
             'Architecture Decision Records for every major decision',
             'Deployment runbooks for dev, staging, and production',
             'Engineer onboarding guide for future team hires',
-            '60-day post-delivery support included in contract',
+            '30-day Code Defect Warranty covering direct regressions',
         ],
     },
 ];
@@ -338,10 +338,10 @@ const Process = () => {
             <Section className="proc-cta-section">
                 <Container>
                     <div className="proc-cta-inner">
-                        <h2 className="proc-cta-title">Ready to start the audit?</h2>
+                        <h2 className="proc-cta-title">Ready to start the rescue?</h2>
                         <p className="proc-cta-body">
-                            Every rescue begins with a Diagnostic Audit. Book a 15-minute Strategy Call and
-                            we will tell you candidly whether your codebase qualifies and what it will cost.
+                            Start with a free discovery call. We will tell you candidly whether your codebase
+                            qualifies and scope a paid Diagnostic Audit (starting at $1,500) that you own completely.
                         </p>
                         <div className="proc-cta-actions">
                             <Link to="/contact" className="btn btn-primary proc-cta-btn">

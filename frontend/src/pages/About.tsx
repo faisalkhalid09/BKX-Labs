@@ -347,8 +347,8 @@ const About = () => {
                     <div className="ab-cta-inner">
                         <h2 className="ab-cta-title">Ready to stop firefighting?</h2>
                         <p className="ab-cta-body">
-                            Every engagement begins with a Technical Health Check: a written, forensic report
-                            on your system's current state. No obligation, no sales pressure.
+                            Start with a free discovery call. If your project qualifies, the next step is a
+                            paid Diagnostic Audit: a written, forensic engineering blueprint you own completely.
                         </p>
                         <Link to="/contact" className="btn ab-inline-btn ab-cta-btn">
                             Book a Rescue Strategy Call <ArrowRight size={18} />

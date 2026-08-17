@@ -237,13 +237,14 @@ const Services = () => {
                             </div>
                             <p className="svc-body">
                                 Before a single line of code is changed, we need to understand the full picture.
-                                Our audit team conducts a forensic review of your codebase, infrastructure, and
-                                security posture using a combination of automated static analysis, manual
-                                architectural review, and live performance profiling under realistic load conditions.
-                                The output is a written Technical Health Report: a boardroom-ready document that
-                                tells you exactly what is broken, why it's broken, the blast radius of each issue,
-                                and what a realistic remediation will cost. This report is yours outright.
-                                No obligation to continue with BKX Labs.
+                                This is a fixed-price, paid engagement starting at $1,500. You are paying for an
+                                objective engineering blueprint, not a sales pitch. Our audit team conducts a forensic
+                                review of your codebase, infrastructure, and security posture using automated static
+                                analysis, manual architectural review, and live performance profiling under realistic
+                                load conditions. The output is a written Technical Health Report: a boardroom-ready
+                                document that tells you exactly what is broken, why it's broken, the blast radius
+                                of each issue, and what a realistic remediation will cost. This report is yours
+                                outright, regardless of whether you continue with BKX Labs.
                             </p>
                             <blockquote className="svc-insight">
                                 This engagement converts your largest technical liability into a quantified risk

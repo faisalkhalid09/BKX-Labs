@@ -152,7 +152,7 @@ const Home = () => {
             <Hero
                 title="Software Development Agency Laravel & React Engineering"
                 subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits."
-                ctaText="Request a Technical Health Check"
+                ctaText="Book a Discovery Call"
                 ctaLink="/contact"
             />
 
@@ -208,10 +208,11 @@ const Home = () => {
                         <span className="accent-label">Root Cause Analysis</span>
                         <h2>Why Enterprise Software Projects Fail</h2>
                         <p>
-                            After recovering over forty high-stakes codebases, we've identified three systemic failure
-                            modes that account for the overwhelming majority of stalled, broken, and abandoned projects.
-                            Understanding the root cause, not just the symptoms, is what separates a lasting rescue
-                            from a temporary patch.
+                            From rescuing a 20%-complete EdTech platform with exposed AWS credentials (Class Moalimy)
+                            to rebuilding a stalled enterprise DMS with 10-second query times (LocaGed), we have
+                            identified three systemic failure modes that account for the overwhelming majority of
+                            stalled, broken, and abandoned projects. Understanding the root cause, not just the
+                            symptoms, is what separates a lasting rescue from a temporary patch.
                         </p>
                     </div>
 
@@ -300,14 +301,14 @@ const Home = () => {
                         <a href="/about" className="internal-nav-card" aria-label="About BKX Labs team and mission">
                             <span className="internal-nav-icon"><Users2 size={28} strokeWidth={1.5} /></span>
                             <h3>About Us</h3>
-                            <p>A 25-person team of specialists hand-picked for their ability to stabilize and rescue high-stakes software systems.</p>
+                            <p>A boutique, senior-led engineering squad built for high-stakes rescues, audits, and greenfield builds across regulated industries.</p>
                             <span className="internal-nav-link">Meet the Team →</span>
                         </a>
                         <a href="/contact" className="internal-nav-card" aria-label="Contact BKX Labs to start your rescue">
                             <span className="internal-nav-icon"><ClipboardList size={28} strokeWidth={1.5} /></span>
-                            <h3>Start Your Rescue</h3>
-                            <p>Every engagement starts with a Technical Health Check. Tell us about your situation: no obligation, just clarity.</p>
-                            <span className="internal-nav-link">Get In Touch →</span>
+                            <h3>Start the Rescue Protocol</h3>
+                            <p>Book a free discovery call to discuss your situation. If we can help, the next step is a paid Diagnostic Audit that you own completely.</p>
+                            <span className="internal-nav-link">Book a Discovery Call →</span>
                         </a>
                     </div>
                 </Container>
@@ -338,15 +339,17 @@ const Home = () => {
                             <div className="protocol-step">
                                 <div className="step-number">01</div>
                                 <div className="step-content">
-                                    <h3>No Black-Box Engineering</h3>
+                                    <h3>Forensic Diagnostic Audit (Paid Engagement)</h3>
                                     <p>
-                                        A forensic deep-dive into your codebase, infrastructure, and architecture.
-                                        Our engineers use static analysis tooling (PHPStan Level 9, ESLint strict,
-                                        OWASP ZAP for security surface mapping), dependency vulnerability scanning,
-                                        and live query profiling against your database under realistic load profiles.
-                                        The output is a written Technical Health Report: every issue ranked by severity
-                                        (Critical / High / Medium / Low), with a time-and-cost estimate for each
-                                        remediation item. You own this report outright. No obligation to continue.
+                                        This is a fixed-price, paid engagement starting at $1,500. You are paying
+                                        for an objective engineering blueprint, not a sales pitch. Our engineers
+                                        conduct a forensic deep-dive into your codebase, infrastructure, and architecture
+                                        using static analysis tooling (PHPStan Level 9, ESLint strict, OWASP ZAP),
+                                        dependency vulnerability scanning, and live query profiling under realistic
+                                        load profiles. The output is a written Technical Health Report: every issue
+                                        ranked by severity (Critical / High / Medium / Low), with a time-and-cost
+                                        estimate for each remediation item. You own this report outright, regardless
+                                        of whether you continue with BKX Labs.
                                     </p>
                                 </div>
                             </div>
@@ -579,8 +582,8 @@ const Home = () => {
                             <div className="g-point">
                                 <CheckCircle size={24} />
                                 <div>
-                                    <h3>60-Day Post-Handover Support</h3>
-                                    <p>We stay engaged for 60 days post-delivery at no additional charge to monitor production stability, address any edge cases that surface under real-world load, and ensure your internal team has full operational ownership. The engagement is not complete until your team is self-sufficient.</p>
+                                    <h3>30-Day Code Defect Warranty</h3>
+                                    <p>We provide a 30-day Code Defect Warranty following handover covering direct regressions and objective SOW acceptance criteria. Any defect in our delivered code is remediated at zero additional cost, ensuring strict accountability without acting as an open-ended IT helpdesk.</p>
                                 </div>
                             </div>
                         </div>
@@ -596,12 +599,12 @@ const Home = () => {
                             Your software is fixable. Let's prove it.
                         </h2>
                         <p>
-                            Every rescue starts with a Technical Health Check. You'll walk away with a written
-                            assessment of your system's critical risk surface, no strings attached, no sales call.
-                            Just an honest answer to the question your board is already asking.
+                            Every rescue starts with a free discovery call. We assess your situation, determine
+                            if we can help, and scope a paid Diagnostic Audit that gives you a complete,
+                            written engineering blueprint you own outright.
                         </p>
                         <Button variant="primary" href="/contact">
-                            Talk to a Turnaround Architect
+                            Book a Discovery Call
                         </Button>
                     </div>
                 </Container>
