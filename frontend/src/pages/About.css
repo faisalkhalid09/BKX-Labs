@@ -770,6 +770,8 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 
 .ab-team-info {
     position: relative;
+    width: 100%;
+    text-align: center;
 }
 
 .ab-team-name {
@@ -778,6 +780,8 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     color: var(--primary);
     margin-bottom: 0.25rem;
     letter-spacing: -0.02em;
+    text-align: center;
+    width: 100%;
 }
 
 .ab-team-role {
@@ -785,6 +789,8 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     color: var(--text-secondary);
     font-weight: 500;
     margin-bottom: 0.75rem;
+    text-align: center;
+    width: 100%;
 }
 
 .ab-team-linkedin-badge {
