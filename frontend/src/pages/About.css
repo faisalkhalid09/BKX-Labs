@@ -719,7 +719,8 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 }
 
 .ab-team-card {
-    min-width: 280px;
+    width: 220px;
+    min-width: 220px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -728,7 +729,7 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 .ab-team-photo-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     border-radius: 1.5rem;
     overflow: hidden;
     background: var(--secondary);
