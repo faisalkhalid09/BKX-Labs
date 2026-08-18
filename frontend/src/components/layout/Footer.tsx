@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -54,6 +54,17 @@ const Footer = () => {
                         <div className="footer-contact">
                             <Mail size={18} />
                             <a href="mailto:contact@bkxlabs.com">contact@bkxlabs.com</a>
+                        </div>
+                        <div className="footer-socials">
+                            <a href="https://www.facebook.com/profile.php?id=61592933933712" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <Facebook size={20} />
+                            </a>
+                            <a href="https://www.instagram.com/bkxlabs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <Instagram size={20} />
+                            </a>
+                            <a href="https://linkedin.com/company/binkhalid-labs" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                <Linkedin size={20} />
+                            </a>
                         </div>
                     </div>
                 </div>
