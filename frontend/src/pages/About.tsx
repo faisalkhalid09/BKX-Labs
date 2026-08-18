@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
-import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock } from 'lucide-react';
+import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './About.css';
@@ -136,6 +136,18 @@ function useScrollReveal(selector: string) {
 }
 
 const About = () => {
+    const teamScrollRef = useRef<HTMLDivElement>(null);
+
+    const scrollTeam = (direction: 'left' | 'right') => {
+        if (teamScrollRef.current) {
+            const scrollAmount = 300 + 32;
+            teamScrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     /* ── Cursor-following pill on photo ── */
     const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
 
@@ -260,12 +272,22 @@ const About = () => {
             ════════════════════════════════════════ */}
             <div className="ab-team-section">
                 <Container className="lg:pr-0">
-                    <div className="ab-team-header pr-4 lg:pr-8 text-center sm:text-left">
-                        <span className="ab-eyebrow">The Core Team</span>
-                        <h2 className="ab-team-title">Meet the experts behind the code.</h2>
+                    <div className="ab-team-header flex items-end justify-between pr-4 lg:pr-8 text-left">
+                        <div>
+                            <span className="ab-eyebrow">The Core Team</span>
+                            <h2 className="ab-team-title">Meet the experts behind the code.</h2>
+                        </div>
+                        <div className="ab-team-controls flex gap-2">
+                            <button onClick={() => scrollTeam('left')} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors text-gray-600" aria-label="Scroll left">
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => scrollTeam('right')} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors text-gray-600" aria-label="Scroll right">
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
                     </div>
                     
-                    <div className="ab-team-grid">
+                    <div className="ab-team-scroll" ref={teamScrollRef}>
                         {TEAM_MEMBERS.map((member) => {
                             const nameParts = member.name.split(' ');
                             const lastWord = nameParts.pop();
@@ -279,11 +301,11 @@ const About = () => {
                                             <Linkedin size={18} />
                                         </a>
                                     </div>
-                                    <div className="ab-team-info text-center">
-                                        <h3 className="ab-team-name">
+                                    <div className="ab-team-info text-center w-full">
+                                        <h3 className="ab-team-name text-center w-full block">
                                             {firstPart} <span className="text-blue-600 font-medium">{lastWord}</span>
                                         </h3>
-                                        <p className="ab-team-role">{member.role}</p>
+                                        <p className="ab-team-role text-center w-full block">{member.role}</p>
                                     </div>
                                 </div>
                             );

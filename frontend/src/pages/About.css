@@ -707,25 +707,25 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     margin-top: 0.5rem;
 }
 
-.ab-team-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+.ab-team-scroll {
+    display: flex;
     gap: 2rem;
-    max-width: fit-content;
-    margin: 0 auto;
+    overflow-x: auto;
+    padding-bottom: 2rem;
+    scrollbar-width: none; 
+    scroll-behavior: smooth;
 }
-
-@media (min-width: 768px) {
-    .ab-team-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem 4rem; /* 3rem vertical, 4rem horizontal */
-    }
+.ab-team-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .ab-team-card {
     width: 300px;
+    min-width: 300px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .ab-team-photo-wrap {
@@ -810,5 +810,7 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 }
 
 @media (max-width: 1024px) {
-    /* Optional mobile adjustments */
+    .ab-team-scroll {
+        padding-right: 2rem;
+    }
 }
