@@ -719,8 +719,8 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 }
 
 .ab-team-card {
-    width: 220px;
-    min-width: 220px;
+    width: 300px;
+    min-width: 300px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -734,36 +734,13 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     overflow: hidden;
     background: var(--secondary);
     margin-bottom: 1.5rem;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 0 0px var(--primary);
+    transition: box-shadow 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* "when hover the inside stroke or border should grow its color should be the blue of website theme" */
 .ab-team-card:hover .ab-team-photo-wrap {
-    transform: translateY(-8px);
-}
-
-.ab-team-bg-blob {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, rgba(255,255,255,0) 70%);
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0;
-    transition: all 0.5s ease;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.ab-team-card:hover .ab-team-bg-blob {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    animation: blob-pulse 3s infinite alternate;
-}
-
-@keyframes blob-pulse {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    100% { transform: translate(-50%, -50%) scale(1.1); }
+    box-shadow: inset 0 0 0 6px var(--primary);
 }
 
 .ab-team-photo {
@@ -772,52 +749,21 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     object-fit: cover;
     object-position: top;
     position: relative;
-    z-index: 2;
-    transition: transform 0.5s ease;
+    /* Ensure the inset shadow appears above the image. 
+       Usually an inset box-shadow on a parent requires the child image to be behind it, 
+       but if the child image covers it, the shadow is hidden. 
+       We can fix this by adding a pseudo-element for the border, or using mix-blend-mode. 
+       Actually, standard practice for inset shadow over an img is to put it on a pseudo-element. */
 }
 
-.ab-team-card:hover .ab-team-photo {
-    transform: scale(1.05);
-}
-
-.ab-team-hover-overlay {
+.ab-team-photo-wrap::after {
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-    opacity: 0;
+    border-radius: inherit;
+    box-shadow: inherit;
     z-index: 3;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    transition: opacity 0.4s ease;
-}
-
-.ab-team-card:hover .ab-team-hover-overlay {
-    opacity: 1;
-}
-
-.ab-team-linkedin-btn {
-    background: #ffffff;
-    color: #0a66c2;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-}
-
-.ab-team-card:hover .ab-team-linkedin-btn {
-    transform: translateY(0);
-}
-
-.ab-team-linkedin-btn:hover {
-    background: #0a66c2;
-    color: #ffffff;
+    pointer-events: none;
 }
 
 .ab-team-info {
@@ -838,17 +784,6 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     color: var(--text-secondary);
     font-weight: 500;
     margin-bottom: 0.75rem;
-}
-
-.ab-team-linkedin-icon {
-    display: inline-flex;
-    color: #0a66c2;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-}
-
-.ab-team-linkedin-icon:hover {
-    opacity: 1;
 }
 
 @media (max-width: 1024px) {

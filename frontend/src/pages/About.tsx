@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
-import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock } from 'lucide-react';
+import { Linkedin, ArrowRight, ShieldCheck, BookOpen, Lock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/ui/SEO';
 import './About.css';
@@ -136,6 +136,18 @@ function useScrollReveal(selector: string) {
 }
 
 const About = () => {
+    const teamScrollRef = useRef<HTMLDivElement>(null);
+
+    const scrollTeam = (direction: 'left' | 'right') => {
+        if (teamScrollRef.current) {
+            const scrollAmount = 300 + 32;
+            teamScrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     /* ── Cursor-following pill on photo ── */
     const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
 
@@ -260,12 +272,22 @@ const About = () => {
             ════════════════════════════════════════ */}
             <div className="ab-team-section">
                 <Container className="lg:pr-0">
-                    <div className="ab-team-header">
-                        <span className="ab-eyebrow">The Core Team</span>
-                        <h2 className="ab-team-title">Meet the experts behind the code.</h2>
+                    <div className="ab-team-header flex items-end justify-between pr-4 lg:pr-8">
+                        <div>
+                            <span className="ab-eyebrow">The Core Team</span>
+                            <h2 className="ab-team-title">Meet the experts behind the code.</h2>
+                        </div>
+                        <div className="ab-team-controls flex gap-2">
+                            <button onClick={() => scrollTeam('left')} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors text-gray-600" aria-label="Scroll left">
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => scrollTeam('right')} className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors text-gray-600" aria-label="Scroll right">
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
                     </div>
                     
-                    <div className="ab-team-scroll">
+                    <div className="ab-team-scroll" ref={teamScrollRef}>
                         {TEAM_MEMBERS.map((member) => {
                             const nameParts = member.name.split(' ');
                             const lastWord = nameParts.pop();
@@ -274,22 +296,13 @@ const About = () => {
                             return (
                                 <div key={member.id} className="ab-team-card">
                                     <div className="ab-team-photo-wrap">
-                                        <div className="ab-team-bg-blob"></div>
                                         <img src={member.image} alt={member.name} className="ab-team-photo" />
-                                        <div className="ab-team-hover-overlay">
-                                            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="ab-team-linkedin-btn">
-                                                <Linkedin size={20} />
-                                            </a>
-                                        </div>
                                     </div>
                                     <div className="ab-team-info">
                                         <h3 className="ab-team-name">
                                             {firstPart} <span className="text-blue-600 font-medium">{lastWord}</span>
                                         </h3>
                                         <p className="ab-team-role">{member.role}</p>
-                                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="ab-team-linkedin-icon">
-                                            <Linkedin size={18} />
-                                        </a>
                                     </div>
                                 </div>
                             );
