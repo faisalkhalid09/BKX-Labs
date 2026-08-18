@@ -34,7 +34,7 @@
 
 .ab-founder-grid {
     display: grid;
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 420px 1fr;
     gap: 6rem;
     align-items: center;
     max-width: 1100px;
@@ -49,8 +49,8 @@
 
 .ab-photo-frame {
     position: relative;
-    width: 300px;
-    height: 370px;
+    width: 380px;
+    height: 480px;
     border-radius: 18px;
     overflow: visible;
     /* Outline over outline with lower shadow */
