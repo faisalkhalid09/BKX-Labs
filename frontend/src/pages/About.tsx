@@ -8,12 +8,52 @@ import './About.css';
 
 /* ── Accurate BKX Labs timeline (founded 2025) ── */
 const TIMELINE = [
-    { year: '2020', title: 'Where It Began', body: 'Started building production-grade web systems for startups and small businesses, handling everything from architecture to deployment solo.' },
-    { year: '2021', title: 'First Enterprise Contract', body: 'Signed first enterprise engagement — a multi-tenant platform with 40k+ users. Delivered on time, under scope, and without a single regression.' },
-    { year: '2022', title: 'The First Rescue', body: 'Inherited a collapsing EdTech product three weeks before its investor demo. Stabilized and shipped. The rescue playbook was written here.' },
-    { year: '2023', title: 'The Team Forms', body: 'Began bringing in trusted specialists — engineers who shared the same "diagnose before you touch" philosophy. Every hire was personal and deliberate.' },
-    { year: '2024', title: 'Security and Compliance Practice', body: 'Formalized our security auditing, cryptographic migration, and compliance engineering practice across active client engagements.' },
-    { year: '2025', title: 'BKX Labs Is Founded', body: 'BKX Labs officially launched as a specialist agency — with a defined service model, a proven team, and an uncompromising standard of care.' },
+    {
+        year: '2025',
+        title: 'BKX Labs Founded',
+        body: 'Faisal Khalid established the agency after recognizing a critical market gap: businesses with overgrown, undocumented, and failing legacy codebases had no specialized engineering team to turn to.'
+    },
+    {
+        year: '2025',
+        title: 'Enterprise Rescue Protocol',
+        body: 'Formalized our proprietary two-phase rescue structure, ensuring strict separation between forensic diagnostic audits and actual code implementation to guarantee deterministic outcomes.'
+    },
+    {
+        year: '2026',
+        title: 'Zero-Defect Code Warranty',
+        body: 'Introduced the industry-first 30-Day Defect Warranty on all delivered features, fundamentally shifting the risk of poor architecture away from the client and back to the engineering agency.'
+    }
+];
+
+const TEAM_MEMBERS = [
+    {
+        id: 'zoya',
+        name: 'Zoya Khalid',
+        role: 'Principal Rescue Engineer',
+        image: '/zoya.jpeg',
+        linkedin: 'https://www.linkedin.com/in/zoya-khalid-23087835a/'
+    },
+    {
+        id: 'maryam',
+        name: 'Maryam Wahid',
+        role: 'Lead DevOps & QA Engineer',
+        image: '/maryam.jpeg',
+        linkedin: 'https://www.linkedin.com/in/maryam-wahid-5b70aa385/'
+    },
+    {
+        id: 'zameer',
+        name: 'Muhammed Zameer ul Hassan',
+        role: 'Technical Project Manager',
+        image: 'https://ui-avatars.com/api/?name=Muhammed+Zameer&background=0284c7&color=fff&size=512',
+        linkedin: 'https://www.linkedin.com/in/muhammad-zameer-ul-hassan-2ba0b2308/'
+    },
+    {
+        id: 'ammad',
+        name: 'Ammad Imran',
+        role: 'Director of Business Development',
+        image: '/ammad.jpg',
+        linkedin: 'https://www.linkedin.com/in/rana-ammad-imran-105b6034b?utm_source=share_via&utm_content=profile&utm_medium=member_android'
+    }
 ];
 
 const PHILOSOPHY = [
@@ -211,6 +251,49 @@ const About = () => {
                                 At BKX Labs, Faisal maintains direct technical oversight on all rescue engagements. By personally reviewing both the diagnostic and architecture stages, he guarantees that all foundational decisions are grounded in strict engineering principles. Faisal is concurrently finalizing his Bachelor of Science in Computer Science at UET Lahore, reinforcing his practical enterprise experience with rigorous formal academic fundamentals.
                             </p>
                         </div>
+                    </div>
+                </Container>
+            </div>
+
+            {/* ════════════════════════════════════════
+                TEAM SECTION
+            ════════════════════════════════════════ */}
+            <div className="ab-team-section">
+                <Container className="lg:pr-0">
+                    <div className="ab-team-header">
+                        <span className="ab-eyebrow">The Core Team</span>
+                        <h2 className="ab-team-title">Meet the experts behind the code.</h2>
+                    </div>
+                    
+                    <div className="ab-team-scroll">
+                        {TEAM_MEMBERS.map((member) => {
+                            const nameParts = member.name.split(' ');
+                            const lastWord = nameParts.pop();
+                            const firstPart = nameParts.join(' ');
+                            
+                            return (
+                                <div key={member.id} className="ab-team-card">
+                                    <div className="ab-team-photo-wrap">
+                                        <div className="ab-team-bg-blob"></div>
+                                        <img src={member.image} alt={member.name} className="ab-team-photo" />
+                                        <div className="ab-team-hover-overlay">
+                                            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="ab-team-linkedin-btn">
+                                                <Linkedin size={20} />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div className="ab-team-info">
+                                        <h3 className="ab-team-name">
+                                            {firstPart} <span className="text-blue-600 font-medium">{lastWord}</span>
+                                        </h3>
+                                        <p className="ab-team-role">{member.role}</p>
+                                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="ab-team-linkedin-icon">
+                                            <Linkedin size={18} />
+                                        </a>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </Container>
             </div>
