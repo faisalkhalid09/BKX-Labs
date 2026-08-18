@@ -707,21 +707,23 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     margin-top: 0.5rem;
 }
 
-.ab-team-scroll {
-    display: flex;
+.ab-team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    overflow-x: auto;
-    padding-bottom: 2rem;
-    scrollbar-width: none; 
+    max-width: fit-content;
+    margin: 0 auto;
 }
-.ab-team-scroll::-webkit-scrollbar {
-    display: none;
+
+@media (min-width: 768px) {
+    .ab-team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 4rem; /* 3rem vertical, 4rem horizontal */
+    }
 }
 
 .ab-team-card {
     width: 300px;
-    min-width: 300px;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
 }
@@ -767,7 +769,6 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
 }
 
 .ab-team-info {
-    text-align: left;
     position: relative;
 }
 
@@ -786,8 +787,28 @@ body:has(.ab-photo-frame:hover) .mouse-follower {
     margin-bottom: 0.75rem;
 }
 
+.ab-team-linkedin-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: #ffffff;
+    color: #0a66c2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    z-index: 4;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.ab-team-linkedin-badge:hover {
+    transform: scale(1.1);
+    background: #f8fafc;
+}
+
 @media (max-width: 1024px) {
-    .ab-team-scroll {
-        padding-right: 2rem;
-    }
+    /* Optional mobile adjustments */
 }
