@@ -44,7 +44,7 @@ const TEAM_MEMBERS = [
         id: 'zameer',
         name: 'Muhammed Zameer ul Hassan',
         role: 'Technical Project Manager',
-        image: 'https://ui-avatars.com/api/?name=Muhammed+Zameer&background=0284c7&color=fff&size=512',
+        image: '/zameer.jpeg',
         linkedin: 'https://www.linkedin.com/in/muhammad-zameer-ul-hassan-2ba0b2308/'
     },
     {
