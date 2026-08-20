@@ -55,4 +55,23 @@ return [
         'disable_ssl_verify' => env('SAFEPAY_DISABLE_SSL_VERIFY', false),
     ],
 
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+    ],
+
+    'facebook' => [
+        'page_id'            => env('FACEBOOK_PAGE_ID'),
+        'page_access_token'  => env('FACEBOOK_PAGE_ACCESS_TOKEN'),
+    ],
+
+    'instagram' => [
+        'business_account_id' => env('INSTAGRAM_BUSINESS_ACCOUNT_ID'),
+        'access_token'        => env('INSTAGRAM_ACCESS_TOKEN'),
+    ],
+
+    'linkedin' => [
+        'access_token'     => env('LINKEDIN_ACCESS_TOKEN'),
+        'organization_urn' => env('LINKEDIN_ORGANIZATION_URN'),
+    ],
+
 ];

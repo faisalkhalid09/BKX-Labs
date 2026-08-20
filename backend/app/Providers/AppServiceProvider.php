@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use App\Models\ScheduledPost;
+use App\Observers\ScheduledPostObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
+
+        // Register model observers
+        ScheduledPost::observe(ScheduledPostObserver::class);
 
         RateLimiter::for('auth', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());
