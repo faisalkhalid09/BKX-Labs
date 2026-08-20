@@ -159,36 +159,6 @@ class ScheduledPostResource extends Resource
         ]);
     }
 
-    /**
-     * Map the virtual "publish_immediately" toggle to/from scheduled_at.
-     *
-     * When loading: if scheduled_at is null, set publish_immediately = true.
-     * When saving:  if publish_immediately is true, set scheduled_at = null.
-     */
-    public static function mutateFormDataBeforeFill(array $data): array
-    {
-        $data['publish_immediately'] = is_null($data['scheduled_at'] ?? null);
-        return $data;
-    }
-
-    public static function mutateFormDataBeforeCreate(array $data): array
-    {
-        if ($data['publish_immediately'] ?? true) {
-            $data['scheduled_at'] = null;
-        }
-        unset($data['publish_immediately']);
-        return $data;
-    }
-
-    public static function mutateFormDataBeforeSave(array $data): array
-    {
-        if ($data['publish_immediately'] ?? true) {
-            $data['scheduled_at'] = null;
-        }
-        unset($data['publish_immediately']);
-        return $data;
-    }
-
     public static function table(Table $table): Table
     {
         return $table
