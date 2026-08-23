@@ -1,30 +1,49 @@
+﻿import { useEffect, useRef } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import SEO from '../components/ui/SEO';
+import { useParticleLogo } from '../hooks/useParticleLogo';
 import {
     AlertTriangle,
-    Search,
-    TrendingUp,
-    CheckCircle,
-    FileText,
-    UserCheck,
     Clock,
     Layers,
-    Wrench,
-    FlaskConical,
-    Users2,
-    ClipboardList,
-    Cpu,
+    ServerCrash,
     GitBranch,
     Code2,
-    ServerCrash,
+    Search,
+    UserCheck,
+    FileText,
+    TrendingUp,
+    CheckCircle,
+    ArrowRight,
 } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
+    const { canvasRef, handleMouseEnter, handleMouseLeave } = useParticleLogo();
+    const revealRef = useRef<IntersectionObserver | null>(null);
+
+    useEffect(() => {
+        revealRef.current = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('hm-revealed');
+                        revealRef.current?.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
+        document.querySelectorAll('.hm-reveal').forEach((el) => {
+            revealRef.current?.observe(el);
+        });
+        return () => revealRef.current?.disconnect();
+    }, []);
+
     const structuredData = {
         "@context": "https://schema.org",
         "@graph": [
@@ -32,107 +51,17 @@ const Home = () => {
                 "@type": ["Organization", "ProfessionalService"],
                 "@id": "https://bkxlabs.com/#organization",
                 "name": "BKX Labs",
-                "alternateName": [
-                    "BKX Labs Software Rescue Agency",
-                    "BinKhalid Labs",
-                    "BK Labs",
-                    "Box Labs",
-                    "BX Labs",
-                    "B Labs"
-                ],
                 "url": "https://bkxlabs.com/",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://bkxlabs.com/brand-logo.png",
-                    "width": 400,
-                    "height": 120
-                },
-                "description": "BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects, resolves enterprise-grade technical debt, and provides compliance infrastructure for regulated industries. The agency operates a deterministic, phase-gated rescue methodology across Diagnostic, Triage, and Modernization phases, serving funded startups and enterprise teams globally.",
+                "description": "BKX Labs is a specialized software rescue agency.",
                 "areaServed": "Worldwide",
-                "priceRange": "$$$$",
-                "serviceType": [
-                    "Software Rescue Agency",
-                    "Codebase Audit",
-                    "Technical Debt Remediation",
-                    "Laravel Project Recovery",
-                    "React Codebase Stabilization",
-                    "Compliance Engineering",
-                    "Post-Quantum Cryptography Readiness",
-                    "EU AI Act Compliance",
-                    "SOC 2 Gap Analysis"
-                ],
-                "knowsAbout": [
-                    "Laravel 12",
-                    "React 19",
-                    "TypeScript 5",
-                    "Post-Quantum Cryptography",
-                    "EU AI Act Compliance",
-                    "SOC 2 Type II",
-                    "Technical Debt Remediation",
-                    "Software Architecture"
-                ],
-                "hasOfferCatalog": {
-                    "@type": "OfferCatalog",
-                    "name": "Software Rescue Services",
-                    "itemListElement": [
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Diagnostic Codebase Audit",
-                                "description": "A forensic review of your existing codebase, security posture, and infrastructure to produce a severity-ranked remediation roadmap."
-                            }
-                        },
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Triage and Stabilization",
-                                "description": "Emergency patching of production crashes, security vulnerabilities, and broken CI/CD pipelines, without taking your system offline."
-                            }
-                        },
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Modernization Retainer",
-                                "description": "Systematic long-term refactoring from legacy architecture to modern scalable patterns using Laravel 12, React 19, and TypeScript 5."
-                            }
-                        },
-                        {
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": "Compliance Infrastructure Engineering",
-                                "description": "Implementation of enterprise compliance tooling for EU AI Act, SOC 2 Type II, and Post-Quantum Cryptography readiness."
-                            }
-                        }
-                    ]
-                },
-                "contactPoint": {
-                    "@type": "ContactPoint",
-                    "contactType": "customer service",
-                    "url": "https://bkxlabs.com/contact",
-                    "availableLanguage": "English"
-                },
-                "sameAs": [
-                    "https://linkedin.com/company/bkxlabs",
-                    "https://github.com/bkxlabs"
-                ]
+                "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "url": "https://bkxlabs.com/contact" }
             },
             {
                 "@type": "WebPage",
                 "@id": "https://bkxlabs.com/#webpage",
                 "url": "https://bkxlabs.com/",
                 "name": "BKX Labs Software Rescue Agency | Laravel & React Project Recovery",
-                "description": "BKX Labs is a specialized software rescue agency that recovers failing Laravel and React projects, resolves technical debt, and provides enterprise-grade compliance infrastructure.",
-                "isPartOf": { "@id": "https://bkxlabs.com/#organization" },
-                "breadcrumb": {
-                    "@type": "BreadcrumbList",
-                    "itemListElement": [
-                        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bkxlabs.com/" }
-                    ]
-                }
+                "isPartOf": { "@id": "https://bkxlabs.com/#organization" }
             }
         ]
     };
@@ -141,14 +70,11 @@ const Home = () => {
         <div>
             <SEO
                 title="Software Development Agency | Laravel & React Engineering"
-                description="BKX Labs is a specialist software development agency for Laravel and React projects. We offer custom software development, codebase audits, legacy code modernization, and technical debt remediation. Fixed-price engagements. International team."
-                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation, software engineering company, hire laravel developer, hire react developer, custom software development, legacy code modernization, app refactoring, react js agency, laravel php experts, binkhalid labs, bk labs, box labs, bx labs, b labs"
+                description="BKX Labs is a specialist software development agency for Laravel and React projects."
+                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation"
                 structuredData={structuredData}
             />
 
-
-
-            {/* Hero Section */}
             <Hero
                 title="Software Development Agency Laravel & React Engineering"
                 subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits."
@@ -156,8 +82,6 @@ const Home = () => {
                 ctaLink="/contact"
             />
 
-
-            {/* The Problem Statement */}
             <Section className="problem-section">
                 <Container>
                     <h2 className="text-center section-heading">Sound Familiar?</h2>
@@ -166,452 +90,215 @@ const Home = () => {
                     </p>
                     <div className="grid grid-3">
                         <Card>
-                            <div className="card-icon-wrapper">
-                                <AlertTriangle size={40} strokeWidth={1.5} />
-                            </div>
+                            <div className="card-icon-wrapper"><AlertTriangle size={40} strokeWidth={1.5} /></div>
                             <h3>Agency Left You Stranded</h3>
-                            <p className="card-text">
-                                Your original developer or agency disappeared, delivered incomplete work, or left behind
-                                a codebase so fragile that adding a single feature breaks everything else.
-                            </p>
+                            <p className="card-text">Your original developer or agency disappeared, delivered incomplete work, or left behind a codebase so fragile that adding a single feature breaks everything else.</p>
                         </Card>
-
                         <Card>
-                            <div className="card-icon-wrapper">
-                                <Clock size={40} strokeWidth={1.5} />
-                            </div>
+                            <div className="card-icon-wrapper"><Clock size={40} strokeWidth={1.5} /></div>
                             <h3>Months Behind Schedule</h3>
-                            <p className="card-text">
-                                A launch that was "three weeks away" six months ago. Deadlines keep slipping because
-                                the underlying architecture was never built to scale, and every fix creates two new bugs.
-                            </p>
+                            <p className="card-text">A launch that was "three weeks away" six months ago. Deadlines keep slipping because the underlying architecture was never built to scale.</p>
                         </Card>
-
                         <Card>
-                            <div className="card-icon-wrapper">
-                                <Layers size={40} strokeWidth={1.5} />
-                            </div>
+                            <div className="card-icon-wrapper"><Layers size={40} strokeWidth={1.5} /></div>
                             <h3>Crushing Technical Debt</h3>
-                            <p className="card-text">
-                                Years of shortcuts and band-aid fixes have made your codebase a liability. Your team
-                                is spending more time firefighting than building the features your business needs.
-                            </p>
+                            <p className="card-text">Years of shortcuts and band-aid fixes have made your codebase a liability. Your team is spending more time firefighting than building.</p>
                         </Card>
                     </div>
                 </Container>
             </Section>
 
-            {/* ── NEW: Why Software Projects Fail ── */}
-            <Section className="why-fail-section">
+            <section className="hm-fail-section">
                 <Container>
-                    <div className="why-fail-header">
-                        <span className="accent-label">Root Cause Analysis</span>
-                        <h2>Why Enterprise Software Projects Fail</h2>
-                        <p>
-                            From rescuing a 20%-complete EdTech platform with exposed AWS credentials (Class Moalimy)
-                            to rebuilding a stalled enterprise DMS with 10-second query times (LocaGed), we have
-                            identified three systemic failure modes that account for the overwhelming majority of
-                            stalled, broken, and abandoned projects. Understanding the root cause, not just the
-                            symptoms, is what separates a lasting rescue from a temporary patch.
-                        </p>
+                    <div className="hm-fail-label hm-reveal">
+                        <span className="hm-eyebrow">Root Cause Analysis</span>
+                        <h2 className="hm-section-title">Why Enterprise Software Projects Fail</h2>
+                        <p className="hm-section-sub">From rescuing a 20%-complete EdTech platform with exposed AWS credentials to rebuilding a stalled enterprise DMS with 10-second query times, we have identified three systemic failure modes.</p>
                     </div>
-
-                    <div className="why-fail-grid">
-                        <div className="why-fail-item">
-                            <div className="why-fail-item-icon">
-                                <ServerCrash size={28} strokeWidth={1.5} />
-                            </div>
-                            <h3>Misaligned Team Composition</h3>
-                            <p>
-                                The most common failure pattern is deploying a generalist team on a specialist problem.
-                                A Laravel security vulnerability is not a "senior PHP developer" problem. It is a
-                                security engineering problem that requires a completely different diagnostic lens.
-                                When the team's capability ceiling is lower than the problem's complexity floor,
-                                failure is structurally guaranteed regardless of effort.
-                            </p>
-                            <ul className="why-fail-symptoms">
-                                <li>Repeated security patches that don't resolve the root authentication flaw</li>
+                    <div className="hm-fail-grid">
+                        <div className="hm-fail-item hm-reveal" style={{ transitionDelay: '0ms' }}>
+                            <div className="hm-fail-num">01</div>
+                            <div className="hm-fail-icon"><ServerCrash size={26} strokeWidth={1.5} /></div>
+                            <h3 className="hm-fail-title">Misaligned Team Composition</h3>
+                            <p className="hm-fail-body">The most common failure pattern is deploying a generalist team on a specialist problem. A Laravel security vulnerability requires a completely different diagnostic lens than a "senior PHP developer" brings.</p>
+                            <ul className="hm-fail-symptoms">
+                                <li>Repeated patches that don't resolve root authentication flaws</li>
                                 <li>Performance "fixes" that shift bottlenecks rather than eliminate them</li>
-                                <li>Architectural decisions made reactively rather than from a system-wide view</li>
+                                <li>Architectural decisions made reactively from no system-wide view</li>
                             </ul>
                         </div>
-
-                        <div className="why-fail-item">
-                            <div className="why-fail-item-icon">
-                                <GitBranch size={28} strokeWidth={1.5} />
-                            </div>
-                            <h3>Absent Architecture Governance</h3>
-                            <p>
-                                Software systems without defined architectural constraints degrade deterministically.
-                                Each developer who touches the codebase adds their own patterns, bypasses established
-                                conventions, and introduces coupling that future developers must work around.
-                                Within 18 months of initial release, most unstructured codebases have accumulated
-                                enough hidden dependencies that a change in any one module can cause failures in
-                                completely unrelated subsystems.
-                            </p>
-                            <ul className="why-fail-symptoms">
-                                <li>No enforced coding standards: PHPStan, ESLint, or equivalent are absent or ignored</li>
-                                <li>Business logic scattered across controllers, models, and frontend components</li>
+                        <div className="hm-fail-item hm-reveal" style={{ transitionDelay: '120ms' }}>
+                            <div className="hm-fail-num">02</div>
+                            <div className="hm-fail-icon"><GitBranch size={26} strokeWidth={1.5} /></div>
+                            <h3 className="hm-fail-title">Absent Architecture Governance</h3>
+                            <p className="hm-fail-body">Software systems without defined architectural constraints degrade deterministically. Each developer adds their own patterns, bypasses conventions, and introduces coupling that future developers must work around.</p>
+                            <ul className="hm-fail-symptoms">
+                                <li>No enforced coding standards: PHPStan, ESLint absent or ignored</li>
+                                <li>Business logic scattered across controllers, models, frontend</li>
                                 <li>Zero automated test coverage, making safe refactoring impossible</li>
                             </ul>
                         </div>
-
-                        <div className="why-fail-item">
-                            <div className="why-fail-item-icon">
-                                <Code2 size={28} strokeWidth={1.5} />
-                            </div>
-                            <h3>Uncontrolled Scope Accumulation</h3>
-                            <p>
-                                Feature requests added without corresponding architectural review create technical debt
-                                at a compounding rate. Each shortcut taken under delivery pressure costs three to five
-                                times more to remediate later. By the time teams recognize the codebase as unmanageable,
-                                the remediation cost has frequently exceeded the original development budget,
-                                yet the business still cannot ship the features that drove the original investment.
-                            </p>
-                            <ul className="why-fail-symptoms">
-                                <li>Sprint velocity declining month-over-month despite consistent team headcount</li>
+                        <div className="hm-fail-item hm-reveal" style={{ transitionDelay: '240ms' }}>
+                            <div className="hm-fail-num">03</div>
+                            <div className="hm-fail-icon"><Code2 size={26} strokeWidth={1.5} /></div>
+                            <h3 className="hm-fail-title">Uncontrolled Scope Accumulation</h3>
+                            <p className="hm-fail-body">Feature requests added without architectural review create technical debt at a compounding rate. Each shortcut taken under delivery pressure costs three to five times more to remediate later.</p>
+                            <ul className="hm-fail-symptoms">
+                                <li>Sprint velocity declining month-over-month despite consistent headcount</li>
                                 <li>Bug count increasing relative to features shipped</li>
                                 <li>Engineers describing large portions of the codebase as "untouchable"</li>
                             </ul>
                         </div>
                     </div>
                 </Container>
-            </Section>
+            </section>
 
-            {/* Internal Linking Navigation Block — signals importance of key pages to Google */}
-            <Section className="internal-nav-section">
+            <section className="hm-protocol-section">
                 <Container>
-                    <h2 className="text-center section-heading">Everything You Need to Know</h2>
-                    <p className="text-center section-subheading">
-                        Explore how we work, what we offer, and who we are before you commit to a single conversation.
-                    </p>
-                    <div className="internal-nav-grid">
-                        <a href="/services" className="internal-nav-card" aria-label="View our software rescue services">
-                            <span className="internal-nav-icon"><Wrench size={28} strokeWidth={1.5} /></span>
-                            <h3>Our Services</h3>
-                            <p>Diagnostic audits, emergency triage, modernization retainers, and greenfield development, structured for your situation.</p>
-                            <span className="internal-nav-link">View Services →</span>
-                        </a>
-                        <a href="/process" className="internal-nav-card" aria-label="Learn about our rescue process">
-                            <span className="internal-nav-icon"><FlaskConical size={28} strokeWidth={1.5} /></span>
-                            <h3>The Rescue Protocol</h3>
-                            <p>Our 5-step, auditable process for taking over a failing project and bringing it to production with full transparency.</p>
-                            <span className="internal-nav-link">Explore Process →</span>
-                        </a>
-                        <a href="/about" className="internal-nav-card" aria-label="About BKX Labs team and mission">
-                            <span className="internal-nav-icon"><Users2 size={28} strokeWidth={1.5} /></span>
-                            <h3>About Us</h3>
-                            <p>A boutique, senior-led engineering squad built for high-stakes rescues, audits, and greenfield builds across regulated industries.</p>
-                            <span className="internal-nav-link">Meet the Team →</span>
-                        </a>
-                        <a href="/contact" className="internal-nav-card" aria-label="Contact BKX Labs to start your rescue">
-                            <span className="internal-nav-icon"><ClipboardList size={28} strokeWidth={1.5} /></span>
-                            <h3>Start the Rescue Protocol</h3>
-                            <p>Book a free discovery call to discuss your situation. If we can help, the next step is a paid Diagnostic Audit that you own completely.</p>
-                            <span className="internal-nav-link">Book a Discovery Call →</span>
-                        </a>
-                    </div>
-                </Container>
-            </Section>
-
-            {/* The 3-Phase Rescue Funnel — expanded methodology copy */}
-            <Section className="protocol-section">
-                <Container>
-                    <div className="protocol-grid">
-                        <div className="protocol-sticky">
-                            <span className="accent-label">Methodology</span>
-                            <h2>The Rescue Protocol</h2>
-                            <p>
-                                We don't believe in "rewriting from scratch." We employ a systematic,
-                                low-risk approach to stabilizing and evolving mission-critical software,
-                                with full auditability at every phase gate.
-                            </p>
-                            <a href="/process" className="protocol-explore-btn">
-                                Explore our Process
-                                <div className="arrow-icon">
-                                    <TrendingUp size={16} />
-                                </div>
-                            </a>
+                    <div className="hm-protocol-grid">
+                        <div className="hm-protocol-sticky">
+                            <span className="hm-eyebrow">Methodology</span>
+                            <h2 className="hm-protocol-heading">The Rescue Protocol</h2>
+                            <p className="hm-protocol-desc">We don't believe in "rewriting from scratch." We employ a systematic, low-risk approach to stabilizing and evolving mission-critical software, with full auditability at every phase gate.</p>
+                            <a href="/process" className="hm-protocol-link">Explore our Process <ArrowRight size={16} /></a>
                         </div>
-
-                        <div className="protocol-steps">
-                            {/* Step 1 */}
-                            <div className="protocol-step">
-                                <div className="step-number">01</div>
-                                <div className="step-content">
-                                    <h3>Forensic Diagnostic Audit (Paid Engagement)</h3>
-                                    <p>
-                                        This is a fixed-price, paid engagement starting at $1,500. You are paying
-                                        for an objective engineering blueprint, not a sales pitch. Our engineers
-                                        conduct a forensic deep-dive into your codebase, infrastructure, and architecture
-                                        using static analysis tooling (PHPStan Level 9, ESLint strict, OWASP ZAP),
-                                        dependency vulnerability scanning, and live query profiling under realistic
-                                        load profiles. The output is a written Technical Health Report: every issue
-                                        ranked by severity (Critical / High / Medium / Low), with a time-and-cost
-                                        estimate for each remediation item. You own this report outright, regardless
-                                        of whether you continue with BKX Labs.
-                                    </p>
+                        <div className="hm-protocol-steps">
+                            <div className="hm-step hm-reveal">
+                                <div className="hm-step-num">01</div>
+                                <div className="hm-step-body">
+                                    <h3>Forensic Diagnostic Audit</h3>
+                                    <p>A fixed-price paid engagement starting at $1,500. Our engineers conduct a forensic deep-dive into your codebase using PHPStan Level 9, ESLint strict, OWASP ZAP, and live query profiling. The output is a written Technical Health Report — every issue ranked by severity with remediation cost estimates. You own this report regardless of whether you continue with BKX Labs.</p>
                                 </div>
                             </div>
-
-                            {/* Step 2 */}
-                            <div className="protocol-step">
-                                <div className="step-number">02</div>
-                                <div className="step-content">
+                            <div className="hm-step hm-reveal" style={{ transitionDelay: '80ms' }}>
+                                <div className="hm-step-num">02</div>
+                                <div className="hm-step-body">
                                     <h3>Triage</h3>
-                                    <p>
-                                        Immediate, high-precision intervention on critical failure points.
-                                        All triage work is performed on a staging branch, never directly in production,
-                                        using a reproducible deployment pipeline (GitHub Actions / Docker / Nginx)
-                                        that may not have existed before we arrived. Critical security vulnerabilities
-                                        (SQL injection, broken authentication, unvalidated redirect chains) are sealed
-                                        within the first 72 hours. A Sentry error-tracking integration and Laravel
-                                        Horizon queue monitoring dashboard are established so you have real-time
-                                        production visibility for the first time. Every change is reviewed, logged,
-                                        and approved by your team before it touches the live environment.
-                                    </p>
+                                    <p>Immediate, high-precision intervention on critical failure points. All triage work is performed on a staging branch — never directly in production. Critical security vulnerabilities are sealed within the first 72 hours. Every change requires your explicit approval before touching the live environment.</p>
                                 </div>
                             </div>
-
-                            {/* Step 3 */}
-                            <div className="protocol-step">
-                                <div className="step-number">03</div>
-                                <div className="step-content">
+                            <div className="hm-step hm-reveal" style={{ transitionDelay: '160ms' }}>
+                                <div className="hm-step-num">03</div>
+                                <div className="hm-step-body">
                                     <h3>Modernization</h3>
-                                    <p>
-                                        Iterative architectural evolution delivered via 2-week sprints with a fixed,
-                                        transparent deliverable scope per sprint. We migrate legacy patterns to
-                                        Laravel 12 service-layer architecture, React 19 with TypeScript strict mode,
-                                        and PestPHP 3 test suites that establish a regression safety net before
-                                        any high-risk refactor is attempted. Database restructuring, API versioning,
-                                        and third-party integration rewrites are sequenced to maintain zero-downtime
-                                        throughout. The definition of "done" for modernization is that your internal
-                                        team can take full ownership without requiring our continued involvement,
-                                        supported by the architecture documentation, onboarding guides, and
-                                        runbooks we deliver at handover.
-                                    </p>
+                                    <p>Iterative architectural evolution delivered via 2-week sprints with fixed, transparent deliverable scope. We migrate legacy patterns to Laravel 12 service-layer architecture, React 19 with TypeScript strict mode, and PestPHP 3 test suites. Done means your internal team can take full ownership without our continued involvement.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </Container>
-            </Section>
+            </section>
 
-            {/* ── NEW: Compliance & Security Engineering Section ── */}
-            <Section className="compliance-section">
+            <section className="hm-trust-section">
                 <Container>
-                    <div className="compliance-header">
-                        <span className="accent-label">Compliance Infrastructure</span>
-                        <h2>Engineering for Regulated Industries</h2>
-                        <p>
-                            Technical debt is not just a development problem, it is a compliance risk. Regulated
-                            industries face an accelerating intersection of software quality requirements and
-                            legal enforcement timelines. BKX Labs provides the compliance engineering layer
-                            that most development agencies are not equipped to deliver.
-                        </p>
+                    <div className="hm-trust-header hm-reveal">
+                        <span className="hm-eyebrow">Why BKX Labs</span>
+                        <h2 className="hm-section-title">What sets us apart</h2>
                     </div>
-
-                    <div className="compliance-grid">
-                        <div className="compliance-editorial">
-                            <h3>Why Compliance Requires Engineering Expertise</h3>
-                            <p>
-                                The EU AI Act's August 2026 enforcement deadline for high-risk AI systems is not a
-                                legal problem, it is a software architecture problem. Demonstrating conformity
-                                requires reproducible risk management systems, technical documentation tied to
-                                specific code versions, and human oversight mechanisms built into the application
-                                itself. Lawyers draft the policy; engineers implement the controls.
-                            </p>
-                            <p>
-                                Similarly, SOC 2 Type II continuous monitoring is not achieved by collecting
-                                screenshots before an audit. It requires automated, API-driven evidence pipelines
-                                that produce cryptographically verifiable control records throughout the entire
-                                observation period. Organizations that attempt SOC 2 without engineering-grade
-                                automation routinely receive qualified (failed) audit opinions.
-                            </p>
-                            <p>
-                                Post-Quantum Cryptography migration from RSA and ECDH to NIST-standardized
-                                ML-KEM (FIPS 203) and ML-DSA (FIPS 204) is a code-level migration task. The
-                                "Harvest Now, Decrypt Later" threat is already active; adversaries are capturing
-                                your encrypted traffic today. The migration window is not 2030; it is now.
-                            </p>
-                            <p>
-                                Our compliance engineering team builds the controls, not just the checklists.
-                                Use our free tooling suite to assess your current posture, then engage us to
-                                implement the remediation.
-                            </p>
+                    <div className="hm-trust-list">
+                        <div className="hm-trust-item hm-reveal">
+                            <div className="hm-trust-left">
+                                <span className="hm-trust-num">01</span>
+                                <div className="hm-trust-icon"><Search size={22} strokeWidth={1.5} /></div>
+                            </div>
+                            <div className="hm-trust-right">
+                                <h3>We Diagnose Before We Code</h3>
+                                <p>Most developers start writing code immediately. We spend the first phase understanding the full depth of the problem so the solution is correct, not just fast.</p>
+                            </div>
                         </div>
-
-                        <div className="compliance-tools">
-                            <h3>Free Compliance Assessment Tools</h3>
-                            <div className="compliance-tool-cards">
-
-                                <a
-                                    href="/tools"
-                                    className="compliance-tool-card compliance-tool-card--all"
-                                    aria-label="View all 9 compliance and security tools"
-                                >
-                                    <div className="compliance-tool-icon">
-                                        <Cpu size={24} strokeWidth={1.5} />
-                                    </div>
-                                    <div>
-                                        <h3>View All 9 Tools</h3>
-                                        <p>The full BKX Labs compliance and infrastructure tool suite is free, deterministic, and aligned to 2026 regulatory timelines.</p>
-                                        <span className="compliance-tool-link">Browse Tools →</span>
-                                    </div>
-                                </a>
+                        <div className="hm-trust-divider" />
+                        <div className="hm-trust-item hm-reveal" style={{ transitionDelay: '80ms' }}>
+                            <div className="hm-trust-left">
+                                <span className="hm-trust-num">02</span>
+                                <div className="hm-trust-icon"><UserCheck size={22} strokeWidth={1.5} /></div>
+                            </div>
+                            <div className="hm-trust-right">
+                                <h3>Dedicated Lead and PM</h3>
+                                <p>You get a dedicated Project Manager and a Lead Engineer as your two points of contact. Executive-level communication, zero "I'll check with the team" runarounds.</p>
+                            </div>
+                        </div>
+                        <div className="hm-trust-divider" />
+                        <div className="hm-trust-item hm-reveal" style={{ transitionDelay: '160ms' }}>
+                            <div className="hm-trust-left">
+                                <span className="hm-trust-num">03</span>
+                                <div className="hm-trust-icon"><FileText size={22} strokeWidth={1.5} /></div>
+                            </div>
+                            <div className="hm-trust-right">
+                                <h3>You Own Everything</h3>
+                                <p>Full source code, complete SRS documentation, architecture diagrams, and deployment guides. No vendor lock-in; you can take our work to any team in the future.</p>
                             </div>
                         </div>
                     </div>
                 </Container>
-            </Section>
+            </section>
 
-            {/* Proof / Advantage */}
-            <Section>
+            <section className="hm-particle-section">
                 <Container>
-                    <h2 className="text-center section-heading">Why Teams Trust BKX Labs</h2>
-                    <p className="text-center section-subheading">
-                        We've been brought in after three failed agencies, six-month launch delays, and full
-                        production outages. Here's what sets us apart.
-                    </p>
-                    <div className="grid grid-3">
-                        <Card>
-                            <div className="card-icon-wrapper">
-                                <Search size={40} strokeWidth={1.5} />
-                            </div>
-                            <h3>We Diagnose Before We Code</h3>
-                            <p className="card-text">
-                                Most developers start writing code immediately. We spend the first phase understanding
-                                the full depth of the problem so the solution is correct, not just fast.
-                            </p>
-                        </Card>
-
-                        <Card>
-                            <div className="card-icon-wrapper">
-                                <UserCheck size={40} strokeWidth={1.5} />
-                            </div>
-                            <h3>Dedicated Lead & PM</h3>
-                            <p className="card-text">
-                                You get a dedicated Project Manager and a Lead Engineer as your two points of contact.
-                                Executive-level communication, zero "I'll check with the team" runarounds.
-                            </p>
-                        </Card>
-
-                        <Card>
-                            <div className="card-icon-wrapper">
-                                <FileText size={40} strokeWidth={1.5} />
-                            </div>
-                            <h3>You Own Everything</h3>
-                            <p className="card-text">
-                                Full source code, complete SRS documentation, architecture diagrams, and deployment
-                                guides. No vendor lock-in; you can take our work to any team in the future.
-                            </p>
-                        </Card>
+                    <div className="hm-particle-header hm-reveal">
+                        <span className="hm-eyebrow hm-eyebrow--light">Engineered with Precision</span>
+                        <h2 className="hm-particle-title">Every dot has a destination.</h2>
+                        <p className="hm-particle-sub">Hover the canvas to see our systems come together.</p>
+                    </div>
+                    <div className="hm-canvas-wrap" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                        <canvas ref={canvasRef} className="hm-canvas" />
+                        <div className="hm-canvas-hint">hover to assemble</div>
+                    </div>
+                    <div className="hm-particle-cta hm-reveal">
+                        <a href="/contact" className="hm-particle-btn">
+                            Start the Rescue Protocol <ArrowRight size={18} />
+                        </a>
                     </div>
                 </Container>
-            </Section>
+            </section>
 
-            {/* About / Agency Overview Section */}
-            <Section className="agency-overview-section">
+            <section className="hm-commit-section">
                 <Container>
-                    <div className="agency-overview-grid">
-                        <div className="agency-overview-left">
-                            <span className="accent-label">About BKX Labs</span>
-                            <h2>Specialized Software Rescue Agency</h2>
-                            <p>
-                                BKX Labs is a specialized software rescue agency that recovers failing Laravel and
-                                React projects, resolves enterprise-grade technical debt, and provides compliance
-                                infrastructure for regulated industries.
-                            </p>
-                            <p>
-                                Our deterministic, phase-gated rescue methodology, Diagnostic, Triage, and
-                                Modernization, serves funded startups and enterprise product teams globally. Every
-                                engagement begins with a written Technical Health Report before a single line of
-                                production code is modified.
-                            </p>
-                        </div>
-                        <div className="agency-overview-right">
-                            <div className="agency-overview-meta">
-                                <span className="accent-label">Core Expertise</span>
-                                <ul className="agency-expertise-list">
-                                    <li>Laravel 12 &amp; React 19 Recovery</li>
-                                    <li>TypeScript &amp; Architecture Modernization</li>
-                                    <li>Post-Quantum Cryptography Migration</li>
-                                    <li>Zero-Knowledge Proof Infrastructure</li>
-                                </ul>
-                            </div>
-                            <div className="agency-overview-meta">
-                                <span className="accent-label">Free Compliance Tools</span>
-                                <p className="agency-overview-tools-desc">
-                                    Access our public tool suite at{' '}
-                                    <a href="/tools" className="agency-tools-link">bkxlabs.com/tools</a>, covering EU AI Act risk classification, Post-Quantum CBOM generation,
-                                    SOC 2 readiness scoring, and eight additional compliance and infrastructure tools.
-                                </p>
-                            </div>
-                        </div>
+                    <div className="hm-commit-header hm-reveal">
+                        <span className="hm-eyebrow">Our Rescue Commitments</span>
+                        <h2 className="hm-section-title">We back every engagement.</h2>
+                    </div>
+                    <div className="hm-commit-list">
+                        <details className="hm-commit-item hm-reveal">
+                            <summary className="hm-commit-summary">
+                                <div className="hm-commit-icon"><CheckCircle size={20} strokeWidth={1.5} /></div>
+                                <span>Written Diagnostic Report</span>
+                                <div className="hm-commit-arrow"><TrendingUp size={16} /></div>
+                            </summary>
+                            <div className="hm-commit-body">Before we start any work, you receive a complete written health report detailing every critical, high, and medium severity issue with individual remediation cost and time estimates. This document is yours regardless of whether you proceed with us.</div>
+                        </details>
+                        <div className="hm-commit-divider" />
+                        <details className="hm-commit-item hm-reveal" style={{ transitionDelay: '80ms' }}>
+                            <summary className="hm-commit-summary">
+                                <div className="hm-commit-icon"><CheckCircle size={20} strokeWidth={1.5} /></div>
+                                <span>Zero-Pause Stabilization</span>
+                                <div className="hm-commit-arrow"><TrendingUp size={16} /></div>
+                            </summary>
+                            <div className="hm-commit-body">Triage and stabilization are performed without taking your existing system offline. All changes are validated in a staging environment and require your explicit approval before being promoted to production.</div>
+                        </details>
+                        <div className="hm-commit-divider" />
+                        <details className="hm-commit-item hm-reveal" style={{ transitionDelay: '160ms' }}>
+                            <summary className="hm-commit-summary">
+                                <div className="hm-commit-icon"><CheckCircle size={20} strokeWidth={1.5} /></div>
+                                <span>30-Day Code Defect Warranty</span>
+                                <div className="hm-commit-arrow"><TrendingUp size={16} /></div>
+                            </summary>
+                            <div className="hm-commit-body">We provide a 30-day Code Defect Warranty following handover. Any defect in our delivered code is remediated at zero additional cost, ensuring strict accountability without acting as an open-ended IT helpdesk.</div>
+                        </details>
                     </div>
                 </Container>
-            </Section>
+            </section>
 
-            {/* The BKX Commitments */}
-            <Section className="guarantee-section">
+            <section className="hm-cta-section">
                 <Container>
-                    <div className="guarantee-block">
-                        <div className="guarantee-header">
-                            <CheckCircle size={48} strokeWidth={1.5} className="guarantee-icon" />
-                            <h2>Our Rescue Commitments</h2>
-                        </div>
-                        <p className="guarantee-intro">
-                            Taking over someone else's failure is a serious responsibility. We back every rescue
-                            engagement with concrete, documented commitments, not verbal assurances.
-                        </p>
-                        <div className="guarantee-points">
-                            <div className="g-point">
-                                <CheckCircle size={24} />
-                                <div>
-                                    <h3>Written Diagnostic Report</h3>
-                                    <p>Before we start any work, you receive a complete written health report detailing every critical, high, and medium severity issue with individual remediation cost and time estimates. No surprises about what needs to be fixed or why. This document is yours regardless of whether you proceed.</p>
-                                </div>
-                            </div>
-                            <div className="g-point">
-                                <CheckCircle size={24} />
-                                <div>
-                                    <h3>Zero-Pause Stabilization</h3>
-                                    <p>Triage and stabilization are performed without taking your existing system offline. All changes are validated in a staging environment and require your explicit approval before being promoted to production. Business continuity is not a selling point; it is a non-negotiable constraint on how we operate.</p>
-                                </div>
-                            </div>
-                            <div className="g-point">
-                                <CheckCircle size={24} />
-                                <div>
-                                    <h3>30-Day Code Defect Warranty</h3>
-                                    <p>We provide a 30-day Code Defect Warranty following handover covering direct regressions and objective SOW acceptance criteria. Any defect in our delivered code is remediated at zero additional cost, ensuring strict accountability without acting as an open-ended IT helpdesk.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="hm-cta-block hm-reveal">
+                        <h2 className="hm-cta-title">Your software is fixable. Let's prove it.</h2>
+                        <p className="hm-cta-body">Every rescue starts with a free discovery call. We assess your situation, determine if we can help, and scope a paid Diagnostic Audit that gives you a complete, written engineering blueprint you own outright.</p>
+                        <Button variant="primary" href="/contact">Book a Discovery Call</Button>
                     </div>
                 </Container>
-            </Section>
-
-            {/* Final CTA */}
-            <Section className="cta-section">
-                <Container>
-                    <div className="cta-block">
-                        <h2>
-                            Your software is fixable. Let's prove it.
-                        </h2>
-                        <p>
-                            Every rescue starts with a free discovery call. We assess your situation, determine
-                            if we can help, and scope a paid Diagnostic Audit that gives you a complete,
-                            written engineering blueprint you own outright.
-                        </p>
-                        <Button variant="primary" href="/contact">
-                            Book a Discovery Call
-                        </Button>
-                    </div>
-                </Container>
-            </Section>
+            </section>
         </div>
     );
 };
 
 export default Home;
-
