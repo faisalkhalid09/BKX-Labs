@@ -29,6 +29,13 @@ interface PostSummary {
     published_at: string;
 }
 
+interface BlogPostProps {
+    /** Pre-fetched post data injected during SSG builds. Undefined in the browser. */
+    serverPost?: Post;
+    /** Pre-fetched sidebar posts injected during SSG builds. Undefined in the browser. */
+    serverLatestPosts?: PostSummary[];
+}
+
 function formatDate(dateStr: string): string {
     return new Date(dateStr).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -37,14 +44,17 @@ function formatDate(dateStr: string): string {
     });
 }
 
-export default function BlogPost() {
+export default function BlogPost({ serverPost, serverLatestPosts }: BlogPostProps = {}) {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
-    const [post, setPost] = useState<Post | null>(null);
-    const [latestPosts, setLatestPosts] = useState<PostSummary[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [post, setPost] = useState<Post | null>(serverPost ?? null);
+    const [latestPosts, setLatestPosts] = useState<PostSummary[]>(serverLatestPosts ?? []);
+    const [loading, setLoading] = useState(!serverPost);
 
     useEffect(() => {
+        // Skip fetching when data was already injected by the SSG build script
+        if (serverPost) return;
+
         if (!slug) return;
         setLoading(true);
         
@@ -75,7 +85,9 @@ export default function BlogPost() {
         .catch(() => {
             navigate('/blog', { replace: true });
         });
-    }, [slug, navigate]);
+    }, [slug, navigate, serverPost]);
+
+
 
     if (loading) {
         return (

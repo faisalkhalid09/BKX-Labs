@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot, createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
@@ -17,4 +17,12 @@ const app = (
   </StrictMode>
 )
 
-createRoot(rootElement).render(app)
+// If the root element already has SSG-rendered children (from pre-rendered HTML),
+// hydrate to attach React event listeners without re-rendering the DOM.
+// Otherwise fall back to a fresh createRoot render (local dev, non-SSG pages).
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, app)
+} else {
+  createRoot(rootElement).render(app)
+}
+

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --mode ssr && node scripts/ssg-render.mjs",
+    "build:client": "tsc -b && vite build",
+    "build:ssr": "vite build --mode ssr",
+    "build:ssg": "npm run build:client && npm run build:ssr && node scripts/ssg-render.mjs",
     "build:no-prerender": "tsc -b && vite build",
-    "postbuild": "node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

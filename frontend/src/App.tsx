@@ -30,7 +30,14 @@ import { trackPageView } from './api/analytics';
 import AppointmentSuccess from './pages/AppointmentSuccess';
 import BookingPage from './pages/BookingPage';
 
-function App() {
+import type { ServerData } from './entry-server';
+
+interface AppProps {
+  /** Injected by the SSG build script. Undefined at runtime in the browser. */
+  serverData?: ServerData;
+}
+
+function App({ serverData }: AppProps = {}) {
   const location = useLocation();
   const isToolsShellPage = location.pathname.startsWith('/tools') || location.pathname.startsWith('/glossary');
 
@@ -73,7 +80,15 @@ function App() {
           <Route path="/technical-debt-remediation" element={<TechnicalDebtRemediation />} />
           <Route path="/codebase-audit" element={<CodebaseAudit />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route
+            path="/blog/:slug"
+            element={
+              <BlogPost
+                serverPost={serverData?.post}
+                serverLatestPosts={serverData?.latestPosts}
+              />
+            }
+          />
           <Route path="/dev-rezgo" element={<RezgoDemo />} />
           <Route path="/appointment-success" element={<AppointmentSuccess />} />
           <Route path="/schedule" element={<BookingPage />} />
@@ -86,5 +101,6 @@ function App() {
 }
 
 export default App;
+
 
 

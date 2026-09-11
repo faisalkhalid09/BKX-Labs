@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use App\Models\ScheduledPost;
 use App\Observers\ScheduledPostObserver;
+use App\Models\Post;
+use App\Observers\PostObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Register model observers
         ScheduledPost::observe(ScheduledPostObserver::class);
+        Post::observe(PostObserver::class);
+
 
         RateLimiter::for('auth', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());

@@ -22,7 +22,7 @@ const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render
 const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onSuccess, onError, onExpire }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const [isScriptReady, setIsScriptReady] = useState(() => !!window.turnstile);
+  const [isScriptReady, setIsScriptReady] = useState(() => typeof window !== 'undefined' && !!window.turnstile);
 
   // Keep callbacks stable via refs so effect deps don't change
   const onSuccessRef = useRef(onSuccess);

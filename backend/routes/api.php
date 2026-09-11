@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GPUPricingController;
 use App\Http\Controllers\BlackwellPUEController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RebuildController;
 // use App\Http\Controllers\Api\RezgoDemoController;
 
 Route::get('/test', function () {
@@ -21,6 +22,12 @@ Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{slug}', [PostController::class, 'show']);
 
 Route::get('/sitemap', [App\Http\Controllers\SitemapController::class, 'index']);
+
+// ── Internal SSG Rebuild Webhook ─────────────────────────────────────────────
+// Called automatically by PostObserver when a post is published/updated.
+// Protected by X-Rebuild-Token header. Rate-limited to prevent abuse.
+Route::post('/internal/rebuild', [RebuildController::class, 'trigger'])
+    ->middleware('throttle:5,1');
 
 
 
