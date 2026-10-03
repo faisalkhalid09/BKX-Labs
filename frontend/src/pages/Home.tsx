@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Hero from '../components/ui/Hero';
 import Container from '../components/layout/Container';
 import Section from '../components/layout/Section';
@@ -228,25 +228,6 @@ const Home = () => {
                                 <p>Full source code, complete SRS documentation, architecture diagrams, and deployment guides. No vendor lock-in; you can take our work to any team in the future.</p>
                             </div>
                         </div>
-                    </div>
-                </Container>
-            </section>
-
-            <section className="hm-particle-section">
-                <Container>
-                    <div className="hm-particle-header hm-reveal">
-                        <span className="hm-eyebrow hm-eyebrow--light">Engineered with Precision</span>
-                        <h2 className="hm-particle-title">Every dot has a destination.</h2>
-                        <p className="hm-particle-sub">Hover the canvas to see our systems come together.</p>
-                    </div>
-                    <div className="hm-canvas-wrap" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <canvas ref={canvasRef} className="hm-canvas" />
-                        <div className="hm-canvas-hint">hover to assemble</div>
-                    </div>
-                    <div className="hm-particle-cta hm-reveal">
-                        <a href="/contact" className="hm-particle-btn">
-                            Start the Rescue Protocol <ArrowRight size={18} />
-                        </a>
                     </div>
                 </Container>
             </section>
