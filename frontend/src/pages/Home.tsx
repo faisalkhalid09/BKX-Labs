@@ -5,7 +5,6 @@ import Section from '../components/layout/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import SEO from '../components/ui/SEO';
-import { useParticleLogo } from '../hooks/useParticleLogo';
 import {
     AlertTriangle,
     Clock,
@@ -18,12 +17,10 @@ import {
     FileText,
     TrendingUp,
     CheckCircle,
-    ArrowRight,
 } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
-    const { canvasRef, handleMouseEnter, handleMouseLeave } = useParticleLogo();
     const revealRef = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
