@@ -17,6 +17,7 @@ import {
     FileText,
     TrendingUp,
     CheckCircle,
+    ArrowRight,
 } from 'lucide-react';
 import './Home.css';
 
