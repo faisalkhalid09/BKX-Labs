@@ -18,6 +18,7 @@ set -euo pipefail
 
 PROJECT_DIR="/var/www/BKX-Labs"
 FRONTEND_DIR="${PROJECT_DIR}/frontend"
+BACKEND_DIR="${PROJECT_DIR}/backend"
 LOG_FILE="/var/log/bkx-rebuild.log"
 LOCK_FILE="/tmp/bkx-rebuild.lock"
 NODE_BIN=$(which node 2>/dev/null || echo "/usr/bin/node")
@@ -44,7 +45,7 @@ git pull origin main 2>&1 | tee -a "$LOG_FILE"
 
 # ── Step 2: Backend deployment ──────────────────────────────────────────────
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2: composer install (no-dev)..." | tee -a "$LOG_FILE"
-cd "${PROJECT_DIR}/backend"
+cd "$BACKEND_DIR"
 composer install --no-dev --optimize-autoloader --no-interaction 2>&1 | tee -a "$LOG_FILE"
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2b: php artisan optimize..." | tee -a "$LOG_FILE"
@@ -52,6 +53,9 @@ php artisan optimize 2>&1 | tee -a "$LOG_FILE"
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2c: php artisan filament:assets..." | tee -a "$LOG_FILE"
 php artisan filament:assets 2>&1 | tee -a "$LOG_FILE"
+
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2d: chown storage & bootstrap/cache to www-data..." | tee -a "$LOG_FILE"
+chown -R www-data:www-data "${BACKEND_DIR}/storage" "${BACKEND_DIR}/bootstrap/cache" 2>&1 | tee -a "$LOG_FILE"
 
 # ── Step 3: Install/update npm packages ────────────────────────────────────────
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 3: npm ci..." | tee -a "$LOG_FILE"

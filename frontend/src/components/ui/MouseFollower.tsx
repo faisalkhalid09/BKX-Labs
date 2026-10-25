@@ -156,7 +156,7 @@ const MouseFollower = () => {
   return (
     <>
       <svg style={{ width: 0, height: 0, position: 'absolute' }} aria-hidden="true">
-        <filter id="cursor-color-map" color-interpolation-filters="sRGB">
+        <filter id="cursor-color-map" colorInterpolationFilters="sRGB">
           <feColorMatrix type="matrix" values="
             -1.0    0     0     0   1.1176
             -0.875  0     0     0   1.1024

@@ -34,7 +34,7 @@ class SitemapController extends Controller
             ['loc' => '/hire-react-developer', 'changefreq' => 'monthly', 'priority' => '0.95'],
             ['loc' => '/technical-debt-remediation', 'changefreq' => 'monthly', 'priority' => '0.9'],
             ['loc' => '/codebase-audit', 'changefreq' => 'monthly', 'priority' => '0.9'],
-            ['loc' => '/software-rescue', 'changefreq' => 'monthly', 'priority' => '0.9'],
+            ['loc' => '/schedule', 'changefreq' => 'monthly', 'priority' => '0.8'],
             // ── Tools Hub ──
             ['loc' => '/tools', 'changefreq' => 'weekly', 'priority' => '0.95'],
             // ── Individual Tool Pages ──
