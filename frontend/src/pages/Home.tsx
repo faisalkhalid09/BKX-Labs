@@ -49,17 +49,28 @@ const Home = () => {
                 "@type": ["Organization", "ProfessionalService"],
                 "@id": "https://bkxlabs.com/#organization",
                 "name": "BKX Labs",
+                "alternateName": ["bkxlabs", "BKXLabs", "BKX Labs Agency"],
                 "url": "https://bkxlabs.com/",
-                "description": "BKX Labs is a specialized software rescue agency.",
+                "logo": { "@type": "ImageObject", "url": "https://bkxlabs.com/brand-logo.png" },
+                "description": "BKX Labs (bkxlabs) is a specialized software rescue agency for Laravel and React projects.",
                 "areaServed": "Worldwide",
                 "contactPoint": { "@type": "ContactPoint", "contactType": "customer service", "url": "https://bkxlabs.com/contact" }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://bkxlabs.com/#website",
+                "url": "https://bkxlabs.com/",
+                "name": "BKX Labs",
+                "alternateName": ["bkxlabs", "BKXLabs", "BKX Labs Agency"],
+                "publisher": { "@id": "https://bkxlabs.com/#organization" }
             },
             {
                 "@type": "WebPage",
                 "@id": "https://bkxlabs.com/#webpage",
                 "url": "https://bkxlabs.com/",
-                "name": "BKX Labs Software Rescue Agency | Laravel & React Project Recovery",
-                "isPartOf": { "@id": "https://bkxlabs.com/#organization" }
+                "name": "BKX Labs (bkxlabs) | Laravel & React Software Rescue Agency",
+                "isPartOf": { "@id": "https://bkxlabs.com/#website" },
+                "about": { "@id": "https://bkxlabs.com/#organization" }
             }
         ]
     };
@@ -67,15 +78,15 @@ const Home = () => {
     return (
         <div>
             <SEO
-                title="Software Development Agency | Laravel & React Engineering"
-                description="BKX Labs is a specialist software development agency for Laravel and React projects."
-                keywords="software development agency, laravel development company, react development agency, codebase audit, technical debt remediation"
+                title="BKX Labs (bkxlabs) | Laravel & React Software Rescue Agency"
+                description="BKX Labs (bkxlabs.com) rescues stalled Laravel and React projects: forensic codebase audits, emergency stabilisation, technical debt remediation, and fixed-price greenfield delivery for international teams."
+                keywords="bkxlabs, BKX Labs, software rescue agency, laravel development company, react development agency, codebase audit, technical debt remediation"
                 structuredData={structuredData}
             />
 
             <Hero
-                title="Software Development Agency Laravel & React Engineering"
-                subtitle="Don't let bad code kill your business. BKX Labs rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits."
+                title="BKX Labs | Software Development & Rescue Agency"
+                subtitle="Don't let bad code kill your business. BKX Labs (bkxlabs.com) rescues stalled Laravel and React applications, eliminates technical debt, and delivers what other agencies couldn't. Fixed-price audits."
                 ctaText="Book a Discovery Call"
                 ctaLink="/contact"
             />

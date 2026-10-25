@@ -24,7 +24,7 @@ const SEO = ({
 
     const baseUrl = import.meta.env.VITE_APP_URL || 'https://bkxlabs.com';
     const fullUrl = canonical || `${baseUrl}${location.pathname || '/'}`;
-    const fullTitle = `${title} | BKX Labs`;
+    const fullTitle = title.startsWith('BKX Labs') ? title : `${title} | BKX Labs`;
 
     // Breadcrumb schema — generated from the current path
     const pathSegments = location.pathname.split('/').filter(Boolean);

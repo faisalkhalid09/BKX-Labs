@@ -42,21 +42,32 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 1: git pull..." | tee -a "$LOG_FILE"
 cd "$PROJECT_DIR"
 git pull origin main 2>&1 | tee -a "$LOG_FILE"
 
-# ── Step 2: Install/update npm packages ────────────────────────────────────────
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2: npm ci..." | tee -a "$LOG_FILE"
+# ── Step 2: Backend deployment ──────────────────────────────────────────────
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2: composer install (no-dev)..." | tee -a "$LOG_FILE"
+cd "${PROJECT_DIR}/backend"
+composer install --no-dev --optimize-autoloader --no-interaction 2>&1 | tee -a "$LOG_FILE"
+
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2b: php artisan optimize..." | tee -a "$LOG_FILE"
+php artisan optimize 2>&1 | tee -a "$LOG_FILE"
+
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 2c: php artisan filament:assets..." | tee -a "$LOG_FILE"
+php artisan filament:assets 2>&1 | tee -a "$LOG_FILE"
+
+# ── Step 3: Install/update npm packages ────────────────────────────────────────
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 3: npm ci..." | tee -a "$LOG_FILE"
 cd "$FRONTEND_DIR"
 $NPM_BIN ci --prefer-offline 2>&1 | tee -a "$LOG_FILE"
 
-# ── Step 3: Run the full SSG build ────────────────────────────────────────────
+# ── Step 4: Run the full SSG build ────────────────────────────────────────────
 # build:ssg = vite build (client) + vite build --mode ssr + node ssg-render.mjs
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 3: npm run build:ssg..." | tee -a "$LOG_FILE"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 4: npm run build:ssg..." | tee -a "$LOG_FILE"
 $NPM_BIN run build:ssg 2>&1 | tee -a "$LOG_FILE"
 
-# ── Step 4: Reload Nginx ───────────────────────────────────────────────────────
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 4: nginx -s reload..." | tee -a "$LOG_FILE"
+# ── Step 5: Reload Nginx ───────────────────────────────────────────────────────
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Step 5: nginx -s reload..." | tee -a "$LOG_FILE"
 sudo nginx -s reload 2>&1 | tee -a "$LOG_FILE"
 
-# ── Step 5: Cleanup SSR bundle (optional — saves disk space) ───────────────────
+# ── Step 6: Cleanup SSR bundle (optional — saves disk space) ───────────────────
 # The dist/server/ directory contains the SSR bundle only needed during the build.
 # It does not need to be served publicly.
 # Uncomment the line below to remove it after the build:

@@ -114,35 +114,131 @@ async function fetchPost(slug) {
 // ── Inject rendered HTML into the index.html template ────────────────────────
 function injectIntoTemplate(template, appHtml, helmet) {
   let html = template
+  let bodyHtml = appHtml
 
-  // Replace <div id="root"></div> with the pre-rendered content
-  html = html.replace(
-    '<div id="root"></div>',
-    `<div id="root">${appHtml}</div>`
+  const helmetHasData = helmet && Object.keys(helmet).length > 0 && (
+    Boolean(helmet.title?.toString()) ||
+    Boolean(helmet.meta?.toString()) ||
+    Boolean(helmet.link?.toString()) ||
+    Boolean(helmet.script?.toString())
   )
 
-  // Inject Helmet-managed head tags
-  if (helmet) {
-    // Title
+  if (helmetHasData) {
+    // Title — replace the static template title
     if (helmet.title?.toString()) {
       html = html.replace(/<title>.*?<\/title>/i, helmet.title.toString())
     }
-    // Meta tags
+
+    // Strip static <meta name="description"> so Helmet's version is the only one
+    html = html.replace(/<meta\s+name=["']description["'][^>]*\/?>/gi, '')
+
+    // Strip static <link rel="canonical"> so Helmet's version is the only one
+    html = html.replace(/<link\s+rel=["']canonical["'][^>]*\/?>/gi, '')
+
+    // Strip ALL static <script type="application/ld+json"> blocks from the
+    // template (Organization, ProfessionalService) so Helmet's richer @graph
+    // is the single source of truth
+    html = html.replace(
+      /<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
+      ''
+    )
+
+    // Inject Helmet meta tags (description, OG, Twitter, keywords…)
     if (helmet.meta?.toString()) {
       html = html.replace('</head>', `${helmet.meta.toString()}\n</head>`)
     }
-    // Link tags (canonical, etc.)
+    // Inject Helmet link tags (canonical, etc.)
     if (helmet.link?.toString()) {
       html = html.replace('</head>', `${helmet.link.toString()}\n</head>`)
     }
-    // Script tags (JSON-LD structured data)
+    // Inject Helmet script tags (JSON-LD structured data)
     if (helmet.script?.toString()) {
       html = html.replace('</head>', `${helmet.script.toString()}\n</head>`)
     }
+  } else {
+    // In React 19 SSR, document metadata tags (<title>, <meta>, <link>, <script>)
+    // are rendered directly into appHtml. We extract and hoist them into <head>
+    // of the template, stripping duplicates from template and removing them from
+    // bodyHtml so they don't remain duplicated in <div id="root">.
+
+    // 1. Title
+    const titleMatch = bodyHtml.match(/<title>([\s\S]*?)<\/title>/i)
+    if (titleMatch) {
+      html = html.replace(/<title>.*?<\/title>/i, titleMatch[0])
+      bodyHtml = bodyHtml.replace(titleMatch[0], '')
+    }
+
+    // 2. Meta description
+    const descMatch = bodyHtml.match(/<meta\s+name=["']description["'][^>]*\/?>/i)
+    if (descMatch) {
+      html = html.replace(/<meta\s+name=["']description["'][^>]*\/?>/gi, descMatch[0])
+      bodyHtml = bodyHtml.replace(descMatch[0], '')
+    }
+
+    // 3. Canonical link
+    const canonMatch = bodyHtml.match(/<link\s+rel=["']canonical["'][^>]*\/?>/i)
+    if (canonMatch) {
+      html = html.replace(/<link\s+rel=["']canonical["'][^>]*\/?>/gi, canonMatch[0])
+      bodyHtml = bodyHtml.replace(canonMatch[0], '')
+    }
+
+    // 4. Keywords
+    const kwMatch = bodyHtml.match(/<meta\s+name=["']keywords["'][^>]*\/?>/i)
+    if (kwMatch) {
+      html = html.replace(/<meta\s+name=["']keywords["'][^>]*\/?>/gi, '')
+      html = html.replace('</head>', `${kwMatch[0]}\n</head>`)
+      bodyHtml = bodyHtml.replace(kwMatch[0], '')
+    }
+
+    // 5. Open Graph tags
+    const ogMatches = [...bodyHtml.matchAll(/<meta\s+property=["']og:[^"']+["'][^>]*\/?>/gi)]
+    if (ogMatches.length > 0) {
+      html = html.replace(/<meta\s+property=["']og:[^"']+["'][^>]*\/?>\s*/gi, '')
+      const ogBlock = ogMatches.map((m) => m[0]).join('\n  ')
+      html = html.replace('</head>', `  ${ogBlock}\n</head>`)
+      for (const m of ogMatches) {
+        bodyHtml = bodyHtml.replace(m[0], '')
+      }
+    }
+
+    // 6. Twitter tags
+    const twitterMatches = [...bodyHtml.matchAll(/<meta\s+name=["']twitter:[^"']+["'][^>]*\/?>/gi)]
+    if (twitterMatches.length > 0) {
+      html = html.replace(/<meta\s+name=["']twitter:[^"']+["'][^>]*\/?>\s*/gi, '')
+      const twBlock = twitterMatches.map((m) => m[0]).join('\n  ')
+      html = html.replace('</head>', `  ${twBlock}\n</head>`)
+      for (const m of twitterMatches) {
+        bodyHtml = bodyHtml.replace(m[0], '')
+      }
+    }
+
+    // 7. JSON-LD scripts (structured data)
+    const jsonLdMatches = [...bodyHtml.matchAll(/<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi)]
+    if (jsonLdMatches.length > 0) {
+      html = html.replace(/<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
+      const scriptBlock = jsonLdMatches.map((m) => m[0]).join('\n  ')
+      html = html.replace('</head>', `  ${scriptBlock}\n</head>`)
+      for (const m of jsonLdMatches) {
+        bodyHtml = bodyHtml.replace(m[0], '')
+      }
+    }
+
+    // 8. Preload tags
+    const preloadMatches = [...bodyHtml.matchAll(/<link\s+rel=["']preload["'][^>]*\/?>/gi)]
+    for (const m of preloadMatches) {
+      bodyHtml = bodyHtml.replace(m[0], '')
+    }
   }
+
+  // Replace <div id="root"></div> with the clean pre-rendered content
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${bodyHtml}</div>`
+  )
 
   return html
 }
+
 
 // ── Write an HTML file to the dist directory ─────────────────────────────────
 async function writeHtmlFile(route, html) {
