@@ -68,7 +68,7 @@ const Home = () => {
                 "@type": "WebPage",
                 "@id": "https://bkxlabs.com/#webpage",
                 "url": "https://bkxlabs.com/",
-                "name": "BKX Labs (bkxlabs) | Laravel & React Software Rescue Agency",
+                "name": "BKX Labs | Laravel & React Software Rescue Agency",
                 "isPartOf": { "@id": "https://bkxlabs.com/#website" },
                 "about": { "@id": "https://bkxlabs.com/#organization" }
             }
@@ -78,7 +78,7 @@ const Home = () => {
     return (
         <div>
             <SEO
-                title="BKX Labs (bkxlabs) | Laravel & React Software Rescue Agency"
+                title="BKX Labs | Laravel & React Software Rescue Agency"
                 description="BKX Labs (bkxlabs.com) rescues stalled Laravel and React projects: forensic codebase audits, emergency stabilisation, technical debt remediation, and fixed-price greenfield delivery for international teams."
                 keywords="bkxlabs, BKX Labs, software rescue agency, laravel development company, react development agency, codebase audit, technical debt remediation"
                 structuredData={structuredData}
