@@ -42,14 +42,90 @@ export default defineConfig(({ mode }) => {
           // Don't compute compressed sizes during build (speeds up build output)
           reportCompressedSize: false,
           // Raise chunk warning limit
-          chunkSizeWarningLimit: 600,
+          chunkSizeWarningLimit: 500,
           rollupOptions: {
             output: {
-              // Split vendor libs into separate cached chunks
-              manualChunks: {
-                'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-                'vendor-ui': ['lucide-react'],
-                'vendor-utils': ['axios', 'react-hook-form'],
+              // Split vendor libs and heavy components into separate cached chunks
+              manualChunks(id) {
+                const normalizedId = id.replace(/\\/g, '/')
+
+                // Vendor chunk splitting
+                if (normalizedId.includes('/node_modules/')) {
+                  if (
+                    normalizedId.includes('/react/') ||
+                    normalizedId.includes('/react-dom/') ||
+                    normalizedId.includes('/react-router/') ||
+                    normalizedId.includes('/react-router-dom/') ||
+                    normalizedId.includes('/react-helmet-async/') ||
+                    normalizedId.includes('/react-hook-form/')
+                  ) {
+                    return 'vendor-react'
+                  }
+                  if (
+                    normalizedId.includes('/lucide-react/') ||
+                    normalizedId.includes('/framer-motion/') ||
+                    normalizedId.includes('/recharts/')
+                  ) {
+                    return 'vendor-ui'
+                  }
+                  if (normalizedId.includes('/axios/')) {
+                    return 'vendor-utils'
+                  }
+                  return undefined
+                }
+
+                // Tools, calculators & glossary chunk (shared registry & calculators)
+                if (
+                  normalizedId.includes('/src/components/tools/') ||
+                  normalizedId.includes('/src/components/Blackwell') ||
+                  normalizedId.includes('/src/components/CloudGPU') ||
+                  normalizedId.includes('/src/pages/ToolDetail') ||
+                  normalizedId.includes('/src/pages/ToolsIndex') ||
+                  normalizedId.includes('/src/lib/tools/') ||
+                  normalizedId.includes('/src/pages/glossary/') ||
+                  normalizedId.includes('/src/lib/glossary/')
+                ) {
+                  return 'chunk-tools'
+                }
+
+                // Heavy content pages (Services, CaseStudy, About, Process)
+                if (
+                  normalizedId.includes('/src/pages/Services') ||
+                  normalizedId.includes('/src/pages/CaseStudy') ||
+                  normalizedId.includes('/src/pages/About') ||
+                  normalizedId.includes('/src/pages/Process')
+                ) {
+                  return 'chunk-pages-content'
+                }
+
+                // Dedicated service landing pages & booking
+                if (
+                  normalizedId.includes('/src/pages/HireLaravelDeveloper') ||
+                  normalizedId.includes('/src/pages/HireReactDeveloper') ||
+                  normalizedId.includes('/src/pages/TechnicalDebtRemediation') ||
+                  normalizedId.includes('/src/pages/CodebaseAudit') ||
+                  normalizedId.includes('/src/pages/BookingPage') ||
+                  normalizedId.includes('/src/pages/AppointmentSuccess')
+                ) {
+                  return 'chunk-pages-services'
+                }
+
+                // Blog pages
+                if (
+                  normalizedId.includes('/src/pages/Blog') ||
+                  normalizedId.includes('/src/pages/BlogPost')
+                ) {
+                  return 'chunk-blog'
+                }
+
+                // Legal pages
+                if (
+                  normalizedId.includes('/src/pages/PrivacyPolicy') ||
+                  normalizedId.includes('/src/pages/TermsOfService') ||
+                  normalizedId.includes('/src/pages/RezgoDemo')
+                ) {
+                  return 'chunk-pages-legal'
+                }
               },
             },
           },
